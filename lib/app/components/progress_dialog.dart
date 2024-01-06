@@ -1,0 +1,79 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class ProgressAlertDialog {
+  static Timer? timer;
+  static void progressAlertDialog(BuildContext context, String progressMessage) {
+    showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => AlertDialog(
+        content: Row(
+          // mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(width: 16.0),
+            Text(progressMessage),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static void loadingAlertDialog(BuildContext context, String progressMessage) {
+    showDialog<String>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          timer = Timer(const Duration(seconds: 3), () {
+            Navigator.of(context).pop();
+          });
+
+          return AlertDialog(
+            content: Row(
+              // mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const CircularProgressIndicator(),
+                const SizedBox(width: 16.0),
+                Text(progressMessage),
+              ],
+            ),
+          );
+        }).then((value) {
+      if (timer!.isActive) {
+        timer!.cancel();
+      }
+    });
+  }
+
+  static void showALoadingDialog(BuildContext context, String progressMessage, int seconds, String nextPage) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Row(
+            // mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(width: 16.0),
+              Text(progressMessage),
+            ],
+          ),
+        );
+      },
+    );
+
+    // Delay for 3 seconds
+    await Future.delayed(Duration(seconds: seconds), () {
+      Navigator.of(context).pop(); // Close the alert dialog
+
+      // Navigate to the next page
+      Get.toNamed(nextPage);
+    });
+  }
+}
