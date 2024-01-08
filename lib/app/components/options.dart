@@ -66,6 +66,11 @@ class Options extends StatelessWidget {
                       "Informations personelles.";
                   Get.toNamed(AppRoutes.PROFILEOTP);
                 }
+                if (options[index].title == 'Changer de pass') {
+                  Get.find<ProfileController>().selectedRoute.value =
+                      "Changer de pass";
+                  Get.toNamed(AppRoutes.PROFILECHANGESPASSWORD);
+                }
               },
           backgroundColor: context.colorScheme.background,
           margin: EdgeInsets.only(top: index == 0 ? 0 : spaceBetweenOptions),

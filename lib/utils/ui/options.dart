@@ -12,6 +12,10 @@ List<FluOption> profileScreenOptions = [
       title: 'Informations personelles.',
       description: 'Modifiez ou ajoutez des informations.'),
   FluOption(
+      icon: FluIcons.password,
+      title: 'Changer de pass',
+      description: 'Changer le code PIN de votre compte.'),
+  FluOption(
       icon: FluIcons.people,
       title: 'Favoris',
       description: 'Envoyez plus rapidement de l\'argent à vos proches.'),

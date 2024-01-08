@@ -25,4 +25,5 @@ class AppRoutes {
   static const String PROFILEINFORMATIONPERSONELLES =
       '/profileinformationpersonelles';
   static const String PROFILEOTP = '/profileotpview';
+  static const String PROFILECHANGESPASSWORD = '/profilechangepassword';
 }

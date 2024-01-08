@@ -16,6 +16,7 @@ import 'package:ibank/app/modules/transfer/views/transfer_view.dart';
 import 'package:ibank/app/modules/withdrawal/views/withdrawal_view.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 
+import '../modules/profile/views/profile_change_pin.dart';
 import '../modules/profile/views/profile_information_personelles_view.dart';
 import '../modules/profile/views/profile_otp_view.dart';
 import '../modules/profile/views/profile_view.dart';
@@ -49,5 +50,8 @@ class AppPages {
         name: AppRoutes.PROFILEINFORMATIONPERSONELLES,
         page: () => const ProfileInformationPersonellesView()),
     GetPage(name: AppRoutes.PROFILEOTP, page: () => const ProfileOtpView()),
+    GetPage(
+        name: AppRoutes.PROFILECHANGESPASSWORD,
+        page: () => const ProfileChangePinView()),
   ];
 }
