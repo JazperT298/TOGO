@@ -1,9 +1,15 @@
-// ignore_for_file: unnecessary_null_comparison, avoid_print, unused_import
+// ignore_for_file: unnecessary_null_comparison, avoid_print, unused_import, unrelated_type_equality_checks
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ibank/app/components/info_alert_dialog.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
+import 'package:ibank/app/modules/splash/controller/splash_controller.dart';
+import 'package:ibank/utils/common/app_session_manager.dart';
+import 'package:ibank/utils/constants/app_config.dart';
+import 'package:ibank/utils/constants/sys_prop.dart';
 import 'package:ibank/utils/handlers/eula_ota_handler.dart';
 import 'package:ibank/utils/presenter/eula_presenter.dart';
 import 'package:ibank/utils/constants/app_labels.dart';
@@ -11,6 +17,24 @@ import 'package:ibank/utils/handlers/message_handler.dart';
 import 'package:ibank/utils/sms/sms_listener.dart';
 import 'package:ibank/utils/sms/sms_option_enum.dart';
 import 'package:ibank/utils/soap/soap_sender.dart';
+
+abstract class VerifyUser {
+  bool onVerifySuccess();
+  bool onVerifyFailed();
+}
+
+class VerifyUserImpl implements VerifyUser {
+  @override
+  bool onVerifySuccess() {
+    return true;
+  }
+
+  @override
+  bool onVerifyFailed() {
+    // Your implementation for failure
+    return false;
+  }
+}
 
 class Eula extends EulaPresenter with SendSmsListeners {
   static late BuildContext ctx;
@@ -21,6 +45,30 @@ class Eula extends EulaPresenter with SendSmsListeners {
   Eula(super.context, super.iRequestOtp, super.iVerify);
 
   static void initializeSmsApi() {}
+
+  //from validateSim,
+  static void sendEula(VerifyUser verifyUser) {
+    SqlHelper.checkDB(ctx);
+    SplashController controller = Get.find();
+
+    if (!isFreshInstall()) {
+      return;
+    }
+
+    controller.checkUser();
+
+    verifyUser.onVerifyFailed();
+
+    verifyUser.onVerifyFailed();
+    // if (res == false) {
+    //   // check if what is the OTP message
+    //   // InfoAlertDialog.progressAlertDialog(Get.context!, progressMessage);
+
+    //   return false;
+    // } else {
+    //   return true;
+    // }
+  }
 
   static void generateOTP() {
     // EULA GETOTP <os> <msisdn>
@@ -101,6 +149,23 @@ class Eula extends EulaPresenter with SendSmsListeners {
 
   void showToast(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  static bool isNewAppVersion() {
+    if (SqlHelper.getProperty(SysProp.PROP_VERSION_CODE, "0") == AppConfig.app_version_code &&
+        SqlHelper.getProperty(SysProp.PROP_VERSION_NAME, "0") == AppConfig.app_package_name) {
+      return false;
+    }
+    SqlHelper.getProperty(SysProp.PROP_STAT_LOGIN, "0");
+    return true;
+  }
+
+  static bool isFreshInstall() {
+    if (AppSessionManager.newInstance(Get.context!).isFirstInstall()) {
+      return false;
+    }
+    SqlHelper.setProperty(SysProp.PROP_STAT_LOGIN, "0");
+    return true;
   }
 
   // Eula(this.ctx) : super(null, null, null) {

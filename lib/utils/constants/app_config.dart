@@ -13,4 +13,5 @@ class AppConfig {
   static String eula_refuse = 'refuse';
   static String app_version_name = '1';
   static String app_version_code = 'v1';
+  static String FLAVOR_mode = 'bypass';
 }
