@@ -48,17 +48,22 @@ class HomeView extends GetView<HomeController> {
                           children: [
                             Row(
                               children: [
-                                FluBadge(
-                                  offset: const Offset(5, 5),
-                                  child: FluAvatar(
-                                    size: UISettings.minButtonSize - 8,
-                                    outlined: true,
-                                    outlineThickness: 1.5,
-                                    outlineGap: 3,
-                                    outlineColor: [
-                                      context.colorScheme.outlineVariant
-                                    ],
-                                    margin: const EdgeInsets.only(right: 10),
+                                InkWell(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.PROFILE);
+                                  },
+                                  child: FluBadge(
+                                    offset: const Offset(5, 5),
+                                    child: FluAvatar(
+                                      size: UISettings.minButtonSize - 8,
+                                      outlined: true,
+                                      outlineThickness: 1.5,
+                                      outlineGap: 3,
+                                      outlineColor: [
+                                        context.colorScheme.outlineVariant
+                                      ],
+                                      margin: const EdgeInsets.only(right: 10),
+                                    ),
                                   ),
                                 ),
                                 const Spacer(),

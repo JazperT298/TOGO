@@ -16,6 +16,9 @@ import 'package:ibank/app/modules/transfer/views/transfer_view.dart';
 import 'package:ibank/app/modules/withdrawal/views/withdrawal_view.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 
+import '../modules/profile/views/profile_information_personelles_view.dart';
+import '../modules/profile/views/profile_otp_view.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/withdrawal/views/withdrawal_otp_view.dart';
 import '../modules/withdrawal/views/withdrawal_success_view.dart';
 
@@ -36,7 +39,15 @@ class AppPages {
     GetPage(name: AppRoutes.NEWFAV, page: () => const NewFavView()),
     GetPage(name: AppRoutes.WITHDRAWAL, page: () => const WithdrawalView()),
     GetPage(name: AppRoutes.TRANSFER, page: () => const TransferView()),
-    GetPage(name: AppRoutes.WITHDRAWALOTP, page: () => const WithdrawalOtpView()),
-    GetPage(name: AppRoutes.WITHDRAWALSUCCESS, page: () => const WithdrawalSuccessView()),
+    GetPage(
+        name: AppRoutes.WITHDRAWALOTP, page: () => const WithdrawalOtpView()),
+    GetPage(
+        name: AppRoutes.WITHDRAWALSUCCESS,
+        page: () => const WithdrawalSuccessView()),
+    GetPage(name: AppRoutes.PROFILE, page: () => const ProfileView()),
+    GetPage(
+        name: AppRoutes.PROFILEINFORMATIONPERSONELLES,
+        page: () => const ProfileInformationPersonellesView()),
+    GetPage(name: AppRoutes.PROFILEOTP, page: () => const ProfileOtpView()),
   ];
 }

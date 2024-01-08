@@ -21,4 +21,8 @@ class AppRoutes {
   static const String NEWFAV = '/newfav';
   static const String WITHDRAWALOTP = '/withdrawalotp';
   static const String WITHDRAWALSUCCESS = '/withdrawalsuccess';
+  static const String PROFILE = '/profile';
+  static const String PROFILEINFORMATIONPERSONELLES =
+      '/profileinformationpersonelles';
+  static const String PROFILEOTP = '/profileotpview';
 }
