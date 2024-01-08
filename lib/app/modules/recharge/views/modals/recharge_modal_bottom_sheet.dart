@@ -8,13 +8,15 @@ class RechargeModalBottomSheet extends StatefulWidget {
   const RechargeModalBottomSheet({super.key});
 
   @override
-  State<RechargeModalBottomSheet> createState() => _RechargeModalBottomSheetState();
+  State<RechargeModalBottomSheet> createState() =>
+      _RechargeModalBottomSheetState();
 }
 
 class _RechargeModalBottomSheetState extends State<RechargeModalBottomSheet> {
   final PageController pageController = PageController();
 
-  void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  void toNextStep() => pageController.nextPage(
+      duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   @override
   Widget build(BuildContext context) {
     final action = WalletAction.getAll()[0];
@@ -177,7 +179,7 @@ class _RechargeModalBottomSheetState extends State<RechargeModalBottomSheet> {
               TextSpan(
                 text: 'Frais de L’operation : '.toUpperCase(),
                 style: TextStyle(
-                  fontSize: M3FontSizes.headlineTiny,
+                  fontSize: M3FontSizes.headlineSmall,
                   fontWeight: FontWeight.w600,
                   color: context.colorScheme.onBackground,
                 ),
@@ -185,7 +187,7 @@ class _RechargeModalBottomSheetState extends State<RechargeModalBottomSheet> {
               TextSpan(
                 text: '150 FCFA'.toUpperCase(),
                 style: TextStyle(
-                  fontSize: M3FontSizes.headlineTiny,
+                  fontSize: M3FontSizes.headlineSmall,
                   fontWeight: FontWeight.w600,
                   color: context.colorScheme.primary,
                 ),
@@ -246,15 +248,17 @@ class _RechargeModalBottomSheetState extends State<RechargeModalBottomSheet> {
                             children: [
                               Text(
                                 option.name,
-                                style:
-                                    TextStyle(fontSize: M3FontSizes.headlineTiny, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
+                                style: TextStyle(
+                                    fontSize: M3FontSizes.headlineSmall,
+                                    fontWeight: FontWeight.w600,
+                                    color: context.colorScheme.onSurface),
                               ),
                               Text(
                                 option.description,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
-                                  fontSize: M3FontSizes.headlineTiny,
+                                  fontSize: M3FontSizes.headlineSmall,
                                 ),
                               ),
                             ],
@@ -319,15 +323,17 @@ class _RechargeModalBottomSheetState extends State<RechargeModalBottomSheet> {
                             children: [
                               Text(
                                 option.name,
-                                style:
-                                    TextStyle(fontSize: M3FontSizes.headlineTiny, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
+                                style: TextStyle(
+                                    fontSize: M3FontSizes.headlineSmall,
+                                    fontWeight: FontWeight.w600,
+                                    color: context.colorScheme.onSurface),
                               ),
                               Text(
                                 option.description,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
-                                  fontSize: M3FontSizes.headlineTiny,
+                                  fontSize: M3FontSizes.headlineSmall,
                                 ),
                               ),
                             ],
@@ -386,7 +392,9 @@ class _RechargeModalBottomSheetState extends State<RechargeModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -435,7 +443,9 @@ class _RechargeModalBottomSheetState extends State<RechargeModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),

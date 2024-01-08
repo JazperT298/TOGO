@@ -28,12 +28,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  qr_code_scanner: ^1.0.1
+  flutter_otp_text_field: ^1.1.1
   camera: ^0.10.4
   emojis: ^0.9.9
   flukit:
     git:
       url: https://github.com/charles9904/flukit
- # flukit:
+  # flukit:
   #  path: ../../me/flukit
   flutter:
     sdk: flutter

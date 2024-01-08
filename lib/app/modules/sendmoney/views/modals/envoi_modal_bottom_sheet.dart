@@ -53,7 +53,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           style: TextStyle(
             color: context.colorScheme.secondary,
             fontWeight: FontWeight.w600,
-            fontSize: M3FontSizes.headlineTiny,
+            fontSize: M3FontSizes.headlineSmall,
             letterSpacing: 1.0,
           ),
         ),
@@ -89,7 +89,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           style: TextStyle(
             color: context.colorScheme.secondary,
             fontWeight: FontWeight.w600,
-            fontSize: M3FontSizes.headlineTiny,
+            fontSize: M3FontSizes.headlineSmall,
             letterSpacing: 1.0,
           ),
         ),
@@ -184,7 +184,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               TextSpan(
                 text: 'Frais de L’operation : '.toUpperCase(),
                 style: TextStyle(
-                  fontSize: M3FontSizes.headlineTiny,
+                  fontSize: M3FontSizes.headlineSmall,
                   fontWeight: FontWeight.w600,
                   color: context.colorScheme.outline,
                 ),
@@ -192,7 +192,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               TextSpan(
                 text: '0 FCFA'.toUpperCase(),
                 style: TextStyle(
-                  fontSize: M3FontSizes.headlineTiny,
+                  fontSize: M3FontSizes.headlineSmall,
                   fontWeight: FontWeight.w600,
                   color: context.colorScheme.secondary,
                 ),

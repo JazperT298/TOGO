@@ -10,13 +10,15 @@ class PaiementModalBottomSheet extends StatefulWidget {
   const PaiementModalBottomSheet({super.key});
 
   @override
-  State<PaiementModalBottomSheet> createState() => _PaiementModalBottomSheetState();
+  State<PaiementModalBottomSheet> createState() =>
+      _PaiementModalBottomSheetState();
 }
 
 class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
   final PageController pageController = PageController();
 
-  void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  void toNextStep() => pageController.nextPage(
+      duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   @override
   Widget build(BuildContext context) {
     final action = WalletAction.getAll()[2];
@@ -132,13 +134,17 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
           TextSpan(
             children: [
               const TextSpan(
-                text: 'Réabonnez-vous  à l’identique ou passez à une autre formule pour ',
-                style: TextStyle(fontSize: M3FontSizes.headlineTiny, fontWeight: FontWeight.w600, color: Colors.grey),
+                text:
+                    'Réabonnez-vous  à l’identique ou passez à une autre formule pour ',
+                style: TextStyle(
+                    fontSize: M3FontSizes.headlineSmall,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey),
               ),
               TextSpan(
                 text: ' Maison 1',
                 style: TextStyle(
-                  fontSize: M3FontSizes.headlineTiny,
+                  fontSize: M3FontSizes.headlineSmall,
                   fontWeight: FontWeight.w600,
                   color: context.colorScheme.primary,
                 ),
@@ -220,7 +226,7 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
               TextSpan(
                 text: 'Frais de L’operation : '.toUpperCase(),
                 style: const TextStyle(
-                  fontSize: M3FontSizes.headlineTiny,
+                  fontSize: M3FontSizes.headlineSmall,
                   fontWeight: FontWeight.w600,
                   color: Colors.grey,
                 ),
@@ -228,7 +234,7 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
               TextSpan(
                 text: '150 FCFA'.toUpperCase(),
                 style: TextStyle(
-                  fontSize: M3FontSizes.headlineTiny,
+                  fontSize: M3FontSizes.headlineSmall,
                   fontWeight: FontWeight.w600,
                   color: context.colorScheme.primary,
                 ),
@@ -289,15 +295,17 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
                             children: [
                               Text(
                                 option.name,
-                                style:
-                                    TextStyle(fontSize: M3FontSizes.headlineTiny, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
+                                style: TextStyle(
+                                    fontSize: M3FontSizes.headlineSmall,
+                                    fontWeight: FontWeight.w600,
+                                    color: context.colorScheme.onSurface),
                               ),
                               Text(
                                 option.description,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
-                                  fontSize: M3FontSizes.headlineTiny,
+                                  fontSize: M3FontSizes.headlineSmall,
                                 ),
                               ),
                             ],
@@ -362,15 +370,17 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
                             children: [
                               Text(
                                 option.name,
-                                style:
-                                    TextStyle(fontSize: M3FontSizes.headlineTiny, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
+                                style: TextStyle(
+                                    fontSize: M3FontSizes.headlineSmall,
+                                    fontWeight: FontWeight.w600,
+                                    color: context.colorScheme.onSurface),
                               ),
                               Text(
                                 option.description,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
-                                  fontSize: M3FontSizes.headlineTiny,
+                                  fontSize: M3FontSizes.headlineSmall,
                                 ),
                               ),
                             ],
@@ -405,7 +415,8 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
                 prefixIcon: FluIcons.addCircle,
                 backgroundColor: context.colorScheme.primaryContainer,
                 margin: EdgeInsets.only(bottom: context.height * .020),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
               ListView.builder(
                   shrinkWrap: true,
@@ -421,8 +432,12 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
                       backgroundColor: Colors.transparent,
                       splashFactory: NoSplash.splashFactory,
                       margin: EdgeInsets.only(top: index == 0 ? 0 : 10),
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      border: BorderSide(width: 1.5, color: context.colorScheme.outlineVariant.withOpacity(.5)),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      border: BorderSide(
+                          width: 1.5,
+                          color: context.colorScheme.outlineVariant
+                              .withOpacity(.5)),
                       cornerRadius: 25,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -434,7 +449,8 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
                               children: [
                                 Text(
                                   'Maison $index',
-                                  style: context.textTheme.headlineLarge?.copyWith(
+                                  style:
+                                      context.textTheme.headlineLarge?.copyWith(
                                     fontSize: M3FontSizes.headlineSmall,
                                     fontWeight: FontWeight.w600,
                                     color: context.colorScheme.onSurface,
@@ -473,7 +489,8 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
                 width: double.infinity,
                 color: Colors.white,
                 child: Padding(
-                  padding: UISettings.pagePadding.copyWith(top: 8, left: 24, right: 24),
+                  padding: UISettings.pagePadding
+                      .copyWith(top: 8, left: 24, right: 24),
                   child: FluButton.text(
                     'Confirmir',
                     suffixIcon: FluIcons.checkCircleUnicon,
@@ -492,7 +509,9 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
                         offset: const Offset(0, 5),
                       )
                     ],
-                    textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: M3FontSizes.bodyLarge),
                   ),
                 ),
               ),
@@ -545,15 +564,17 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
                             children: [
                               Text(
                                 option.name,
-                                style:
-                                    TextStyle(fontSize: M3FontSizes.headlineTiny, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
+                                style: TextStyle(
+                                    fontSize: M3FontSizes.headlineSmall,
+                                    fontWeight: FontWeight.w600,
+                                    color: context.colorScheme.onSurface),
                               ),
                               Text(
                                 option.description,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
-                                  fontSize: M3FontSizes.headlineTiny,
+                                  fontSize: M3FontSizes.headlineSmall,
                                 ),
                               ),
                             ],
@@ -612,7 +633,9 @@ class _PaiementModalBottomSheetState extends State<PaiementModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),

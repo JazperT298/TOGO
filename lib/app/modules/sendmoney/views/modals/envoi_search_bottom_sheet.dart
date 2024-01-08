@@ -63,7 +63,7 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
                   style: TextStyle(
                     color: context.colorScheme.secondary,
                     fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.headlineTiny,
+                    fontSize: M3FontSizes.headlineSmall,
                     letterSpacing: 1.0,
                   ),
                 ),
@@ -154,7 +154,7 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
                                       Text(
                                         option.fullName,
                                         style: TextStyle(
-                                            fontSize: M3FontSizes.headlineTiny, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
+                                            fontSize: M3FontSizes.headlineSmall, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 8.0),
@@ -163,7 +163,7 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
-                                            fontSize: M3FontSizes.headlineTiny,
+                                            fontSize: M3FontSizes.headlineSmall,
                                           ),
                                         ),
                                       ),

@@ -16,4 +16,6 @@ class AppRoutes {
   static const String WITHDRAWAL = '/withdrawal';
   static const String TRANSFER = '/transfer';
   static const String NEWFAV = '/newfav';
+  static const String WITHDRAWALOTP = '/withdrawalotp';
+  static const String WITHDRAWALSUCCESS = '/withdrawalsuccess';
 }
