@@ -7,7 +7,6 @@ import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
-import 'package:ibank/app/modules/sendmoney/views/modals/envoi_modal_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/core/users.dart';

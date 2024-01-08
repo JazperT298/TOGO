@@ -35,7 +35,6 @@ class AppPages {
     GetPage(name: AppRoutes.PRIVACY, page: () => const PrivacyView()),
     GetPage(name: AppRoutes.LOGINSUCCESS, page: () => const LoginSuccess()),
     GetPage(name: AppRoutes.BOTTOMNAV, page: () => const BottomNavView()),
-    GetPage(name: AppRoutes.HOME, page: () => const HomeView()),
     GetPage(name: AppRoutes.HISTORY, page: () => const HistoryView()),
     GetPage(name: AppRoutes.SHOP, page: () => const ShopView()),
     GetPage(name: AppRoutes.SETTINGS, page: () => const SettingsView()),

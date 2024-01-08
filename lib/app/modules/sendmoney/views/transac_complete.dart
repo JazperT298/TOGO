@@ -79,7 +79,7 @@ class TransacCompleteView extends StatelessWidget {
                   'Fermer',
                   iconStrokeWidth: 1.8,
                   onPressed: () {
-                    Get.toNamed(AppRoutes.HOME);
+                    Get.toNamed(AppRoutes.BOTTOMNAV);
                   },
                   height: 55,
                   width: MediaQuery.of(context).size.width * 16,

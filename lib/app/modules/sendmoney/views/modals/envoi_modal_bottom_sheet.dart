@@ -345,7 +345,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       });
                     },
                     onFieldSubmitted: (p0) {
-                      if (numberEditingCobntroller.text.isNotEmpty) {
+                      if (numberEditingCobntroller.text.isNotEmpty || numberEditingCobntroller.text.contains('99 99 02 28')) {
                         AppGlobal.isEditedTransferNational = true;
                         AppGlobal.isSubscribedTransferNational = false;
                         AppGlobal.isOtherNetTransferNational = false;
@@ -566,7 +566,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               onFieldSubmitted: (p0) {
                 if (codeEditingController.text.isEmpty) {
                   showToast(context, 'Code Secret should not be empty');
-                } else if (!codeEditingController.text.trim().contains('9999')) {
+                } else if (!codeEditingController.text.trim().contains('4512')) {
                   showToast(context, 'Invalid Code Secret');
                   AppGlobal.siOTPPage = true;
                 } else {
@@ -584,7 +584,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 onPressed: () async {
                   if (codeEditingController.text.isEmpty) {
                     showToast(context, 'Code Secret should not be empty');
-                  } else if (!codeEditingController.text.trim().contains('9999')) {
+                  } else if (!codeEditingController.text.trim().contains('4512')) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
