@@ -4,6 +4,9 @@ class AppRoutes {
   static const String SPLASH = '/splash';
   static const String ONBOARD = '/onboard';
   static const String LOGIN = '/login';
+  static const String OTP = '/otp';
+  static const String LOGINSUCCESS = '/loginsuccess';
+
   static const String BOTTOMNAV = '/bottomnav';
 
   static const String HOME = '/home';

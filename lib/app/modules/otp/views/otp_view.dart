@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
+import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/modules/otp/controller/otp_controller.dart';
 import 'package:flukit/flukit.dart';
 import 'package:ibank/app/routes/app_routes.dart';
@@ -105,7 +106,8 @@ class _OtpViewState extends State<OtpView> {
                           isEmptyFields = true;
                         });
                       } else {
-                        // onVerifierTap(context);
+                        SharedPrefService.saveLoginData(true, 'Malik Monk');
+                        ProgressAlertDialog.showALoadingDialog(context, 'Validating OTP, Please wait...', 5, AppRoutes.PRIVACY);
                         textEditingController.clear();
                       }
                     },
@@ -189,7 +191,6 @@ class _OtpViewState extends State<OtpView> {
                 'Verifier',
                 suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
-                // onPressed: () => onVerifierTap(context),
                 onPressed: () {
                   if (textEditingController.text.isEmpty) {
                     setState(() {
@@ -200,6 +201,7 @@ class _OtpViewState extends State<OtpView> {
                       isEmptyFields = true;
                     });
                   } else {
+                    SharedPrefService.saveLoginData(true, 'Malik Monk');
                     ProgressAlertDialog.showALoadingDialog(context, 'Validating OTP, Please wait...', 5, AppRoutes.PRIVACY);
                     textEditingController.clear();
                   }

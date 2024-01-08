@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/privacy/controller/privacy_controller.dart';
 import 'package:flukit/flukit.dart';
+import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 
 class PrivacyView extends GetView<PrivacyController> {
@@ -108,7 +109,9 @@ class PrivacyView extends GetView<PrivacyController> {
                           FluButton.text(
                             'J’accepte',
                             iconStrokeWidth: 1.8,
-                            // onPressed: () => onAcceptTap(context),
+                            onPressed: () {
+                              Get.toNamed(AppRoutes.LOGINSUCCESS);
+                            },
                             height: 55,
                             width: MediaQuery.of(context).size.width * .40,
                             cornerRadius: UISettings.minButtonCornerRadius,
