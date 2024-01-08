@@ -4,15 +4,20 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:get/get.dart';
+import 'package:ibank/app/components/line_separator.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
+import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_search_bottom_sheet.dart';
 import 'package:ibank/app/providers/transaction_provider.dart';
+import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 
 class EnvoiModalBottomSheet extends StatefulWidget {
-  const EnvoiModalBottomSheet({super.key});
+  const EnvoiModalBottomSheet({super.key, required this.sendType});
+  final String sendType;
 
   @override
   State<EnvoiModalBottomSheet> createState() => _EnvoiModalBottomSheetState();
@@ -27,7 +32,33 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   User? selectedUser;
   bool isTextFieldEmpty = false;
 
-  void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  void toNextStep() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            // mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16.0),
+              Text('Please wait...'),
+            ],
+          ),
+        );
+      },
+    );
+
+    // Delay for 3 seconds
+    await Future.delayed(const Duration(seconds: 2), () {
+      Navigator.of(context).pop(); // Close the alert dialog
+
+      // Navigate to the next page
+      pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+    });
+  }
 
   void showToast(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
@@ -50,6 +81,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       children: [
         Text(
           action.name.toUpperCase(),
+          // widget.sendType,
           style: TextStyle(
             color: context.colorScheme.secondary,
             fontWeight: FontWeight.w600,
@@ -77,7 +109,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: context.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -85,7 +117,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Envoi',
+          'Envoi'.toUpperCase(),
           style: TextStyle(
             color: context.colorScheme.secondary,
             fontWeight: FontWeight.w600,
@@ -118,100 +150,163 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: context.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
     final header2 = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Text(
-        //   'Envoi',
-        //   style: TextStyle(
-        //     color: context.colorScheme.secondary,
-        //     fontWeight: FontWeight.w600,
-        //     fontSize: M3FontSizes.headlineTiny,
-        //     letterSpacing: 1.0,
-        //   ),
-        // ),
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: 'Vous allez envoyeR '.toUpperCase(),
+        Text(
+          'Récapitulatif'.toUpperCase(),
+          style: TextStyle(
+            color: context.colorScheme.secondary,
+            fontWeight: FontWeight.w600,
+            fontSize: M3FontSizes.headlineTiny,
+            letterSpacing: 1.0,
+          ),
+        ),
+        Text(
+          widget.sendType,
+          style: TextStyle(
+            fontSize: M3FontSizes.headlineMedium,
+            fontWeight: FontWeight.w600,
+            color: context.colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(height: 24),
+        Text(
+          'Bénéficiaire'.toUpperCase(),
+          style: TextStyle(
+            fontSize: M3FontSizes.headlineTiny,
+            color: context.colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(height: 18),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Expanded(
+              child: Text(
+                'Nom',
+                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                'Karim Razack',
                 style: TextStyle(
-                  fontSize: M3FontSizes.headlineMedium,
-                  fontWeight: FontWeight.w600,
+                  fontSize: M3FontSizes.headlineTiny,
                   color: context.colorScheme.onSurface,
                 ),
               ),
-              TextSpan(
-                text: '\n20.000 fcfa '.toUpperCase(),
-                style: TextStyle(
-                  fontSize: M3FontSizes.headlineMedium,
-                  fontWeight: FontWeight.w600,
-                  color: context.colorScheme.secondary,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: 'à '.toUpperCase(),
+        const SizedBox(height: 6),
+        widget.sendType.contains('Transert National')
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Prénom',
+                      style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      'Razack',
+                      style: TextStyle(
+                        fontSize: M3FontSizes.headlineTiny,
+                        color: context.colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : const SizedBox.shrink(),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Expanded(
+              child: Text(
+                'Numéro',
+                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                '99 77 77 77',
                 style: TextStyle(
-                  fontSize: M3FontSizes.headlineMedium,
-                  fontWeight: FontWeight.w600,
+                  fontSize: M3FontSizes.headlineTiny,
                   color: context.colorScheme.onSurface,
                 ),
               ),
-              TextSpan(
-                text: 'Karim'.toUpperCase(),
-                style: TextStyle(
-                  fontSize: M3FontSizes.headlineMedium,
-                  fontWeight: FontWeight.w600,
-                  color: context.colorScheme.primary,
-                ),
-              ),
-            ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const LineSeparator(color: Colors.grey),
+        const SizedBox(height: 24),
+        Text(
+          'DETAILS'.toUpperCase(),
+          style: TextStyle(
+            fontSize: M3FontSizes.headlineTiny,
+            color: context.colorScheme.onSurface,
           ),
         ),
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: 'Frais de L’operation : '.toUpperCase(),
+        const SizedBox(height: 18),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Expanded(
+              child: Text(
+                'Frais',
+                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                '0 FCFA',
                 style: TextStyle(
-                  fontSize: M3FontSizes.headlineSmall,
-                  fontWeight: FontWeight.w600,
-                  color: context.colorScheme.outline,
+                  fontSize: M3FontSizes.headlineTiny,
+                  color: context.colorScheme.onSurface,
                 ),
               ),
-              TextSpan(
-                text: '0 FCFA'.toUpperCase(),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Expanded(
+              child: Text(
+                'Montant',
+                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                '20 000 FCFA',
                 style: TextStyle(
-                  fontSize: M3FontSizes.headlineSmall,
-                  fontWeight: FontWeight.w600,
-                  color: context.colorScheme.secondary,
+                  fontSize: M3FontSizes.headlineTiny,
+                  color: context.colorScheme.onSurface,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        FluLine(
-          height: 1,
-          width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: context.height * .025),
-        ),
+        const SizedBox(height: 32),
       ],
     );
 
     final page1 = SingleChildScrollView(
       padding: UISettings.pagePadding.copyWith(
-        top: context.height * .025,
-        bottom: context.height * .025,
+        top: MediaQuery.of(context).size.height * .025,
+        bottom: MediaQuery.of(context).size.height * .025,
       ),
       child: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
         return Column(
@@ -230,7 +325,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     cornerRadius: 15,
                     keyboardType: TextInputType.number,
                     fillColor: context.colorScheme.primaryContainer,
-                    textStyle: context.textTheme.bodyMedium,
+                    textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium),
                     onChanged: (text) {
                       // Remove any existing spaces
                       text = text.replaceAll(" ", "");
@@ -278,7 +373,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                         context: context,
                         builder: (context) => Container(
                             padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                            child: const ModalBottomSheet(child: EnvoiModalBottomSheet()))).then((value) {
+                            child: ModalBottomSheet(child: EnvoiModalBottomSheet(sendType: widget.sendType)))).then((value) {
                       if (value != null) {
                         setState(() {
                           selectedUser = value;
@@ -292,7 +387,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   },
                   child: Container(
                       height: 45,
-                      width: context.width / 7.8,
+                      width: MediaQuery.of(context).size.width / 7.8,
                       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
                       decoration:
                           BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
@@ -336,7 +431,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   }
                 },
                 height: 55,
-                width: context.width * 16,
+                width: MediaQuery.of(context).size.width * 16,
                 cornerRadius: UISettings.minButtonCornerRadius,
                 backgroundColor: context.colorScheme.primary,
                 foregroundColor: context.colorScheme.onPrimary,
@@ -358,8 +453,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
     final page2 = SingleChildScrollView(
       padding: UISettings.pagePadding.copyWith(
-        top: context.height * .025,
-        bottom: context.height * .025,
+        top: MediaQuery.of(context).size.height * .025,
+        bottom: MediaQuery.of(context).size.height * .025,
       ),
       child: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
         return Column(
@@ -375,7 +470,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               cornerRadius: 15,
               keyboardType: TextInputType.number,
               fillColor: context.colorScheme.primaryContainer,
-              textStyle: context.textTheme.bodyMedium,
+              textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium),
               onChanged: (text) {
                 setState(() {
                   isTextFieldEmpty = false;
@@ -384,6 +479,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               onFieldSubmitted: (p0) {
                 if (amountEditingController.text.isNotEmpty) {
                   TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
+                  AppGlobal.siOTPPage = true;
                   toNextStep();
                   isTextFieldEmpty = false;
                 } else {
@@ -415,6 +511,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 onPressed: () {
                   if (amountEditingController.text.isNotEmpty) {
                     TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
+                    AppGlobal.siOTPPage = true;
                     toNextStep();
                     isTextFieldEmpty = false;
                   } else {
@@ -424,7 +521,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   }
                 },
                 height: 55,
-                width: context.width * 16,
+                width: MediaQuery.of(context).size.width * 16,
                 cornerRadius: UISettings.minButtonCornerRadius,
                 backgroundColor: context.colorScheme.primary,
                 foregroundColor: context.colorScheme.onPrimary,
@@ -447,8 +544,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
     final page3 = SingleChildScrollView(
       padding: UISettings.pagePadding.copyWith(
-        top: context.height * .025,
-        bottom: context.height * .025,
+        top: MediaQuery.of(context).size.height * .025,
+        bottom: MediaQuery.of(context).size.height * .025,
       ),
       child: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
         return Column(
@@ -465,12 +562,13 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
               fillColor: context.colorScheme.primaryContainer,
-              textStyle: context.textTheme.bodyMedium,
+              textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium),
               onFieldSubmitted: (p0) {
                 if (codeEditingController.text.isEmpty) {
                   showToast(context, 'Code Secret should not be empty');
                 } else if (!codeEditingController.text.trim().contains('9999')) {
                   showToast(context, 'Invalid Code Secret');
+                  AppGlobal.siOTPPage = true;
                 } else {
                   // KRouter.to(context, Routes.transactionComplete);
                 }
@@ -483,17 +581,84 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 'Valider',
                 suffixIcon: FluIcons.checkCircleUnicon,
                 iconStrokeWidth: 1.8,
-                onPressed: () {
+                onPressed: () async {
                   if (codeEditingController.text.isEmpty) {
                     showToast(context, 'Code Secret should not be empty');
                   } else if (!codeEditingController.text.trim().contains('9999')) {
-                    showToast(context, 'Invalid Code Secret');
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const AlertDialog(
+                          content: Row(
+                            // mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              CircularProgressIndicator(),
+                              SizedBox(width: 16.0),
+                              Text('Please wait...'),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                    await Future.delayed(const Duration(seconds: 5), () {
+                      Navigator.of(context).pop(); // Close the alert dialog
+
+                      // Navigate to the next page
+                      Get.toNamed(AppRoutes.TRANSACFAILED);
+                    });
                   } else {
-                    // KRouter.to(context, Routes.transactionComplete);
+                    if (widget.sendType.contains('Transfert National')) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const AlertDialog(
+                            content: Row(
+                              // mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CircularProgressIndicator(),
+                                SizedBox(width: 16.0),
+                                Text('Please wait...'),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                      await Future.delayed(const Duration(seconds: 3), () {
+                        Navigator.of(context).pop(); // Close the alert dialog
+
+                        // Navigate to the next page
+                        Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+                      });
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const AlertDialog(
+                            content: Row(
+                              // mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CircularProgressIndicator(),
+                                SizedBox(width: 16.0),
+                                Text('Please wait...'),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                      await Future.delayed(const Duration(seconds: 3), () {
+                        Navigator.of(context).pop(); // Close the alert dialog
+
+                        // Navigate to the next page
+                        SendMenuDialog.showTransacCompleteDialog(context);
+                      });
+                    }
                   }
                 },
                 height: 55,
-                width: context.width * 16,
+                width: MediaQuery.of(context).size.width * 16,
                 cornerRadius: UISettings.minButtonCornerRadius,
                 backgroundColor: context.colorScheme.primary,
                 foregroundColor: context.colorScheme.onPrimary,
@@ -516,8 +681,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
     final searchPage = SingleChildScrollView(
       padding: UISettings.pagePadding.copyWith(
-        top: context.height * .025,
-        bottom: context.height * .025,
+        top: MediaQuery.of(context).size.height * .025,
+        bottom: MediaQuery.of(context).size.height * .025,
       ),
       child: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
         return Column(
@@ -532,7 +697,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
               fillColor: context.colorScheme.primaryContainer,
-              textStyle: context.textTheme.bodyMedium,
+              textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium),
             ),
             const SizedBox(height: 35),
             Visibility(
@@ -542,8 +707,11 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 suffixIcon: FluIcons.checkCircleUnicon,
                 iconStrokeWidth: 1.8,
                 // onPressed: () => KRouter.to(context, Routes.transactionComplete),
+                onPressed: () {
+                  AppGlobal.siOTPPage = false;
+                },
                 height: 55,
-                width: context.width * 16,
+                width: MediaQuery.of(context).size.width * 16,
                 cornerRadius: UISettings.minButtonCornerRadius,
                 backgroundColor: context.colorScheme.primary,
                 foregroundColor: context.colorScheme.onPrimary,

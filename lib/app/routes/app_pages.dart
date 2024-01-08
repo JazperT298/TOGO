@@ -9,6 +9,9 @@ import 'package:ibank/app/modules/newfav/views/newfav_view.dart';
 import 'package:ibank/app/modules/onboard/views/onboard_view.dart';
 import 'package:ibank/app/modules/otp/views/otp_view.dart';
 import 'package:ibank/app/modules/privacy/views/privacy_view.dart';
+import 'package:ibank/app/modules/sendmoney/views/transac_complete.dart';
+import 'package:ibank/app/modules/sendmoney/views/transac_failed.dart';
+import 'package:ibank/app/modules/sendmoney/views/transac_success.dart';
 import 'package:ibank/app/modules/settings/views/settings_view.dart';
 import 'package:ibank/app/modules/shop/views/shop_view.dart';
 import 'package:ibank/app/modules/splash/views/splash_view.dart';
@@ -40,18 +43,16 @@ class AppPages {
     GetPage(name: AppRoutes.NEWFAV, page: () => const NewFavView()),
     GetPage(name: AppRoutes.WITHDRAWAL, page: () => const WithdrawalView()),
     GetPage(name: AppRoutes.TRANSFER, page: () => const TransferView()),
-    GetPage(
-        name: AppRoutes.WITHDRAWALOTP, page: () => const WithdrawalOtpView()),
-    GetPage(
-        name: AppRoutes.WITHDRAWALSUCCESS,
-        page: () => const WithdrawalSuccessView()),
+    GetPage(name: AppRoutes.WITHDRAWALOTP, page: () => const WithdrawalOtpView()),
+    GetPage(name: AppRoutes.WITHDRAWALSUCCESS, page: () => const WithdrawalSuccessView()),
     GetPage(name: AppRoutes.PROFILE, page: () => const ProfileView()),
-    GetPage(
-        name: AppRoutes.PROFILEINFORMATIONPERSONELLES,
-        page: () => const ProfileInformationPersonellesView()),
+    GetPage(name: AppRoutes.PROFILEINFORMATIONPERSONELLES, page: () => const ProfileInformationPersonellesView()),
     GetPage(name: AppRoutes.PROFILEOTP, page: () => const ProfileOtpView()),
-    GetPage(
-        name: AppRoutes.PROFILECHANGESPASSWORD,
-        page: () => const ProfileChangePinView()),
+    GetPage(name: AppRoutes.PROFILECHANGESPASSWORD, page: () => const ProfileChangePinView()),
+    GetPage(name: AppRoutes.WITHDRAWALOTP, page: () => const WithdrawalOtpView()),
+    GetPage(name: AppRoutes.WITHDRAWALSUCCESS, page: () => const WithdrawalSuccessView()),
+    GetPage(name: AppRoutes.TRANSACCOMPLETE, page: () => const TransacCompleteView()),
+    GetPage(name: AppRoutes.TRANSACFAILED, page: () => const TransacFailedView()),
+    GetPage(name: AppRoutes.TRANSACSUCCESS, page: () => const TransacSuccessView()),
   ];
 }

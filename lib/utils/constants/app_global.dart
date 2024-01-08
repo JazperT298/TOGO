@@ -21,6 +21,7 @@ class AppGlobal {
   static bool isEditedTransferNational = true;
   static bool isSubscribedTransferNational = false;
   static bool isOtherNetTransferNational = false;
+  static bool siOTPPage = true;
   static dynamic phonenumberspan;
   static String addressBookDisplayName = "";
   static StringBuffer notifymessage = StringBuffer();
