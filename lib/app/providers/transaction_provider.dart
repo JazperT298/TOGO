@@ -65,18 +65,18 @@ class TransactionProvider {
       } else {
         print('onSendMoneySubmit asd sulod dre 2');
         //assign amount
-        String? amount = ParserValidator.parseAmount2(amountEditingController, context);
-        print('onSendMoneySubmit amount $amount');
-        if (StringUtils().isNullOrEmpty(amount)) return;
+        // String? amount = ParserValidator.parseAmount2(amountEditingController, context);
+        // print('onSendMoneySubmit amount $amount');
+        if (StringUtils().isNullOrEmpty(amountEditingController.text)) return;
 
         if (AppGlobal.isSubscribedTransferNational & AppGlobal.isOtherNetTransferNational) {
-          sendSoap(msisdn, amount!, NetState.ONNET);
+          sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
         } else if (AppGlobal.isSubscribedTransferNational & !AppGlobal.isOtherNetTransferNational) {
-          sendSoap(msisdn, amount!, NetState.ONNET);
+          sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
         } else if (!AppGlobal.isSubscribedTransferNational & !AppGlobal.isOtherNetTransferNational) {
-          sendSoap(msisdn, amount!, NetState.ONNET);
+          sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
         } else if (!AppGlobal.isSubscribedTransferNational & AppGlobal.isOtherNetTransferNational) {
-          sendSoap(msisdn, amount!, NetState.OFFNET);
+          sendSoap(msisdn, amountEditingController.text, NetState.OFFNET);
         }
       }
     } catch (ex) {

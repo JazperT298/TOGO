@@ -115,27 +115,27 @@ class SendMenuDialog {
                   ),
                 ),
                 const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      child: Text(
-                        'Nom',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Karim Razack',
-                        style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
-                          color: context.colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     const Expanded(
+                //       child: Text(
+                //         'Nom',
+                //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: Text(
+                //         'Karim Razack',
+                //         style: TextStyle(
+                //           fontSize: M3FontSizes.headlineTiny,
+                //           color: context.colorScheme.onSurface,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -187,27 +187,27 @@ class SendMenuDialog {
                     color: context.colorScheme.onSurface,
                   ),
                 ),
-                const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      child: Text(
-                        'Frais',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '0 FCFA',
-                        style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
-                          color: context.colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // const SizedBox(height: 18),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     const Expanded(
+                //       child: Text(
+                //         'Frais',
+                //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: Text(
+                //         '0 FCFA',
+                //         style: TextStyle(
+                //           fontSize: M3FontSizes.headlineTiny,
+                //           color: context.colorScheme.onSurface,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -397,26 +397,26 @@ class SendMenuDialog {
                   ),
                 ),
                 const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      child: Text(
-                        'Nom',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Karim Razack',
-                        style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
-                          color: context.colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     const Expanded(
+                //       child: Text(
+                //         'Nom',
+                //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: Text(
+                //         'Karim Razack',
+                //         style: TextStyle(
+                //           fontSize: M3FontSizes.headlineTiny,
+                //           color: context.colorScheme.onSurface,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -473,12 +473,12 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
-                      child: Text(
-                        'Frais',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-                      ),
-                    ),
+                    // const Expanded(
+                    //   child: Text(
+                    //     'Frais',
+                    //     style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                    //   ),
+                    // ),
                     Expanded(
                       child: Text(
                         '0 FCFA',
