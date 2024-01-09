@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/routes/app_routes.dart';
 
 class ProgressAlertDialog {
   static Timer? timer;
@@ -74,6 +75,35 @@ class ProgressAlertDialog {
 
       // Navigate to the next page
       Get.toNamed(nextPage);
+    });
+  }
+
+  static void showALoadingDialog2(BuildContext context, String progressMessage, int seconds, bool isInvalidCode) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Row(
+            // mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(width: 16.0),
+              Text(progressMessage),
+            ],
+          ),
+        );
+      },
+    );
+
+    // Delay for 3 seconds
+    await Future.delayed(Duration(seconds: seconds), () {
+      Navigator.of(context).pop(); // Close the alert dialog
+
+      print('isInvalidCode $isInvalidCode');
+      if (isInvalidCode == false) {
+        Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+      }
     });
   }
 }

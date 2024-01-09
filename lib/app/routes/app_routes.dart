@@ -9,7 +9,6 @@ class AppRoutes {
 
   static const String BOTTOMNAV = '/bottomnav';
 
-  static const String HOME = '/home';
   static const String HISTORY = '/history';
   static const String SHOP = '/shop';
   static const String SETTINGS = '/settings';

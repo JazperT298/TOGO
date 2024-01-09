@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/components/line_separator.dart';
+import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_modal_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
@@ -90,12 +91,20 @@ class SendMenuDialog {
     );
   }
 
-  static void showRecapOperationDialog(context) {
+  static void showRecapOperationDialog(context) async {
+    print('Amount: ${AppGlobal.amount}');
+    print('Beneficiary: ${AppGlobal.beneficiare}');
+    print('Date: ${AppGlobal.date}');
+    print('New Balance: ${AppGlobal.remainingBal}');
+    print('Transaction ID: ${AppGlobal.txn}');
+    print('Number ID: ${AppGlobal.numbers}');
+
     // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return alert dialog object
+
         return AlertDialog(
           insetPadding: EdgeInsets.all(12), // Outside Padding
           contentPadding: EdgeInsets.all(12), // Content Padding
@@ -115,39 +124,41 @@ class SendMenuDialog {
                   ),
                 ),
                 const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      child: Text(
-                        'Nom',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Karim Razack',
-                        style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
-                          color: context.colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     const Expanded(
+                //       child: Text(
+                //         'Nom',
+                //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: Text(
+                //         'Karim Razack',
+                //         style: TextStyle(
+                //           fontSize: M3FontSizes.headlineTiny,
+                //           color: context.colorScheme.onSurface,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Expanded(
                       child: Text(
                         'Prénom',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        'Razack',
+                        AppGlobal.beneficiare.toString(),
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -163,12 +174,14 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Numéro',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        '99 77 77 77',
+                        AppGlobal.numbers,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -187,27 +200,27 @@ class SendMenuDialog {
                     color: context.colorScheme.onSurface,
                   ),
                 ),
-                const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      child: Text(
-                        'Frais',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '0 FCFA',
-                        style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
-                          color: context.colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // const SizedBox(height: 18),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     const Expanded(
+                //       child: Text(
+                //         'Frais',
+                //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: Text(
+                //         '0 FCFA',
+                //         style: TextStyle(
+                //           fontSize: M3FontSizes.headlineTiny,
+                //           color: context.colorScheme.onSurface,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -215,12 +228,14 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Montant',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        '20 000 FCFA',
+                        AppGlobal.amount,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -246,12 +261,14 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Date',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        '01/02/2024',
+                        AppGlobal.date,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -267,12 +284,14 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Heure',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        '09:30:10',
+                        AppGlobal.time,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -287,12 +306,14 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Txn ID',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        '12469081234',
+                        AppGlobal.txn,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -308,12 +329,14 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Nouveau solde',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        '70 000 FCFA',
+                        AppGlobal.remainingBal,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -356,7 +379,8 @@ class SendMenuDialog {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Votre opération a été e\nffectué avec succès.'.toUpperCase(),
+                        'Votre opération a été e\nffectué avec succès.'
+                            .toUpperCase(),
                         style: TextStyle(
                           color: context.colorScheme.onSurface,
                           fontSize: M3FontSizes.headlineTiny,
@@ -397,26 +421,26 @@ class SendMenuDialog {
                   ),
                 ),
                 const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      child: Text(
-                        'Nom',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Karim Razack',
-                        style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
-                          color: context.colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     const Expanded(
+                //       child: Text(
+                //         'Nom',
+                //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: Text(
+                //         'Karim Razack',
+                //         style: TextStyle(
+                //           fontSize: M3FontSizes.headlineTiny,
+                //           color: context.colorScheme.onSurface,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -424,7 +448,9 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Prénom',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -445,7 +471,9 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Numéro',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -473,12 +501,12 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
-                      child: Text(
-                        'Frais',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-                      ),
-                    ),
+                    // const Expanded(
+                    //   child: Text(
+                    //     'Frais',
+                    //     style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                    //   ),
+                    // ),
                     Expanded(
                       child: Text(
                         '0 FCFA',
@@ -497,7 +525,9 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Montant',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -528,7 +558,9 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Date',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -549,7 +581,9 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Heure',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -569,7 +603,9 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Txn ID',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -590,7 +626,9 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Nouveau solde',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: M3FontSizes.headlineTiny,
+                            color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -625,7 +663,9 @@ class SendMenuDialog {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: M3FontSizes.bodyLarge),
                 ),
                 const SizedBox(
                   height: 12,
@@ -640,7 +680,8 @@ class SendMenuDialog {
 }
 
 class _ModalBottomSheet extends StatelessWidget {
-  const _ModalBottomSheet({required this.child, required this.sendType, required this.siOTPPage});
+  const _ModalBottomSheet(
+      {required this.child, required this.sendType, required this.siOTPPage});
 
   final Widget child;
   final String sendType;
@@ -650,7 +691,8 @@ class _ModalBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
             height: isKeyboardVisible
                 ? AppGlobal.siOTPPage == true

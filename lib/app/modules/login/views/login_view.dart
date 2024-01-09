@@ -114,7 +114,7 @@ class _LoginViewState extends State<LoginView> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(_selectedCountryCode.isEmpty ? '+229' : _selectedCountryCode, style: const TextStyle(color: Colors.black)),
+                          Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: const TextStyle(color: Colors.black)),
                           const FluIcon(FluIcons.arrowDown2, size: 20)
                         ],
                       ),

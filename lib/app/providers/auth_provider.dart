@@ -35,6 +35,7 @@ class AuthProvider {
           headers: defaultHeader,
           jsonEncode(KYCInquiryRequest(requestId: request.requestId, commandId: request.commandId, destination: request.destination)),
         );
+        print('AuthService verifyMsisdn 05 ${response.body}');
         return VerificationResponse.fromJson(jsonDecode(response.bodyString!));
       } else {
         AppGlobal.isSendVerificationLoading = false;
@@ -62,7 +63,7 @@ class AuthProvider {
           headers: defaultHeader,
           jsonEncode(KYCInquiryRequest(requestId: request.requestId, commandId: request.commandId, destination: request.destination)),
         );
-        print('response ${response.bodyString}');
+        print('response asd ${response.body}');
         return VerificationResponse.fromJson(jsonDecode(response.bodyString!));
       } else {
         AppGlobal.isSendVerificationLoading = false;
