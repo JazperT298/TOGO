@@ -179,31 +179,31 @@ class ProfileInformationPersonellesView extends GetView<ProfileController> {
                     fontSize: M3FontSizes.labelLarge,
                   ),
                 )),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
-            ),
-            Padding(
-                padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.05,
-                  right: MediaQuery.of(context).size.width * 0.05,
-                ),
-                child: const Text(
-                  "Email",
-                  style: TextStyle(
-                    fontSize: M3FontSizes.bodySmall,
-                  ),
-                )),
-            Padding(
-                padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.05,
-                  right: MediaQuery.of(context).size.width * 0.05,
-                ),
-                child: Text(
-                  "${controller.name.value}@gmail.com",
-                  style: const TextStyle(
-                    fontSize: M3FontSizes.labelLarge,
-                  ),
-                )),
+            // SizedBox(
+            //   height: MediaQuery.of(context).size.height * 0.03,
+            // ),
+            // Padding(
+            //     padding: EdgeInsets.only(
+            //       left: MediaQuery.of(context).size.width * 0.05,
+            //       right: MediaQuery.of(context).size.width * 0.05,
+            //     ),
+            //     child: const Text(
+            //       "Email",
+            //       style: TextStyle(
+            //         fontSize: M3FontSizes.bodySmall,
+            //       ),
+            //     )),
+            // Padding(
+            //     padding: EdgeInsets.only(
+            //       left: MediaQuery.of(context).size.width * 0.05,
+            //       right: MediaQuery.of(context).size.width * 0.05,
+            //     ),
+            //     child: Text(
+            //       "${controller.name.value}@gmail.com",
+            //       style: const TextStyle(
+            //         fontSize: M3FontSizes.labelLarge,
+            //       ),
+            //     )),
           ],
         ),
       )),

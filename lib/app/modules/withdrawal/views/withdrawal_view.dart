@@ -1,5 +1,4 @@
 import 'package:flukit/flukit.dart';
-import 'package:flukit/utils.dart';
 import 'package:get/get.dart';
 
 // import 'package:camera/camera.dart';

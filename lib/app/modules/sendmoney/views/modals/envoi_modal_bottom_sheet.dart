@@ -56,20 +56,22 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       Navigator.of(context).pop(); // Close the alert dialog
 
       // Navigate to the next page
-      pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+      pageController.nextPage(
+          duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
     });
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   void onUserSelected(User usersNumber) {
     setState(() {
       selectedUser = usersNumber;
       numberEditingCobntroller.text = usersNumber.phoneNumber!;
-      AppGlobal.phonenumberspan = usersNumber.phoneNumber!
-          .replaceAll("[^0-9]", ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
+      AppGlobal.phonenumberspan = usersNumber.phoneNumber!.replaceAll("[^0-9]",
+          ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
     });
   }
 
@@ -109,7 +111,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -150,7 +153,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -189,7 +193,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             const Expanded(
               child: Text(
                 'Nom',
-                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                style: TextStyle(
+                    fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -211,7 +216,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   const Expanded(
                     child: Text(
                       'Prénom',
-                      style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                      style: TextStyle(
+                          fontSize: M3FontSizes.headlineTiny,
+                          color: Colors.grey),
                     ),
                   ),
                   Expanded(
@@ -233,7 +240,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             const Expanded(
               child: Text(
                 'Numéro',
-                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                style: TextStyle(
+                    fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -264,7 +272,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             const Expanded(
               child: Text(
                 'Frais',
-                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                style: TextStyle(
+                    fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -285,7 +294,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             const Expanded(
               child: Text(
                 'Montant',
-                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                style: TextStyle(
+                    fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -320,12 +330,14 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   child: FluTextField(
                     hint: "Numéro du destinataire",
                     inputController: numberEditingCobntroller,
-                    hintStyle: const TextStyle(fontSize: M3FontSizes.titleMedium),
+                    hintStyle:
+                        const TextStyle(fontSize: M3FontSizes.titleMedium),
                     height: 50,
                     cornerRadius: 15,
                     keyboardType: TextInputType.number,
                     fillColor: context.colorScheme.primaryContainer,
-                    textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium),
+                    textStyle:
+                        const TextStyle(fontSize: M3FontSizes.bodyMedium),
                     onChanged: (text) {
                       // Remove any existing spaces
                       text = text.replaceAll(" ", "");
@@ -336,7 +348,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                           (match) => '${match.group(0)} ',
                         );
                       }
-                      numberEditingCobntroller.value = numberEditingCobntroller.value.copyWith(
+                      numberEditingCobntroller.value =
+                          numberEditingCobntroller.value.copyWith(
                         text: text,
                         selection: TextSelection.collapsed(offset: text.length),
                       );
@@ -372,8 +385,12 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                         isScrollControlled: true,
                         context: context,
                         builder: (context) => Container(
-                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                            child: ModalBottomSheet(child: EnvoiModalBottomSheet(sendType: widget.sendType)))).then((value) {
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            child: ModalBottomSheet(
+                                child: EnvoiModalBottomSheet(
+                                    sendType: widget.sendType)))).then((value) {
                       if (value != null) {
                         setState(() {
                           selectedUser = value;
@@ -388,9 +405,12 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   child: Container(
                       height: 45,
                       width: MediaQuery.of(context).size.width / 7.8,
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                      decoration:
-                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 4.0),
+                      decoration: BoxDecoration(
+                          color: context.colorScheme.primaryContainer,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0))),
                       child: const FluIcon(FluIcons.userSearch, size: 20)),
                 ),
               ],
@@ -443,7 +463,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
           ],
@@ -478,7 +500,10 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               },
               onFieldSubmitted: (p0) {
                 if (amountEditingController.text.isNotEmpty) {
-                  TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
+                  TransactionProvider.onSendMoneySubmit(
+                      numberEditingCobntroller,
+                      amountEditingController,
+                      context);
                   AppGlobal.siOTPPage = true;
                   toNextStep();
                   isTextFieldEmpty = false;
@@ -510,7 +535,10 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (amountEditingController.text.isNotEmpty) {
-                    TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
+                    TransactionProvider.onSendMoneySubmit(
+                        numberEditingCobntroller,
+                        amountEditingController,
+                        context);
                     AppGlobal.siOTPPage = true;
                     toNextStep();
                     isTextFieldEmpty = false;
@@ -533,7 +561,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -566,7 +596,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               onFieldSubmitted: (p0) {
                 if (codeEditingController.text.isEmpty) {
                   showToast(context, 'Code Secret should not be empty');
-                } else if (!codeEditingController.text.trim().contains('9999')) {
+                } else if (!codeEditingController.text
+                    .trim()
+                    .contains('9999')) {
                   showToast(context, 'Invalid Code Secret');
                   AppGlobal.siOTPPage = true;
                 } else {
@@ -584,7 +616,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 onPressed: () async {
                   if (codeEditingController.text.isEmpty) {
                     showToast(context, 'Code Secret should not be empty');
-                  } else if (!codeEditingController.text.trim().contains('9999')) {
+                  } else if (!codeEditingController.text
+                      .trim()
+                      .contains('9999')) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -670,7 +704,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -723,7 +759,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
