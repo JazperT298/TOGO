@@ -69,7 +69,7 @@ class RequestOTPModel implements IRequestOTPModel {
 
   @override
   int validateData() {
-    if (StringUtils().isNullOrEmpty(getMsisdn()) || getMsisdn().length < 8) {
+    if (StringUtil().isNullOrEmpty(getMsisdn()) || getMsisdn().length < 8) {
       return 1;
     } else {
       return 0;

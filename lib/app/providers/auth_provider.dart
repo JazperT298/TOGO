@@ -2,6 +2,7 @@
 // ignore_for_file: unnecessary_null_comparison, avoid_print, deprecated_member_use
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
@@ -26,15 +27,18 @@ class AuthProvider {
       String genRequestId = generateRequestId(stringProperty);
       print('AuthService genRequestId 07 $genRequestId');
       KYCInquiryRequest request = KYCInquiryRequest(commandId: 'kycinquiry', requestId: 'INQ-$genRequestId', destination: '22879397111');
+      log('request $request');
 
       if (request != null) {
         String verifyMsisdnUrl = 'https://flooznfctest.moov-africa.tg/kyctest/inquiry';
+        log('request $verifyMsisdnUrl');
         Map<String, String> defaultHeader = {'command-id': request.commandId};
         var response = await connect.post(
           verifyMsisdnUrl,
           headers: defaultHeader,
           jsonEncode(KYCInquiryRequest(requestId: request.requestId, commandId: request.commandId, destination: request.destination)),
         );
+        log('AuthService verifyMsisdn 2 ${response.body}');
         print('AuthService verifyMsisdn 05 ${response.body}');
         return VerificationResponse.fromJson(jsonDecode(response.bodyString!));
       } else {
@@ -53,11 +57,12 @@ class AuthProvider {
       AppGlobal.isSendVerificationLoading = true;
       String stringProperty = await SqlHelper.getProperty(SysProp.PROP_MSISDN, msisdn);
       String genRequestId = generateRequestId(stringProperty);
-      KYCInquiryRequest request = KYCInquiryRequest(commandId: 'kycinquiry', requestId: 'INQ-$genRequestId', destination: '22879397112');
-
+      KYCInquiryRequest request = KYCInquiryRequest(commandId: 'kycinquiry', requestId: 'INQ-$genRequestId', destination: msisdn);
+      log('request ${request.toJson()}');
       if (request != null) {
         String verifyMsisdnUrl = 'https://flooznfctest.moov-africa.tg/kyctest/inquiry';
         Map<String, String> defaultHeader = {'command-id': request.commandId};
+        log('request $verifyMsisdnUrl');
         var response = await connect.post(
           verifyMsisdnUrl,
           headers: defaultHeader,

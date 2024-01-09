@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors
+// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors, constant_identifier_names, use_build_context_synchronously, unused_field
 
 import 'dart:convert';
 import 'dart:developer';
@@ -18,12 +18,21 @@ import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_search_bottom_sheet.dart';
+import 'package:ibank/app/providers/auth_provider.dart';
 import 'package:ibank/app/providers/transaction_provider.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/utils/common/parser_validator.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:http/http.dart' as http;
+import 'package:ibank/utils/constants/app_string_confirmation.dart';
+import 'package:ibank/utils/constants/app_string_validation.dart';
 import 'package:xml/xml.dart' as xml;
+import 'package:ibank/utils/string_utils.dart';
+
+enum NetState { OFFNET, ONNET }
+
+enum FieldType { NORMAL, PHONEBOOK }
 
 class EnvoiModalBottomSheet extends StatefulWidget {
   const EnvoiModalBottomSheet({super.key, required this.sendType});
@@ -34,20 +43,29 @@ class EnvoiModalBottomSheet extends StatefulWidget {
 }
 
 class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
-  final PageController pageController = PageController();
-  final numberEditingCobntroller = TextEditingController();
-  final amountEditingController = TextEditingController();
-  final codeEditingController = TextEditingController();
-  bool isKeyboardVis = false;
-  User? selectedUser;
-  bool isTextFieldEmpty = false;
-  bool isInvalidCode = false;
-  String invalidCodeString = '';
-  final controller = Get.put(
-      SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
-  void toNextStep() async {
+  static final PageController pageController = PageController();
+  static final numberEditingCobntroller = TextEditingController();
+  static final amountEditingController = TextEditingController();
+  static final codeEditingController = TextEditingController();
+  static bool isKeyboardVis = false;
+  static User? selectedUser;
+  static bool isTextFieldEmpty = false;
+  static bool isInvalidCode = false;
+  static String invalidCodeString = '';
+
+  static bool isLoading = false;
+  static final message = StringBuffer();
+  static final notifymessage = StringBuffer();
+
+  static FieldType? fieldtype;
+
+  static String messageType = '';
+
+  final controller =
+      Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  static void toNextStep() async {
     showDialog(
-      context: context,
+      context: Get.context!,
       builder: (BuildContext context) {
         return const AlertDialog(
           content: Row(
@@ -56,7 +74,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             children: [
               CircularProgressIndicator(),
               SizedBox(width: 16.0),
-              Text('Please wait...'),
+              Text("S'il vous plaît, attendez..."),
             ],
           ),
         );
@@ -65,25 +83,23 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
     // Delay for 3 seconds
     await Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pop(); // Close the alert dialog
+      Navigator.of(Get.context!).pop(); // Close the alert dialog
 
       // Navigate to the next page
-      pageController.nextPage(
-          duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+      pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
     });
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   void onUserSelected(User usersNumber) {
     setState(() {
       selectedUser = usersNumber;
       numberEditingCobntroller.text = usersNumber.phoneNumber!;
-      AppGlobal.phonenumberspan = usersNumber.phoneNumber!.replaceAll("[^0-9]",
-          ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
+      AppGlobal.phonenumberspan = usersNumber.phoneNumber!
+          .replaceAll("[^0-9]", ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
     });
   }
 
@@ -123,8 +139,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -165,8 +180,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -227,9 +241,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   const Expanded(
                     child: Text(
                       'Prénom',
-                      style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
-                          color: Colors.grey),
+                      style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                     ),
                   ),
                   Expanded(
@@ -251,8 +263,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             const Expanded(
               child: Text(
                 'Numéro',
-                style: TextStyle(
-                    fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -303,8 +314,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             const Expanded(
               child: Text(
                 'Montant',
-                style: TextStyle(
-                    fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -341,14 +351,12 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   child: FluTextField(
                     hint: "Numéro du destinataire",
                     inputController: numberEditingCobntroller,
-                    hintStyle:
-                        const TextStyle(fontSize: M3FontSizes.titleMedium),
+                    hintStyle: const TextStyle(fontSize: M3FontSizes.titleMedium),
                     height: 50,
                     cornerRadius: 15,
                     keyboardType: TextInputType.number,
                     fillColor: context.colorScheme.primaryContainer,
-                    textStyle:
-                        const TextStyle(fontSize: M3FontSizes.bodyMedium),
+                    textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium),
                     onChanged: (text) {
                       // Remove any existing spaces
                       text = text.replaceAll(" ", "");
@@ -359,8 +367,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                           (match) => '${match.group(0)} ',
                         );
                       }
-                      numberEditingCobntroller.value =
-                          numberEditingCobntroller.value.copyWith(
+                      numberEditingCobntroller.value = numberEditingCobntroller.value.copyWith(
                         text: text,
                         selection: TextSelection.collapsed(offset: text.length),
                       );
@@ -369,16 +376,16 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       });
                     },
                     onFieldSubmitted: (p0) {
-                      if (numberEditingCobntroller.text.isNotEmpty ||
-                          numberEditingCobntroller.text
-                              .contains('99 99 02 28')) {
-                        AppGlobal.isEditedTransferNational = true;
-                        AppGlobal.isSubscribedTransferNational = false;
-                        AppGlobal.isOtherNetTransferNational = false;
-                        addNumberFromReceiver(
-                            numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
+                      if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.length < 11) {
+                        Get.snackbar("Message", 'Numero Invalide', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                      } else if (numberEditingCobntroller.text.isNotEmpty || numberEditingCobntroller.text.contains('99 99 02 28')) {
+                        // AppGlobal.isEditedTransferNational = true;
+                        // AppGlobal.isSubscribedTransferNational = false;
+                        // AppGlobal.isOtherNetTransferNational = false;
+                        onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
+                        // addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                         isTextFieldEmpty = false;
-                        toNextStep();
+
                         if (selectedUser == null) {
                           AppGlobal.phonenumberspan = null;
                         }
@@ -400,12 +407,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                         isScrollControlled: true,
                         context: context,
                         builder: (context) => Container(
-                            padding: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).viewInsets.bottom),
-                            child: ModalBottomSheet(
-                                child: EnvoiModalBottomSheet(
-                                    sendType: widget.sendType)))).then((value) {
+                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                            child: ModalBottomSheet(child: EnvoiModalBottomSheet(sendType: widget.sendType)))).then((value) {
                       if (value != null) {
                         setState(() {
                           selectedUser = value;
@@ -420,12 +423,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   child: Container(
                       height: 45,
                       width: MediaQuery.of(context).size.width / 7.8,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 4.0),
-                      decoration: BoxDecoration(
-                          color: context.colorScheme.primaryContainer,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0))),
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                      decoration:
+                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
                       child: const FluIcon(FluIcons.userSearch, size: 20)),
                 ),
               ],
@@ -451,13 +451,13 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (numberEditingCobntroller.text.isNotEmpty) {
-                    addNumberFromReceiver(
-                        numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
+                    onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
+                    // addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                     AppGlobal.isEditedTransferNational = true;
                     AppGlobal.isSubscribedTransferNational = false;
                     AppGlobal.isOtherNetTransferNational = false;
                     isTextFieldEmpty = false;
-                    toNextStep();
+
                     if (selectedUser == null) {
                       AppGlobal.phonenumberspan = null;
                     }
@@ -480,9 +480,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
               ),
             ),
           ],
@@ -531,7 +529,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      'Please input am amount*',
+                      'Veuillez saisir le montant*',
                       style: TextStyle(
                         fontSize: M3FontSizes.titleSmall,
                         color: context.colorScheme.secondary,
@@ -571,9 +569,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -610,9 +606,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 },
                 onFieldSubmitted: (p0) async {
                   if (codeEditingController.text.isEmpty) {
-                    showToast(context, 'Code Secret should not be empty');
+                    showToast(context, 'Le code secret ne doit pas être vide');
                     isInvalidCode = true;
-                    invalidCodeString = "Code Secret should not be empty";
+                    invalidCodeString = "Le code secret ne doit pas être vide";
                     // } else if (!codeEditingController.text.trim().contains('4512')) {
                     //   showDialog(
                     //     context: context,
@@ -639,13 +635,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   } else {
                     if (widget.sendType.contains('Transfert National')) {
                       setState(() {
-                        var asd =
-                            '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
-                        sendMoneyToReceiver(
-                            asd,
-                            'F3C8DEBDBA27B035',
-                            amountEditingController.text,
-                            codeEditingController.text);
+                        addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                       });
                       showDialog(
                         context: context,
@@ -657,7 +647,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                               children: const [
                                 CircularProgressIndicator(),
                                 SizedBox(width: 16.0),
-                                Text("Verfying OTP! Please wait..."),
+                                Text("S'il vous plaît, attendez..."),
                               ],
                             ),
                           );
@@ -665,7 +655,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       );
 
                       // Delay for 3 seconds
-                      await Future.delayed(Duration(seconds: 3), () {
+                      await Future.delayed(Duration(seconds: 2), () {
                         Navigator.of(context).pop(); // Close the alert dialog
 
                         print('isInvalidCode $isInvalidCode');
@@ -677,13 +667,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
                     } else {
                       setState(() {
-                        var asd =
-                            '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
-                        sendMoneyToReceiver(
-                            asd,
-                            'F3C8DEBDBA27B035',
-                            amountEditingController.text,
-                            codeEditingController.text);
+                        addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                       });
                       showDialog(
                         context: context,
@@ -695,7 +679,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                               children: const [
                                 CircularProgressIndicator(),
                                 SizedBox(width: 16.0),
-                                Text("Verfying OTP! Please wait..."),
+                                Text("S'il vous plaît, attendez..."),
                               ],
                             ),
                           );
@@ -703,7 +687,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       );
 
                       // Delay for 3 seconds
-                      await Future.delayed(Duration(seconds: 3), () {
+                      await Future.delayed(Duration(seconds: 2), () {
                         Navigator.of(context).pop(); // Close the alert dialog
 
                         print('isInvalidCode $isInvalidCode');
@@ -738,9 +722,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 iconStrokeWidth: 1.8,
                 onPressed: () async {
                   if (codeEditingController.text.isEmpty) {
-                    showToast(context, 'Code Secret should not be empty');
+                    showToast(context, 'Le code secret ne doit pas être vide');
                     isInvalidCode = true;
-                    invalidCodeString = "Code Secret should not be empty";
+                    invalidCodeString = "Le code secret ne doit pas être vide";
                     // } else if (!codeEditingController.text.trim().contains('4512')) {
                     //   showDialog(
                     //     context: context,
@@ -767,13 +751,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   } else {
                     if (widget.sendType.contains('Transfert National')) {
                       setState(() {
-                        var asd =
-                            '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
-                        sendMoneyToReceiver(
-                            asd,
-                            'F3C8DEBDBA27B035',
-                            amountEditingController.text,
-                            codeEditingController.text);
+                        addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                       });
                       showDialog(
                         context: context,
@@ -785,7 +763,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                               children: [
                                 CircularProgressIndicator(),
                                 SizedBox(width: 16.0),
-                                Text("Verfying OTP! Please wait..."),
+                                Text("S'il vous plaît, attendez..."),
                               ],
                             ),
                           );
@@ -805,13 +783,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
                     } else {
                       setState(() {
-                        var asd =
-                            '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
-                        sendMoneyToReceiver(
-                            asd,
-                            'F3C8DEBDBA27B035',
-                            amountEditingController.text,
-                            codeEditingController.text);
+                        addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                       });
                       showDialog(
                         context: context,
@@ -823,7 +795,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                               children: const [
                                 CircularProgressIndicator(),
                                 SizedBox(width: 16.0),
-                                Text("Verfying OTP! Please wait..."),
+                                Text("S'il vous plaît, attendez..."),
                               ],
                             ),
                           );
@@ -856,9 +828,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -911,9 +881,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -933,16 +901,14 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   }
 
   //vshould verify the receiver
-  addNumberFromReceiver(String msisdn, String token) async {
+  static void addNumberFromReceiver(String msisdn, String token) async {
     try {
       var strToken = await SqlHelper.getToken();
       print('strToken ${strToken!.replaceAll(".", "")}');
       var toe = strToken.replaceAll(".", "");
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -962,9 +928,30 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
         log(jsonString);
+        var decodedData = jsonDecode(jsonString);
+        String description = decodedData['description'];
+        if (description.contains('TOKEN_FOUND')) {
+          var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
+          sendMoneyToReceiver(asd, 'F3C8DEBDBA27B035', amountEditingController.text, codeEditingController.text, messageType);
+          // } else if (description.contains('VERSION NOT UP TO DATE')) {
+        } else {
+          isInvalidCode = true;
+          if (!description.contains('TOKEN_NOT_FOUND')) {
+            invalidCodeString = description;
+          }
+          if (description.contains('TOKEN_NOT_FOUND')) {
+            await Future.delayed(Duration(seconds: 1), () {});
+            await SharedPrefService.logoutUserData(false, '').then((value) {
+              ProgressAlertDialog.showALoadingDialog(Get.context!, 'Déconnecter...', 3, AppRoutes.LOGIN);
+            });
+            Get.snackbar("Message", "La session a expiré. Vous avez été déconnecté!...",
+                backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: Duration(seconds: 5));
+          }
+        }
         // var jsonResponse = jsonDecode(jsonString);
         print('JSON Response: $jsonString');
       } else {
+        numberEditingCobntroller.clear();
         print('asda ${response.reasonPhrase}');
       }
     } catch (e) {
@@ -974,18 +961,15 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
   //1111 and code if kani 22879397111 nga user
   // 99990137
-  sendMoneyToReceiver(
-      String msisdn, String token, String amounts, String code) async {
+  static void sendMoneyToReceiver(String msisdn, String token, String amounts, String code, String mess) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header /><v:Body><n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990228</msisdn><message i:type="d:string">APPCASH $msisdn $amounts $code F</message>
+          <msisdn i:type="d:string">22899990228</msisdn><message i:type="d:string">$mess $msisdn $amounts $code F</message>
           <token i:type="d:string">F3C8DEBDBA27B035</token><sendsms i:type="d:string">true</sendsms>
           </n0:RequestToken></v:Body></v:Envelope>''';
       request.headers.addAll(headers);
@@ -999,8 +983,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
         var documentss = xml.XmlDocument.parse(parseResult);
-        var requestTokenReturnElement =
-            document.findAllElements('RequestTokenReturn').single;
+        var requestTokenReturnElement = document.findAllElements('RequestTokenReturn').single;
 
         if (jsonString.contains('Transfert reussi')) {
           String trimString = jsonString.replaceAll('Transfert reussi', '');
@@ -1054,15 +1037,13 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           }
 
           isInvalidCode = false;
-
-          setState(() {});
         } else {
-          setState(() {
-            isInvalidCode = true;
-            invalidCodeString = jsonString;
-          });
+          isInvalidCode = true;
+          invalidCodeString = jsonString;
         }
+        numberEditingCobntroller.clear();
       } else {
+        numberEditingCobntroller.clear();
         log('response.reasonPhrase ${response.reasonPhrase}');
       }
     } on Exception catch (_) {
@@ -1146,5 +1127,151 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
     }
 
     return transferInfo;
+  }
+
+  static void onVerifySmidnSubmit(
+      TextEditingController numberEditingController, TextEditingController amountEditingController, BuildContext context) async {
+    try {
+      String msisdn = "";
+      print('onSendMoneySubmit AppGlobal.phonenumberspan  ${AppGlobal.phonenumberspan}');
+      if (AppGlobal.phonenumberspan != null) {
+        // List<dynamic> url = AppGlobal.phonenumberspan.getSpans(0, AppGlobal.phonenumberspan.length) as List<dynamic>;
+        msisdn = AppGlobal.phonenumberspan;
+        //url[0].url;
+        fieldtype = FieldType.PHONEBOOK;
+      } else {
+        //assign receivers number
+        msisdn = numberEditingController.text.replaceAll(" ", "");
+
+        fieldtype = FieldType.NORMAL;
+      }
+      print('onSendMoneySubmit fieldtype $fieldtype');
+      print('onSendMoneySubmit fieldtype $msisdn');
+      //msisdn = verifyMsisdn(msisdn);
+      msisdn = ParserValidator.validateMsisdn("228", msisdn, context);
+      print('onSendMoneySubmit msisdn $msisdn');
+
+      if (StringUtil().isNullOrEmpty(msisdn)) {
+        showToast2(context, AppStringValidation.destinationRequired);
+        print('onSendMoneySubmit fieldtype ${AppStringValidation.destinationRequired}}');
+        return;
+      }
+      if (AppGlobal.isEditedTransferNational) {
+        var res = await AuthProvider.sendVerification(msisdn);
+        if (res.extendedData.issubscribed && res.extendedData.othernet) {
+          print('CASH APPCASH ${res.extendedData.issubscribed} ${res.extendedData.othernet}');
+          AppGlobal.isEditedTransferNational = false;
+          messageType = 'APPCASH';
+          toNextStep();
+        } else if (res.extendedData.issubscribed && !res.extendedData.othernet) {
+          print('CASH APPCASH ${res.extendedData.issubscribed} ${!res.extendedData.othernet}');
+          AppGlobal.isEditedTransferNational = false;
+          messageType = 'APPCASH';
+          toNextStep();
+        } else if (!res.extendedData.issubscribed && !res.extendedData.othernet) {
+          print('CASH APPCASH ${!res.extendedData.issubscribed} ${!res.extendedData.othernet}');
+          AppGlobal.isEditedTransferNational = false;
+          messageType = 'APPCASH';
+          toNextStep();
+        } else if (!res.extendedData.issubscribed && res.extendedData.othernet) {
+          print('CASH CASHOFF ${!res.extendedData.issubscribed} ${res.extendedData.othernet}');
+          AppGlobal.isEditedTransferNational = false;
+          messageType = 'CASHOFF';
+          toNextStep();
+        } else {
+          showToast2(context, AppStringValidation.destinationRequired);
+        }
+      } else {
+        // Kung phonebook ni siya nga function
+        print('onSendMoneySubmit asd sulod dre 2');
+        //assign amount
+        // String? amount = ParserValidator.parseAmount2(amountEditingController, context);
+        // print('onSendMoneySubmit amount $amount');
+        if (StringUtil().isNullOrEmpty(amountEditingController.text)) return;
+
+        if (AppGlobal.isSubscribedTransferNational & AppGlobal.isOtherNetTransferNational) {
+          sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
+        } else if (AppGlobal.isSubscribedTransferNational & !AppGlobal.isOtherNetTransferNational) {
+          sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
+        } else if (!AppGlobal.isSubscribedTransferNational & !AppGlobal.isOtherNetTransferNational) {
+          sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
+        } else if (!AppGlobal.isSubscribedTransferNational & AppGlobal.isOtherNetTransferNational) {
+          sendSoap(msisdn, amountEditingController.text, NetState.OFFNET);
+        }
+      }
+    } catch (ex) {
+      print('onSendMoneySubmit ex $ex');
+    }
+  }
+
+  static void sendSoap(String msisdn, String amount, NetState state) {
+    resetMessage();
+    switch (state) {
+      case NetState.OFFNET:
+        // HITS: CASHOFF <msisdn> <amount> <password> F
+        message
+          ..write("CASHOFF")
+          ..write(' ')
+          ..write(msisdn)
+          ..write(' ')
+          ..write(amount)
+          ..write(' ')
+          ..write("<password/>")
+          ..write(' ')
+          ..write('F');
+        print("HITS 1 ${message.toString()}");
+        break;
+
+      case NetState.ONNET:
+        // HITS: APPCASH <msisdn> <amount> <password> F
+        message
+          ..write("APPCASH")
+          ..write(' ')
+          ..write(msisdn)
+          ..write(' ')
+          ..write(amount)
+          ..write(' ')
+          ..write("<password/>")
+          ..write(' ')
+          ..write('F');
+        print("HITS 2 ${message.toString()}");
+        break;
+    }
+
+    String confirm = "";
+    switch (fieldtype) {
+      case FieldType.NORMAL:
+        confirm = AppStringConfirmation.confirmtransfertnationalmanual.replaceAll("<amount>", amount).replaceAll("<msisdn>", msisdn);
+        print("HITS 3 ${message.toString()}");
+        break;
+      case FieldType.PHONEBOOK:
+        confirm = AppStringConfirmation.confirmtransfertnational
+            .replaceAll("<amount>", amount)
+            .replaceAll("<contactname>", StringUtil().setText(AppGlobal.addressBookDisplayName, AppGlobal.addressBookDisplayName, ""))
+            .replaceAll("<msisdn>", msisdn);
+        print("HITS 4 ${message.toString()}");
+        break;
+      case null:
+        break;
+    }
+    notifymessage.write(confirm);
+  }
+
+  void showProgressDialog(BuildContext context, String progressMessage) {
+    if (isLoading == true) {
+      ProgressAlertDialog.progressAlertDialog(context, progressMessage);
+    } else {
+      null;
+    }
+  }
+
+  static void showToast2(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  static void resetMessage() {
+    if (AppGlobal.message.length > 0) AppGlobal.message.write(AppGlobal.message.length);
+    if (AppGlobal.notifymessage.length > 0) AppGlobal.notifymessage.write(AppGlobal.notifymessage.length);
+    if (AppGlobal.shortcode.length > 0) AppGlobal.shortcode.write(AppGlobal.shortcode.length);
   }
 }

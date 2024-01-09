@@ -2,7 +2,7 @@
 
 import 'dart:typed_data';
 
-class StringUtils {
+class StringUtil {
   // // char[] base64Table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".toCharArray();
   late String base64Table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 

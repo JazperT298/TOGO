@@ -18,7 +18,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final numberController = TextEditingController();
   final controller = Get.put(LoginController());
-  String _selectedCountryCode = '+229'; // Default country code
+  String _selectedCountryCode = '+228'; // Default country code
   // final countryPicker = const FlCountryCodePicker();
   CountryCode? countryCode;
   bool isTextFieldEmpty = false;
@@ -151,7 +151,7 @@ class _LoginViewState extends State<LoginView> {
 
                       onFieldSubmitted: (p0) {
                         if (numberController.text.isNotEmpty) {
-                          ProgressAlertDialog.showALoadingDialog(context, 'Verfying! Please wait...', 3, AppRoutes.OTP);
+                          ProgressAlertDialog.showALoadingDialog(context, "Vérification ! S'il vous plaît, attendez...", 3, AppRoutes.OTP);
                           isTextFieldEmpty = false;
                         } else {
                           setState(() {
@@ -182,7 +182,7 @@ class _LoginViewState extends State<LoginView> {
                 onPressed: () {
                   // Get.toNamed(AppRoutes.HOME);
                   if (numberController.text.isNotEmpty) {
-                    ProgressAlertDialog.showALoadingDialog(context, 'Verfying! Please wait...', 3, AppRoutes.OTP);
+                    ProgressAlertDialog.showALoadingDialog(context, "Vérification ! S'il vous plaît, attendez...", 3, AppRoutes.OTP);
                     isTextFieldEmpty = false;
                   } else {
                     setState(() {

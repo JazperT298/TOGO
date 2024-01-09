@@ -50,7 +50,7 @@ class SoapSender {
       SqlHelper.checkDB2(ctx);
       String? token = await SqlHelper.getToken();
       String stringProperty = await SqlHelper.getProperty(SysProp.PROP_MSISDN, "");
-      String? msisdn = StringUtils().isNullOrEmpty2(stringProperty, destination);
+      String? msisdn = StringUtil().isNullOrEmpty2(stringProperty, destination);
       String msg = message; //EncryptionHelper.encryptData(ctx, message);
       print('msg from sendSoap $msg');
 

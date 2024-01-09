@@ -22,7 +22,7 @@ class TransactionProvider {
 
   static FieldType? fieldtype;
 
-  static void onSendMoneySubmit(
+  static void onVerifySmidnSubmit(
       TextEditingController numberEditingController, TextEditingController amountEditingController, BuildContext context) async {
     try {
       String msisdn = "";
@@ -44,7 +44,7 @@ class TransactionProvider {
       msisdn = ParserValidator.validateMsisdn("228", msisdn, context);
       print('onSendMoneySubmit msisdn $msisdn');
 
-      if (StringUtils().isNullOrEmpty(msisdn)) {
+      if (StringUtil().isNullOrEmpty(msisdn)) {
         showToast(context, AppStringValidation.destinationRequired);
         print('onSendMoneySubmit fieldtype ${AppStringValidation.destinationRequired}}');
         return;
@@ -67,7 +67,7 @@ class TransactionProvider {
         //assign amount
         // String? amount = ParserValidator.parseAmount2(amountEditingController, context);
         // print('onSendMoneySubmit amount $amount');
-        if (StringUtils().isNullOrEmpty(amountEditingController.text)) return;
+        if (StringUtil().isNullOrEmpty(amountEditingController.text)) return;
 
         if (AppGlobal.isSubscribedTransferNational & AppGlobal.isOtherNetTransferNational) {
           sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
@@ -179,7 +179,7 @@ class TransactionProvider {
       case FieldType.PHONEBOOK:
         confirm = AppStringConfirmation.confirmtransfertnational
             .replaceAll("<amount>", amount)
-            .replaceAll("<contactname>", StringUtils().setText(AppGlobal.addressBookDisplayName, AppGlobal.addressBookDisplayName, ""))
+            .replaceAll("<contactname>", StringUtil().setText(AppGlobal.addressBookDisplayName, AppGlobal.addressBookDisplayName, ""))
             .replaceAll("<msisdn>", msisdn);
 
         break;

@@ -106,8 +106,8 @@ class EulaPresenter implements IEulaPresenter {
       }
 
       // AppConfig.appendLog(activity, "debug ito", "pumasok dito #2");
-      bool bool1 = StringUtils().isNullOrEmpty(SqlHelper.getProperty(SysProp.PROP_VERSION_CODE, "") as String?);
-      bool bool2 = StringUtils().isNullOrEmpty(SqlHelper.getProperty(SysProp.PROP_VERSION_NAME, "") as String?);
+      bool bool1 = StringUtil().isNullOrEmpty(SqlHelper.getProperty(SysProp.PROP_VERSION_CODE, "") as String?);
+      bool bool2 = StringUtil().isNullOrEmpty(SqlHelper.getProperty(SysProp.PROP_VERSION_NAME, "") as String?);
       bool bool3 = AppSessionManager.newInstance(context!).isFirstInstall();
 
       if ((!bool1) && (!bool2)) {

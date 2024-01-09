@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:ibank/utils/constants/app_integer.dart';
 import 'package:ibank/utils/constants/app_string_validation.dart';
@@ -159,12 +161,12 @@ class ParserValidator {
     try {
       bool isValid = true;
       String tempMsisdn = ParserValidator.parseMsisdn(msisdn, context)!;
-      if (StringUtils().isNullOrEmpty(tempMsisdn)) return "";
+      if (StringUtil().isNullOrEmpty(tempMsisdn)) return "";
 
       tempMsisdn = tempMsisdn.replaceAll("+", "").replaceAll(" ", "");
       String newMsisdn = tempMsisdn;
 
-      if (StringUtils().isNullOrEmpty(tempMsisdn)) {
+      if (StringUtil().isNullOrEmpty(tempMsisdn)) {
         isValid = false;
       }
       if (tempMsisdn.length < AppInteger.minMsisdn) {
@@ -182,7 +184,7 @@ class ParserValidator {
         isValid = false;
       }
       if (!isValid) return "";
-
+      log('newMsisdn $newMsisdn');
       return newMsisdn;
     } catch (ex) {
       print('validateMsisdn $ex');

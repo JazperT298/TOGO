@@ -194,7 +194,7 @@ class SqlHelper {
 
       final newRowId = await db.insert('TBLHISTORY', contentValues);
 
-      if (!StringUtils().isNullOrEmpty(limit) && int.parse(limit) > 0) {
+      if (!StringUtil().isNullOrEmpty(limit) && int.parse(limit) > 0) {
         await db.rawDelete('DELETE FROM TBLHISTORY WHERE PKEY IN (SELECT PKEY FROM TBLHISTORY ORDER BY PKEY DESC LIMIT -1 OFFSET ?)', [limit]);
       }
 
@@ -370,7 +370,7 @@ class SqlHelper {
         print('token from setProperty ${SysProp.PROP_TOKEN} token $token}');
         await setProperty(SysProp.PROP_TOKEN, token);
 
-        if (StringUtils().isNullOrEmpty(AppConfig.mobilemsisdn)) {
+        if (StringUtil().isNullOrEmpty(AppConfig.mobilemsisdn)) {
           await setProperty(SysProp.PROP_MSISDN, "");
         } else {
           // Uncomment the line below if PROP_MSISDN is not used
@@ -385,9 +385,9 @@ class SqlHelper {
     print('token from checkDB 2 $token');
     String dbToken = await getProperty(SysProp.PROP_TOKEN, "");
     if (token != dbToken) {
-      if (StringUtils().isNullOrEmpty(dbToken)) {
+      if (StringUtil().isNullOrEmpty(dbToken)) {
         // await deleteTables();
-        if (StringUtils().isNullOrEmpty(AppConfig.mobilemsisdn)) {
+        if (StringUtil().isNullOrEmpty(AppConfig.mobilemsisdn)) {
           await setProperty(SysProp.PROP_MSISDN, "");
         } else {}
         return true;
