@@ -27,4 +27,12 @@ class AppGlobal {
   static StringBuffer notifymessage = StringBuffer();
   static StringBuffer message = StringBuffer();
   static StringBuffer shortcode = StringBuffer();
+
+  static String beneficiare = "";
+  static String date = "";
+
+  static String amount = "";
+  static String remainingBal = "";
+  static String txn = "";
+  static String numbers = "";
 }

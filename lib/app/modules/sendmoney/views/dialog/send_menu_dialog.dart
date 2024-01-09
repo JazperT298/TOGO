@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/components/line_separator.dart';
+import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_modal_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
@@ -90,12 +91,20 @@ class SendMenuDialog {
     );
   }
 
-  static void showRecapOperationDialog(context) {
+  static void showRecapOperationDialog(context) async {
+    print('Amount: ${AppGlobal.amount}');
+    print('Beneficiary: ${AppGlobal.beneficiare}');
+    print('Date: ${AppGlobal.date}');
+    print('New Balance: ${AppGlobal.remainingBal}');
+    print('Transaction ID: ${AppGlobal.txn}');
+    print('Number ID: ${AppGlobal.numbers}');
+
     // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return alert dialog object
+
         return AlertDialog(
           insetPadding: EdgeInsets.all(12), // Outside Padding
           contentPadding: EdgeInsets.all(12), // Content Padding
@@ -147,7 +156,7 @@ class SendMenuDialog {
                     ),
                     Expanded(
                       child: Text(
-                        'Razack',
+                        AppGlobal.beneficiare.toString(),
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -168,7 +177,7 @@ class SendMenuDialog {
                     ),
                     Expanded(
                       child: Text(
-                        '99 77 77 77',
+                        AppGlobal.numbers,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -220,7 +229,7 @@ class SendMenuDialog {
                     ),
                     Expanded(
                       child: Text(
-                        '20 000 FCFA',
+                        AppGlobal.amount,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -251,7 +260,7 @@ class SendMenuDialog {
                     ),
                     Expanded(
                       child: Text(
-                        '01/02/2024',
+                        AppGlobal.date,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -272,7 +281,7 @@ class SendMenuDialog {
                     ),
                     Expanded(
                       child: Text(
-                        '09:30:10',
+                        '10:35:10',
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -292,7 +301,7 @@ class SendMenuDialog {
                     ),
                     Expanded(
                       child: Text(
-                        '12469081234',
+                        AppGlobal.txn,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,
@@ -313,7 +322,7 @@ class SendMenuDialog {
                     ),
                     Expanded(
                       child: Text(
-                        '70 000 FCFA',
+                        AppGlobal.remainingBal,
                         style: TextStyle(
                           fontSize: M3FontSizes.headlineTiny,
                           color: context.colorScheme.onSurface,

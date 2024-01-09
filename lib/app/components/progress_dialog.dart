@@ -99,6 +99,8 @@ class ProgressAlertDialog {
     // Delay for 3 seconds
     await Future.delayed(Duration(seconds: seconds), () {
       Navigator.of(context).pop(); // Close the alert dialog
+
+      print('isInvalidCode $isInvalidCode');
       if (isInvalidCode == false) {
         Get.toNamed(AppRoutes.TRANSACCOMPLETE);
       }

@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison
+// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors
 
 import 'dart:convert';
 import 'dart:developer';
@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:ibank/app/components/line_separator.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
+import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
@@ -41,7 +42,6 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   User? selectedUser;
   bool isTextFieldEmpty = false;
   bool isInvalidCode = false;
-  bool isInvalidCode2 = false;
   String invalidCodeString = '';
   final controller =
       Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
@@ -568,32 +568,117 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             header2,
             const SizedBox(height: 24),
             FluTextField(
-              inputController: codeEditingController,
-              hint: "Votre code secret",
-              hintStyle: const TextStyle(fontSize: M3FontSizes.titleMedium),
-              height: 50,
-              cornerRadius: 15,
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              fillColor: context.colorScheme.primaryContainer,
-              textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium),
-              onChanged: (p0) {
-                setState(() {
-                  isInvalidCode = false;
-                });
-              },
-              onFieldSubmitted: (p0) {
-                if (codeEditingController.text.isEmpty) {
-                  showToast(context, 'Code Secret should not be empty');
-                } else if (!codeEditingController.text.trim().contains('4512')) {
-                  showToast(context, 'Invalid Code Secret');
-                  AppGlobal.siOTPPage = true;
-                } else {
-                  sendMoneyToReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035', amountEditingController.text, codeEditingController.text);
-                  // KRouter.to(context, Routes.transactionComplete);
-                }
-              },
-            ),
+                inputController: codeEditingController,
+                hint: "Votre code secret",
+                hintStyle: const TextStyle(fontSize: M3FontSizes.titleMedium),
+                height: 50,
+                cornerRadius: 15,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+                fillColor: context.colorScheme.primaryContainer,
+                textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium),
+                onChanged: (p0) {
+                  setState(() {
+                    isInvalidCode = false;
+                  });
+                },
+                onFieldSubmitted: (p0) async {
+                  if (codeEditingController.text.isEmpty) {
+                    showToast(context, 'Code Secret should not be empty');
+                    isInvalidCode = true;
+                    invalidCodeString = "Code Secret should not be empty";
+                    // } else if (!codeEditingController.text.trim().contains('4512')) {
+                    //   showDialog(
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return const AlertDialog(
+                    //         content: Row(
+                    //           // mainAxisSize: MainAxisSize.min,
+                    //           mainAxisAlignment: MainAxisAlignment.start,
+                    //           children: [
+                    //             CircularProgressIndicator(),
+                    //             SizedBox(width: 16.0),
+                    //             Text('Please wait...'),
+                    //           ],
+                    //         ),
+                    //       );
+                    //     },
+                    //   );
+                    //   await Future.delayed(const Duration(seconds: 5), () {
+                    //     Navigator.of(context).pop(); // Close the alert dialog
+
+                    //     // Navigate to the next page
+                    //     Get.toNamed(AppRoutes.TRANSACFAILED);
+                    //   });
+                  } else {
+                    if (widget.sendType.contains('Transfert National')) {
+                      setState(() {
+                        var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
+                        sendMoneyToReceiver(asd, 'F3C8DEBDBA27B035', amountEditingController.text, codeEditingController.text);
+                      });
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: Row(
+                              // mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const CircularProgressIndicator(),
+                                const SizedBox(width: 16.0),
+                                Text("Verfying OTP! Please wait..."),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+
+                      // Delay for 3 seconds
+                      await Future.delayed(Duration(seconds: 3), () {
+                        Navigator.of(context).pop(); // Close the alert dialog
+
+                        print('isInvalidCode $isInvalidCode');
+                        if (isInvalidCode == false) {
+                          Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+                        }
+                      });
+                      setState(() {});
+                      // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
+                    } else {
+                      setState(() {
+                        var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
+                        sendMoneyToReceiver(asd, 'F3C8DEBDBA27B035', amountEditingController.text, codeEditingController.text);
+                      });
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: Row(
+                              // mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const CircularProgressIndicator(),
+                                const SizedBox(width: 16.0),
+                                Text("Verfying OTP! Please wait..."),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+
+                      // Delay for 3 seconds
+                      await Future.delayed(Duration(seconds: 3), () {
+                        Navigator.of(context).pop(); // Close the alert dialog
+
+                        print('isInvalidCode $isInvalidCode');
+                        if (isInvalidCode == false) {
+                          Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+                        }
+                      });
+                      setState(() {});
+                    }
+                  }
+                }),
             isInvalidCode == true
                 ? Center(
                     child: Container(
@@ -645,14 +730,70 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     //   });
                   } else {
                     if (widget.sendType.contains('Transfert National')) {
+                      setState(() {
+                        var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
+                        sendMoneyToReceiver(asd, 'F3C8DEBDBA27B035', amountEditingController.text, codeEditingController.text);
+                      });
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const AlertDialog(
+                            content: Row(
+                              // mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CircularProgressIndicator(),
+                                SizedBox(width: 16.0),
+                                Text("Verfying OTP! Please wait..."),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+
+                      // Delay for 3 seconds
+                      await Future.delayed(Duration(seconds: 3), () {
+                        Navigator.of(context).pop(); // Close the alert dialog
+
+                        print('isInvalidCode $isInvalidCode');
+                        if (isInvalidCode == false) {
+                          Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+                        }
+                      });
+                      setState(() {});
                       // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
-                      sendMoneyToReceiver(
-                          numberEditingCobntroller.text, 'F3C8DEBDBA27B035', amountEditingController.text, codeEditingController.text);
-                      ProgressAlertDialog.showALoadingDialog2(context, "Verfying OTP! Please wait...", 5, isInvalidCode2);
                     } else {
-                      sendMoneyToReceiver(
-                          numberEditingCobntroller.text, 'F3C8DEBDBA27B035', amountEditingController.text, codeEditingController.text);
-                      ProgressAlertDialog.showALoadingDialog2(context, "Verfying OTP! Please wait...", 5, isInvalidCode2);
+                      setState(() {
+                        var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
+                        sendMoneyToReceiver(asd, 'F3C8DEBDBA27B035', amountEditingController.text, codeEditingController.text);
+                      });
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: Row(
+                              // mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                CircularProgressIndicator(),
+                                SizedBox(width: 16.0),
+                                Text("Verfying OTP! Please wait..."),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+
+                      // Delay for 3 seconds
+                      await Future.delayed(Duration(seconds: 3), () {
+                        Navigator.of(context).pop(); // Close the alert dialog
+
+                        print('isInvalidCode $isInvalidCode');
+                        if (isInvalidCode == false) {
+                          Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+                        }
+                      });
+                      setState(() {});
                     }
                   }
                 },
@@ -741,6 +882,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
     );
   }
 
+  //vshould verify the receiver
   addNumberFromReceiver(String msisdn, String token) async {
     try {
       var strToken = await SqlHelper.getToken();
@@ -781,7 +923,6 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   //1111 and code if kani 22879397111 nga user
   sendMoneyToReceiver(String msisdn, String token, String amounts, String code) async {
     try {
-      isInvalidCode2 = true;
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
@@ -811,22 +952,32 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           String innerString = requestTokenReturnElement.text.trim();
           Map<String, dynamic> jsonData = parseInnerStringToMap(innerString);
           if (jsonString.contains('Transfert reussi')) {
+            log('jsonString $jsonString');
             // Print or use the JSON data
-            String? amount = jsonData['Montant'];
+            String? amounts = jsonData['Montant'];
             String? beneficiary = jsonData['Beneficiaire'];
-            String? date = jsonData['Date'];
+            String? date = jsonData['Date'].toString();
             String? newBalance = jsonData['Nouveau solde Flooz'];
             String? txnId = jsonData['Txn ID'];
-            print('Amount: $amount');
+
+            print('Amount: $amounts');
             print('Beneficiary: $beneficiary');
             print('Date: $date');
             print('New Balance: $newBalance');
             print('Transaction ID: $txnId');
             log('jsonData $jsonData');
-            isInvalidCode2 = false;
+            AppGlobal.beneficiare = beneficiary.toString();
+            AppGlobal.date = date.toString();
+            AppGlobal.amount = amounts.toString();
+            AppGlobal.remainingBal = newBalance.toString();
+            AppGlobal.txn = txnId.toString();
+            AppGlobal.numbers = msisdn.toString();
+
+            isInvalidCode = false;
+
+            setState(() {});
           } else {
             setState(() {
-              isInvalidCode2 = true;
               isInvalidCode = true;
               invalidCodeString = jsonString;
             });
