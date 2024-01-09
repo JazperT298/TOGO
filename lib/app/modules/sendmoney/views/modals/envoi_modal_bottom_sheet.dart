@@ -973,6 +973,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   }
 
   //1111 and code if kani 22879397111 nga user
+  // 99990137
   sendMoneyToReceiver(
       String msisdn, String token, String amounts, String code) async {
     try {
@@ -1047,6 +1048,10 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           AppGlobal.txn = txnId.toString();
           AppGlobal.numbers = msisdn.toString();
           AppGlobal.time = time.toString();
+
+          if (AppGlobal.numbers == AppGlobal.beneficiare) {
+            AppGlobal.beneficiare = 'N/A';
+          }
 
           isInvalidCode = false;
 
