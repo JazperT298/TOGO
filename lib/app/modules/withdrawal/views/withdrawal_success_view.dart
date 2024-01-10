@@ -10,147 +10,150 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const Padding(
-                padding: UISettings.pagePadding,
-                child: Text(
-                  "RETRAIT",
-                  style: TextStyle(color: Colors.orange),
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              const Padding(
-                padding: UISettings.pagePadding,
-                child: Text(
-                  "Vous retirez",
-                  style: TextStyle(
-                    fontSize: M3FontSizes.headlineLarge,
+      body: WillPopScope(
+        onWillPop: () => controller.getBack(),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Padding(
+                  padding: UISettings.pagePadding,
+                  child: Text(
+                    "RETRAIT",
+                    style: TextStyle(color: Colors.orange),
                   ),
                 ),
-              ),
-              Padding(
-                padding: UISettings.pagePadding,
-                child: Obx(
-                  () => Text(
-                    controller.withdrawalAmountWithUnit.value,
-                    style: const TextStyle(
-                        fontSize: M3FontSizes.headlineLarge,
-                        color: Colors.orange),
-                  ),
+                const SizedBox(
+                  height: 5,
                 ),
-              ),
-              Padding(
-                padding: UISettings.pagePadding,
-                child: Obx(
-                  () => Text(
-                    "Chez ${controller.nickname.value}",
-                    style: const TextStyle(
+                const Padding(
+                  padding: UISettings.pagePadding,
+                  child: Text(
+                    "Vous retirez",
+                    style: TextStyle(
                       fontSize: M3FontSizes.headlineLarge,
                     ),
                   ),
                 ),
-              ),
-              Padding(
+                Padding(
                   padding: UISettings.pagePadding,
-                  child: Row(
-                    children: [
-                      const Text(
-                        "Frais de l'operation: ",
-                        style: TextStyle(
-                          fontSize: M3FontSizes.bodyLarge,
-                        ),
-                      ),
-                      Obx(
-                        () => Text(
-                          controller.fees.value,
-                          style: const TextStyle(
-                              fontSize: M3FontSizes.bodyLarge,
-                              color: Colors.orange),
-                        ),
-                      ),
-                    ],
-                  )),
-              Padding(
-                  padding: UISettings.pagePadding,
-                  child: Row(
-                    children: [
-                      const Text(
-                        "TAF: ",
-                        style: TextStyle(
-                          fontSize: M3FontSizes.bodyLarge,
-                        ),
-                      ),
-                      Obx(
-                        () => Text(
-                          controller.taf.value,
-                          style: const TextStyle(
-                              fontSize: M3FontSizes.bodyLarge,
-                              color: Colors.orange),
-                        ),
-                      ),
-                    ],
-                  )),
-              Padding(
-                  padding: UISettings.pagePadding,
-                  child: Row(
-                    children: [
-                      const Text(
-                        "Nouveau solde Flooz: ",
-                        style: TextStyle(
-                          fontSize: M3FontSizes.bodyLarge,
-                        ),
-                      ),
-                      Obx(
-                        () => Text(
-                          controller.balance.value,
-                          style: const TextStyle(
-                              fontSize: M3FontSizes.bodyLarge,
-                              color: Colors.orange),
-                        ),
-                      ),
-                    ],
-                  )),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.57,
-              ),
-              Padding(
-                padding: UISettings.pagePadding,
-                child: FluButton.text(
-                  'Continuer',
-                  suffixIcon: FluIcons.arrowRight,
-                  iconStrokeWidth: 1.8,
-                  onPressed: () {
-                    Get.back();
-                    Get.back();
-                    Get.back();
-                    // Get.toNamed(AppRoutes.WITHDRAWALOTP);
-                  },
-                  height: 55,
-                  width: MediaQuery.of(context).size.width * 16,
-                  cornerRadius: UISettings.minButtonCornerRadius,
-                  backgroundColor: context.colorScheme.primary,
-                  foregroundColor: context.colorScheme.onPrimary,
-                  boxShadow: [
-                    BoxShadow(
-                      color: context.colorScheme.primary.withOpacity(.35),
-                      blurRadius: 25,
-                      spreadRadius: 3,
-                      offset: const Offset(0, 5),
-                    )
-                  ],
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: M3FontSizes.bodyLarge),
+                  child: Obx(
+                    () => Text(
+                      controller.withdrawalAmountWithUnit.value,
+                      style: const TextStyle(
+                          fontSize: M3FontSizes.headlineLarge,
+                          color: Colors.orange),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: UISettings.pagePadding,
+                  child: Obx(
+                    () => Text(
+                      "Chez ${controller.nickname.value}",
+                      style: const TextStyle(
+                        fontSize: M3FontSizes.headlineLarge,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                    padding: UISettings.pagePadding,
+                    child: Row(
+                      children: [
+                        const Text(
+                          "Frais de l'operation: ",
+                          style: TextStyle(
+                            fontSize: M3FontSizes.bodyLarge,
+                          ),
+                        ),
+                        Obx(
+                          () => Text(
+                            controller.fees.value,
+                            style: const TextStyle(
+                                fontSize: M3FontSizes.bodyLarge,
+                                color: Colors.orange),
+                          ),
+                        ),
+                      ],
+                    )),
+                Padding(
+                    padding: UISettings.pagePadding,
+                    child: Row(
+                      children: [
+                        const Text(
+                          "TAF: ",
+                          style: TextStyle(
+                            fontSize: M3FontSizes.bodyLarge,
+                          ),
+                        ),
+                        Obx(
+                          () => Text(
+                            controller.taf.value,
+                            style: const TextStyle(
+                                fontSize: M3FontSizes.bodyLarge,
+                                color: Colors.orange),
+                          ),
+                        ),
+                      ],
+                    )),
+                Padding(
+                    padding: UISettings.pagePadding,
+                    child: Row(
+                      children: [
+                        const Text(
+                          "Nouveau solde Flooz: ",
+                          style: TextStyle(
+                            fontSize: M3FontSizes.bodyLarge,
+                          ),
+                        ),
+                        Obx(
+                          () => Text(
+                            controller.balance.value,
+                            style: const TextStyle(
+                                fontSize: M3FontSizes.bodyLarge,
+                                color: Colors.orange),
+                          ),
+                        ),
+                      ],
+                    )),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.57,
+                ),
+                Padding(
+                  padding: UISettings.pagePadding,
+                  child: FluButton.text(
+                    'Continuer',
+                    suffixIcon: FluIcons.arrowRight,
+                    iconStrokeWidth: 1.8,
+                    onPressed: () {
+                      Get.back();
+                      Get.back();
+                      Get.back();
+                      // Get.toNamed(AppRoutes.WITHDRAWALOTP);
+                    },
+                    height: 55,
+                    width: MediaQuery.of(context).size.width * 16,
+                    cornerRadius: UISettings.minButtonCornerRadius,
+                    backgroundColor: context.colorScheme.primary,
+                    foregroundColor: context.colorScheme.onPrimary,
+                    boxShadow: [
+                      BoxShadow(
+                        color: context.colorScheme.primary.withOpacity(.35),
+                        blurRadius: 25,
+                        spreadRadius: 3,
+                        offset: const Offset(0, 5),
+                      )
+                    ],
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: M3FontSizes.bodyLarge),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

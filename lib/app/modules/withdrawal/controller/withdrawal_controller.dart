@@ -21,6 +21,12 @@ class WithdrawalController extends GetxController {
 
   TextEditingController code = TextEditingController();
 
+  getBack() {
+    Get.back();
+    Get.back();
+    Get.back();
+  }
+
   addPendingCashout() async {
     var headers = {'Content-Type': 'application/xml'};
     var request = http.Request('POST',

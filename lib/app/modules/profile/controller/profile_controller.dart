@@ -16,10 +16,18 @@ class ProfileController extends GetxController {
   RxString birthdate = ''.obs;
   RxString msisdn = ''.obs;
   RxString soldeFlooz = ''.obs;
+  RxString commission = ''.obs;
 
   TextEditingController oldPIN = TextEditingController();
   TextEditingController newPIN = TextEditingController();
   TextEditingController confirmNewPIN = TextEditingController();
+
+  TextEditingController code = TextEditingController();
+
+  getBack() {
+    Get.back();
+    Get.back();
+  }
 
   enterPinForInformationPersonelles({required String code}) async {
     isLoading(true);
@@ -73,6 +81,7 @@ class ProfileController extends GetxController {
           msisdn.value = dataDecoded['Compte'];
           birthdate.value = dataDecoded['Date de naissance'];
           soldeFlooz.value = dataDecoded['Solde Flooz'];
+          commission.value = dataDecoded['Commission'];
           Get.toNamed(AppRoutes.PROFILEINFORMATIONPERSONELLES);
         } else {
           Get.snackbar("Message", jsonString,

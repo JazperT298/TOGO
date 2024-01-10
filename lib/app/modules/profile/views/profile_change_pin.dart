@@ -1,5 +1,6 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
 
@@ -94,20 +95,37 @@ class ProfileChangePinView extends GetView<ProfileController> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.01,
                       ),
-                      Padding(
+                      Container(
                         padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.05,
-                          right: MediaQuery.of(context).size.width * 0.05,
-                        ),
-                        child: FluTextField(
-                          inputController: controller.oldPIN,
-                          hint: "",
-                          height: 50,
-                          cornerRadius: 15,
+                            left: MediaQuery.of(Get.context!).size.width * 0.05,
+                            right:
+                                MediaQuery.of(Get.context!).size.width * 0.05),
+                        height: MediaQuery.of(Get.context!).size.height * 0.07,
+                        width: MediaQuery.of(Get.context!).size.width,
+                        child: TextField(
+                          obscureText: true,
+                          textAlign: TextAlign.center,
+                          controller: controller.oldPIN,
                           keyboardType: TextInputType.number,
-                          fillColor: context.colorScheme.primaryContainer,
-                          textStyle:
-                              const TextStyle(fontSize: M3FontSizes.bodyMedium),
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: InputDecoration(
+                            fillColor: const Color.fromARGB(255, 175, 221, 243),
+                            filled: true,
+                            contentPadding: EdgeInsets.only(
+                                left: MediaQuery.of(Get.context!).size.width *
+                                    0.03),
+                            alignLabelWithHint: false,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -127,20 +145,37 @@ class ProfileChangePinView extends GetView<ProfileController> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.01,
                       ),
-                      Padding(
+                      Container(
                         padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.05,
-                          right: MediaQuery.of(context).size.width * 0.05,
-                        ),
-                        child: FluTextField(
-                          inputController: controller.newPIN,
-                          hint: "",
-                          height: 50,
-                          cornerRadius: 15,
+                            left: MediaQuery.of(Get.context!).size.width * 0.05,
+                            right:
+                                MediaQuery.of(Get.context!).size.width * 0.05),
+                        height: MediaQuery.of(Get.context!).size.height * 0.07,
+                        width: MediaQuery.of(Get.context!).size.width,
+                        child: TextField(
+                          obscureText: true,
+                          textAlign: TextAlign.center,
+                          controller: controller.newPIN,
                           keyboardType: TextInputType.number,
-                          fillColor: context.colorScheme.primaryContainer,
-                          textStyle:
-                              const TextStyle(fontSize: M3FontSizes.bodyMedium),
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: InputDecoration(
+                            fillColor: const Color.fromARGB(255, 175, 221, 243),
+                            filled: true,
+                            contentPadding: EdgeInsets.only(
+                                left: MediaQuery.of(Get.context!).size.width *
+                                    0.03),
+                            alignLabelWithHint: false,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -160,20 +195,37 @@ class ProfileChangePinView extends GetView<ProfileController> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.01,
                       ),
-                      Padding(
+                      Container(
                         padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.05,
-                          right: MediaQuery.of(context).size.width * 0.05,
-                        ),
-                        child: FluTextField(
-                          inputController: controller.confirmNewPIN,
-                          hint: "",
-                          height: 50,
-                          cornerRadius: 15,
+                            left: MediaQuery.of(Get.context!).size.width * 0.05,
+                            right:
+                                MediaQuery.of(Get.context!).size.width * 0.05),
+                        height: MediaQuery.of(Get.context!).size.height * 0.07,
+                        width: MediaQuery.of(Get.context!).size.width,
+                        child: TextField(
+                          obscureText: true,
+                          textAlign: TextAlign.center,
+                          controller: controller.confirmNewPIN,
                           keyboardType: TextInputType.number,
-                          fillColor: context.colorScheme.primaryContainer,
-                          textStyle:
-                              const TextStyle(fontSize: M3FontSizes.bodyMedium),
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: InputDecoration(
+                            fillColor: const Color.fromARGB(255, 175, 221, 243),
+                            filled: true,
+                            contentPadding: EdgeInsets.only(
+                                left: MediaQuery.of(Get.context!).size.width *
+                                    0.03),
+                            alignLabelWithHint: false,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
