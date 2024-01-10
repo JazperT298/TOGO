@@ -11,6 +11,9 @@ class ProfileChangePinView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.oldPIN.clear();
+    controller.newPIN.clear();
+    controller.confirmNewPIN.clear();
     return Scaffold(
       body: Obx(
         () => controller.isLoading.value == true
