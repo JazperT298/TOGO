@@ -36,4 +36,6 @@ class AppGlobal {
   static String remainingBal = "";
   static String txn = "";
   static String numbers = "";
+
+  static String internationalType = "";
 }
