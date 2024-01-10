@@ -46,12 +46,14 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                   ),
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: UISettings.pagePadding,
-                child: Text(
-                  "Chez Etz Alibaba",
-                  style: TextStyle(
-                    fontSize: M3FontSizes.headlineLarge,
+                child: Obx(
+                  () => Text(
+                    "Chez ${controller.nickname.value}",
+                    style: const TextStyle(
+                      fontSize: M3FontSizes.headlineLarge,
+                    ),
                   ),
                 ),
               ),
@@ -75,8 +77,48 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                       ),
                     ],
                   )),
+              Padding(
+                  padding: UISettings.pagePadding,
+                  child: Row(
+                    children: [
+                      const Text(
+                        "TAF: ",
+                        style: TextStyle(
+                          fontSize: M3FontSizes.bodyLarge,
+                        ),
+                      ),
+                      Obx(
+                        () => Text(
+                          controller.taf.value,
+                          style: const TextStyle(
+                              fontSize: M3FontSizes.bodyLarge,
+                              color: Colors.orange),
+                        ),
+                      ),
+                    ],
+                  )),
+              Padding(
+                  padding: UISettings.pagePadding,
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Nouveau solde Flooz: ",
+                        style: TextStyle(
+                          fontSize: M3FontSizes.bodyLarge,
+                        ),
+                      ),
+                      Obx(
+                        () => Text(
+                          controller.balance.value,
+                          style: const TextStyle(
+                              fontSize: M3FontSizes.bodyLarge,
+                              color: Colors.orange),
+                        ),
+                      ),
+                    ],
+                  )),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.62,
+                height: MediaQuery.of(context).size.height * 0.57,
               ),
               Padding(
                 padding: UISettings.pagePadding,

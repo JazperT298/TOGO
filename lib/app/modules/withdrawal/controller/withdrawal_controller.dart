@@ -13,13 +13,18 @@ class WithdrawalController extends GetxController {
   RxString amount = ''.obs;
   RxString refID = ''.obs;
   RxString fees = ''.obs;
+  RxString taf = ''.obs;
+  RxString balance = ''.obs;
   RxString withdrawalAmountWithUnit = ''.obs;
 
   RxBool isLoading = true.obs;
 
+  TextEditingController code = TextEditingController();
+
   addPendingCashout() async {
     var headers = {'Content-Type': 'application/xml'};
-    var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+    var request = http.Request('POST',
+        Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
     request.body =
         '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
    <soapenv:Header/>
@@ -54,8 +59,10 @@ class WithdrawalController extends GetxController {
     isLoading(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
       xmlns:d="http://www.w3.org/2001/XMLSchema" 
       xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
       xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -86,7 +93,8 @@ class WithdrawalController extends GetxController {
           refID.value = decodedData['refid'];
         } else {
           Get.back();
-          Get.snackbar("Message", decodedData['message'], backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", decodedData['message'],
+              backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
         // print('JSON Response: $jsonResponse');
@@ -103,8 +111,10 @@ class WithdrawalController extends GetxController {
     isLoading(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -156,9 +166,13 @@ class WithdrawalController extends GetxController {
           log(dataDecoded.toString());
           fees.value = dataDecoded['Frais HT'];
           withdrawalAmountWithUnit.value = dataDecoded['Montant'];
+          taf.value = dataDecoded['TAF'];
+          balance.value = dataDecoded['Nouveau solde Flooz'];
+
           Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
         } else {
-          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString,
+              backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         print(response.reasonPhrase);
