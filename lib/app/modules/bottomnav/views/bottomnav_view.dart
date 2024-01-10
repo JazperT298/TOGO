@@ -9,6 +9,8 @@ import 'package:ibank/app/modules/profile/views/profile_view.dart';
 import 'package:ibank/app/modules/shop/views/shop_view.dart';
 import 'package:ibank/utils/configs.dart';
 
+import '../../home/controller/home_controller.dart';
+
 final currentPageProvider = StateProvider.autoDispose<int>((ref) => 0);
 
 class BottomNavView extends ConsumerStatefulWidget {
@@ -24,12 +26,14 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
 
   void onPageChange(int index) {
     ref.read(currentPageProvider.notifier).state = index;
-    pageController.animateToPage(index, duration: 300.milliseconds, curve: Curves.decelerate);
+    pageController.animateToPage(index,
+        duration: 300.milliseconds, curve: Curves.decelerate);
   }
 
   @override
   void initState() {
     pageController = PageController();
+    Get.put(HomeController());
     super.initState();
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
+import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
 import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/routes/app_routes.dart';
@@ -126,7 +127,7 @@ class _Card extends StatefulWidget {
 }
 
 class _CardState extends State<_Card> {
-  bool afficherSolde = true;
+  var controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -160,34 +161,79 @@ class _CardState extends State<_Card> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Expanded(
-                            child: Text.rich(
-                              TextSpan(children: [
-                                TextSpan(
-                                    text: afficherSolde ? '######' : '14250'),
-                                const TextSpan(
-                                    text: ' CFA',
-                                    style: TextStyle(
-                                        fontSize: M3FontSizes.bodySmall)),
-                              ]),
-                              style: TextStyle(
-                                fontSize: M3FontSizes.displayMedium,
-                                fontWeight: FontWeight.bold,
-                                color: context.colorScheme.onPrimary,
+                            child: Row(children: [
+                              Obx(
+                                () => controller.afficherSolde.value == true
+                                    ? Text(
+                                        '######',
+                                        style: TextStyle(
+                                          fontSize: M3FontSizes.displayMedium,
+                                          fontWeight: FontWeight.bold,
+                                          color: context.colorScheme.onPrimary,
+                                        ),
+                                      )
+                                    : Text(
+                                        controller.soldeFlooz.value,
+                                        style: TextStyle(
+                                          fontSize: M3FontSizes.displayMedium,
+                                          fontWeight: FontWeight.bold,
+                                          color: context.colorScheme.onPrimary,
+                                        ),
+                                      ),
                               ),
-                            ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height *
+                                        0.02),
+                                child: Text(
+                                  " FCFA",
+                                  style: TextStyle(
+                                    fontSize: M3FontSizes.bodySmall,
+                                    fontWeight: FontWeight.bold,
+                                    color: context.colorScheme.onPrimary,
+                                  ),
+                                ),
+                              ),
+                            ]),
+                            // child: Text.rich(
+                            //   TextSpan(children: [
+                            //     TextSpan(
+                            //         text: controller.afficherSolde
+                            //             ? '######'
+                            //             : controller.soldeFlooz.value),
+                            //     const TextSpan(
+                            //         text: ' CFA',
+                            //         style: TextStyle(
+                            //             fontSize: M3FontSizes.bodySmall)),
+                            //   ]),
+                            //   style: TextStyle(
+                            //     fontSize: M3FontSizes.displayMedium,
+                            //     fontWeight: FontWeight.bold,
+                            //     color: context.colorScheme.onPrimary,
+                            //   ),
+                            // ),
                           ),
-                          FluButton.icon(
-                            FluIcons.eyeSlash,
-                            onPressed: () {
-                              setState(() {
-                                afficherSolde = !afficherSolde;
-                              });
-                            },
-                            alignment: Alignment.centerRight,
-                            backgroundColor: Colors.transparent,
-                            foregroundColor:
-                                context.colorScheme.onPrimary.withOpacity(.5),
-                            // margin: EdgeInsets.only(bottom: 5),
+                          Obx(
+                            () => FluButton.icon(
+                              controller.afficherSolde.value == true
+                                  ? FluIcons.eye
+                                  : FluIcons.eyeSlash,
+                              onPressed: () {
+                                if (controller.afficherSolde.value == true) {
+                                  HomeAlertDialog.showOTPview(
+                                      controller: controller);
+                                } else {
+                                  controller.afficherSolde.value = true;
+                                }
+
+                                setState(() {});
+                              },
+                              alignment: Alignment.centerRight,
+                              backgroundColor: Colors.transparent,
+                              foregroundColor:
+                                  context.colorScheme.onPrimary.withOpacity(.5),
+                              // margin: EdgeInsets.only(bottom: 5),
+                            ),
                           ),
                         ],
                       ),
@@ -205,15 +251,19 @@ class _CardState extends State<_Card> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    authenticatedUser.fullName.toUpperCase(),
-                    style: TextStyle(
-                      color: context.colorScheme.onPrimary,
-                      fontWeight: FontWeight.bold,
+                  Obx(
+                    () => Text(
+                      // authenticatedUser.fullName.toUpperCase(),
+                      controller.name.value,
+                      style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        color: context.colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   Text(
-                    '79 50 25 00',
+                    '62 35 67 89',
                     style: TextStyle(
                       color: context.colorScheme.onPrimary,
                     ),
