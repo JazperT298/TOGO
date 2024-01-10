@@ -158,6 +158,7 @@ class _Page extends GetView<OnboardController> {
         Expanded(
           child: FluImage(
             data.image,
+            imageSource: ImageSources.asset,
             expand: true,
             overlayOpacity: .15,
           ),

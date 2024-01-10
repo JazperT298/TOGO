@@ -77,3 +77,47 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
     );
   }
 }
+
+// import 'package:flukit/flukit.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:ibank/app/modules/bottomnav/controller/bottomnav_controller.dart';
+// import 'package:ibank/utils/configs.dart';
+
+// class BottomNavView extends GetView<BottomNavController> {
+//   const BottomNavView({super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     Get.put(BottomNavController());
+//     return FluScreen(
+//       body: Obx(
+//         () => PageView(
+//           controller: controller.pageController.value,
+//           physics: const NeverScrollableScrollPhysics(),
+//           children: controller.bodyContent,
+//         ),
+//       ),
+//       overlayStyle: context.systemUiOverlayStyle.copyWith(
+//         statusBarColor: Colors.transparent,
+//         statusBarIconBrightness: Brightness.dark,
+//       ),
+//       bottomNavigationBar: Obx(
+//         () =>  Container(
+//           margin: UISettings.pagePadding,
+//           clipBehavior: Clip.antiAlias,
+//           decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+//           child: FluBottomNavBar(
+//             onItemTap: (index) => controller.selectedIndex.value = index,
+//             items: controller.navItem,
+//             style: FluBottomNavBarStyle(
+//               height: MediaQuery.of(context).size.height * .1,
+//               backgroundColor: Colors.black,
+//               foregroundColor: context.colorScheme.secondary.withOpacity(.85),
+//               unSelectedForegroundColor: context.colorScheme.onPrimary,
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

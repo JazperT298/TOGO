@@ -10,6 +10,7 @@ import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_colors.dart';
 import 'package:ibank/utils/core/users.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -416,9 +417,21 @@ class _Favorites extends StatelessWidget {
                         height: itemSize,
                         width: itemSize,
                         margin: EdgeInsets.only(left: index == 0 ? 0 : 10),
-                        child: FluAvatar(
-                          image: user.avatar,
-                          overlayOpacity: .2,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.getRandomColor(),
+                          ),
+                          child: Center(
+                            child: Text(
+                              user.firstName.substring(0, 1),
+                              style: const TextStyle(
+                                color: Colors
+                                    .white, // You can change the text color
+                                fontSize: 24.0, // You can adjust the font size
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     },

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_images.dart';
 
 import '../../../routes/app_routes.dart';
 
@@ -73,7 +74,9 @@ class _LoginViewState extends State<LoginView> {
             children: [
               Expanded(
                 child: Image.asset(
-                  'assets/images/loginImage.png',
+                  AppImages.loginImage,
+                  height: MediaQuery.of(context).size.height * .3,
+                  width: MediaQuery.of(context).size.height * .3,
                 ),
               ),
               const SizedBox(height: 20),
