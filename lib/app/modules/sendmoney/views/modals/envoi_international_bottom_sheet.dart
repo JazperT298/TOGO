@@ -40,10 +40,12 @@ class EnvoiInternationalBottomSheet extends StatefulWidget {
   final String sendType;
 
   @override
-  State<EnvoiInternationalBottomSheet> createState() => _EnvoiInternationalBottomSheetState();
+  State<EnvoiInternationalBottomSheet> createState() =>
+      _EnvoiInternationalBottomSheetState();
 }
 
-class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottomSheet> {
+class _EnvoiInternationalBottomSheetState
+    extends State<EnvoiInternationalBottomSheet> {
   static final PageController pageController = PageController();
   static final numberEditingCobntroller = TextEditingController();
   static final amountEditingController = TextEditingController();
@@ -67,15 +69,20 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
   CountryCode? countryCode;
   late final FlCountryCodePicker countryPicker;
 
+  String internationalType = '';
+
   @override
   void initState() {
+    numberEditingCobntroller.clear();
+    amountEditingController.clear();
+    codeEditingController.clear();
     // TODO: implement initState
     countryPicker = FlCountryCodePicker(
-      localize: true,
-      showDialCode: true,
-      showSearchBar: false,
-      title: title,
-    );
+        localize: true,
+        showDialCode: true,
+        showSearchBar: false,
+        title: title,
+        filteredCountries: ['BJ', 'CI', 'NE', 'BF', 'ML', 'GW', 'SN']);
     super.initState();
   }
 
@@ -86,21 +93,30 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 12.0, left: 0),
-          child: Text('Selectionner'.toUpperCase(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFFFB6404))),
+          child: Text('Selectionner'.toUpperCase(),
+              style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFFFB6404))),
         ),
         const Padding(
           padding: EdgeInsets.only(top: 4.0, left: 0),
-          child: Text('Votre pays', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black)),
+          child: Text('Votre pays',
+              style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black)),
         ),
         const Padding(
             padding: EdgeInsets.only(top: 8.0, left: 0),
-            child: Text('Choisissez votre pays et bénéficiez d’une expérience personnalisée ainsi que des transactions optimisées.',
+            child: Text(
+                'Choisissez votre pays et bénéficiez d’une expérience personnalisée ainsi que des transactions optimisées.',
                 style: TextStyle(fontSize: 14))),
       ],
     ),
   );
-  final controller =
-      Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  final controller = Get.put(
+      SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   static void toNextStep() async {
     showDialog(
       context: Get.context!,
@@ -124,20 +140,22 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
       Navigator.of(Get.context!).pop(); // Close the alert dialog
 
       // Navigate to the next page
-      pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+      pageController.nextPage(
+          duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
     });
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   void onUserSelected(User usersNumber) {
     setState(() {
       selectedUser = usersNumber;
       numberEditingCobntroller.text = usersNumber.phoneNumber!;
-      AppGlobal.phonenumberspan = usersNumber.phoneNumber!
-          .replaceAll("[^0-9]", ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
+      AppGlobal.phonenumberspan = usersNumber.phoneNumber!.replaceAll("[^0-9]",
+          ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
     });
   }
 
@@ -177,7 +195,8 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -218,7 +237,8 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -259,7 +279,8 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
             const Expanded(
               child: Text(
                 'Numéro',
-                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                style: TextStyle(
+                    fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -288,7 +309,8 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
             const Expanded(
               child: Text(
                 'Montant',
-                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                style: TextStyle(
+                    fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -326,10 +348,12 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                   child: FluTextField(
                     hint: "Numéro du destinataire",
                     inputController: numberEditingCobntroller,
-                    hintStyle: const TextStyle(fontSize: M3FontSizes.titleMedium),
+                    hintStyle:
+                        const TextStyle(fontSize: M3FontSizes.titleMedium),
                     prefix: GestureDetector(
                       onTap: () async {
-                        final picked = await countryPicker.showPicker(context: context);
+                        final picked =
+                            await countryPicker.showPicker(context: context);
                         // Null check
                         if (picked != null) print(picked.dialCode);
                         setState(() {
@@ -339,16 +363,27 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                       child: Container(
                         height: 45,
                         width: MediaQuery.of(context).size.width / 5,
-                        padding: EdgeInsets.symmetric(horizontal: _selectedCountryCode.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
-                        decoration:
-                            BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                _selectedCountryCode.length <= 3 ? 18.0 : 12.0,
+                            vertical: 4.0),
+                        decoration: BoxDecoration(
+                            color: context.colorScheme.primaryContainer,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10.0))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: const TextStyle(color: Colors.black)),
+                            Text(
+                                _selectedCountryCode.isEmpty
+                                    ? '+228'
+                                    : _selectedCountryCode,
+                                style: const TextStyle(color: Colors.black)),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
-                              child: Container(width: 1.5, color: Colors.grey, height: 20),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Container(
+                                  width: 1.5, color: Colors.grey, height: 20),
                             ),
                           ],
                         ),
@@ -358,7 +393,8 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     cornerRadius: 15,
                     keyboardType: TextInputType.number,
                     fillColor: context.colorScheme.primaryContainer,
-                    textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium),
+                    textStyle:
+                        const TextStyle(fontSize: M3FontSizes.bodyMedium),
                     onChanged: (text) {
                       // Remove any existing spaces
                       text = text.replaceAll(" ", "");
@@ -369,7 +405,8 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                           (match) => '${match.group(0)} ',
                         );
                       }
-                      numberEditingCobntroller.value = numberEditingCobntroller.value.copyWith(
+                      numberEditingCobntroller.value =
+                          numberEditingCobntroller.value.copyWith(
                         text: text,
                         selection: TextSelection.collapsed(offset: text.length),
                       );
@@ -378,13 +415,19 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                       });
                     },
                     onFieldSubmitted: (p0) {
-                      if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.length < 11) {
-                        Get.snackbar("Message", 'Numero Invalide', backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                      } else if (numberEditingCobntroller.text.isNotEmpty || numberEditingCobntroller.text.contains('99 99 02 28')) {
+                      if (numberEditingCobntroller.text.isNotEmpty &&
+                          numberEditingCobntroller.text.length < 11) {
+                        Get.snackbar("Message", 'Numero Invalide',
+                            backgroundColor: Colors.lightBlue,
+                            colorText: Colors.white);
+                      } else if (numberEditingCobntroller.text.isNotEmpty ||
+                          numberEditingCobntroller.text
+                              .contains('99 99 02 28')) {
                         // AppGlobal.isEditedTransferNational = true;
                         // AppGlobal.isSubscribedTransferNational = false;
                         // AppGlobal.isOtherNetTransferNational = false;
-                        onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
+                        // onVerifySmidnSubmit(numberEditingCobntroller,
+                        //     amountEditingController, context);
                         // addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                         isTextFieldEmpty = false;
 
@@ -409,8 +452,12 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                         isScrollControlled: true,
                         context: context,
                         builder: (context) => Container(
-                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                            child: ModalBottomSheet(child: EnvoiInternationalBottomSheet(sendType: widget.sendType)))).then((value) {
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            child: ModalBottomSheet(
+                                child: EnvoiInternationalBottomSheet(
+                                    sendType: widget.sendType)))).then((value) {
                       if (value != null) {
                         setState(() {
                           selectedUser = value;
@@ -425,9 +472,12 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                   child: Container(
                       height: 45,
                       width: MediaQuery.of(context).size.width / 7.8,
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                      decoration:
-                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 4.0),
+                      decoration: BoxDecoration(
+                          color: context.colorScheme.primaryContainer,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0))),
                       child: const FluIcon(FluIcons.userSearch, size: 20)),
                 ),
               ],
@@ -453,13 +503,13 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (numberEditingCobntroller.text.isNotEmpty) {
-                    onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
+                    onVerifySmidnSubmit(
+                        numberEditingCobntroller.text, _selectedCountryCode);
                     // addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                     AppGlobal.isEditedTransferNational = true;
                     AppGlobal.isSubscribedTransferNational = false;
                     AppGlobal.isOtherNetTransferNational = false;
                     isTextFieldEmpty = false;
-
                     if (selectedUser == null) {
                       AppGlobal.phonenumberspan = null;
                     }
@@ -482,7 +532,9 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
           ],
@@ -571,7 +623,9 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -636,7 +690,11 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     //   });
                   } else {
                     setState(() {
-                      addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
+                      verifyAndroid(
+                          selectedCountryCode: _selectedCountryCode,
+                          destinationMSISDN: numberEditingCobntroller.text,
+                          amount: amountEditingController.text,
+                          code: codeEditingController.text);
                     });
                     showDialog(
                       context: context,
@@ -656,15 +714,15 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     );
 
                     // Delay for 3 seconds
-                    await Future.delayed(Duration(seconds: 2), () {
-                      Navigator.of(context).pop(); // Close the alert dialog
+                    // await Future.delayed(Duration(seconds: 2), () {
+                    //   Navigator.of(context).pop(); // Close the alert dialog
 
-                      print('isInvalidCode $isInvalidCode');
-                      if (isInvalidCode == false) {
-                        Get.toNamed(AppRoutes.TRANSACCOMPLETE);
-                      }
-                    });
-                    setState(() {});
+                    //   print('isInvalidCode $isInvalidCode');
+                    //   if (isInvalidCode == false) {
+                    //     Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+                    //   }
+                    // });
+                    // setState(() {});
                     // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
                   }
                 }),
@@ -719,7 +777,11 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     //   });
                   } else {
                     setState(() {
-                      addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
+                      verifyAndroid(
+                          selectedCountryCode: _selectedCountryCode,
+                          destinationMSISDN: numberEditingCobntroller.text,
+                          amount: amountEditingController.text,
+                          code: codeEditingController.text);
                     });
                     showDialog(
                       context: context,
@@ -739,15 +801,15 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     );
 
                     // Delay for 3 seconds
-                    await Future.delayed(Duration(seconds: 3), () {
-                      Navigator.of(context).pop(); // Close the alert dialog
+                    // await Future.delayed(Duration(seconds: 3), () {
+                    //   Navigator.of(context).pop(); // Close the alert dialog
 
-                      print('isInvalidCode $isInvalidCode');
-                      if (isInvalidCode == false) {
-                        Get.toNamed(AppRoutes.TRANSACCOMPLETE);
-                      }
-                    });
-                    setState(() {});
+                    //   print('isInvalidCode $isInvalidCode');
+                    //   if (isInvalidCode == false) {
+                    //     Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+                    //   }
+                    // });
+                    // setState(() {});
                     // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
                   }
                 },
@@ -764,7 +826,9 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -817,7 +881,9 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -836,24 +902,105 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
     );
   }
 
-  //vshould verify the receiver
-  static void addNumberFromReceiver(String msisdn, String token) async {
+  static void onVerifySmidnSubmit(
+      String destinationMsisdn, String selectedCountryCode) async {
     try {
-      var strToken = await SqlHelper.getToken();
-      print('strToken ${strToken!.replaceAll(".", "")}');
-      var toe = strToken.replaceAll(".", "");
+      print(destinationMsisdn);
+      print(selectedCountryCode);
+      String toReplaceSpaces =
+          (selectedCountryCode + destinationMsisdn).trim().toString();
+      String toReplacePlusSign = toReplaceSpaces.replaceAll(" ", "");
+      String finalmsisdn =
+          toReplacePlusSign.replaceAll("+", "").trim().toString();
+      print(finalmsisdn);
+      print("CALLED NI");
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
-          <v:Header /><v:Body><n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <v:Header />
+          <v:Body>
+          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <msisdn i:type="d:string">22899990228</msisdn>
+          <message i:type="d:string">VRFY GETNDC $finalmsisdn F</message>
+          <token i:type="d:string">F3C8DEBDBA27B035</token>
+          <sendsms i:type="d:string">false</sendsms>
+          </n0:RequestToken>
+          </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var jsonString = soapElement.innerText;
+        var decodedData = jsonDecode(jsonString);
+        log(decodedData.toString());
+
+        // if (decodedData['international'] == 'xcash') {
+        //   AppGlobal.internationalType = 'CASH';
+        // } else if (decodedData['international'] == 'xmcash') {
+        //   AppGlobal.internationalType = 'XMCASH';
+        // }
+        if (decodedData['onNet'] == true || decodedData['offNet'] == true) {
+          Get.snackbar("Numéro invalide", jsonString,
+              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+        } else {
+          if (decodedData['description'] == "SUCCESS") {
+            AppGlobal.internationalType = decodedData['international'];
+            toNextStep();
+          } else {
+            Get.snackbar(decodedData['message'], jsonString,
+                backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          }
+        }
+
+        // if (jsonString.contains('Retrait validé')) {
+
+        // } else {
+        //   Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+        // }
+      } else {
+        print(response.reasonPhrase);
+      }
+    } catch (e) {
+      print('onVerifySmidnSubmit $e');
+    }
+  }
+
+  //vshould verify the receiver
+  static void verifyAndroid(
+      {required String destinationMSISDN,
+      required String selectedCountryCode,
+      required String amount,
+      required String code}) async {
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+          <v:Body>
+          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
           <msisdn i:type="d:string">22899990228</msisdn>
           <message i:type="d:string">VRFY ANDROIDAPP F3C8DEBDBA27B035 ANDROID 3.0.1.0 F</message>
-          <token i:type="d:string">1234567890</token>
+          <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">false</sendsms>
-          </n0:RequestToken></v:Body></v:Envelope>''';
+          </n0:RequestToken>
+          </v:Body>
+          </v:Envelope>''';
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
@@ -863,29 +1010,26 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         var document = xml.XmlDocument.parse(parseResult);
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
-        log(jsonString);
         var decodedData = jsonDecode(jsonString);
-        String description = decodedData['description'];
-        if (description.contains('TOKEN_FOUND')) {
-          var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
-          sendMoneyToReceiver(asd, 'F3C8DEBDBA27B035', amountEditingController.text, codeEditingController.text, messageType);
-          // } else if (description.contains('VERSION NOT UP TO DATE')) {
-        } else {
-          isInvalidCode = true;
-          if (!description.contains('TOKEN_NOT_FOUND')) {
-            invalidCodeString = description;
-          }
-          if (description.contains('TOKEN_NOT_FOUND')) {
-            await Future.delayed(Duration(seconds: 1), () {});
-            await SharedPrefService.logoutUserData(false, '').then((value) {
-              ProgressAlertDialog.showALoadingDialog(Get.context!, 'Déconnecter...', 3, AppRoutes.LOGIN);
-            });
-            Get.snackbar("Message", "La session a expiré. Vous avez été déconnecté!...",
-                backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: Duration(seconds: 5));
-          }
+        log(decodedData.toString());
+        if (decodedData['description'] == 'TOKEN_FOUND') {
+          sendMoneyInternational(
+              selectedCountryCode: selectedCountryCode,
+              destinationMSISDN: destinationMSISDN,
+              amount: amount,
+              code: code);
+        } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
+          await Future.delayed(Duration(seconds: 1), () {});
+          await SharedPrefService.logoutUserData(false, '').then((value) {
+            ProgressAlertDialog.showALoadingDialog(
+                Get.context!, 'Déconnecter...', 3, AppRoutes.LOGIN);
+          });
+          Get.snackbar(
+              "Message", "La session a expiré. Vous avez été déconnecté!...",
+              backgroundColor: Colors.lightBlue,
+              colorText: Colors.white,
+              duration: Duration(seconds: 5));
         }
-        // var jsonResponse = jsonDecode(jsonString);
-        print('JSON Response: $jsonString');
       } else {
         numberEditingCobntroller.clear();
         print('asda ${response.reasonPhrase}');
@@ -897,87 +1041,98 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
 
   //1111 and code if kani 22879397111 nga user
   // 99990137
-  static void sendMoneyToReceiver(String msisdn, String token, String amounts, String code, String mess) async {
+  static void sendMoneyInternational(
+      {required String destinationMSISDN,
+      required String amount,
+      required String selectedCountryCode,
+      required String code}) async {
     try {
+      print("CALLED_HERE");
+      print(destinationMSISDN);
+      print(amount);
+      print(code);
+
+      print(AppGlobal.internationalType);
+
+      String toReplaceSpaces =
+          (selectedCountryCode + destinationMSISDN).trim().toString();
+      String toReplacePlusSign = toReplaceSpaces.replaceAll(" ", "");
+      String finalmsisdn =
+          toReplacePlusSign.replaceAll("+", "").trim().toString();
+      print(finalmsisdn);
+
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
-          xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+
+      if (AppGlobal.internationalType == "xcash") {
+        request.body =
+            '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
-          <v:Header /><v:Body><n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990228</msisdn><message i:type="d:string">$mess $msisdn $amounts $code F</message>
-          <token i:type="d:string">F3C8DEBDBA27B035</token><sendsms i:type="d:string">true</sendsms>
-          </n0:RequestToken></v:Body></v:Envelope>''';
+          <v:Header />
+          <v:Body>
+          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <msisdn i:type="d:string">22899990228</msisdn>
+          <message i:type="d:string">CASH $finalmsisdn $amount $code F</message>
+          <token i:type="d:string">F3C8DEBDBA27B035</token>
+          <sendsms i:type="d:string">true</sendsms></n0:RequestToken></v:Body></v:Envelope>''';
+      } else if (AppGlobal.internationalType == "xmcash") {
+        String alphacodetwo = '';
+        // ['BJ', 'CI', 'NE', 'BF', 'ML', 'GW', 'SN']
+        if (selectedCountryCode == "+229") {
+          alphacodetwo = 'BJ';
+        }
+        if (selectedCountryCode == "+226") {
+          alphacodetwo = 'BF';
+        }
+        if (selectedCountryCode == "+225") {
+          alphacodetwo = 'CI';
+        }
+        if (selectedCountryCode == "+245") {
+          alphacodetwo = 'GW';
+        }
+        if (selectedCountryCode == "+223") {
+          alphacodetwo = 'ML';
+        }
+        if (selectedCountryCode == "+227") {
+          alphacodetwo = 'NE';
+        }
+        if (selectedCountryCode == "+221") {
+          alphacodetwo = 'SN';
+        }
+        request.body =
+            '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+            xmlns:d="http://www.w3.org/2001/XMLSchema" 
+            xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+            xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+            <v:Header />
+            <v:Body>
+            <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+            <msisdn i:type="d:string">22899990228</msisdn>
+            <message i:type="d:string">XMCASH MFS_AFRICA_SEND $finalmsisdn:::$alphacodetwo $amount $code F</message>
+            <token i:type="d:string">F3C8DEBDBA27B035</token>
+            <sendsms i:type="d:string">true</sendsms>
+            </n0:RequestToken></v:Body></v:Envelope>''';
+      }
+
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
         var result = await response.stream.bytesToString();
-
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
-        var documentss = xml.XmlDocument.parse(parseResult);
-        var requestTokenReturnElement = document.findAllElements('RequestTokenReturn').single;
-
-        if (jsonString.contains('Transfert reussi')) {
-          String trimString = jsonString.replaceAll('Transfert reussi', '');
-          String inputString = "'''$trimString'''";
-          var lines = inputString.trim().split('\n');
-          var jsonMap = {};
-          log(lines.toString());
-          for (var line in lines) {
-            var parts = line.split(':');
-            if (parts.length == 2) {
-              var key = parts[0].trim();
-              var value = parts[1].trim();
-              jsonMap[key] = value;
-            }
-            if (parts.length == 3) {
-              var trioPart = line.split(',');
-              for (var lin in trioPart) {
-                var finLine = lin.split(':');
-                var key = finLine[0].trim();
-                var value = finLine[1].trim();
-                jsonMap[key] = value;
-              }
-            }
-            if (parts.length == 4) {
-              String date = line.replaceAll('Date:', '');
-              var dateformatList = date.trim().toString().split(" ");
-              jsonMap['Date'] = dateformatList[0];
-              jsonMap['Time'] = dateformatList[1];
-            }
-          }
-          var dataEncoded = jsonEncode(jsonMap);
-          var dataDecoded = jsonDecode(dataEncoded);
-          log(dataDecoded.toString());
-          String? amounts = dataDecoded['Montant'];
-          String? beneficiary = dataDecoded['Beneficiaire'];
-          String? date = dataDecoded['Date'].toString();
-          String? newBalance = dataDecoded['Nouveau solde Flooz'];
-          String? txnId = dataDecoded['Txn ID'];
-          String? time = dataDecoded['Time'];
-
-          AppGlobal.beneficiare = beneficiary.toString();
-          AppGlobal.date = date.toString();
-          AppGlobal.amount = amounts.toString();
-          AppGlobal.remainingBal = newBalance.toString();
-          AppGlobal.txn = txnId.toString();
-          AppGlobal.numbers = msisdn.toString();
-          AppGlobal.time = time.toString();
-
-          if (AppGlobal.numbers == AppGlobal.beneficiare) {
-            AppGlobal.beneficiare = 'N/A';
-          }
-
-          isInvalidCode = false;
-        } else {
-          isInvalidCode = true;
-          invalidCodeString = jsonString;
-        }
+        log(jsonString.toString());
+        Get.back();
+        Get.back();
         numberEditingCobntroller.clear();
+        amountEditingController.clear();
+        codeEditingController.clear();
+        showSuccessOrderPlace(message: jsonString);
       } else {
         numberEditingCobntroller.clear();
         log('response.reasonPhrase ${response.reasonPhrase}');
@@ -987,6 +1142,36 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
     } catch (e) {
       log('asd $e');
     }
+  }
+
+  static showSuccessOrderPlace({required String message}) async {
+    Get.dialog(AlertDialog(
+        content: Container(
+      height: MediaQuery.of(Get.context!).size.height * 0.2,
+      width: MediaQuery.of(Get.context!).size.width,
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Message",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(Get.context!).size.height * 0.032,
+          ),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 10),
+          ),
+        ],
+      ),
+    )));
   }
 
   Map<String, dynamic> parseInnerStringToMap(String innerString) {
@@ -1065,81 +1250,6 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
     return transferInfo;
   }
 
-  static void onVerifySmidnSubmit(
-      TextEditingController numberEditingController, TextEditingController amountEditingController, BuildContext context) async {
-    try {
-      String msisdn = "";
-      print('onSendMoneySubmit AppGlobal.phonenumberspan  ${AppGlobal.phonenumberspan}');
-      if (AppGlobal.phonenumberspan != null) {
-        // List<dynamic> url = AppGlobal.phonenumberspan.getSpans(0, AppGlobal.phonenumberspan.length) as List<dynamic>;
-        msisdn = AppGlobal.phonenumberspan;
-        //url[0].url;
-        fieldtype = FieldType.PHONEBOOK;
-      } else {
-        //assign receivers number
-        msisdn = numberEditingController.text.replaceAll(" ", "");
-
-        fieldtype = FieldType.NORMAL;
-      }
-      print('onSendMoneySubmit fieldtype $fieldtype');
-      print('onSendMoneySubmit fieldtype $msisdn');
-      //msisdn = verifyMsisdn(msisdn);
-      msisdn = ParserValidator.validateMsisdn("228", msisdn, context);
-      print('onSendMoneySubmit msisdn $msisdn');
-
-      if (StringUtil().isNullOrEmpty(msisdn)) {
-        showToast2(context, AppStringValidation.destinationRequired);
-        print('onSendMoneySubmit fieldtype ${AppStringValidation.destinationRequired}}');
-        return;
-      }
-      if (AppGlobal.isEditedTransferNational) {
-        var res = await AuthProvider.sendVerification(msisdn);
-        if (res.extendedData.issubscribed && res.extendedData.othernet) {
-          print('CASH APPCASH ${res.extendedData.issubscribed} ${res.extendedData.othernet}');
-          AppGlobal.isEditedTransferNational = false;
-          messageType = 'APPCASH';
-          toNextStep();
-        } else if (res.extendedData.issubscribed && !res.extendedData.othernet) {
-          print('CASH APPCASH ${res.extendedData.issubscribed} ${!res.extendedData.othernet}');
-          AppGlobal.isEditedTransferNational = false;
-          messageType = 'APPCASH';
-          toNextStep();
-        } else if (!res.extendedData.issubscribed && !res.extendedData.othernet) {
-          print('CASH APPCASH ${!res.extendedData.issubscribed} ${!res.extendedData.othernet}');
-          AppGlobal.isEditedTransferNational = false;
-          messageType = 'APPCASH';
-          toNextStep();
-        } else if (!res.extendedData.issubscribed && res.extendedData.othernet) {
-          print('CASH CASHOFF ${!res.extendedData.issubscribed} ${res.extendedData.othernet}');
-          AppGlobal.isEditedTransferNational = false;
-          messageType = 'CASHOFF';
-          toNextStep();
-        } else {
-          showToast2(context, AppStringValidation.destinationRequired);
-        }
-      } else {
-        // Kung phonebook ni siya nga function
-        print('onSendMoneySubmit asd sulod dre 2');
-        //assign amount
-        // String? amount = ParserValidator.parseAmount2(amountEditingController, context);
-        // print('onSendMoneySubmit amount $amount');
-        if (StringUtil().isNullOrEmpty(amountEditingController.text)) return;
-
-        if (AppGlobal.isSubscribedTransferNational & AppGlobal.isOtherNetTransferNational) {
-          sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
-        } else if (AppGlobal.isSubscribedTransferNational & !AppGlobal.isOtherNetTransferNational) {
-          sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
-        } else if (!AppGlobal.isSubscribedTransferNational & !AppGlobal.isOtherNetTransferNational) {
-          sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
-        } else if (!AppGlobal.isSubscribedTransferNational & AppGlobal.isOtherNetTransferNational) {
-          sendSoap(msisdn, amountEditingController.text, NetState.OFFNET);
-        }
-      }
-    } catch (ex) {
-      print('onSendMoneySubmit ex $ex');
-    }
-  }
-
   static void sendSoap(String msisdn, String amount, NetState state) {
     resetMessage();
     switch (state) {
@@ -1177,13 +1287,18 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
     String confirm = "";
     switch (fieldtype) {
       case FieldType.NORMAL:
-        confirm = AppStringConfirmation.confirmtransfertnationalmanual.replaceAll("<amount>", amount).replaceAll("<msisdn>", msisdn);
+        confirm = AppStringConfirmation.confirmtransfertnationalmanual
+            .replaceAll("<amount>", amount)
+            .replaceAll("<msisdn>", msisdn);
         print("HITS 3 ${message.toString()}");
         break;
       case FieldType.PHONEBOOK:
         confirm = AppStringConfirmation.confirmtransfertnational
             .replaceAll("<amount>", amount)
-            .replaceAll("<contactname>", StringUtil().setText(AppGlobal.addressBookDisplayName, AppGlobal.addressBookDisplayName, ""))
+            .replaceAll(
+                "<contactname>",
+                StringUtil().setText(AppGlobal.addressBookDisplayName,
+                    AppGlobal.addressBookDisplayName, ""))
             .replaceAll("<msisdn>", msisdn);
         print("HITS 4 ${message.toString()}");
         break;
@@ -1202,12 +1317,19 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
   }
 
   static void showToast2(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   static void resetMessage() {
-    if (AppGlobal.message.length > 0) AppGlobal.message.write(AppGlobal.message.length);
-    if (AppGlobal.notifymessage.length > 0) AppGlobal.notifymessage.write(AppGlobal.notifymessage.length);
-    if (AppGlobal.shortcode.length > 0) AppGlobal.shortcode.write(AppGlobal.shortcode.length);
+    if (AppGlobal.message.length > 0) {
+      AppGlobal.message.write(AppGlobal.message.length);
+    }
+    if (AppGlobal.notifymessage.length > 0) {
+      AppGlobal.notifymessage.write(AppGlobal.notifymessage.length);
+    }
+    if (AppGlobal.shortcode.length > 0) {
+      AppGlobal.shortcode.write(AppGlobal.shortcode.length);
+    }
   }
 }

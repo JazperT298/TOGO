@@ -62,8 +62,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
   static String messageType = '';
 
-  final controller =
-      Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  final controller = Get.put(
+      SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   static void toNextStep() async {
     showDialog(
       context: Get.context!,
@@ -87,20 +87,22 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       Navigator.of(Get.context!).pop(); // Close the alert dialog
 
       // Navigate to the next page
-      pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+      pageController.nextPage(
+          duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
     });
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   void onUserSelected(User usersNumber) {
     setState(() {
       selectedUser = usersNumber;
       numberEditingCobntroller.text = usersNumber.phoneNumber!;
-      AppGlobal.phonenumberspan = usersNumber.phoneNumber!
-          .replaceAll("[^0-9]", ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
+      AppGlobal.phonenumberspan = usersNumber.phoneNumber!.replaceAll("[^0-9]",
+          ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
     });
   }
 
@@ -140,7 +142,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -181,7 +184,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -242,7 +246,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   const Expanded(
                     child: Text(
                       'Prénom',
-                      style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                      style: TextStyle(
+                          fontSize: M3FontSizes.headlineTiny,
+                          color: Colors.grey),
                     ),
                   ),
                   Expanded(
@@ -264,7 +270,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             const Expanded(
               child: Text(
                 'Numéro',
-                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                style: TextStyle(
+                    fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -315,7 +322,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             const Expanded(
               child: Text(
                 'Montant',
-                style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                style: TextStyle(
+                    fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -353,12 +361,14 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   child: FluTextField(
                     hint: "Numéro du destinataire",
                     inputController: numberEditingCobntroller,
-                    hintStyle: const TextStyle(fontSize: M3FontSizes.titleMedium),
+                    hintStyle:
+                        const TextStyle(fontSize: M3FontSizes.titleMedium),
                     height: 50,
                     cornerRadius: 15,
                     keyboardType: TextInputType.number,
                     fillColor: context.colorScheme.primaryContainer,
-                    textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium),
+                    textStyle:
+                        const TextStyle(fontSize: M3FontSizes.bodyMedium),
                     onChanged: (text) {
                       // Remove any existing spaces
                       text = text.replaceAll(" ", "");
@@ -369,7 +379,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                           (match) => '${match.group(0)} ',
                         );
                       }
-                      numberEditingCobntroller.value = numberEditingCobntroller.value.copyWith(
+                      numberEditingCobntroller.value =
+                          numberEditingCobntroller.value.copyWith(
                         text: text,
                         selection: TextSelection.collapsed(offset: text.length),
                       );
@@ -378,13 +389,19 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       });
                     },
                     onFieldSubmitted: (p0) {
-                      if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.length < 11) {
-                        Get.snackbar("Message", 'Numero Invalide', backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                      } else if (numberEditingCobntroller.text.isNotEmpty || numberEditingCobntroller.text.contains('99 99 02 28')) {
+                      if (numberEditingCobntroller.text.isNotEmpty &&
+                          numberEditingCobntroller.text.length < 11) {
+                        Get.snackbar("Message", 'Numero Invalide',
+                            backgroundColor: Colors.lightBlue,
+                            colorText: Colors.white);
+                      } else if (numberEditingCobntroller.text.isNotEmpty ||
+                          numberEditingCobntroller.text
+                              .contains('99 99 02 28')) {
                         // AppGlobal.isEditedTransferNational = true;
                         // AppGlobal.isSubscribedTransferNational = false;
                         // AppGlobal.isOtherNetTransferNational = false;
-                        onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
+                        onVerifySmidnSubmit(numberEditingCobntroller,
+                            amountEditingController, context);
                         // addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                         isTextFieldEmpty = false;
 
@@ -409,8 +426,12 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                         isScrollControlled: true,
                         context: context,
                         builder: (context) => Container(
-                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                            child: ModalBottomSheet(child: EnvoiModalBottomSheet(sendType: widget.sendType)))).then((value) {
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            child: ModalBottomSheet(
+                                child: EnvoiModalBottomSheet(
+                                    sendType: widget.sendType)))).then((value) {
                       if (value != null) {
                         setState(() {
                           selectedUser = value;
@@ -425,9 +446,12 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   child: Container(
                       height: 45,
                       width: MediaQuery.of(context).size.width / 7.8,
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                      decoration:
-                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 4.0),
+                      decoration: BoxDecoration(
+                          color: context.colorScheme.primaryContainer,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0))),
                       child: const FluIcon(FluIcons.userSearch, size: 20)),
                 ),
               ],
@@ -453,7 +477,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (numberEditingCobntroller.text.isNotEmpty) {
-                    onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
+                    onVerifySmidnSubmit(numberEditingCobntroller,
+                        amountEditingController, context);
                     // addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                     AppGlobal.isEditedTransferNational = true;
                     AppGlobal.isSubscribedTransferNational = false;
@@ -482,7 +507,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
           ],
@@ -571,7 +598,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -636,7 +665,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     //   });
                   } else {
                     setState(() {
-                      addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
+                      addNumberFromReceiver(
+                          numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                     });
                     showDialog(
                       context: context,
@@ -719,7 +749,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     //   });
                   } else {
                     setState(() {
-                      addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
+                      addNumberFromReceiver(
+                          numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                     });
                     showDialog(
                       context: context,
@@ -764,7 +795,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -817,7 +850,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             const SizedBox(height: 30),
@@ -843,8 +878,10 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       print('strToken ${strToken!.replaceAll(".", "")}');
       var toe = strToken.replaceAll(".", "");
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -868,7 +905,12 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         String description = decodedData['description'];
         if (description.contains('TOKEN_FOUND')) {
           var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
-          sendMoneyToReceiver(asd, 'F3C8DEBDBA27B035', amountEditingController.text, codeEditingController.text, messageType);
+          sendMoneyToReceiver(
+              asd,
+              'F3C8DEBDBA27B035',
+              amountEditingController.text,
+              codeEditingController.text,
+              messageType);
           // } else if (description.contains('VERSION NOT UP TO DATE')) {
         } else {
           isInvalidCode = true;
@@ -878,10 +920,14 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           if (description.contains('TOKEN_NOT_FOUND')) {
             await Future.delayed(Duration(seconds: 1), () {});
             await SharedPrefService.logoutUserData(false, '').then((value) {
-              ProgressAlertDialog.showALoadingDialog(Get.context!, 'Déconnecter...', 3, AppRoutes.LOGIN);
+              ProgressAlertDialog.showALoadingDialog(
+                  Get.context!, 'Déconnecter...', 3, AppRoutes.LOGIN);
             });
-            Get.snackbar("Message", "La session a expiré. Vous avez été déconnecté!...",
-                backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: Duration(seconds: 5));
+            Get.snackbar(
+                "Message", "La session a expiré. Vous avez été déconnecté!...",
+                backgroundColor: Colors.lightBlue,
+                colorText: Colors.white,
+                duration: Duration(seconds: 5));
           }
         }
         // var jsonResponse = jsonDecode(jsonString);
@@ -897,11 +943,14 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
   //1111 and code if kani 22879397111 nga user
   // 99990137
-  static void sendMoneyToReceiver(String msisdn, String token, String amounts, String code, String mess) async {
+  static void sendMoneyToReceiver(String msisdn, String token, String amounts,
+      String code, String mess) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header /><v:Body><n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
@@ -919,7 +968,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
         var documentss = xml.XmlDocument.parse(parseResult);
-        var requestTokenReturnElement = document.findAllElements('RequestTokenReturn').single;
+        var requestTokenReturnElement =
+            document.findAllElements('RequestTokenReturn').single;
 
         if (jsonString.contains('Transfert reussi')) {
           String trimString = jsonString.replaceAll('Transfert reussi', '');
@@ -1066,10 +1116,13 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   }
 
   static void onVerifySmidnSubmit(
-      TextEditingController numberEditingController, TextEditingController amountEditingController, BuildContext context) async {
+      TextEditingController numberEditingController,
+      TextEditingController amountEditingController,
+      BuildContext context) async {
     try {
       String msisdn = "";
-      print('onSendMoneySubmit AppGlobal.phonenumberspan  ${AppGlobal.phonenumberspan}');
+      print(
+          'onSendMoneySubmit AppGlobal.phonenumberspan  ${AppGlobal.phonenumberspan}');
       if (AppGlobal.phonenumberspan != null) {
         // List<dynamic> url = AppGlobal.phonenumberspan.getSpans(0, AppGlobal.phonenumberspan.length) as List<dynamic>;
         msisdn = AppGlobal.phonenumberspan;
@@ -1089,28 +1142,36 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
       if (StringUtil().isNullOrEmpty(msisdn)) {
         showToast2(context, AppStringValidation.destinationRequired);
-        print('onSendMoneySubmit fieldtype ${AppStringValidation.destinationRequired}}');
+        print(
+            'onSendMoneySubmit fieldtype ${AppStringValidation.destinationRequired}}');
         return;
       }
       if (AppGlobal.isEditedTransferNational) {
         var res = await AuthProvider.sendVerification(msisdn);
         if (res.extendedData.issubscribed && res.extendedData.othernet) {
-          print('CASH APPCASH ${res.extendedData.issubscribed} ${res.extendedData.othernet}');
+          print(
+              'CASH APPCASH ${res.extendedData.issubscribed} ${res.extendedData.othernet}');
           AppGlobal.isEditedTransferNational = false;
           messageType = 'APPCASH';
           toNextStep();
-        } else if (res.extendedData.issubscribed && !res.extendedData.othernet) {
-          print('CASH APPCASH ${res.extendedData.issubscribed} ${!res.extendedData.othernet}');
+        } else if (res.extendedData.issubscribed &&
+            !res.extendedData.othernet) {
+          print(
+              'CASH APPCASH ${res.extendedData.issubscribed} ${!res.extendedData.othernet}');
           AppGlobal.isEditedTransferNational = false;
           messageType = 'APPCASH';
           toNextStep();
-        } else if (!res.extendedData.issubscribed && !res.extendedData.othernet) {
-          print('CASH APPCASH ${!res.extendedData.issubscribed} ${!res.extendedData.othernet}');
+        } else if (!res.extendedData.issubscribed &&
+            !res.extendedData.othernet) {
+          print(
+              'CASH APPCASH ${!res.extendedData.issubscribed} ${!res.extendedData.othernet}');
           AppGlobal.isEditedTransferNational = false;
           messageType = 'APPCASH';
           toNextStep();
-        } else if (!res.extendedData.issubscribed && res.extendedData.othernet) {
-          print('CASH CASHOFF ${!res.extendedData.issubscribed} ${res.extendedData.othernet}');
+        } else if (!res.extendedData.issubscribed &&
+            res.extendedData.othernet) {
+          print(
+              'CASH CASHOFF ${!res.extendedData.issubscribed} ${res.extendedData.othernet}');
           AppGlobal.isEditedTransferNational = false;
           messageType = 'CASHOFF';
           toNextStep();
@@ -1125,13 +1186,17 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         // print('onSendMoneySubmit amount $amount');
         if (StringUtil().isNullOrEmpty(amountEditingController.text)) return;
 
-        if (AppGlobal.isSubscribedTransferNational & AppGlobal.isOtherNetTransferNational) {
+        if (AppGlobal.isSubscribedTransferNational &
+            AppGlobal.isOtherNetTransferNational) {
           sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
-        } else if (AppGlobal.isSubscribedTransferNational & !AppGlobal.isOtherNetTransferNational) {
+        } else if (AppGlobal.isSubscribedTransferNational &
+            !AppGlobal.isOtherNetTransferNational) {
           sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
-        } else if (!AppGlobal.isSubscribedTransferNational & !AppGlobal.isOtherNetTransferNational) {
+        } else if (!AppGlobal.isSubscribedTransferNational &
+            !AppGlobal.isOtherNetTransferNational) {
           sendSoap(msisdn, amountEditingController.text, NetState.ONNET);
-        } else if (!AppGlobal.isSubscribedTransferNational & AppGlobal.isOtherNetTransferNational) {
+        } else if (!AppGlobal.isSubscribedTransferNational &
+            AppGlobal.isOtherNetTransferNational) {
           sendSoap(msisdn, amountEditingController.text, NetState.OFFNET);
         }
       }
@@ -1177,13 +1242,18 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
     String confirm = "";
     switch (fieldtype) {
       case FieldType.NORMAL:
-        confirm = AppStringConfirmation.confirmtransfertnationalmanual.replaceAll("<amount>", amount).replaceAll("<msisdn>", msisdn);
+        confirm = AppStringConfirmation.confirmtransfertnationalmanual
+            .replaceAll("<amount>", amount)
+            .replaceAll("<msisdn>", msisdn);
         print("HITS 3 ${message.toString()}");
         break;
       case FieldType.PHONEBOOK:
         confirm = AppStringConfirmation.confirmtransfertnational
             .replaceAll("<amount>", amount)
-            .replaceAll("<contactname>", StringUtil().setText(AppGlobal.addressBookDisplayName, AppGlobal.addressBookDisplayName, ""))
+            .replaceAll(
+                "<contactname>",
+                StringUtil().setText(AppGlobal.addressBookDisplayName,
+                    AppGlobal.addressBookDisplayName, ""))
             .replaceAll("<msisdn>", msisdn);
         print("HITS 4 ${message.toString()}");
         break;
@@ -1202,12 +1272,19 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   }
 
   static void showToast2(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   static void resetMessage() {
-    if (AppGlobal.message.length > 0) AppGlobal.message.write(AppGlobal.message.length);
-    if (AppGlobal.notifymessage.length > 0) AppGlobal.notifymessage.write(AppGlobal.notifymessage.length);
-    if (AppGlobal.shortcode.length > 0) AppGlobal.shortcode.write(AppGlobal.shortcode.length);
+    if (AppGlobal.message.length > 0) {
+      AppGlobal.message.write(AppGlobal.message.length);
+    }
+    if (AppGlobal.notifymessage.length > 0) {
+      AppGlobal.notifymessage.write(AppGlobal.notifymessage.length);
+    }
+    if (AppGlobal.shortcode.length > 0) {
+      AppGlobal.shortcode.write(AppGlobal.shortcode.length);
+    }
   }
 }
