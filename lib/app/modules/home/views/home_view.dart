@@ -9,6 +9,7 @@ import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_colors.dart';
 import 'package:ibank/utils/core/users.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -16,11 +17,7 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildTitle(BuildContext context, String text, Color color) => Text(
         text.toUpperCase(),
-        style: TextStyle(
-            fontSize: M3FontSizes.headlineMedium,
-            fontWeight: FontWeight.bold,
-            color: color,
-            height: 1.5),
+        style: TextStyle(fontSize: M3FontSizes.headlineMedium, fontWeight: FontWeight.bold, color: color, height: 1.5),
       );
 
   @override
@@ -34,8 +31,7 @@ class HomeView extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.only(
-                    top: 10, bottom: MediaQuery.of(context).size.height * .025),
+                padding: EdgeInsets.only(top: 10, bottom: MediaQuery.of(context).size.height * .025),
                 color: context.colorScheme.primary.withOpacity(.1),
                 child: SafeArea(
                   child: Column(
@@ -55,9 +51,7 @@ class HomeView extends GetView<HomeController> {
                                     outlined: true,
                                     outlineThickness: 1.5,
                                     outlineGap: 3,
-                                    outlineColor: [
-                                      context.colorScheme.outlineVariant
-                                    ],
+                                    outlineColor: [context.colorScheme.outlineVariant],
                                     margin: const EdgeInsets.only(right: 10),
                                   ),
                                 ),
@@ -70,29 +64,17 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * .035),
+                            SizedBox(height: MediaQuery.of(context).size.height * .035),
                             Text(Flu.formatDate(DateTime.now()).toUpperCase(),
-                                style: TextStyle(
-                                    color: context.colorScheme.onBackground
-                                        .withOpacity(.45))),
-                            _buildTitle(
-                                context,
-                                'Votre argent, votre contrôle.'.toUpperCase(),
-                                context.colorScheme.onSurface),
+                                style: TextStyle(color: context.colorScheme.onBackground.withOpacity(.45))),
+                            _buildTitle(context, 'Votre argent, votre contrôle.'.toUpperCase(), context.colorScheme.onSurface),
                             FluLine(
                               height: 1,
                               width: double.infinity,
                               color: context.colorScheme.surface,
-                              margin: EdgeInsets.symmetric(
-                                      vertical:
-                                          MediaQuery.of(context).size.height *
-                                              .025)
-                                  .copyWith(
+                              margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025).copyWith(
                                 left: MediaQuery.of(context).size.height * .1,
-                                right:
-                                    MediaQuery.of(context).size.height * .015,
+                                right: MediaQuery.of(context).size.height * .015,
                               ),
                             ),
                             const _Card(),
@@ -106,8 +88,7 @@ class HomeView extends GetView<HomeController> {
               ),
               _Favorites(users..shuffle()),
               const Padding(
-                padding:
-                    EdgeInsets.only(right: 20, top: 50, left: 20, bottom: 15),
+                padding: EdgeInsets.only(right: 20, top: 50, left: 20, bottom: 15),
                 child: _PromotionsAndOffers(),
               ),
             ],
@@ -135,9 +116,7 @@ class _CardState extends State<_Card> {
     return Container(
         height: MediaQuery.of(context).size.height * .25,
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-            color: context.colorScheme.primary,
-            borderRadius: BorderRadius.circular(25)),
+        decoration: BoxDecoration(color: context.colorScheme.primary, borderRadius: BorderRadius.circular(25)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -162,12 +141,8 @@ class _CardState extends State<_Card> {
                           Expanded(
                             child: Text.rich(
                               TextSpan(children: [
-                                TextSpan(
-                                    text: afficherSolde ? '######' : '14250'),
-                                const TextSpan(
-                                    text: ' CFA',
-                                    style: TextStyle(
-                                        fontSize: M3FontSizes.bodySmall)),
+                                TextSpan(text: afficherSolde ? '######' : '14250'),
+                                const TextSpan(text: ' CFA', style: TextStyle(fontSize: M3FontSizes.bodySmall)),
                               ]),
                               style: TextStyle(
                                 fontSize: M3FontSizes.displayMedium,
@@ -185,8 +160,7 @@ class _CardState extends State<_Card> {
                             },
                             alignment: Alignment.centerRight,
                             backgroundColor: Colors.transparent,
-                            foregroundColor:
-                                context.colorScheme.onPrimary.withOpacity(.5),
+                            foregroundColor: context.colorScheme.onPrimary.withOpacity(.5),
                             // margin: EdgeInsets.only(bottom: 5),
                           ),
                         ],
@@ -249,10 +223,7 @@ class _QuickActions extends StatelessWidget {
       case WalletActions.topUp:
         showModalBottomSheet(
             context: context,
-            builder: (context) => _ModalBottomSheet(
-                child: (action == WalletActions.pay)
-                    ? const _ServicesModalBottomSheet()
-                    : Container()));
+            builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
         break;
     }
   }
@@ -283,8 +254,7 @@ class _QuickActions extends StatelessWidget {
               width: 1.5,
               color: context.colorScheme.primary.withOpacity(.1),
             ),
-            margin: EdgeInsets.only(
-                left: WalletActions.values.indexOf(action) == 0 ? 0 : 10),
+            margin: EdgeInsets.only(left: WalletActions.values.indexOf(action) == 0 ? 0 : 10),
             onPressed: () => onAction(context, action),
           );
         },
@@ -311,9 +281,7 @@ class _Favorites extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: UISettings.pagePadding.copyWith(
-              top: MediaQuery.of(context).size.height * .035,
-              bottom: MediaQuery.of(context).size.height * .035),
+          padding: UISettings.pagePadding.copyWith(top: MediaQuery.of(context).size.height * .035, bottom: MediaQuery.of(context).size.height * .035),
           child: Row(children: [
             Expanded(
                 child: Column(
@@ -366,9 +334,20 @@ class _Favorites extends StatelessWidget {
                         height: itemSize,
                         width: itemSize,
                         margin: EdgeInsets.only(left: index == 0 ? 0 : 10),
-                        child: FluAvatar(
-                          image: user.avatar,
-                          overlayOpacity: .2,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.getRandomColor(),
+                          ),
+                          child: Center(
+                            child: Text(
+                              user.firstName.substring(0, 1),
+                              style: const TextStyle(
+                                color: Colors.white, // You can change the text color
+                                fontSize: 24.0, // You can adjust the font size
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     },
@@ -400,15 +379,13 @@ class _ServicesModalBottomSheet extends StatefulWidget {
   const _ServicesModalBottomSheet();
 
   @override
-  State<_ServicesModalBottomSheet> createState() =>
-      _ServicesModalBottomSheetState();
+  State<_ServicesModalBottomSheet> createState() => _ServicesModalBottomSheetState();
 }
 
 class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
   final PageController pageController = PageController();
 
-  void toNextStep() => pageController.nextPage(
-      duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
 
   @override
   Widget build(BuildContext context) {
@@ -435,8 +412,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -461,8 +437,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -487,8 +462,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -581,12 +555,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                   backgroundColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   margin: EdgeInsets.only(top: index == 0 ? 0 : 25),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  border: BorderSide(
-                      width: 1.5,
-                      color:
-                          context.colorScheme.outlineVariant.withOpacity(.5)),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  border: BorderSide(width: 1.5, color: context.colorScheme.outlineVariant.withOpacity(.5)),
                   cornerRadius: 25,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -598,13 +568,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                           children: [
                             const Text('Offre start.'),
                             Text.rich(
-                              const TextSpan(children: [
-                                TextSpan(text: '15000'),
-                                TextSpan(
-                                    text: ' F/Mois',
-                                    style: TextStyle(
-                                        fontSize: M3FontSizes.labelSmall))
-                              ]),
+                              const TextSpan(
+                                  children: [TextSpan(text: '15000'), TextSpan(text: ' F/Mois', style: TextStyle(fontSize: M3FontSizes.labelSmall))]),
                               style: TextStyle(
                                 fontSize: M3FontSizes.displaySmall,
                                 fontWeight: FontWeight.w600,
@@ -642,18 +607,13 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                 final option = action.children[index];
 
                 return FluButton(
-                  onPressed: () => Get.toNamed(AppRoutes
-                      .BOTTOMNAV), //KRouter.to(context, Routes.subscriptionTransferConfirmation),
+                  onPressed: () => Get.toNamed(AppRoutes.BOTTOMNAV), //KRouter.to(context, Routes.subscriptionTransferConfirmation),
                   width: double.infinity,
                   backgroundColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   margin: EdgeInsets.only(top: index == 0 ? 0 : 10),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  border: BorderSide(
-                      width: 1.5,
-                      color:
-                          context.colorScheme.outlineVariant.withOpacity(.5)),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  border: BorderSide(width: 1.5, color: context.colorScheme.outlineVariant.withOpacity(.5)),
                   cornerRadius: 25,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -686,8 +646,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
           FluButton.text(
             "Ajouter une box",
             prefixIcon: FluIcons.add,
-            margin:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * .015),
+            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .015),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           ),
         ],
@@ -712,8 +671,7 @@ class _PromotionsAndOffers extends StatelessWidget {
   const _PromotionsAndOffers({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  Widget build(BuildContext context) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -766,9 +724,7 @@ class _PromotionsAndOffers extends StatelessWidget {
             height: 215,
             margin: const EdgeInsets.only(bottom: 20),
             clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-                color: context.colorScheme.secondary.withOpacity(.45),
-                borderRadius: BorderRadius.circular(30)),
+            decoration: BoxDecoration(color: context.colorScheme.secondary.withOpacity(.45), borderRadius: BorderRadius.circular(30)),
             child: Stack(
               children: [
                 const FluImage(
@@ -778,8 +734,7 @@ class _PromotionsAndOffers extends StatelessWidget {
                   overlayOpacity: .5,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20)
-                      .copyWith(top: 15, bottom: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 15, bottom: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -800,15 +755,12 @@ class _PromotionsAndOffers extends StatelessWidget {
                             children: [
                               Text(
                                 '2023 Super Bowl LVI.',
-                                style: TextStyle(
-                                    fontSize: M3FontSizes.bodyLarge,
-                                    color: context.colorScheme.onPrimary),
+                                style: TextStyle(fontSize: M3FontSizes.bodyLarge, color: context.colorScheme.onPrimary),
                               ),
                               const SizedBox(height: 3),
                               Text(
                                 'Le super bowl est là. Vivez de moments de folie avec flooz.',
-                                style: TextStyle(
-                                    color: context.colorScheme.onPrimary),
+                                style: TextStyle(color: context.colorScheme.onPrimary),
                               ),
                             ],
                           ))
@@ -840,8 +792,7 @@ class _StoryIndicator extends StatelessWidget {
       child: LinearProgressIndicator(
         value: progress,
         backgroundColor: context.colorScheme.onPrimary.withOpacity(.5),
-        valueColor:
-            AlwaysStoppedAnimation<Color>(context.colorScheme.onPrimary),
+        valueColor: AlwaysStoppedAnimation<Color>(context.colorScheme.onPrimary),
       ),
     );
   }

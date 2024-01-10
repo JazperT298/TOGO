@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_colors.dart';
 import 'package:ibank/utils/core/users.dart';
 
 class ModalBottomSheet extends StatelessWidget {
@@ -128,19 +129,36 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
                             angle: 80,
                             strokeWidth: 1,
                             color: context.colorScheme.primaryContainer,
+                            // child: Container(
+                            //     height: context.width * .15,
+                            //     width: context.width * .15,
+                            //     margin: const EdgeInsets.all(5),
+                            //     decoration: BoxDecoration(
+                            //       color: context.colorScheme.primaryContainer,
+                            //       borderRadius: BorderRadius.circular(50),
+                            //     ),
+                            //     child: FluAvatar(
+                            //       image: option.avatar,
+                            //       overlayOpacity: .2,
+                            //       circle: true,
+                            //     )),
                             child: Container(
-                                height: context.width * .15,
-                                width: context.width * .15,
-                                margin: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: context.colorScheme.primaryContainer,
-                                  borderRadius: BorderRadius.circular(50),
+                              height: context.width * .15,
+                              width: context.width * .15,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.getRandomColor(),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  option.firstName.substring(0, 1),
+                                  style: const TextStyle(
+                                    color: Colors.white, // You can change the text color
+                                    fontSize: 24.0, // You can adjust the font size
+                                  ),
                                 ),
-                                child: FluAvatar(
-                                  image: option.avatar,
-                                  overlayOpacity: .2,
-                                  circle: true,
-                                )),
+                              ),
+                            ),
                           ),
                           Expanded(
                             child: Padding(

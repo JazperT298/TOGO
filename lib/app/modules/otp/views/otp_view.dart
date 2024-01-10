@@ -8,6 +8,7 @@ import 'package:ibank/app/modules/otp/controller/otp_controller.dart';
 import 'package:flukit/flukit.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_images.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpView extends StatefulWidget {
@@ -47,8 +48,7 @@ class _OtpViewState extends State<OtpView> {
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -60,14 +60,15 @@ class _OtpViewState extends State<OtpView> {
       ),
       body: SafeArea(
         child: Padding(
-          padding:
-              UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+          padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Image.asset(
-                  'assets/images/loginOTP.png',
+                  AppImages.otpImage,
+                  height: MediaQuery.of(context).size.height * .3,
+                  width: MediaQuery.of(context).size.height * .3,
                 ),
               ),
               const SizedBox(height: 20),
@@ -81,19 +82,13 @@ class _OtpViewState extends State<OtpView> {
                 child: const Text(
                   'Veuillez saisir le code à 06 chiffres que nous vous avons envoyé sur votre numéro',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w400),
                 ),
               ),
               const Text(
                 '+228 69 04 05 07',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFFFB6404),
-                    fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 14, color: Color(0xFFFB6404), fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 28),
               Form(
@@ -109,19 +104,13 @@ class _OtpViewState extends State<OtpView> {
                         setState(() {
                           isEmptyFields = true;
                         });
-                      } else if (!textEditingController.text
-                          .trim()
-                          .contains('2222')) {
+                      } else if (!textEditingController.text.trim().contains('2222')) {
                         setState(() {
                           isEmptyFields = true;
                         });
                       } else {
                         SharedPrefService.saveLoginData(true, 'Malik Monk');
-                        ProgressAlertDialog.showALoadingDialog(
-                            context,
-                            'Validating OTP, Please wait...',
-                            5,
-                            AppRoutes.PRIVACY);
+                        ProgressAlertDialog.showALoadingDialog(context, 'Validating OTP, Please wait...', 5, AppRoutes.PRIVACY);
                         textEditingController.clear();
                       }
                     },
@@ -198,10 +187,7 @@ class _OtpViewState extends State<OtpView> {
                   : Text(
                       'Renvoyer le code',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: M3FontSizes.titleSmall,
-                          color: context.colorScheme.primary,
-                          fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: M3FontSizes.titleSmall, color: context.colorScheme.primary, fontWeight: FontWeight.w600),
                     ),
               const SizedBox(height: 16),
               FluButton.text(
@@ -213,16 +199,13 @@ class _OtpViewState extends State<OtpView> {
                     setState(() {
                       isEmptyFields = true;
                     });
-                  } else if (!textEditingController.text
-                      .trim()
-                      .contains('2222')) {
+                  } else if (!textEditingController.text.trim().contains('2222')) {
                     setState(() {
                       isEmptyFields = true;
                     });
                   } else {
                     SharedPrefService.saveLoginData(true, 'Malik Monk');
-                    ProgressAlertDialog.showALoadingDialog(context,
-                        'Validating OTP, Please wait...', 5, AppRoutes.PRIVACY);
+                    ProgressAlertDialog.showALoadingDialog(context, 'Validating OTP, Please wait...', 5, AppRoutes.PRIVACY);
                     textEditingController.clear();
                   }
                 },
@@ -239,9 +222,7 @@ class _OtpViewState extends State<OtpView> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
               ),
               const SizedBox(height: 30),
             ],
