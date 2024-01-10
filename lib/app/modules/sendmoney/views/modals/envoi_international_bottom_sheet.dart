@@ -35,15 +35,15 @@ enum NetState { OFFNET, ONNET }
 
 enum FieldType { NORMAL, PHONEBOOK }
 
-class EnvoiModalBottomSheet extends StatefulWidget {
-  const EnvoiModalBottomSheet({super.key, required this.sendType});
+class EnvoiInternationalBottomSheet extends StatefulWidget {
+  const EnvoiInternationalBottomSheet({super.key, required this.sendType});
   final String sendType;
 
   @override
-  State<EnvoiModalBottomSheet> createState() => _EnvoiModalBottomSheetState();
+  State<EnvoiInternationalBottomSheet> createState() => _EnvoiInternationalBottomSheetState();
 }
 
-class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
+class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottomSheet> {
   static final PageController pageController = PageController();
   static final numberEditingCobntroller = TextEditingController();
   static final amountEditingController = TextEditingController();
@@ -62,6 +62,43 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
   static String messageType = '';
 
+  String _selectedCountryCode = '+228'; // Default country code
+  // final countryPicker = const FlCountryCodePicker();
+  CountryCode? countryCode;
+  late final FlCountryCodePicker countryPicker;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    countryPicker = FlCountryCodePicker(
+      localize: true,
+      showDialCode: true,
+      showSearchBar: false,
+      title: title,
+    );
+    super.initState();
+  }
+
+  Widget title = Padding(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 12.0, left: 0),
+          child: Text('Selectionner'.toUpperCase(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFFFB6404))),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(top: 4.0, left: 0),
+          child: Text('Votre pays', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black)),
+        ),
+        const Padding(
+            padding: EdgeInsets.only(top: 8.0, left: 0),
+            child: Text('Choisissez votre pays et bénéficiez d’une expérience personnalisée ainsi que des transactions optimisées.',
+                style: TextStyle(fontSize: 14))),
+      ],
+    ),
+  );
   final controller =
       Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   static void toNextStep() async {
@@ -214,49 +251,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           ),
         ),
         const SizedBox(height: 18),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     const Expanded(
-        //       child: Text(
-        //         'Nom',
-        //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-        //       ),
-        //     ),
-        //     Expanded(
-        //       child: Text(
-        //         'Karim Razack',
-        //         style: TextStyle(
-        //           fontSize: M3FontSizes.headlineTiny,
-        //           color: context.colorScheme.onSurface,
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // const SizedBox(height: 6),
-        widget.sendType.contains('Transert National')
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Expanded(
-                    child: Text(
-                      'Prénom',
-                      style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Razack',
-                      style: TextStyle(
-                        fontSize: M3FontSizes.headlineTiny,
-                        color: context.colorScheme.onSurface,
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : const SizedBox.shrink(),
+        const SizedBox.shrink(),
         const SizedBox(height: 6),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -278,7 +273,6 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             ),
           ],
         ),
-
         const SizedBox(height: 24),
         Text(
           'DETAILS'.toUpperCase(),
@@ -288,27 +282,6 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           ),
         ),
         const SizedBox(height: 18),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     const Expanded(
-        //       child: Text(
-        //         'Frais',
-        //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-        //       ),
-        //     ),
-        //     Expanded(
-        //       child: Text(
-        //         '0 FCFA',
-        //         style: TextStyle(
-        //           fontSize: M3FontSizes.headlineTiny,
-        //           color: context.colorScheme.onSurface,
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // const SizedBox(height: 6),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -354,6 +327,33 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     hint: "Numéro du destinataire",
                     inputController: numberEditingCobntroller,
                     hintStyle: const TextStyle(fontSize: M3FontSizes.titleMedium),
+                    prefix: GestureDetector(
+                      onTap: () async {
+                        final picked = await countryPicker.showPicker(context: context);
+                        // Null check
+                        if (picked != null) print(picked.dialCode);
+                        setState(() {
+                          _selectedCountryCode = picked!.dialCode;
+                        });
+                      },
+                      child: Container(
+                        height: 45,
+                        width: MediaQuery.of(context).size.width / 5,
+                        padding: EdgeInsets.symmetric(horizontal: _selectedCountryCode.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
+                        decoration:
+                            BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: const TextStyle(color: Colors.black)),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: Container(width: 1.5, color: Colors.grey, height: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     height: 50,
                     cornerRadius: 15,
                     keyboardType: TextInputType.number,
@@ -410,7 +410,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                         context: context,
                         builder: (context) => Container(
                             padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                            child: ModalBottomSheet(child: EnvoiModalBottomSheet(sendType: widget.sendType)))).then((value) {
+                            child: ModalBottomSheet(child: EnvoiInternationalBottomSheet(sendType: widget.sendType)))).then((value) {
                       if (value != null) {
                         setState(() {
                           selectedUser = value;

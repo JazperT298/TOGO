@@ -6,6 +6,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/components/line_separator.dart';
 import 'package:ibank/app/data/local/shared_preference.dart';
+import 'package:ibank/app/modules/sendmoney/views/modals/envoi_international_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_modal_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
@@ -61,7 +62,7 @@ class SendMenuDialog {
                         builder: (context) => _ModalBottomSheet(
                               sendType: 'Transfert International',
                               siOTPPage: AppGlobal.siOTPPage,
-                              child: EnvoiModalBottomSheet(
+                              child: EnvoiInternationalBottomSheet(
                                 sendType: 'Transfert International',
                               ),
                             ));
@@ -151,9 +152,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Prénom',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -174,9 +173,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Numéro',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -228,9 +225,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Montant',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -261,9 +256,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Date',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -284,9 +277,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Heure',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -306,9 +297,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Txn ID',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -329,9 +318,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Nouveau solde',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -379,8 +366,7 @@ class SendMenuDialog {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Votre opération a été e\nffectué avec succès.'
-                            .toUpperCase(),
+                        'Votre opération a été e\nffectué avec succès.'.toUpperCase(),
                         style: TextStyle(
                           color: context.colorScheme.onSurface,
                           fontSize: M3FontSizes.headlineTiny,
@@ -448,9 +434,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Prénom',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -471,9 +455,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Numéro',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -525,9 +507,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Montant',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -558,9 +538,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Date',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -581,9 +559,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Heure',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -603,9 +579,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Txn ID',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -626,9 +600,7 @@ class SendMenuDialog {
                     const Expanded(
                       child: Text(
                         'Nouveau solde',
-                        style: TextStyle(
-                            fontSize: M3FontSizes.headlineTiny,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -663,9 +635,7 @@ class SendMenuDialog {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: M3FontSizes.bodyLarge),
+                  textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
                 ),
                 const SizedBox(
                   height: 12,
@@ -680,8 +650,7 @@ class SendMenuDialog {
 }
 
 class _ModalBottomSheet extends StatelessWidget {
-  const _ModalBottomSheet(
-      {required this.child, required this.sendType, required this.siOTPPage});
+  const _ModalBottomSheet({required this.child, required this.sendType, required this.siOTPPage});
 
   final Widget child;
   final String sendType;
@@ -691,8 +660,7 @@ class _ModalBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
             height: isKeyboardVisible
                 ? AppGlobal.siOTPPage == true
