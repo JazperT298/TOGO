@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:ibank/app/components/line_separator.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
+import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/data/models/user.dart';
@@ -975,7 +976,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           if (AppGlobal.numbers == AppGlobal.beneficiare) {
             AppGlobal.beneficiare = 'N/A';
           }
-
+          // SqlHelper.setTransacHistory("-1", dataDecoded);
+          Get.find<StorageServices>().saveHistoryTransaction(message: dataDecoded, service: "Transfert National");
           isInvalidCode = false;
           Get.back();
           Get.back();

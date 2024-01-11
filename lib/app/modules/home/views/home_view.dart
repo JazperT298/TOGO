@@ -3,6 +3,7 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
@@ -46,15 +47,23 @@ class HomeView extends GetView<HomeController> {
                           children: [
                             Row(
                               children: [
-                                FluBadge(
-                                  offset: const Offset(5, 5),
-                                  child: FluAvatar(
-                                    size: UISettings.minButtonSize - 8,
-                                    outlined: true,
-                                    outlineThickness: 1.5,
-                                    outlineGap: 3,
-                                    outlineColor: [context.colorScheme.outlineVariant],
-                                    margin: const EdgeInsets.only(right: 10),
+                                InkWell(
+                                  onTap: () {
+                                    // Get.find<StorageServices>()
+                                    //     .storage
+                                    //     .remove("history");
+                                    // print("clear");
+                                  },
+                                  child: FluBadge(
+                                    offset: const Offset(5, 5),
+                                    child: FluAvatar(
+                                      size: UISettings.minButtonSize - 8,
+                                      outlined: true,
+                                      outlineThickness: 1.5,
+                                      outlineGap: 3,
+                                      outlineColor: [context.colorScheme.outlineVariant],
+                                      margin: const EdgeInsets.only(right: 10),
+                                    ),
                                   ),
                                 ),
                                 const Spacer(),

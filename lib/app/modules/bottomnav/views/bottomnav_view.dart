@@ -9,6 +9,7 @@ import 'package:ibank/app/modules/profile/views/profile_view.dart';
 import 'package:ibank/app/modules/shop/views/shop_view.dart';
 import 'package:ibank/utils/configs.dart';
 
+import '../../history/controller/history_controller.dart';
 import '../../home/controller/home_controller.dart';
 
 final currentPageProvider = StateProvider.autoDispose<int>((ref) => 0);
@@ -34,6 +35,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
   void initState() {
     pageController = PageController();
     Get.put(HomeController());
+    Get.put(HistoryController());
     super.initState();
   }
 

@@ -13,6 +13,7 @@ import 'package:ibank/utils/constants/ws_const.dart';
 import 'package:sizer/sizer.dart';
 import 'package:telephony/telephony.dart';
 
+import 'app/data/local/getstorage_services.dart';
 import 'utils/configs.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart' as flc;
 
@@ -28,7 +29,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SqlHelper.initDatabase();
   cameras = await availableCameras();
-
+  Get.put(StorageServices());
   runApp(const App());
 }
 
@@ -53,7 +54,8 @@ class App extends StatelessWidget {
               themeMode: themeManager.themeMode,
               initialRoute: AppRoutes.SPLASH, //  Routes.splash.path,
               getPages: AppPages.list,
-              supportedLocales: flc.CountryLocalizations.supportedLocales.map(Locale.new),
+              supportedLocales:
+                  flc.CountryLocalizations.supportedLocales.map(Locale.new),
               localizationsDelegates: const [
                 // Package's localization delegate.
                 // You can still add other delegates from your app.

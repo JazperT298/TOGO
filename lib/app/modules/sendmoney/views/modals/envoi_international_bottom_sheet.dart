@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +29,8 @@ import 'package:ibank/utils/constants/app_string_confirmation.dart';
 import 'package:ibank/utils/constants/app_string_validation.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:ibank/utils/string_utils.dart';
+
+import '../../../../data/local/getstorage_services.dart';
 
 enum NetState { OFFNET, ONNET }
 
@@ -1056,8 +1057,9 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         numberEditingCobntroller.clear();
         amountEditingController.clear();
         codeEditingController.clear();
-        SqlHelper.setTransacHistory("-1", jsonString);
-        showSuccessOrderPlace(message: jsonString);
+        // SqlHelper.setTransacHistory("-1", jsonString);
+        Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: "Transfert International");
+        showMessageDialog(message: jsonString);
       } else {
         numberEditingCobntroller.clear();
         log('response.reasonPhrase ${response.reasonPhrase}');
@@ -1069,7 +1071,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
     }
   }
 
-  static showSuccessOrderPlace({required String message}) async {
+  static showMessageDialog({required String message}) async {
     Get.dialog(AlertDialog(
         content: Container(
       height: MediaQuery.of(Get.context!).size.height * 0.2,
