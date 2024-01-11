@@ -107,6 +107,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
       Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   static void toNextStep() async {
     showDialog(
+      barrierDismissible: false,
       context: Get.context!,
       builder: (BuildContext context) {
         return const AlertDialog(
@@ -741,6 +742,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     });
                     showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return const AlertDialog(
                           content: Row(

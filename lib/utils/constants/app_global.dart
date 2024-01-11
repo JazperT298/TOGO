@@ -27,6 +27,7 @@ class AppGlobal {
   static StringBuffer notifymessage = StringBuffer();
   static StringBuffer message = StringBuffer();
   static StringBuffer shortcode = StringBuffer();
+  static String currentAddress = "";
 
   static String beneficiare = "";
   static String date = "";

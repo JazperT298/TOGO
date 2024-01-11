@@ -77,7 +77,9 @@ class SendMenuDialog {
                 ),
                 GestureDetector(
                   onTap: () {
-                    print('3');
+                    Get.back();
+                    Get.snackbar("Message", "À venir",
+                        backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
                   },
                   child: Container(
                     height: 20,

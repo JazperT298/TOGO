@@ -86,7 +86,7 @@ class _OtpViewState extends State<OtpView> {
                 ),
               ),
               const Text(
-                '+228 69 04 05 07',
+                '+228 99 99 01 37',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14, color: Color(0xFFFB6404), fontWeight: FontWeight.w600),
               ),
@@ -96,7 +96,7 @@ class _OtpViewState extends State<OtpView> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 8.0,
-                    horizontal: 75,
+                    horizontal: 20,
                   ),
                   child: PinCodeTextField(
                     obscuringCharacter: '*',
@@ -106,13 +106,13 @@ class _OtpViewState extends State<OtpView> {
                         setState(() {
                           isEmptyFields = true;
                         });
-                      } else if (!textEditingController.text.trim().contains('2222')) {
+                      } else if (!textEditingController.text.trim().contains('999900')) {
                         setState(() {
                           isEmptyFields = true;
                         });
                       } else {
                         SharedPrefService.saveLoginData(true, 'Malik Monk');
-                        ProgressAlertDialog.showALoadingDialog(context, 'Validating OTP, Please wait...', 5, AppRoutes.PRIVACY);
+                        ProgressAlertDialog.showALoadingDialog(context, "Validation d'OTP, veuillez patienter...", 5, AppRoutes.PRIVACY);
                         textEditingController.clear();
                       }
                     },
@@ -121,19 +121,17 @@ class _OtpViewState extends State<OtpView> {
                       color: Colors.green.shade600,
                       fontWeight: FontWeight.bold,
                     ),
-                    length: 4,
-                    // obscureText: true,
-                    // obscuringCharacter: '*',
-
+                    length: 6,
+                    // maxLength: 8,
                     blinkWhenObscuring: true,
                     animationType: AnimationType.fade,
-                    validator: (v) {
-                      if (v!.length < 3) {
-                        return "I'm from validator";
-                      } else {
-                        return null;
-                      }
-                    },
+                    // validator: (v) {
+                    //   if (v!.length < 5) {
+                    //     return "I'm from validator";
+                    //   } else {
+                    //     return null;
+                    //   }
+                    // },
                     pinTheme: PinTheme(
                         shape: PinCodeFieldShape.box,
                         borderRadius: BorderRadius.circular(10),
@@ -201,13 +199,13 @@ class _OtpViewState extends State<OtpView> {
                     setState(() {
                       isEmptyFields = true;
                     });
-                  } else if (!textEditingController.text.trim().contains('2222')) {
+                  } else if (!textEditingController.text.trim().contains('999900')) {
                     setState(() {
                       isEmptyFields = true;
                     });
                   } else {
                     SharedPrefService.saveLoginData(true, 'Malik Monk');
-                    ProgressAlertDialog.showALoadingDialog(context, 'Validating OTP, Please wait...', 5, AppRoutes.PRIVACY);
+                    ProgressAlertDialog.showALoadingDialog(context, "Validation d'OTP, veuillez patienter...", 5, AppRoutes.PRIVACY);
                     textEditingController.clear();
                   }
                 },

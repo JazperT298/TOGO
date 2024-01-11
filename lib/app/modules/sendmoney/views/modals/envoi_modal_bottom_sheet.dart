@@ -68,6 +68,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   static void toNextStep() async {
     showDialog(
+      barrierDismissible: false,
       context: Get.context!,
       builder: (BuildContext context) {
         return const AlertDialog(
@@ -392,7 +393,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                         onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
                         // addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                         isTextFieldEmpty = false;
-
+                        setState(() {});
                         if (phoneContactNumer == null) {
                           AppGlobal.phonenumberspan = null;
                         }
@@ -609,41 +610,16 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 onChanged: (p0) {
                   setState(() {
                     isInvalidCode = false;
+                    invalidCodeString = '';
                   });
                 },
                 onFieldSubmitted: (p0) async {
-                  if (codeEditingController.text.isEmpty) {
-                    showToast(context, 'Le code secret ne doit pas être vide');
-                    isInvalidCode = true;
-                    invalidCodeString = "Le code secret ne doit pas être vide";
-                    // } else if (!codeEditingController.text.trim().contains('4512')) {
-                    //   showDialog(
-                    //     context: context,
-                    //     builder: (BuildContext context) {
-                    //       return const AlertDialog(
-                    //         content: Row(
-                    //           // mainAxisSize: MainAxisSize.min,
-                    //           mainAxisAlignment: MainAxisAlignment.start,
-                    //           children: [
-                    //             CircularProgressIndicator(),
-                    //             SizedBox(width: 16.0),
-                    //             Text('Please wait...'),
-                    //           ],
-                    //         ),
-                    //       );
-                    //     },
-                    //   );
-                    //   await Future.delayed(const Duration(seconds: 5), () {
-                    //     Navigator.of(context).pop(); // Close the alert dialog
-
-                    //     // Navigate to the next page
-                    //     Get.toNamed(AppRoutes.TRANSACFAILED);
-                    //   });
-                  } else {
+                  if (codeEditingController.text.isNotEmpty && codeEditingController.text.contains('3344')) {
                     setState(() {
                       addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                     });
                     showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
@@ -659,18 +635,19 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                         );
                       },
                     );
-
-                    // // Delay for 3 seconds
-                    // await Future.delayed(Duration(seconds: 2), () {
-                    //   Navigator.of(context).pop(); // Close the alert dialog
-
-                    //   print('isInvalidCode $isInvalidCode');
-                    //   if (isInvalidCode == false) {
-                    //     Get.toNamed(AppRoutes.TRANSACCOMPLETE);
-                    //   }
-                    // });
-                    // setState(() {});
-                    // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
+                    await Future.delayed(Duration(seconds: 3), () {
+                      Navigator.of(context).pop(); // Close the alert dialog
+                    });
+                  } else if (codeEditingController.text.isNotEmpty && !codeEditingController.text.contains('3344')) {
+                    setState(() {
+                      isInvalidCode = true;
+                      invalidCodeString = "Code invalide. S'il vous plaît essayer à nouveau";
+                    });
+                  } else if (codeEditingController.text.isEmpty) {
+                    setState(() {
+                      isInvalidCode = true;
+                      invalidCodeString = "Le code secret ne doit pas être vide";
+                    });
                   }
                 }),
             isInvalidCode == true
@@ -695,45 +672,19 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 suffixIcon: FluIcons.checkCircleUnicon,
                 iconStrokeWidth: 1.8,
                 onPressed: () async {
-                  if (codeEditingController.text.isEmpty) {
-                    showToast(context, 'Le code secret ne doit pas être vide');
-                    isInvalidCode = true;
-                    invalidCodeString = "Le code secret ne doit pas être vide";
-                    // } else if (!codeEditingController.text.trim().contains('4512')) {
-                    //   showDialog(
-                    //     context: context,
-                    //     builder: (BuildContext context) {
-                    //       return const AlertDialog(
-                    //         content: Row(
-                    //           // mainAxisSize: MainAxisSize.min,
-                    //           mainAxisAlignment: MainAxisAlignment.start,
-                    //           children: [
-                    //             CircularProgressIndicator(),
-                    //             SizedBox(width: 16.0),
-                    //             Text('Please wait...'),
-                    //           ],
-                    //         ),
-                    //       );
-                    //     },
-                    //   );
-                    //   await Future.delayed(const Duration(seconds: 5), () {
-                    //     Navigator.of(context).pop(); // Close the alert dialog
-
-                    //     // Navigate to the next page
-                    //     Get.toNamed(AppRoutes.TRANSACFAILED);
-                    //   });
-                  } else {
+                  if (codeEditingController.text.isNotEmpty && codeEditingController.text.contains('999900')) {
                     setState(() {
                       addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
                     });
                     showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
-                        return const AlertDialog(
+                        return AlertDialog(
                           content: Row(
                             // mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                            children: const [
                               CircularProgressIndicator(),
                               SizedBox(width: 16.0),
                               Text("S'il vous plaît, attendez..."),
@@ -742,18 +693,19 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                         );
                       },
                     );
-
-                    // // Delay for 3 seconds
-                    // await Future.delayed(Duration(seconds: 3), () {
-                    //   Navigator.of(context).pop(); // Close the alert dialog
-
-                    //   print('isInvalidCode $isInvalidCode');
-                    //   if (isInvalidCode == false) {
-                    //     Get.toNamed(AppRoutes.TRANSACCOMPLETE);
-                    //   }
-                    // });
-                    // setState(() {});
-                    // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
+                    await Future.delayed(Duration(seconds: 3), () {
+                      Navigator.of(context).pop(); // Close the alert dialog
+                    });
+                  } else if (codeEditingController.text.isNotEmpty && !codeEditingController.text.contains('999900')) {
+                    setState(() {
+                      isInvalidCode = true;
+                      invalidCodeString = "Code invalide. S'il vous plaît essayer à nouveau";
+                    });
+                  } else if (codeEditingController.text.isEmpty) {
+                    setState(() {
+                      isInvalidCode = true;
+                      invalidCodeString = "Le code secret ne doit pas être vide";
+                    });
                   }
                 },
                 height: 55,
@@ -958,20 +910,20 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           var dataEncoded = jsonEncode(jsonMap);
           var dataDecoded = jsonDecode(dataEncoded);
           log(dataDecoded.toString());
-          String? amounts = dataDecoded['Montant'];
-          String? beneficiary = dataDecoded['Beneficiaire'];
-          String? date = dataDecoded['Date'].toString();
-          String? newBalance = dataDecoded['Nouveau solde Flooz'];
-          String? txnId = dataDecoded['Txn ID'];
-          String? time = dataDecoded['Time'];
+          // String? amounts = dataDecoded['Montant'];
+          // String? beneficiary = dataDecoded['Beneficiaire'];
+          // String? date = dataDecoded['Date'].toString();
+          // String? newBalance = dataDecoded['Nouveau solde Flooz'];
+          // String? txnId = dataDecoded['Txn ID'];
+          // String? time = dataDecoded['Time'];
 
-          AppGlobal.beneficiare = beneficiary.toString();
-          AppGlobal.date = date.toString();
-          AppGlobal.amount = amounts.toString();
-          AppGlobal.remainingBal = newBalance.toString();
-          AppGlobal.txn = txnId.toString();
-          AppGlobal.numbers = msisdn.toString();
-          AppGlobal.time = time.toString();
+          // AppGlobal.beneficiare = beneficiary.toString();
+          // AppGlobal.date = date.toString();
+          // AppGlobal.amount = amounts.toString();
+          // AppGlobal.remainingBal = newBalance.toString();
+          // AppGlobal.txn = txnId.toString();
+          // AppGlobal.numbers = msisdn.toString();
+          // AppGlobal.time = time.toString();
 
           if (AppGlobal.numbers == AppGlobal.beneficiare) {
             AppGlobal.beneficiare = 'N/A';
@@ -985,7 +937,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           amountEditingController.clear();
           codeEditingController.clear();
           showSuccessOrderPlace(message: jsonString);
-          SqlHelper.setTransacHistory("-1", jsonString);
+          // SqlHelper.setTransacHistory("-1", jsonString);
         } else {
           isInvalidCode = true;
           invalidCodeString = jsonString;

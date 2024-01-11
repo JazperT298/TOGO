@@ -1,10 +1,13 @@
-// ignore_for_file: avoid_print, unused_field
+// ignore_for_file: avoid_print, unused_field, unnecessary_null_comparison
 
 import 'dart:async';
 
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ibank/utils/constants/app_global.dart';
+import 'package:location/location.dart';
 
 /// Map
 /// This a map showing nearby agences.
@@ -22,6 +25,8 @@ class AgenciesMap extends StatefulWidget {
 }
 
 class AgenciesMapState extends State<AgenciesMap> {
+  late LocationData currentLocation;
+
   // late String _mapStyle;
 
   double radius(BuildContext context) => context.height * .055;
@@ -50,17 +55,27 @@ class AgenciesMapState extends State<AgenciesMap> {
   } */
 
   void getLocation() async {
-    Flu.geoService.determinePosition().then((FluPosition fluPosition) {
+    Flu.geoService.determinePosition().then((FluPosition fluPosition) async {
       final Position position = fluPosition.position;
 
       final CameraPosition cameraPosition = CameraPosition(
         target: LatLng(position.latitude, position.longitude),
         zoom: widget.fullScreen ? 14 : 10,
       );
-
       _controller.future.then((GoogleMapController controller) {
         controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
       });
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+      if (placemarks != null && placemarks.isNotEmpty) {
+        setState(() {
+          AppGlobal.currentAddress = '${placemarks.first.street}, ${placemarks.first.locality}, ${placemarks.first.administrativeArea}';
+          print('current location ${AppGlobal.currentAddress}');
+        });
+        setState(() {});
+      }
     }).catchError((error) {
       // TODO: Gérer les erreurs, par exemple, gérer le refus de la permission
       print('Erreur lors de la récupération de la position : $error');

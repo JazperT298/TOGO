@@ -11,6 +11,7 @@ import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/core/users.dart';
 import 'package:ibank/utils/sms/sms_option_enum.dart';
 import 'package:ibank/utils/soap/soap_sender.dart';
@@ -73,8 +74,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
                                   value: .15,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      context.colorScheme.primary),
+                                  valueColor: AlwaysStoppedAnimation<Color>(context.colorScheme.primary),
                                 ),
                               ),
                             ),
@@ -82,21 +82,14 @@ class _ProfileViewState extends State<ProfileView> {
                               tag: 'user_avatar',
                               child: GestureDetector(
                                 onTap: () async {
-                                  await SharedPrefService.logoutUserData(
-                                          false, '')
-                                      .then((value) {
-                                    ProgressAlertDialog.showALoadingDialog(
-                                        context,
-                                        'Logging out...',
-                                        3,
-                                        AppRoutes.LOGIN);
+                                  await SharedPrefService.logoutUserData(false, '').then((value) {
+                                    ProgressAlertDialog.showALoadingDialog(context, 'Logging out...', 3, AppRoutes.LOGIN);
                                   });
                                 },
-                                child: FluAvatar(
-                                  image: authenticatedUser.avatar,
-                                  label: authenticatedUser.fullName,
+                                child: const FluAvatar(
                                   size: 65,
                                   cornerRadius: 999,
+                                  icon: FluIcons.user,
                                 ),
                               ),
                             ),
@@ -109,37 +102,39 @@ class _ProfileViewState extends State<ProfileView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // Row(
+                            //   children: [
+                            //     Hero(
+                            //       tag: "titleTextHeroTag",
+                            //       child: Text(
+                            //         authenticatedUser.fullName,
+                            //         style: TextStyle(
+                            //             fontSize: M3FontSizes.titleMedium, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
+                            //       ),
+                            //     ),
+                            //     const SizedBox(width: 5),
+                            //     FluIcon(
+                            //       FluIcons.verify,
+                            //       size: 20,
+                            //       color: context.colorScheme.primary,
+                            //       style: FluIconStyles.bulk,
+                            //     )
+                            //   ],
+                            // ),
+                            const SizedBox(height: 2),
                             Row(
                               children: [
-                                Hero(
-                                  tag: "titleTextHeroTag",
-                                  child: Text(
-                                    authenticatedUser.fullName,
-                                    style: TextStyle(
-                                        fontSize: M3FontSizes.titleMedium,
-                                        fontWeight: FontWeight.w600,
-                                        color: context.colorScheme.onSurface),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                FluIcon(
-                                  FluIcons.verify,
-                                  size: 20,
-                                  color: context.colorScheme.primary,
-                                  style: FluIconStyles.bulk,
-                                )
-                              ],
-                            ),
-                            const SizedBox(height: 2),
-                            const Row(
-                              children: [
-                                FluIcon(
+                                const FluIcon(
                                   FluIcons.routing2,
                                   size: 18,
                                 ),
-                                SizedBox(width: 5),
-                                Text(
-                                  'Lomé, Togo.',
+                                const SizedBox(width: 5),
+                                Expanded(
+                                  child: Text(
+                                    AppGlobal.currentAddress.isEmpty ? '' : AppGlobal.currentAddress,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
                                 )
                               ],
                             ),
@@ -156,7 +151,7 @@ class _ProfileViewState extends State<ProfileView> {
                         tag: "backButtonHeroTag",
                         child: FluButton.icon(
                           FluIcons.setting2,
-                          onPressed: () => Get.toNamed(AppRoutes.SETTINGS),
+                          // onPressed: () => Get.toNamed(AppRoutes.SETTINGS),
                           size: UISettings.minButtonSize,
                           cornerRadius: UISettings.minButtonCornerRadius,
                           backgroundColor: context.colorScheme.background,
@@ -180,10 +175,7 @@ class _ProfileViewState extends State<ProfileView> {
                     margin: const EdgeInsets.only(bottom: 12),
                     color: context.colorScheme.tertiary,
                   ),
-                  Text('Agences à proximité.',
-                      style: TextStyle(
-                          color: context.colorScheme.primary,
-                          fontFamily: 'neptune')),
+                  Text('Agences à proximité.', style: TextStyle(color: context.colorScheme.primary, fontFamily: 'neptune')),
                   const SizedBox(height: 10),
                   const Hero(
                     tag: "descriptionTextHeroTag",
@@ -215,9 +207,7 @@ class _ProfileViewState extends State<ProfileView> {
                   children: [
                     Text(
                       'Mon Flooz.',
-                      style: TextStyle(
-                          color: context.colorScheme.primary,
-                          fontFamily: 'neptune'),
+                      style: TextStyle(color: context.colorScheme.primary, fontFamily: 'neptune'),
                     ),
                     Options(profileScreenOptions)
                   ],

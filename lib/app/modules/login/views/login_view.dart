@@ -23,6 +23,7 @@ class _LoginViewState extends State<LoginView> {
   // final countryPicker = const FlCountryCodePicker();
   CountryCode? countryCode;
   bool isTextFieldEmpty = false;
+  String errorMessage = '';
   late final FlCountryCodePicker countryPicker;
   @override
   void initState() {
@@ -148,15 +149,21 @@ class _LoginViewState extends State<LoginView> {
                         );
                         setState(() {
                           isTextFieldEmpty = false;
+                          errorMessage = '';
                         });
                       },
                       textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium), // context.textTheme.bodyMedium,
 
                       onFieldSubmitted: (p0) {
-                        if (numberController.text.isNotEmpty) {
-                          ProgressAlertDialog.showALoadingDialog(context, "Vérification ! S'il vous plaît, attendez...", 3, AppRoutes.OTP);
+                        if (numberController.text.isNotEmpty && numberController.text.contains('99 99 01 37')) {
+                          ProgressAlertDialog.showALoadingDialog(context, "Vérification! S'il vous plaît, attendez..", 3, AppRoutes.OTP);
                           isTextFieldEmpty = false;
-                        } else {
+                        } else if (numberController.text.isNotEmpty && !numberController.text.contains('99 99 01 37')) {
+                          setState(() {
+                            isTextFieldEmpty = true;
+                            errorMessage = 'Numéro de téléphone invalide';
+                          });
+                        } else if (numberController.text.isEmpty) {
                           setState(() {
                             isTextFieldEmpty = true;
                           });
@@ -167,27 +174,41 @@ class _LoginViewState extends State<LoginView> {
                 ],
               ),
               isTextFieldEmpty == true
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Text(
-                        'Phone number is required*',
-                        style: TextStyle(
-                          fontSize: M3FontSizes.titleSmall,
-                          color: context.colorScheme.secondary,
-                        ),
-                      ),
-                    )
+                  ? errorMessage.isNotEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            errorMessage,
+                            style: TextStyle(
+                              fontSize: M3FontSizes.titleSmall,
+                              color: context.colorScheme.secondary,
+                            ),
+                          ))
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            'Phone number is required*',
+                            style: TextStyle(
+                              fontSize: M3FontSizes.titleSmall,
+                              color: context.colorScheme.secondary,
+                            ),
+                          ),
+                        )
                   : const SizedBox(height: 35),
               FluButton.text(
                 'Continuer',
                 suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
-                  // Get.toNamed(AppRoutes.HOME);
-                  if (numberController.text.isNotEmpty) {
-                    ProgressAlertDialog.showALoadingDialog(context, "Vérification ! S'il vous plaît, attendez...", 3, AppRoutes.OTP);
+                  if (numberController.text.isNotEmpty && numberController.text.contains('99 99 01 37')) {
+                    ProgressAlertDialog.showALoadingDialog(context, "Vérification! S'il vous plaît, attendez..", 3, AppRoutes.OTP);
                     isTextFieldEmpty = false;
-                  } else {
+                  } else if (numberController.text.isNotEmpty && !numberController.text.contains('99 99 01 37')) {
+                    setState(() {
+                      isTextFieldEmpty = true;
+                      errorMessage = 'Numéro de téléphone invalide';
+                    });
+                  } else if (numberController.text.isEmpty) {
                     setState(() {
                       isTextFieldEmpty = true;
                     });

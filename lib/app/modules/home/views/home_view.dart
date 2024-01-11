@@ -3,6 +3,7 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/components/dotted_circle.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
@@ -60,6 +61,7 @@ class HomeView extends GetView<HomeController> {
                                       size: UISettings.minButtonSize - 8,
                                       outlined: true,
                                       outlineThickness: 1.5,
+                                      icon: FluIcons.user,
                                       outlineGap: 3,
                                       outlineColor: [context.colorScheme.outlineVariant],
                                       margin: const EdgeInsets.only(right: 10),
@@ -279,10 +281,14 @@ class _QuickActions extends StatelessWidget {
         Get.toNamed(AppRoutes.WITHDRAWAL);
         break;
       case WalletActions.pay:
+        Get.snackbar("Message", "À venir", backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+        break;
       case WalletActions.topUp:
-        showModalBottomSheet(
-            context: context,
-            builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
+        Get.snackbar("Message", "À venir", backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+
+        // showModalBottomSheet(
+        //     context: context,
+        //     builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
         break;
     }
   }
@@ -329,7 +335,8 @@ class _Favorites extends StatelessWidget {
 
   void onItemTap([int? index]) {
     // KRouter.noContextPush(index == null ? Routes.newFavorite : Routes.transfer);
-    Get.toNamed(index == null ? AppRoutes.NEWFAV : AppRoutes.TRANSFER);
+    // Get.toNamed(index == null ? AppRoutes.NEWFAV : AppRoutes.TRANSFER);
+    Get.snackbar("Message", "À venir", backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
   }
 
   @override
@@ -375,8 +382,9 @@ class _Favorites extends StatelessWidget {
                 size: itemSize,
                 margin: const EdgeInsets.only(right: 10),
               ),
-              SizedBox(
+              Container(
                   height: itemSize,
+                  color: Colors.white,
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -385,24 +393,31 @@ class _Favorites extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       final user = favorites[index];
 
+                      // return CustomPaint(
+                      //   painter: DottedCirclePainter(),
+                      //   child: const FluIcon(FluIcons.plus),
+                      // );
+
                       return FluButton(
                         onPressed: () => onItemTap(index),
                         height: itemSize,
                         width: itemSize,
                         margin: EdgeInsets.only(left: index == 0 ? 0 : 10),
                         child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.getRandomColor(),
-                          ),
-                          child: Center(
-                            child: Text(
-                              user.firstName.substring(0, 1),
-                              style: const TextStyle(
-                                color: Colors.white, // You can change the text color
-                                fontSize: 24.0, // You can adjust the font size
-                              ),
-                            ),
+                          decoration: const BoxDecoration(shape: BoxShape.circle),
+                          // child: Center(
+                          //   child: Text(
+                          //     user.firstName.substring(0, 1),
+                          //     style: const TextStyle(
+                          //       color: Colors.white, // You can change the text color
+                          //       fontSize: 24.0, // You can adjust the font size
+                          //     ),
+                          //   ),
+                          // ),
+                          child: const FluIcon(
+                            FluIcons.add,
+                            size: 24.0,
+                            color: Colors.black,
                           ),
                         ),
                       );

@@ -2,6 +2,7 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/components/empty_view.dart';
 import 'package:ibank/app/modules/bottomnav/controller/bottomnav_controller.dart';
 import 'package:ibank/app/modules/history/views/history_view.dart';
 import 'package:ibank/app/modules/home/views/home_view.dart';
@@ -26,9 +27,10 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
   late final PageController pageController;
 
   void onPageChange(int index) {
-    ref.read(currentPageProvider.notifier).state = index;
-    pageController.animateToPage(index,
-        duration: 300.milliseconds, curve: Curves.decelerate);
+    if (index != 2) {
+      ref.read(currentPageProvider.notifier).state = index;
+      pageController.animateToPage(index, duration: 300.milliseconds, curve: Curves.decelerate);
+    }
   }
 
   @override
@@ -48,7 +50,8 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
         children: const [
           HomeView(),
           HistoryView(),
-          ShopView(),
+          // ShopView(),
+          EmptyView(),
           ProfileView(),
         ],
       ),
