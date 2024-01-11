@@ -42,7 +42,7 @@ class TransacCompleteView extends StatelessWidget {
                     child: Text(
                       'Opération effectuer avec succèss',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: M3FontSizes.headlineLarge),
+                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 20),
                     ),
                   ),
                 ),
@@ -53,7 +53,7 @@ class TransacCompleteView extends StatelessWidget {
                     child: Text(
                       "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: M3FontSizes.headlineTiny),
+                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 18),
                     ),
                   ),
                 ),

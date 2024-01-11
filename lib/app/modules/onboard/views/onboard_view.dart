@@ -109,7 +109,7 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
               prefixIcon: onboardingScreenPage[currentPage].buttonIcon,
               iconStrokeWidth: 1.8,
               onPressed: toNextPage,
-              height: UISettings.buttonSize,
+              height: UISettings.buttonSize - 10,
               width: MediaQuery.of(context).size.width * .42,
               cornerRadius: UISettings.buttonCornerRadius,
               margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .025, bottom: MediaQuery.of(context).size.height * .08),
@@ -126,7 +126,7 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
               textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * .025),
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * .010),
               child: SmoothPageIndicator(
                 controller: pageController,
                 count: onboardingScreenPage.length,

@@ -17,7 +17,7 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildTitle(BuildContext context, String text, Color color) => Text(
         text.toUpperCase(),
-        style: TextStyle(fontSize: M3FontSizes.headlineMedium, fontWeight: FontWeight.bold, color: color, height: 1.5),
+        style: TextStyle(fontSize: M3FontSizes.headlineSmall, fontWeight: FontWeight.bold, color: color, height: 1.5),
       );
 
   @override
@@ -297,10 +297,7 @@ class _Favorites extends StatelessWidget {
                   child: Text(
                     'Personne favorites'.toUpperCase(),
                     style: TextStyle(
-                      fontSize: M3FontSizes.headlineSmall,
-                      fontWeight: FontWeight.bold,
-                      color: context.colorScheme.onSurface,
-                    ),
+                        fontSize: M3FontSizes.headlineSmall, fontWeight: FontWeight.bold, color: context.colorScheme.onSurface, height: 1.5),
                   ),
                 ),
               ],

@@ -193,7 +193,7 @@ class _LoginViewState extends State<LoginView> {
                     });
                   }
                 },
-                height: 55,
+                height: UISettings.buttonSize - 10,
                 width: MediaQuery.of(context).size.width * 16,
                 cornerRadius: UISettings.minButtonCornerRadius,
                 backgroundColor: context.colorScheme.primary,

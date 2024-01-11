@@ -1,8 +1,15 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/data/models/transaction.dart';
 import 'package:ibank/app/modules/history/controller/history_controller.dart';
+import 'package:ibank/app/modules/history/views/dialog/history_dialog.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/core/transactions.dart';
 
@@ -16,10 +23,12 @@ class HistoryView extends StatefulWidget {
 class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStateMixin {
   final controller = Get.put(HistoryController());
   late final TabController tabController;
+  late List<Map<String, dynamic>>? history = [];
 
   @override
   void initState() {
     tabController = TabController(length: _Filters.values.length, vsync: this);
+    getHistory();
     super.initState();
   }
 
@@ -27,6 +36,16 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
   void dispose() {
     tabController.dispose();
     super.dispose();
+  }
+
+  void getHistory() async {
+    try {
+      history = await SqlHelper.getAllTransactions();
+      jsonEncode(history);
+      log('jsonEncode(history) ${jsonEncode(history)}');
+    } catch (e) {
+      print('HISTORY $e');
+    }
   }
 
   @override
@@ -87,7 +106,11 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
               width: double.infinity,
               margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
             ),
-            _TransactionsList(transactions),
+            GestureDetector(
+                onTap: () {
+                  HistoryDialog.showHistoryDialog(context, history);
+                },
+                child: _TransactionsList(transactions, history!)),
           ],
         ),
       )),
@@ -98,8 +121,9 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
 /// Transactions list widget.
 class _TransactionsList extends GetView<HistoryController> {
   final List<Transaction> transactions;
+  final List<Map<String, dynamic>> transacHistory;
 
-  const _TransactionsList(this.transactions, {Key? key}) : super(key: key);
+  const _TransactionsList(this.transactions, this.transacHistory, {Key? key}) : super(key: key);
 
   Color getTransactionColor(Transaction transaction) {
     if (transaction.status == TransactionStatus.waiting) {
@@ -149,10 +173,10 @@ class _TransactionsList extends GetView<HistoryController> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         padding: UISettings.pagePadding.copyWith(bottom: 50),
-        itemCount: transactions.length,
+        itemCount: transacHistory.length,
         itemBuilder: (context, index) {
           Transaction transaction = transactions[index];
-
+          final transactionss = transacHistory[index];
           String status = getTransactionStatus(transaction);
           Color statusColor = getTransactionStatusColor(context, transaction);
           Color color = getTransactionColor(transaction);
@@ -171,20 +195,57 @@ class _TransactionsList extends GetView<HistoryController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FluOutline(
-                  boxShadow: [BoxShadow(blurRadius: 30, spreadRadius: 3, color: Colors.black.withOpacity(.085))],
-                  margin: const EdgeInsets.only(right: 8),
-                  cornerRadius: 50,
-                  gap: 3,
-                  colors: [getTransactionColor(transaction).withOpacity(.5)],
-                  child: FluAvatar(
-                    image: avatarImage,
-                    icon: avatarIcon,
-                    size: UISettings.buttonSize - 5,
-                    cornerRadius: UISettings.buttonCornerRadius + 5,
-                    fillColor: context.colorScheme.primaryContainer,
-                  ),
-                ),
+                // FluOutline(
+                //   boxShadow: [BoxShadow(blurRadius: 30, spreadRadius: 3, color: Colors.black.withOpacity(.085))],
+                //   margin: const EdgeInsets.only(right: 8),
+                //   cornerRadius: 50,
+                //   gap: 3,
+                //   colors: [getTransactionColor(transaction).withOpacity(.5)],
+                //   child: FluAvatar(
+                //     image: avatarImage,
+                //     icon: avatarIcon,
+                //     size: UISettings.buttonSize - 5,
+                //     cornerRadius: UISettings.buttonCornerRadius + 5,
+                //     fillColor: context.colorScheme.primaryContainer,
+                //   ),
+                // ),
+                // FluArc(
+                //   startOfArc: 90,
+                //   angle: 80,
+                //   strokeWidth: 1,
+                //   color: context.colorScheme.primaryContainer,
+                //   // child: Container(
+                //   //     height: context.width * .15,
+                //   //     width: context.width * .15,
+                //   //     margin: const EdgeInsets.all(5),
+                //   //     decoration: BoxDecoration(
+                //   //       color: context.colorScheme.primaryContainer,
+                //   //       borderRadius: BorderRadius.circular(50),
+                //   //     ),
+                //   //     child: FluAvatar(
+                //   //       image: option.avatar,
+                //   //       overlayOpacity: .2,
+                //   //       circle: true,
+                //   //     )),
+                //   child: Container(
+                //     height: MediaQuery.of(context).size.width * .15,
+                //     width: MediaQuery.of(context).size.width * .15,
+                //     decoration: BoxDecoration(
+                //       shape: BoxShape.circle,
+                //       color: AppColors.getRandomColor(),
+                //     ),
+                //     child: Center(
+                //       child: Text(
+                //         transactionss.toString().substring(0, 1),
+                //         style: const TextStyle(
+                //           color: Colors.white, // You can change the text color
+                //           fontSize: 24.0, // You can adjust the font size
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -194,16 +255,18 @@ class _TransactionsList extends GetView<HistoryController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              transaction.agency != null
-                                  ? StringUtils(transaction.agency!.transactionTitle).capitalizeFirst!
-                                  : StringUtils(transaction.receivers.map((user) => user.firstName).toList().join(', ')).capitalize!,
+                              transactionss['MESSAGE'].toString(),
+                              maxLines: 2,
+                              // transaction.agency != null
+                              //     ? StringUtils(transaction.agency!.transactionTitle).capitalizeFirst!
+                              //     : StringUtils(transaction.receivers.map((user) => user.firstName).toList().join(', ')).capitalize!,
                               style: const TextStyle(fontSize: M3FontSizes.bodyLarge, fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              status,
-                              style: TextStyle(color: statusColor),
+                              '', //  transactionss['TIME'].toString(),
+                              style: const TextStyle(color: Colors.black54),
                             ),
                           ],
                         ),
@@ -216,16 +279,21 @@ class _TransactionsList extends GetView<HistoryController> {
                       ),
                       SizedBox(
                         width: (MediaQuery.of(context).size.width - (UISettings.pagePaddingSize * 2)) * .2,
-                        child: Text.rich(
-                          TextSpan(
-                              children: [TextSpan(text: '${transaction.type == TransactionType.incoming ? '+' : '-'}${transaction.amout.round()}f')]),
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            fontFamily: 'neptune',
-                            fontSize: M3FontSizes.bodyLarge,
-                            color: color,
-                          ),
+                        child: Text(
+                          '', // transactionss['AMOUNT'].toString(), '',
+                          style: const TextStyle(fontSize: M3FontSizes.bodyLarge, fontWeight: FontWeight.w600),
                         ),
+                        // Text.rich(
+                        //   TextSpan(
+                        //       children:
+                        //       [TextSpan(text: '${transaction.type == TransactionType.incoming ? '+' : '-'}${transaction.amout.round()}f')]),
+                        //   textAlign: TextAlign.end,
+                        //   style: TextStyle(
+                        //     fontFamily: 'neptune',
+                        //     fontSize: M3FontSizes.bodyLarge,
+                        //     color: color,
+                        //   ),
+                        // ),
                       ),
                     ],
                   ),

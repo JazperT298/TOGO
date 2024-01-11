@@ -88,11 +88,11 @@ class PrivacyView extends GetView<PrivacyController> {
                   left: 0,
                   right: 0,
                   child: Container(
-                    height: 90,
+                    height: MediaQuery.of(context).size.height * .09,
                     width: double.infinity,
                     color: Colors.white,
                     child: Padding(
-                      padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
+                      padding: UISettings.pagePadding.copyWith(top: 8, left: 24, right: 24),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -112,7 +112,7 @@ class PrivacyView extends GetView<PrivacyController> {
                             onPressed: () {
                               Get.toNamed(AppRoutes.LOGINSUCCESS);
                             },
-                            height: 55,
+                            height: UISettings.buttonSize - 10,
                             width: MediaQuery.of(context).size.width * .40,
                             cornerRadius: UISettings.minButtonCornerRadius,
                             backgroundColor: context.colorScheme.primary,

@@ -1,12 +1,14 @@
-// ignore_for_file: unused_element, avoid_print
+// ignore_for_file: unused_element, avoid_print, unnecessary_null_comparison, unrelated_type_equality_checks, prefer_interpolation_to_compose_strings
 
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_colors.dart';
 import 'package:ibank/utils/core/users.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ModalBottomSheet extends StatelessWidget {
   const ModalBottomSheet({super.key, required this.child});
@@ -37,13 +39,33 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
   late final List<User> favorites;
   late final List<String> userFullnames;
   late final List<String> userNumbers;
+
+  List<Contact>? _contacts = [];
+  bool _permissionDenied = false;
+
   User? selectedUser;
+  Contact? selectedContacts;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     favorites = widget.favorites;
+
+    _fetchContacts();
+  }
+
+  Future _fetchContacts() async {
+    if (!await FlutterContacts.requestPermission(readonly: true)) {
+      setState(() => _permissionDenied = true);
+
+      print('_permissionDenied $_permissionDenied');
+    } else {
+      var contacts = await FlutterContacts.getContacts();
+      contacts = await FlutterContacts.getContacts(withProperties: true, withPhoto: true);
+      setState(() => _contacts = contacts);
+      print('_contacts $_contacts');
+    }
   }
 
   @override
@@ -64,14 +86,14 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
                   style: TextStyle(
                     color: context.colorScheme.secondary,
                     fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.headlineSmall,
+                    fontSize: M3FontSizes.bodyMedium,
                     letterSpacing: 1.0,
                   ),
                 ),
                 Text(
                   'Selectionner une personne.',
                   style: TextStyle(
-                    fontSize: M3FontSizes.headlineMedium,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                     color: context.colorScheme.onSurface,
                   ),
@@ -81,19 +103,19 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
                   child: Text(
                     'Choisissez le contact à qui vous voulez envoyer de l’argent.',
                     style: TextStyle(
-                      fontSize: M3FontSizes.titleMedium,
+                      fontSize: M3FontSizes.titleSmall,
                     ),
                   ),
                 ),
                 const SizedBox(height: 24),
                 FluTextField(
                   hint: "Nom ou numéro de téléphone",
-                  hintStyle: const TextStyle(fontSize: M3FontSizes.titleMedium),
                   height: 50,
                   cornerRadius: 15,
                   keyboardType: TextInputType.name,
                   fillColor: context.colorScheme.primaryContainer,
-                  textStyle: context.textTheme.bodyMedium,
+                  hintStyle: const TextStyle(fontSize: M3FontSizes.titleSmall),
+                  textStyle: const TextStyle(fontSize: M3FontSizes.titleSmall),
                   suffixIcon: FluIcons.refresh,
                 ),
                 FluLine(
@@ -104,18 +126,19 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: favorites.length,
+                  itemCount: _contacts!.length, // favorites.length,
                   itemBuilder: ((context, index) {
                     final option = favorites[index];
                     return FluButton(
                       onPressed: () {
                         setState(() {
-                          if (selectedUser == users[index]) {
-                            selectedUser = null; // Deselect the user
+                          if (selectedContacts == _contacts![index]) {
+                            selectedContacts = null; // Deselect the user
                           } else {
-                            selectedUser = users[index]; // Select the user
-                            print('selected User ${selectedUser!.fullName}');
-                            print('selected User ${selectedUser!.phoneNumber}');
+                            selectedContacts = _contacts![index]; // Select the user
+                            print('selected User ${selectedContacts!.displayName}');
+                            print('selected number $selectedContacts');
+                            print('selected ${selectedContacts!.phones.map((phone) => phone.toString()).join(", ")}');
                           }
                         });
                       },
@@ -170,24 +193,27 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        option.fullName,
+                                        // option.fullName,
+                                        _contacts![index].displayName.toString(),
                                         style: TextStyle(
-                                            fontSize: M3FontSizes.headlineSmall, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
+                                            fontSize: M3FontSizes.bodyLarge, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 8.0),
                                         child: Text(
-                                          option.phoneNumber.toString(),
+                                          // option.phoneNumber.toString(),
+
+                                          _contacts![index].phones.isEmpty ? " " : _contacts![index].phones[0].number.toString(),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
-                                            fontSize: M3FontSizes.headlineSmall,
+                                            fontSize: M3FontSizes.titleSmall,
                                           ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                  selectedUser == users[index]
+                                  selectedContacts == _contacts![index]
                                       ? const FluIcon(FluIcons.checkCircleUnicon, color: Colors.green)
                                       : const FluIcon(FluIcons.checkCircleUnicon, color: Colors.transparent)
                                 ],
@@ -219,11 +245,20 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
                       'Saisir le montant',
                       suffixIcon: FluIcons.arrowRight,
                       iconStrokeWidth: 1.8,
-                      onPressed: selectedUser != null
+                      onPressed: selectedContacts != null
                           ? () {
-                              print('selected User 2 ${selectedUser!.fullName}');
-                              print('selected User 2 ${selectedUser!.phoneNumber}');
-                              Navigator.pop(context, selectedUser);
+                              String formatPhone = formatPhoneNumber(selectedContacts!.phones[0].number.trim());
+                              String countryCode = selectedContacts!.phones[0].number.substring(0, 3);
+                              // print('selected User 2  $formatPhone');
+                              print('selected User 2 ${selectedContacts!.phones[0].number}');
+
+                              Navigator.pop(
+                                context,
+                                {
+                                  'formatPhone': formatPhone,
+                                  'countryCode': countryCode,
+                                },
+                              );
                             }
                           : null,
                       height: 50,
@@ -247,5 +282,25 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
         ],
       );
     });
+  }
+
+  String formatPhoneNumber(String number) {
+    // Remove any non-digit characters from the input number
+    String cleanedNumber = number.replaceAll(RegExp(r'\D'), '');
+
+    // Check if the cleaned number has a length of at least 8
+    if (cleanedNumber.length >= 8) {
+      // Remove the first three digits and then apply the desired formatting
+      return cleanedNumber.substring(3, 5) +
+          ' ' +
+          cleanedNumber.substring(5, 7) +
+          ' ' +
+          cleanedNumber.substring(7, 9) +
+          ' ' +
+          cleanedNumber.substring(9);
+    } else {
+      // If the input is not valid, return the original number
+      return number;
+    }
   }
 }

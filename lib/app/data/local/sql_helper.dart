@@ -74,10 +74,17 @@ class SqlHelper {
            MERCHANT TEXT, VERSION TEXT
           );
         ''');
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS TBLTRANSACTION(
+            PKEY INTEGER NOT NULL PRIMARY KEY ASC AUTOINCREMENT,
+            MESSAGE TEXT
+          );
+        ''');
       },
     );
   }
 
+  // ACCOUNT TEXT, BENEFICIARE TEXT, AMOUNT TEXT, DATE TEXT, NEWBALNCE TEXT, TXNID TEXT, TIME TEXT
   static void upgradeDatabase(Database db, int oldVersion, int newVersion) async {
     // Handle database upgrade logic here
     // You can drop tables or perform other upgrade tasks
@@ -226,6 +233,106 @@ class SqlHelper {
     } catch (ex) {
       print('Error: getMessages $ex');
       return [];
+    }
+  }
+
+  static Future<bool> setTransacHistory(String id, String message) async {
+    // String id, String account, String beneficiare, String amount, String date, String newbalance, String txnid, String time) async {
+    final db = await database;
+
+    try {
+      final contentValues = {
+        'MESSAGE': message
+        // 'ACCOUNT': account,
+        // 'BENEFICIARE': beneficiare,
+        // 'AMOUNT': amount,
+        // 'DATE': date,
+        // 'NEWBALNCE': newbalance,
+        // 'TXNID': txnid,
+        // 'TIME': time,
+      };
+
+      final rowsUpdated = await db.update(
+        'TBLTRANSACTION',
+        contentValues,
+        where: 'PKEY = ?',
+        whereArgs: [id],
+      );
+
+      if (rowsUpdated != 1) {
+        final newRowId = await db.insert('TBLTRANSACTION', contentValues);
+        return newRowId != -1;
+      }
+
+      return true;
+    } catch (ex) {
+      print('Error: setTransacHistory $ex');
+      return false;
+    }
+  }
+
+  static Future<List<String>> getTransacHistories() async {
+    final db = await database;
+
+    try {
+      final result = await db.query(
+        'TBLTRANSACTION',
+        columns: ['MESSAGE'],
+        orderBy: 'MESSAGE ASC',
+      );
+
+      final transacthistory = result.map((row) => row['MESSAGE'].toString()).toList();
+      return transacthistory;
+    } catch (ex) {
+      print('Error: getTransacHistory $ex');
+      return [];
+    }
+  }
+
+  static Future<List<Map<String, dynamic>>> getAllTransactions() async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> result = await db.query('TBLTRANSACTION');
+    return result;
+  }
+
+  static Future<List<String>> getTransacHistory(String displayname) async {
+    final db = await database;
+
+    try {
+      final result = await db.query(
+        'TBLTRANSACTION',
+        columns: ['PKEY', 'ACCOUNT', 'BENEFICIARE', 'AMOUNT', 'DATE', 'NEWBALNCE', 'TXNID', 'TIME'],
+        where: 'ACCOUNT = ?',
+        whereArgs: [displayname],
+      );
+
+      if (result.isNotEmpty) {
+        final transaction = result.map((row) => row.values.map((value) => value.toString()).toList()).toList();
+        return transaction[0];
+      }
+
+      return [];
+    } catch (ex) {
+      print('Error: getTransacHistory $ex');
+      return [];
+    }
+  }
+
+  static Future<bool> deleteTransacHistory(String displayname) async {
+    final db = await database;
+
+    try {
+      final rowsDeleted = await db.delete(
+        'TBLTRANSACTION',
+        where: 'DISPLAYNAME = ?',
+        whereArgs: [displayname],
+      );
+
+      return rowsDeleted > 0;
+    } catch (ex) {
+      print('Error: deleteTransacHistory $ex');
+      return false;
     }
   }
 
@@ -404,6 +511,7 @@ class SqlHelper {
       await db.delete('TBLHISTORY');
       await db.delete('TBLBENEFICIARIES');
       await db.delete('TBLSHOPCCART');
+      await db.delete('TBLTRANSACTION');
       await setProperty(SysProp.PROP_TOKEN, '');
       await setProperty(SysProp.PROP_MSISDN, '');
       await setProperty(SysProp.PROP_MERCHANT, '');
