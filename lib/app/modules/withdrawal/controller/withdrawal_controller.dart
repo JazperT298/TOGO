@@ -197,7 +197,7 @@ class WithdrawalController extends GetxController {
 
   @override
   void onInit() async {
-    await addPendingCashout();
+    // await addPendingCashout();
     checkPendingCashout();
     super.onInit();
   }

@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:ibank/app/components/line_separator.dart';
 import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_international_bottom_sheet.dart';
-import 'package:ibank/app/modules/sendmoney/views/modals/envoi_modal_bottom_sheet.dart';
+import 'package:ibank/app/modules/sendmoney/views/modals/envoi_national_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';

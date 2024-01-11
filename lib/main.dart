@@ -21,6 +21,13 @@ late List<CameraDescription> cameras;
 // final authService = Provider<AuthService>((ref) => AuthService());
 // final sharedPrefService = Provider<SharedPrefService>((ref) => SharedPrefService());
 
+// msisdn: 22896047878
+// pin: 2222
+// msisdn : 22899990507
+// pin: 9999
+// Test Destination: 22879397111, 22879397112
+
+
 onBackgroundMessage(SmsMessage message) {
   debugPrint("onBackgroundMessage called");
 }
