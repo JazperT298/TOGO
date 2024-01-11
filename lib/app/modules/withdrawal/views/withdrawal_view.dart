@@ -103,7 +103,7 @@ class _WithdrawalViewState extends State<WithdrawalView> {
                         padding: UISettings.pagePadding,
                         child: InkWell(
                           onTap: () {
-                            controller.addPendingCashout();
+                            // controller.addPendingCashout();
                           },
                           child: const Text(
                             "RETRAIT",
@@ -114,12 +114,14 @@ class _WithdrawalViewState extends State<WithdrawalView> {
                       const SizedBox(
                         height: 5,
                       ),
-                      const Padding(
+                      Padding(
                         padding: UISettings.pagePadding,
-                        child: Text(
-                          "Vous allez retirer de l'argent chez Etz Alibaba",
-                          style: TextStyle(
-                            fontSize: M3FontSizes.headlineSmall,
+                        child: Obx(
+                          () => Text(
+                            "Vous allez retirer de l'argent chez ${controller.nickname.value}",
+                            style: const TextStyle(
+                              fontSize: M3FontSizes.headlineSmall,
+                            ),
                           ),
                         ),
                       ),
