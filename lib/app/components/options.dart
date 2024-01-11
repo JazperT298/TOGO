@@ -62,14 +62,18 @@ class Options extends StatelessWidget {
           onPressed: option.onPressed ??
               () {
                 if (options[index].title == 'Informations personelles.') {
-                  Get.find<ProfileController>().selectedRoute.value = "Informations personelles.";
+                  Get.find<ProfileController>().selectedRoute.value =
+                      "Informations personelles.";
                   Get.toNamed(AppRoutes.PROFILEOTP);
                 } else if (options[index].title == 'Changer de pass') {
-                  Get.find<ProfileController>().selectedRoute.value = "Changer de pass";
+                  Get.find<ProfileController>().selectedRoute.value =
+                      "Changer de pass";
                   Get.toNamed(AppRoutes.PROFILECHANGESPASSWORD);
                 } else {
                   Get.snackbar("Message", "À venir",
-                      backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+                      backgroundColor: Colors.lightBlue,
+                      colorText: Colors.white,
+                      duration: const Duration(seconds: 3));
                 }
               },
           backgroundColor: context.colorScheme.background,
@@ -92,45 +96,60 @@ class Options extends StatelessWidget {
                             strokeWidth: 1.5,
                             value: .25,
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              (isLogout ? Colors.red : context.colorScheme.primary).withOpacity(.1),
+                              (isLogout
+                                      ? Colors.red
+                                      : context.colorScheme.primary)
+                                  .withOpacity(.1),
                             ),
                           ),
                         )),
                     Container(
                       height: itemSize,
                       width: itemSize,
-                      decoration:
-                          BoxDecoration(color: (isLogout ? Colors.red : context.colorScheme.primary).withOpacity(.045), shape: BoxShape.circle),
+                      decoration: BoxDecoration(
+                          color: (isLogout
+                                  ? Colors.red
+                                  : context.colorScheme.primary)
+                              .withOpacity(.045),
+                          shape: BoxShape.circle),
                       child: FluIcon(
                         option.icon!,
                         size: 24,
                         strokeWidth: 1.6,
-                        color: isLogout ? Colors.red : context.colorScheme.onSurface,
+                        color: isLogout
+                            ? Colors.red
+                            : context.colorScheme.onSurface,
                       ),
                     ),
                   ],
                 ),
               ),
               Expanded(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(
-                  option.title,
-                  style: TextStyle(
-                    fontSize: M3FontSizes.bodyLarge,
-                    fontWeight: FontWeight.bold,
-                    color: isLogout ? Colors.red : context.colorScheme.onBackground,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  option.description!,
-                  style: TextStyle(
-                    color: isLogout ? Colors.red : context.colorScheme.onBackground.withOpacity(.75),
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ])),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    Text(
+                      option.title,
+                      style: TextStyle(
+                        fontSize: M3FontSizes.bodyLarge,
+                        fontWeight: FontWeight.bold,
+                        color: isLogout
+                            ? Colors.red
+                            : context.colorScheme.onBackground,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      option.description!,
+                      style: TextStyle(
+                        color: isLogout
+                            ? Colors.red
+                            : context.colorScheme.onBackground.withOpacity(.75),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ])),
               const SizedBox(width: 15),
               FluIcon(
                 FluIcons.arrowRight1,
