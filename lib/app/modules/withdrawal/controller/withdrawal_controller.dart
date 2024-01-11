@@ -31,15 +31,14 @@ class WithdrawalController extends GetxController {
 
   addPendingCashout() async {
     var headers = {'Content-Type': 'application/xml'};
-    var request = http.Request('POST',
-        Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+    var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
     request.body =
         '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
    <soapenv:Header/>
    <soapenv:Body>
       <app:RequestToken soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
          <msisdn xsi:type="xsd:string">22899990507</msisdn>
-         <message xsi:type="xsd:string">AGNTI 22899990228 500 9999 F</message>
+         <message xsi:type="xsd:string">AGNTI 22899990137 500 9999 F</message>
          <token xsi:type="xsd:string">1234567890</token>
          <sendsms xsi:type="xsd:string">true</sendsms>
       </app:RequestToken>
@@ -67,17 +66,15 @@ class WithdrawalController extends GetxController {
     isLoading(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
       xmlns:d="http://www.w3.org/2001/XMLSchema" 
       xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
       xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
       <v:Header />
       <v:Body>
       <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-      <msisdn i:type="d:string">22899990228</msisdn>
+      <msisdn i:type="d:string">22899990137</msisdn>
       <message i:type="d:string">AGNTGET F</message>
       <token i:type="d:string">F3C8DEBDBA27B035</token>
       <sendsms i:type="d:string">false</sendsms>
@@ -101,8 +98,7 @@ class WithdrawalController extends GetxController {
           refID.value = decodedData['refid'];
         } else {
           Get.back();
-          Get.snackbar("Message", decodedData['message'],
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", decodedData['message'], backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
         // print('JSON Response: $jsonResponse');
@@ -120,17 +116,15 @@ class WithdrawalController extends GetxController {
     isLoading(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header />
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990228</msisdn>
+          <msisdn i:type="d:string">22899990137</msisdn>
           <message i:type="d:string">APPAGNT ${refID.value} $code F</message>
           <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">true</sendsms>
@@ -150,8 +144,7 @@ class WithdrawalController extends GetxController {
         // var decodedData = jsonDecode(jsonString);
         if (jsonString.contains('Retrait validé')) {
           // SqlHelper.setTransacHistory("-1", jsonString);
-          Get.find<StorageServices>()
-              .saveHistoryTransaction(message: jsonString, service: "Retrait");
+          Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: "Retrait");
           String trimString = jsonString.replaceAll('Retrait validé', '');
           String inputString = "'''$trimString'''";
           var lines = inputString.trim().split('\n');
@@ -183,8 +176,7 @@ class WithdrawalController extends GetxController {
 
           Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
         } else {
-          Get.snackbar("Message", jsonString,
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         print(response.reasonPhrase);

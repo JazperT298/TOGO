@@ -19,17 +19,15 @@ class HomeController extends GetxController {
     isLoadingDialog(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header />
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990228</msisdn>
+          <msisdn i:type="d:string">22899990137</msisdn>
           <message i:type="d:string">BALN $code F</message>
           <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">true</sendsms>
@@ -66,17 +64,12 @@ class HomeController extends GetxController {
           firstname.value = dataDecoded['Prenoms'];
           msisdn.value = dataDecoded['Compte'];
           birthdate.value = dataDecoded['Date de naissance'];
-          soldeFlooz.value = dataDecoded['Solde Flooz']
-              .toString()
-              .replaceAll("FCFA", "")
-              .trim()
-              .toString();
+          soldeFlooz.value = dataDecoded['Solde Flooz'].toString().replaceAll("FCFA", "").trim().toString();
           afficherSolde.value = false;
           log(soldeFlooz.value);
           Get.back();
         } else {
-          Get.snackbar("Message", jsonString,
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         print(response.reasonPhrase);

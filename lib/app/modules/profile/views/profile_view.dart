@@ -29,15 +29,15 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     // TODO: implement initState
-    openMonCompte(context);
+    // openMonCompte(context);
     super.initState();
   }
 
-  void openMonCompte(BuildContext context) {
-    String hits = "VRFY GETPROFILE F"; //+ getLanguage();
-    print('hits $hits');
-    SoapSender.sendSoap(context, hits, '', SmsOption.WAIT_RESPONSE, '', false);
-  }
+  // void openMonCompte(BuildContext context) {
+  //   String hits = "VRFY GETPROFILE F"; //+ getLanguage();
+  //   print('hits $hits');
+  //   SoapSender.sendSoap(context, hits, '', SmsOption.WAIT_RESPONSE, '', false);
+  // }
 
   @override
   Widget build(BuildContext context) {
