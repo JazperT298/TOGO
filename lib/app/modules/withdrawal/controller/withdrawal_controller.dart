@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:ibank/app/data/local/getstorage_services.dart';
+import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:developer';
 
@@ -109,6 +111,7 @@ class WithdrawalController extends GetxController {
       }
     } on Exception catch (_) {
       log("ERROR $_");
+      Get.back();
     }
     isLoading(false);
   }
@@ -146,6 +149,9 @@ class WithdrawalController extends GetxController {
         var jsonString = soapElement.innerText;
         // var decodedData = jsonDecode(jsonString);
         if (jsonString.contains('Retrait validé')) {
+          // SqlHelper.setTransacHistory("-1", jsonString);
+          Get.find<StorageServices>()
+              .saveHistoryTransaction(message: jsonString, service: "Retrait");
           String trimString = jsonString.replaceAll('Retrait validé', '');
           String inputString = "'''$trimString'''";
           var lines = inputString.trim().split('\n');
@@ -191,7 +197,7 @@ class WithdrawalController extends GetxController {
 
   @override
   void onInit() async {
-    // await addPendingCashout();
+    await addPendingCashout();
     checkPendingCashout();
     super.onInit();
   }

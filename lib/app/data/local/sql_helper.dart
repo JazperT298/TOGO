@@ -85,7 +85,8 @@ class SqlHelper {
   }
 
   // ACCOUNT TEXT, BENEFICIARE TEXT, AMOUNT TEXT, DATE TEXT, NEWBALNCE TEXT, TXNID TEXT, TIME TEXT
-  static void upgradeDatabase(Database db, int oldVersion, int newVersion) async {
+  static void upgradeDatabase(
+      Database db, int oldVersion, int newVersion) async {
     // Handle database upgrade logic here
     // You can drop tables or perform other upgrade tasks
   }
@@ -119,11 +120,13 @@ class SqlHelper {
       //   return utf8.decode(decryptedBytes);
       // }
       print('verifyMsisdn defaultValue 1 $result');
-      print('verifyMsisdn defaultValue 1ss ${defaultValue.characters.toString().trim().replaceAll(".", "")}');
+      print(
+          'verifyMsisdn defaultValue 1ss ${defaultValue.characters.toString().trim().replaceAll(".", "")}');
 
       // return defaultValue.replaceAll(".", "");
       // return result.toString().replaceAll(".", "");
-      var results = defaultValue.characters.toString().trim().replaceAll(".", "");
+      var results =
+          defaultValue.characters.toString().trim().replaceAll(".", "");
       print('verifyMsisdn defaultValue 1s $results');
       return results;
     } catch (e) {
@@ -202,7 +205,9 @@ class SqlHelper {
       final newRowId = await db.insert('TBLHISTORY', contentValues);
 
       if (!StringUtil().isNullOrEmpty(limit) && int.parse(limit) > 0) {
-        await db.rawDelete('DELETE FROM TBLHISTORY WHERE PKEY IN (SELECT PKEY FROM TBLHISTORY ORDER BY PKEY DESC LIMIT -1 OFFSET ?)', [limit]);
+        await db.rawDelete(
+            'DELETE FROM TBLHISTORY WHERE PKEY IN (SELECT PKEY FROM TBLHISTORY ORDER BY PKEY DESC LIMIT -1 OFFSET ?)',
+            [limit]);
       }
 
       return newRowId != -1;
@@ -226,7 +231,8 @@ class SqlHelper {
       final messages = <String>[];
       for (final row in result) {
         messages.add(row['MESSAGE'] as String);
-        messages.add(format.format(DateTime.fromMillisecondsSinceEpoch(row['DATETIME'] as int)));
+        messages.add(format.format(
+            DateTime.fromMillisecondsSinceEpoch(row['DATETIME'] as int)));
       }
 
       return messages;
@@ -281,7 +287,8 @@ class SqlHelper {
         orderBy: 'MESSAGE ASC',
       );
 
-      final transacthistory = result.map((row) => row['MESSAGE'].toString()).toList();
+      final transacthistory =
+          result.map((row) => row['MESSAGE'].toString()).toList();
       return transacthistory;
     } catch (ex) {
       print('Error: getTransacHistory $ex');
@@ -302,13 +309,24 @@ class SqlHelper {
     try {
       final result = await db.query(
         'TBLTRANSACTION',
-        columns: ['PKEY', 'ACCOUNT', 'BENEFICIARE', 'AMOUNT', 'DATE', 'NEWBALNCE', 'TXNID', 'TIME'],
+        columns: [
+          'PKEY',
+          'ACCOUNT',
+          'BENEFICIARE',
+          'AMOUNT',
+          'DATE',
+          'NEWBALNCE',
+          'TXNID',
+          'TIME'
+        ],
         where: 'ACCOUNT = ?',
         whereArgs: [displayname],
       );
 
       if (result.isNotEmpty) {
-        final transaction = result.map((row) => row.values.map((value) => value.toString()).toList()).toList();
+        final transaction = result
+            .map((row) => row.values.map((value) => value.toString()).toList())
+            .toList();
         return transaction[0];
       }
 
@@ -336,8 +354,19 @@ class SqlHelper {
     }
   }
 
-  static Future<bool> setBeneficiary(String id, String display, String firstname, String lastname, String idnumber, String country, String city,
-      String address, String bank, String bankbranch, String accountnumber, String contactnumber) async {
+  static Future<bool> setBeneficiary(
+      String id,
+      String display,
+      String firstname,
+      String lastname,
+      String idnumber,
+      String country,
+      String city,
+      String address,
+      String bank,
+      String bankbranch,
+      String accountnumber,
+      String contactnumber) async {
     final db = await database;
 
     try {
@@ -384,7 +413,8 @@ class SqlHelper {
         orderBy: 'DISPLAYNAME ASC',
       );
 
-      final beneficiaries = result.map((row) => row['DISPLAYNAME'].toString()).toList();
+      final beneficiaries =
+          result.map((row) => row['DISPLAYNAME'].toString()).toList();
       return beneficiaries;
     } catch (ex) {
       print('Error: getBeneficiaries $ex');
@@ -417,7 +447,9 @@ class SqlHelper {
       );
 
       if (result.isNotEmpty) {
-        final beneficiary = result.map((row) => row.values.map((value) => value.toString()).toList()).toList();
+        final beneficiary = result
+            .map((row) => row.values.map((value) => value.toString()).toList())
+            .toList();
         return beneficiary[0];
       }
 
@@ -562,7 +594,24 @@ class SqlHelper {
         0xa3,
         0x2e
       ]);
-      final ivBytes = Uint8List.fromList([0x1a, 0x5f, 0x2a, 0x5c, 0x04, 0x78, 0x56, 0x2e, 0xe8, 0xd5, 0x98, 0x24, 0x7b, 0x0a, 0xf2, 0xb8]);
+      final ivBytes = Uint8List.fromList([
+        0x1a,
+        0x5f,
+        0x2a,
+        0x5c,
+        0x04,
+        0x78,
+        0x56,
+        0x2e,
+        0xe8,
+        0xd5,
+        0x98,
+        0x24,
+        0x7b,
+        0x0a,
+        0xf2,
+        0xb8
+      ]);
 
       final keyParam = crypto.KeyParameter(keyBytes);
       final params = crypto.ParametersWithIV(keyParam, ivBytes);
@@ -617,7 +666,24 @@ class SqlHelper {
         0xa3,
         0x2e
       ]);
-      final ivBytes = Uint8List.fromList([0x1a, 0x5f, 0x2a, 0x5c, 0x04, 0x78, 0x56, 0x2e, 0xe8, 0xd5, 0x98, 0x24, 0x7b, 0x0a, 0xf2, 0xb8]);
+      final ivBytes = Uint8List.fromList([
+        0x1a,
+        0x5f,
+        0x2a,
+        0x5c,
+        0x04,
+        0x78,
+        0x56,
+        0x2e,
+        0xe8,
+        0xd5,
+        0x98,
+        0x24,
+        0x7b,
+        0x0a,
+        0xf2,
+        0xb8
+      ]);
 
       final keyParam = crypto.KeyParameter(keyBytes);
       final params = crypto.ParametersWithIV(keyParam, ivBytes);
