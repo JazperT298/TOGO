@@ -11,9 +11,6 @@ class ProfileChangePinView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.oldPIN.clear();
-    controller.newPIN.clear();
-    controller.confirmNewPIN.clear();
     return Scaffold(
       body: Obx(
         () => controller.isLoading.value == true
@@ -39,15 +36,9 @@ class ProfileChangePinView extends GetView<ProfileController> {
                           width: MediaQuery.of(context).size.width * 0.13,
                           child: ElevatedButton(
                             style: ButtonStyle(
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white),
-                                backgroundColor: MaterialStateProperty.all<
-                                        Color>(
-                                    const Color.fromARGB(255, 175, 221, 243)),
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
+                                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 175, 221, 243)),
+                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ))),
                             onPressed: () {
@@ -100,9 +91,7 @@ class ProfileChangePinView extends GetView<ProfileController> {
                       ),
                       Container(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(Get.context!).size.width * 0.05,
-                            right:
-                                MediaQuery.of(Get.context!).size.width * 0.05),
+                            left: MediaQuery.of(Get.context!).size.width * 0.05, right: MediaQuery.of(Get.context!).size.width * 0.05),
                         height: MediaQuery.of(Get.context!).size.height * 0.07,
                         width: MediaQuery.of(Get.context!).size.width,
                         child: TextField(
@@ -116,12 +105,9 @@ class ProfileChangePinView extends GetView<ProfileController> {
                           decoration: InputDecoration(
                             fillColor: const Color.fromARGB(255, 175, 221, 243),
                             filled: true,
-                            contentPadding: EdgeInsets.only(
-                                left: MediaQuery.of(Get.context!).size.width *
-                                    0.03),
+                            contentPadding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.width * 0.03),
                             alignLabelWithHint: false,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30)),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
@@ -150,9 +136,7 @@ class ProfileChangePinView extends GetView<ProfileController> {
                       ),
                       Container(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(Get.context!).size.width * 0.05,
-                            right:
-                                MediaQuery.of(Get.context!).size.width * 0.05),
+                            left: MediaQuery.of(Get.context!).size.width * 0.05, right: MediaQuery.of(Get.context!).size.width * 0.05),
                         height: MediaQuery.of(Get.context!).size.height * 0.07,
                         width: MediaQuery.of(Get.context!).size.width,
                         child: TextField(
@@ -166,12 +150,9 @@ class ProfileChangePinView extends GetView<ProfileController> {
                           decoration: InputDecoration(
                             fillColor: const Color.fromARGB(255, 175, 221, 243),
                             filled: true,
-                            contentPadding: EdgeInsets.only(
-                                left: MediaQuery.of(Get.context!).size.width *
-                                    0.03),
+                            contentPadding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.width * 0.03),
                             alignLabelWithHint: false,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30)),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
@@ -200,9 +181,7 @@ class ProfileChangePinView extends GetView<ProfileController> {
                       ),
                       Container(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(Get.context!).size.width * 0.05,
-                            right:
-                                MediaQuery.of(Get.context!).size.width * 0.05),
+                            left: MediaQuery.of(Get.context!).size.width * 0.05, right: MediaQuery.of(Get.context!).size.width * 0.05),
                         height: MediaQuery.of(Get.context!).size.height * 0.07,
                         width: MediaQuery.of(Get.context!).size.width,
                         child: TextField(
@@ -216,12 +195,9 @@ class ProfileChangePinView extends GetView<ProfileController> {
                           decoration: InputDecoration(
                             fillColor: const Color.fromARGB(255, 175, 221, 243),
                             filled: true,
-                            contentPadding: EdgeInsets.only(
-                                left: MediaQuery.of(Get.context!).size.width *
-                                    0.03),
+                            contentPadding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.width * 0.03),
                             alignLabelWithHint: false,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30)),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
@@ -244,22 +220,12 @@ class ProfileChangePinView extends GetView<ProfileController> {
                           suffixIcon: FluIcons.passwordCheck,
                           iconStrokeWidth: 1.8,
                           onPressed: () {
-                            if (controller.oldPIN.text.isEmpty ||
-                                controller.newPIN.text.isEmpty ||
-                                controller.confirmNewPIN.text.isEmpty) {
-                              Get.snackbar("Message", "Entrée manquante",
-                                  backgroundColor: Colors.lightBlue,
-                                  colorText: Colors.white);
-                            } else if (controller.newPIN.text !=
-                                controller.confirmNewPIN.text) {
-                              Get.snackbar(
-                                  "Message", "Le code PIN ne correspond pas",
-                                  backgroundColor: Colors.lightBlue,
-                                  colorText: Colors.white);
+                            if (controller.oldPIN.text.isEmpty || controller.newPIN.text.isEmpty || controller.confirmNewPIN.text.isEmpty) {
+                              Get.snackbar("Message", "Entrée manquante", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                            } else if (controller.newPIN.text != controller.confirmNewPIN.text) {
+                              Get.snackbar("Message", "Le code PIN ne correspond pas", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             } else {
-                              controller.changePin(
-                                  oldPin: controller.oldPIN.text,
-                                  newPin: controller.newPIN.text);
+                              controller.changePin(oldPin: controller.oldPIN.text, newPin: controller.newPIN.text);
                             }
                           },
                           height: 55,
@@ -269,16 +235,13 @@ class ProfileChangePinView extends GetView<ProfileController> {
                           foregroundColor: context.colorScheme.onPrimary,
                           boxShadow: [
                             BoxShadow(
-                              color:
-                                  context.colorScheme.primary.withOpacity(.35),
+                              color: context.colorScheme.primary.withOpacity(.35),
                               blurRadius: 25,
                               spreadRadius: 3,
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: M3FontSizes.bodyLarge),
+                          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
                         ),
                       ),
                     ],

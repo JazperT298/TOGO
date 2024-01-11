@@ -67,6 +67,9 @@ class Options extends StatelessWidget {
                 } else if (options[index].title == 'Changer de pass') {
                   Get.find<ProfileController>().selectedRoute.value = "Changer de pass";
                   Get.toNamed(AppRoutes.PROFILECHANGESPASSWORD);
+                  Get.find<ProfileController>().oldPIN.clear();
+                  Get.find<ProfileController>().newPIN.clear();
+                  Get.find<ProfileController>().confirmNewPIN.clear();
                 } else {
                   Get.snackbar("Message", "À venir",
                       backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));

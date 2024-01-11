@@ -614,40 +614,59 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   });
                 },
                 onFieldSubmitted: (p0) async {
-                  if (codeEditingController.text.isNotEmpty && codeEditingController.text.contains('0290')) {
-                    setState(() {
-                      addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
-                    });
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          content: Row(
-                            // mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
-                              CircularProgressIndicator(),
-                              SizedBox(width: 16.0),
-                              Text("S'il vous plaît, attendez..."),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                    await Future.delayed(Duration(seconds: 3), () {
-                      Navigator.of(context).pop(); // Close the alert dialog
-                    });
-                  } else if (codeEditingController.text.isNotEmpty && !codeEditingController.text.contains('0290')) {
-                    setState(() {
-                      isInvalidCode = true;
-                      invalidCodeString = "Code invalide. S'il vous plaît essayer à nouveau";
-                    });
-                  } else if (codeEditingController.text.isEmpty) {
-                    setState(() {
+                  if (codeEditingController.text.isNotEmpty) {
+                    if (codeEditingController.text.isEmpty) {
+                      showToast(context, 'Le code secret ne doit pas être vide');
                       isInvalidCode = true;
                       invalidCodeString = "Le code secret ne doit pas être vide";
-                    });
+                      // } else if (!codeEditingController.text.trim().contains('4512')) {
+                      //   showDialog(
+                      //     context: context,
+                      //     builder: (BuildContext context) {
+                      //       return const AlertDialog(
+                      //         content: Row(
+                      //           // mainAxisSize: MainAxisSize.min,
+                      //           mainAxisAlignment: MainAxisAlignment.start,
+                      //           children: [
+                      //             CircularProgressIndicator(),
+                      //             SizedBox(width: 16.0),
+                      //             Text('Please wait...'),
+                      //           ],
+                      //         ),
+                      //       );
+                      //     },
+                      //   );
+                      //   await Future.delayed(const Duration(seconds: 5), () {
+                      //     Navigator.of(context).pop(); // Close the alert dialog
+
+                      //     // Navigate to the next page
+                      //     Get.toNamed(AppRoutes.TRANSACFAILED);
+                      //   });
+                    } else {
+                      setState(() {
+                        addNumberFromReceiver(numberEditingCobntroller.text, 'F3C8DEBDBA27B035');
+                      });
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return const AlertDialog(
+                            content: Row(
+                              // mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CircularProgressIndicator(),
+                                SizedBox(width: 16.0),
+                                Text("S'il vous plaît, attendez..."),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                      await Future.delayed(const Duration(seconds: 5), () {
+                        Navigator.of(context).pop();
+                      });
+                    }
                   }
                 }),
             isInvalidCode == true
@@ -925,11 +944,11 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           // AppGlobal.numbers = msisdn.toString();
           // AppGlobal.time = time.toString();
 
-          if (AppGlobal.numbers == AppGlobal.beneficiare) {
-            AppGlobal.beneficiare = 'N/A';
-          }
+          // if (AppGlobal.numbers == AppGlobal.beneficiare) {
+          //   AppGlobal.beneficiare = 'N/A';
+          // }
           // SqlHelper.setTransacHistory("-1", dataDecoded);
-          Get.find<StorageServices>().saveHistoryTransaction(message: dataDecoded, service: "Transfert National");
+          Get.find<StorageServices>().saveHistoryTransaction(message: dataEncoded.toString(), service: "Transfert National");
           isInvalidCode = false;
           Get.back();
           Get.back();
