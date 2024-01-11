@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/bottomnav/views/bottomnav_view.dart';
 import 'package:ibank/app/modules/history/views/history_view.dart';
-import 'package:ibank/app/modules/home/views/home_view.dart';
 import 'package:ibank/app/modules/login/views/login_success.dart';
 import 'package:ibank/app/modules/login/views/login_view.dart';
 import 'package:ibank/app/modules/map/views/map_view.dart';

@@ -7,6 +7,7 @@ import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
 import 'package:ibank/app/modules/home/controller/home_controller.dart';
+import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
@@ -767,54 +768,62 @@ class _PromotionsAndOffers extends StatelessWidget {
         ),
         const SizedBox(height: 40),
         Container(
-            height: 215,
-            margin: const EdgeInsets.only(bottom: 20),
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(color: context.colorScheme.secondary.withOpacity(.45), borderRadius: BorderRadius.circular(30)),
-            child: Stack(
-              children: [
-                const FluImage(
-                  'https://cdn.dribbble.com/users/221912/screenshots/16487340/media/cbe88d0a96371191065d6e2eb8f25a6f.jpg?compress=1&resize=800x600&vertical=top',
-                  height: double.infinity,
-                  width: double.infinity,
-                  overlayOpacity: .5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 15, bottom: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Row(children: [
-                        Expanded(child: _StoryIndicator(1)),
-                        SizedBox(width: 8),
-                        Expanded(child: _StoryIndicator(0)),
-                        SizedBox(width: 8),
-                        Expanded(child: _StoryIndicator(0)),
-                        SizedBox(width: 8),
-                        Expanded(child: _StoryIndicator(0)),
-                      ]),
-                      SizedBox(
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '2023 Super Bowl LVI.',
-                                style: TextStyle(fontSize: M3FontSizes.bodyLarge, color: context.colorScheme.onPrimary),
-                              ),
-                              const SizedBox(height: 3),
-                              Text(
-                                'Le super bowl est là. Vivez de moments de folie avec flooz.',
-                                style: TextStyle(color: context.colorScheme.onPrimary),
-                              ),
-                            ],
-                          ))
-                    ],
-                  ),
-                ),
-              ],
-            )),
+          height: 215,
+          margin: const EdgeInsets.only(bottom: 20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: CarouselWidget.buildCarouselSlider(),
+        ),
+        // Container(
+        //     height: 215,
+        //     margin: const EdgeInsets.only(bottom: 20),
+        //     clipBehavior: Clip.hardEdge,
+        //     decoration: BoxDecoration(color: context.colorScheme.secondary.withOpacity(.45), borderRadius: BorderRadius.circular(30)),
+        //     child: Stack(
+        //       children: [
+        //         const FluImage(
+        //           'https://cdn.dribbble.com/users/221912/screenshots/16487340/media/cbe88d0a96371191065d6e2eb8f25a6f.jpg?compress=1&resize=800x600&vertical=top',
+        //           height: double.infinity,
+        //           width: double.infinity,
+        //           overlayOpacity: .5,
+        //         ),
+        //         Padding(
+        //           padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 15, bottom: 15),
+        //           child: Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //             children: [
+        //               const Row(children: [
+        //                 Expanded(child: _StoryIndicator(1)),
+        //                 SizedBox(width: 8),
+        //                 Expanded(child: _StoryIndicator(0)),
+        //                 SizedBox(width: 8),
+        //                 Expanded(child: _StoryIndicator(0)),
+        //                 SizedBox(width: 8),
+        //                 Expanded(child: _StoryIndicator(0)),
+        //               ]),
+        //               SizedBox(
+        //                   width: double.infinity,
+        //                   child: Column(
+        //                     crossAxisAlignment: CrossAxisAlignment.start,
+        //                     children: [
+        //                       Text(
+        //                         '2023 Super Bowl LVI.',
+        //                         style: TextStyle(fontSize: M3FontSizes.bodyLarge, color: context.colorScheme.onPrimary),
+        //                       ),
+        //                       const SizedBox(height: 3),
+        //                       Text(
+        //                         'Le super bowl est là. Vivez de moments de folie avec flooz.',
+        //                         style: TextStyle(color: context.colorScheme.onPrimary),
+        //                       ),
+        //                     ],
+        //                   ))
+        //             ],
+        //           ),
+        //         ),
+        //       ],
+        //     )),
         const Text(
           'Rechargez, envoyez, payez et parier pour faire partie des heureux gagnants de diverse lots dont un SUV luxueux de chez Toyota...Vous avez l\'art de deviner? Participer à nos jeux concours sur nos réseaux et tentez de remporter un superbe voyage pour deux à Los angeles.',
           style: TextStyle(

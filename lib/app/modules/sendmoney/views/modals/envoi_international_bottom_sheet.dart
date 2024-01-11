@@ -3,7 +3,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:contacts_service/contacts_service.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';

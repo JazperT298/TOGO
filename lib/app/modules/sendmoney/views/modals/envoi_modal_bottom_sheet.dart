@@ -3,7 +3,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:contacts_service/contacts_service.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
@@ -660,16 +659,16 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       },
                     );
 
-                    // Delay for 3 seconds
-                    await Future.delayed(Duration(seconds: 2), () {
-                      Navigator.of(context).pop(); // Close the alert dialog
+                    // // Delay for 3 seconds
+                    // await Future.delayed(Duration(seconds: 2), () {
+                    //   Navigator.of(context).pop(); // Close the alert dialog
 
-                      print('isInvalidCode $isInvalidCode');
-                      if (isInvalidCode == false) {
-                        Get.toNamed(AppRoutes.TRANSACCOMPLETE);
-                      }
-                    });
-                    setState(() {});
+                    //   print('isInvalidCode $isInvalidCode');
+                    //   if (isInvalidCode == false) {
+                    //     Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+                    //   }
+                    // });
+                    // setState(() {});
                     // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
                   }
                 }),
@@ -743,16 +742,16 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       },
                     );
 
-                    // Delay for 3 seconds
-                    await Future.delayed(Duration(seconds: 3), () {
-                      Navigator.of(context).pop(); // Close the alert dialog
+                    // // Delay for 3 seconds
+                    // await Future.delayed(Duration(seconds: 3), () {
+                    //   Navigator.of(context).pop(); // Close the alert dialog
 
-                      print('isInvalidCode $isInvalidCode');
-                      if (isInvalidCode == false) {
-                        Get.toNamed(AppRoutes.TRANSACCOMPLETE);
-                      }
-                    });
-                    setState(() {});
+                    //   print('isInvalidCode $isInvalidCode');
+                    //   if (isInvalidCode == false) {
+                    //     Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+                    //   }
+                    // });
+                    // setState(() {});
                     // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
                   }
                 },
@@ -880,8 +879,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           isInvalidCode = true;
           if (!description.contains('TOKEN_NOT_FOUND')) {
             invalidCodeString = description;
-          }
-          if (description.contains('TOKEN_NOT_FOUND')) {
+          } else if (description.contains('TOKEN_NOT_FOUND')) {
             await Future.delayed(Duration(seconds: 1), () {});
             await SharedPrefService.logoutUserData(false, '').then((value) {
               ProgressAlertDialog.showALoadingDialog(Get.context!, 'Déconnecter...', 3, AppRoutes.LOGIN);
@@ -977,7 +975,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           if (AppGlobal.numbers == AppGlobal.beneficiare) {
             AppGlobal.beneficiare = 'N/A';
           }
-          SqlHelper.setTransacHistory("-1", dataDecoded);
+
           isInvalidCode = false;
           Get.back();
           Get.back();
@@ -985,6 +983,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           amountEditingController.clear();
           codeEditingController.clear();
           showSuccessOrderPlace(message: jsonString);
+          SqlHelper.setTransacHistory("-1", jsonString);
         } else {
           isInvalidCode = true;
           invalidCodeString = jsonString;

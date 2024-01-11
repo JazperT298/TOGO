@@ -99,6 +99,8 @@ class _OtpViewState extends State<OtpView> {
                     horizontal: 75,
                   ),
                   child: PinCodeTextField(
+                    obscuringCharacter: '*',
+                    obscureText: true,
                     onSubmitted: (value) {
                       if (textEditingController.text.isEmpty) {
                         setState(() {

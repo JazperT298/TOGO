@@ -41,6 +41,8 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
   void getHistory() async {
     try {
       history = await SqlHelper.getAllTransactions();
+      setState(() {});
+      log('jsonEncode(history) $history');
       jsonEncode(history);
       log('jsonEncode(history) ${jsonEncode(history)}');
     } catch (e) {
@@ -166,6 +168,26 @@ class _TransactionsList extends GetView<HistoryController> {
     }
   }
 
+  static String? _extractValue(String text, String key) {
+    // Find the index of the key in the text
+    int keyIndex = text.indexOf(key);
+
+    if (keyIndex != -1) {
+      // Extract the substring after the key
+      String valueSubstring = text.substring(keyIndex + key.length);
+
+      // Find the index of the next newline character to determine the end of the value
+      int endIndex = valueSubstring.indexOf('\n');
+
+      // Extract the value
+      String value = endIndex != -1 ? valueSubstring.substring(0, endIndex).trim() : valueSubstring.trim();
+
+      return value;
+    }
+
+    return null; // Key not found
+  }
+
   @override
   Widget build(BuildContext context) {
     Get.put(HistoryController());
@@ -183,7 +205,13 @@ class _TransactionsList extends GetView<HistoryController> {
 
           String? avatarImage;
           FluIcons? avatarIcon;
+          String? montant = _extractValue(transactionss.toString(), "Montant:");
+          String? nouveauSoldeFlooz = _extractValue(transactionss.toString(), "Nouveau solde Flooz:");
+          String? txnId = _extractValue(transactionss.toString(), "Txn ID:");
 
+          print("Montant: $montant");
+          print("Nouveau solde Flooz: $nouveauSoldeFlooz");
+          print("Txn ID: $txnId");
           if (transaction.agency != null) {
             avatarIcon = transaction.agency!.icon;
           } else {
@@ -255,7 +283,7 @@ class _TransactionsList extends GetView<HistoryController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              transactionss['MESSAGE'].toString(),
+                              txnId!.substring(0, txnId.length - 1),
                               maxLines: 2,
                               // transaction.agency != null
                               //     ? StringUtils(transaction.agency!.transactionTitle).capitalizeFirst!
@@ -265,7 +293,7 @@ class _TransactionsList extends GetView<HistoryController> {
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              '', //  transactionss['TIME'].toString(),
+                              nouveauSoldeFlooz!,
                               style: const TextStyle(color: Colors.black54),
                             ),
                           ],
@@ -280,7 +308,7 @@ class _TransactionsList extends GetView<HistoryController> {
                       SizedBox(
                         width: (MediaQuery.of(context).size.width - (UISettings.pagePaddingSize * 2)) * .2,
                         child: Text(
-                          '', // transactionss['AMOUNT'].toString(), '',
+                          montant!.substring(0, montant.length - 1),
                           style: const TextStyle(fontSize: M3FontSizes.bodyLarge, fontWeight: FontWeight.w600),
                         ),
                         // Text.rich(
