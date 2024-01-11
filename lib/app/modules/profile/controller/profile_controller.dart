@@ -33,8 +33,10 @@ class ProfileController extends GetxController {
     isLoading(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -79,10 +81,15 @@ class ProfileController extends GetxController {
           msisdn.value = dataDecoded['Compte'];
           birthdate.value = dataDecoded['Date de naissance'];
           soldeFlooz.value = dataDecoded['Solde Flooz'];
-          commission.value = dataDecoded['Commission'];
+          if ((dataDecoded as Map).containsKey('Commission')) {
+            commission.value = dataDecoded['Commission'];
+          } else {
+            commission.value = "N/A";
+          }
           Get.toNamed(AppRoutes.PROFILEINFORMATIONPERSONELLES);
         } else {
-          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString,
+              backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         print(response.reasonPhrase);
@@ -97,8 +104,10 @@ class ProfileController extends GetxController {
     isLoading(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -124,7 +133,10 @@ class ProfileController extends GetxController {
         var jsonString = soapElement.innerText;
         log(jsonString.toString());
         Get.back();
-        Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 10));
+        Get.snackbar("Message", jsonString,
+            backgroundColor: Colors.lightBlue,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 10));
       } else {
         print(response.reasonPhrase);
       }
