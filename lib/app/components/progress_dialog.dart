@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:sizer/sizer.dart';
 
 class ProgressAlertDialog {
   static Timer? timer;
@@ -17,7 +18,10 @@ class ProgressAlertDialog {
           children: [
             const CircularProgressIndicator(),
             const SizedBox(width: 16.0),
-            Text(progressMessage),
+            Text(
+              progressMessage,
+              style: TextStyle(fontSize: 11.sp),
+            ),
           ],
         ),
       ),
@@ -40,7 +44,10 @@ class ProgressAlertDialog {
               children: [
                 const CircularProgressIndicator(),
                 const SizedBox(width: 16.0),
-                Text(progressMessage),
+                Text(
+                  progressMessage,
+                  style: TextStyle(fontSize: 11.sp),
+                ),
               ],
             ),
           );
@@ -62,7 +69,10 @@ class ProgressAlertDialog {
             children: [
               const CircularProgressIndicator(),
               const SizedBox(width: 16.0),
-              Text(progressMessage),
+              Text(
+                progressMessage,
+                style: TextStyle(fontSize: 11.sp),
+              ),
             ],
           ),
         );
@@ -89,7 +99,10 @@ class ProgressAlertDialog {
             children: [
               const CircularProgressIndicator(),
               const SizedBox(width: 16.0),
-              Text(progressMessage),
+              Text(
+                progressMessage,
+                style: TextStyle(fontSize: 11.sp),
+              ),
             ],
           ),
         );

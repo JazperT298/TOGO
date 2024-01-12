@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:sizer/sizer.dart';
 
 class TransacCompleteView extends StatelessWidget {
   const TransacCompleteView({super.key});
@@ -37,12 +38,12 @@ class TransacCompleteView extends StatelessWidget {
                 ),
                 Padding(
                   padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
-                  child: const Align(
+                  child: Align(
                     alignment: Alignment.center,
                     child: Text(
                       'Opération effectuer avec succèss',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 20),
+                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 15.sp),
                     ),
                   ),
                 ),
@@ -66,9 +67,9 @@ class TransacCompleteView extends StatelessWidget {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(8),
-                    child: const Text(
+                    child: Text(
                       'Voir le récap',
-                      style: TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.w700, fontSize: M3FontSizes.headlineTiny),
+                      style: TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.w700, fontSize: 11.sp),
                     ),
                   ),
                 ),
@@ -81,7 +82,7 @@ class TransacCompleteView extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed(AppRoutes.BOTTOMNAV);
                   },
-                  height: 55,
+                  height: 5.8.h,
                   width: MediaQuery.of(context).size.width * 16,
                   cornerRadius: UISettings.minButtonCornerRadius,
                   backgroundColor: context.colorScheme.primary,
@@ -94,7 +95,7 @@ class TransacCompleteView extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
                 ),
               ],
             ),

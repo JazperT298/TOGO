@@ -7,6 +7,7 @@ import 'package:ibank/app/modules/onboard/controller/onboard_controller.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/ui/onboarding_pages.dart';
+import 'package:sizer/sizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardView extends ConsumerStatefulWidget {
@@ -94,7 +95,7 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                             cornerRadius: 14,
                             backgroundColor: context.colorScheme.background.withOpacity(.25),
                             foregroundColor: Colors.white,
-                            height: UISettings.minButtonSize - 5,
+                            height: UISettings.minButtonSize - 10,
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                           ),
                         ),
@@ -107,6 +108,7 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
             FluButton.text(
               onboardingScreenPage[currentPage].buttonText,
               prefixIcon: onboardingScreenPage[currentPage].buttonIcon,
+              iconSize: 18,
               iconStrokeWidth: 1.8,
               onPressed: toNextPage,
               height: UISettings.buttonSize - 10,
@@ -123,7 +125,10 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                   offset: const Offset(0, 5),
                 )
               ],
-              textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+              textStyle: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 12.sp,
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * .010),
@@ -170,13 +175,14 @@ class _Page extends GetView<OnboardController> {
               Text(
                 StringUtils(data.title).capitalizeFirst!,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: context.colorScheme.onSurface,
-                  fontSize: M3FontSizes.headlineSmall,
-                ),
+                style: TextStyle(color: context.colorScheme.onSurface, fontSize: 18.sp),
               ),
               const SizedBox(height: 5),
-              Text(data.description, textAlign: TextAlign.center),
+              Text(
+                data.description,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 10.sp),
+              ),
             ],
           ),
         ),

@@ -10,6 +10,7 @@ import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:sizer/sizer.dart';
 
 class OtpView extends StatefulWidget {
   const OtpView({super.key});
@@ -72,23 +73,23 @@ class _OtpViewState extends State<OtpView> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 'Confirmez votre numéro',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
-                child: const Text(
+                child: Text(
                   'Veuillez saisir le code à 06 chiffres que nous vous avons envoyé sur votre numéro',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 11.sp, color: Colors.grey, fontWeight: FontWeight.w400),
                 ),
               ),
-              const Text(
+              Text(
                 '+228 99 99 01 37',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: Color(0xFFFB6404), fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 11.sp, color: const Color(0xFFFB6404), fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 28),
               Form(
@@ -112,7 +113,7 @@ class _OtpViewState extends State<OtpView> {
                         });
                       } else {
                         SharedPrefService.saveLoginData(true, 'Malik Monk');
-                        ProgressAlertDialog.showALoadingDialog(context, "Validation d'OTP, veuillez patienter...", 5, AppRoutes.PRIVACY);
+                        ProgressAlertDialog.showALoadingDialog(context, "Chargement..", 5, AppRoutes.PRIVACY);
                         textEditingController.clear();
                       }
                     },
@@ -180,14 +181,14 @@ class _OtpViewState extends State<OtpView> {
                   ? Text(
                       'Pin Code is required*',
                       style: TextStyle(
-                        fontSize: M3FontSizes.titleSmall,
+                        fontSize: 11.sp,
                         color: context.colorScheme.secondary,
                       ),
                     )
                   : Text(
                       'Renvoyer le code',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: M3FontSizes.titleSmall, color: context.colorScheme.primary, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 11.sp, color: context.colorScheme.primary, fontWeight: FontWeight.w600),
                     ),
               const SizedBox(height: 16),
               FluButton.text(
@@ -205,11 +206,11 @@ class _OtpViewState extends State<OtpView> {
                     });
                   } else {
                     SharedPrefService.saveLoginData(true, 'Malik Monk');
-                    ProgressAlertDialog.showALoadingDialog(context, "Validation d'OTP, veuillez patienter...", 5, AppRoutes.PRIVACY);
+                    ProgressAlertDialog.showALoadingDialog(context, "Chargement..", 5, AppRoutes.PRIVACY);
                     textEditingController.clear();
                   }
                 },
-                height: 55,
+                height: 5.8.h,
                 width: MediaQuery.of(context).size.width * 16,
                 cornerRadius: UISettings.minButtonCornerRadius,
                 backgroundColor: context.colorScheme.primary,
@@ -222,7 +223,7 @@ class _OtpViewState extends State<OtpView> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
               const SizedBox(height: 30),
             ],

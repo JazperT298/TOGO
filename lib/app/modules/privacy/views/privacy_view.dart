@@ -6,6 +6,7 @@ import 'package:ibank/app/modules/privacy/controller/privacy_controller.dart';
 import 'package:flukit/flukit.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:sizer/sizer.dart';
 
 class PrivacyView extends GetView<PrivacyController> {
   const PrivacyView({super.key});
@@ -35,47 +36,47 @@ class PrivacyView extends GetView<PrivacyController> {
                         const SizedBox(height: 35),
                         Text(
                           'Politique de confidentialite'.toUpperCase(),
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: context.colorScheme.primary),
+                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w500, color: context.colorScheme.primary),
                         ),
                         const SizedBox(height: 3),
-                        const Text(
+                        Text(
                           'Gorem ipsum dolor sit \namet.',
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
+                          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'Horem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(height: 24),
-                        const Text(
+                        Text(
                           'Nunc vulputate libero et velit interdum.',
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
+                          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'Sorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac ',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus. Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. ',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(height: 24),
-                        const Text(
+                        Text(
                           'Nunc vulputate libero et velit interdum.',
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
+                          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'Sorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac ',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus. Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. ',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(height: 110),
                       ],
@@ -100,7 +101,7 @@ class PrivacyView extends GetView<PrivacyController> {
                             'Je refuse',
                             iconStrokeWidth: 1.8,
                             onPressed: () => print('Je refuse'),
-                            height: 55,
+                            height: 5.8.h,
                             cornerRadius: UISettings.minButtonCornerRadius,
                             backgroundColor: Colors.transparent,
                             foregroundColor: Colors.transparent,
@@ -112,7 +113,7 @@ class PrivacyView extends GetView<PrivacyController> {
                             onPressed: () {
                               Get.toNamed(AppRoutes.LOGINSUCCESS);
                             },
-                            height: UISettings.buttonSize - 10,
+                            height: 5.8.h,
                             width: MediaQuery.of(context).size.width * .40,
                             cornerRadius: UISettings.minButtonCornerRadius,
                             backgroundColor: context.colorScheme.primary,
@@ -125,7 +126,7 @@ class PrivacyView extends GetView<PrivacyController> {
                                 offset: const Offset(0, 5),
                               )
                             ],
-                            textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                            textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
                           ),
                         ],
                       ),

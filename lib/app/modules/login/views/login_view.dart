@@ -6,6 +6,7 @@ import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../routes/app_routes.dart';
 
@@ -46,16 +47,24 @@ class _LoginViewState extends State<LoginView> {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 12.0, left: 0),
-          child: Text('Selectionner'.toUpperCase(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFFFB6404))),
+          child: Text('Selectionner'.toUpperCase(),
+              style: TextStyle(
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w500,
+                color: const Color(0xFFFB6404),
+              )),
         ),
-        const Padding(
-          padding: EdgeInsets.only(top: 4.0, left: 0),
-          child: Text('Votre pays', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black)),
+        Padding(
+          padding: const EdgeInsets.only(top: 4.0, left: 0),
+          child: Text(
+            'Votre pays',
+            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black),
+          ),
         ),
-        const Padding(
-            padding: EdgeInsets.only(top: 8.0, left: 0),
+        Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 0),
             child: Text('Choisissez votre pays et bénéficiez d’une expérience personnalisée ainsi que des transactions optimisées.',
-                style: TextStyle(fontSize: 14))),
+                style: TextStyle(fontSize: 10.sp))),
       ],
     ),
   );
@@ -81,17 +90,17 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 'Accédez à votre compte',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
-                child: const Text(
+                child: Text(
                   'Saisissez vos informations de connexion et connectez-vous à votre compte en toute simplicité',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 11.sp, color: Colors.grey, fontWeight: FontWeight.w400),
                 ),
               ),
               const SizedBox(height: 42),
@@ -110,15 +119,15 @@ class _LoginViewState extends State<LoginView> {
                       });
                     },
                     child: Container(
-                      height: 45,
-                      width: MediaQuery.of(context).size.width / 4.5,
+                      height: 5.h,
+                      width: MediaQuery.of(context).size.width / 4.8,
                       padding: EdgeInsets.symmetric(horizontal: _selectedCountryCode.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
                       decoration:
                           BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: const TextStyle(color: Colors.black)),
+                          Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: TextStyle(color: Colors.black, fontSize: 11.sp)),
                           const FluIcon(FluIcons.arrowDown2, size: 20)
                         ],
                       ),
@@ -129,7 +138,7 @@ class _LoginViewState extends State<LoginView> {
                     child: FluTextField(
                       hint: "Numéro de téléphone",
                       inputController: numberController,
-                      height: 50,
+                      height: 5.h,
                       cornerRadius: 15,
                       keyboardType: TextInputType.number,
                       fillColor: context.colorScheme.primaryContainer,
@@ -152,11 +161,11 @@ class _LoginViewState extends State<LoginView> {
                           errorMessage = '';
                         });
                       },
-                      textStyle: const TextStyle(fontSize: M3FontSizes.bodyMedium), // context.textTheme.bodyMedium,
+                      textStyle: TextStyle(fontSize: 11.sp), // context.textTheme.bodyMedium,
 
                       onFieldSubmitted: (p0) {
                         if (numberController.text.isNotEmpty && numberController.text.contains('99 99 01 37')) {
-                          ProgressAlertDialog.showALoadingDialog(context, "Vérification! S'il vous plaît, attendez..", 3, AppRoutes.OTP);
+                          ProgressAlertDialog.showALoadingDialog(context, "Chargement..", 3, AppRoutes.OTP);
                           isTextFieldEmpty = false;
                         } else if (numberController.text.isNotEmpty && !numberController.text.contains('99 99 01 37')) {
                           setState(() {
@@ -180,7 +189,7 @@ class _LoginViewState extends State<LoginView> {
                           child: Text(
                             errorMessage,
                             style: TextStyle(
-                              fontSize: M3FontSizes.titleSmall,
+                              fontSize: 11.sp,
                               color: context.colorScheme.secondary,
                             ),
                           ))
@@ -189,7 +198,7 @@ class _LoginViewState extends State<LoginView> {
                           child: Text(
                             'Phone number is required*',
                             style: TextStyle(
-                              fontSize: M3FontSizes.titleSmall,
+                              fontSize: 11.sp,
                               color: context.colorScheme.secondary,
                             ),
                           ),
@@ -201,7 +210,7 @@ class _LoginViewState extends State<LoginView> {
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (numberController.text.isNotEmpty && numberController.text.contains('99 99 01 37')) {
-                    ProgressAlertDialog.showALoadingDialog(context, "Vérification! S'il vous plaît, attendez..", 3, AppRoutes.OTP);
+                    ProgressAlertDialog.showALoadingDialog(context, "Chargement..", 3, AppRoutes.OTP);
                     isTextFieldEmpty = false;
                   } else if (numberController.text.isNotEmpty && !numberController.text.contains('99 99 01 37')) {
                     setState(() {
@@ -214,7 +223,7 @@ class _LoginViewState extends State<LoginView> {
                     });
                   }
                 },
-                height: UISettings.buttonSize - 10,
+                height: 5.8.h,
                 width: MediaQuery.of(context).size.width * 16,
                 cornerRadius: UISettings.minButtonCornerRadius,
                 backgroundColor: context.colorScheme.primary,
@@ -227,7 +236,7 @@ class _LoginViewState extends State<LoginView> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
               const SizedBox(height: 30),
             ],

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginSuccess extends StatefulWidget {
   const LoginSuccess({super.key});
@@ -56,12 +57,12 @@ class _LoginSuccessState extends State<LoginSuccess> {
                 ),
                 Padding(
                   padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
-                  child: const Align(
+                  child: Align(
                     alignment: Alignment.center,
                     child: Text(
                       'Vouz avez configurer votre comtre avec succes',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: M3FontSizes.headlineLarge),
+                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24.sp),
                     ),
                   ),
                 ),
@@ -72,9 +73,9 @@ class _LoginSuccessState extends State<LoginSuccess> {
                   'Fermer',
                   iconStrokeWidth: 1.8,
                   onPressed: () {
-                    Get.toNamed(AppRoutes.BOTTOMNAV);
+                    Get.offAllNamed(AppRoutes.BOTTOMNAV);
                   },
-                  height: UISettings.buttonSize - 10,
+                  height: 5.8.h,
                   width: MediaQuery.of(context).size.width * 16,
                   cornerRadius: UISettings.minButtonCornerRadius,
                   backgroundColor: context.colorScheme.primary,
@@ -87,7 +88,7 @@ class _LoginSuccessState extends State<LoginSuccess> {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
                 ),
               ],
             ),

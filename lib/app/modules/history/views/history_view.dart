@@ -9,6 +9,7 @@ import 'package:ibank/app/modules/history/views/dialog/history_dialog.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/core/transactions.dart';
 import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({super.key});
@@ -204,19 +205,19 @@ class _TransactionsList extends GetView<HistoryController> {
                                 Text(
                                   controller.historytransactions[index].service,
                                   maxLines: 2,
-                                  style: const TextStyle(fontSize: M3FontSizes.bodyLarge, fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.bold),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
                                   controller.historytransactions[index].message,
                                   maxLines: 2,
-                                  style: const TextStyle(color: Colors.black54),
+                                  style: TextStyle(color: Colors.black54, fontSize: 11.sp),
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
                                   "${DateFormat.yMMMMd().format(controller.historytransactions[index].date)} ${DateFormat.jm().format(controller.historytransactions[index].date)}", //  transactionss['TIME'].toString(),
-                                  style: const TextStyle(color: Colors.red),
+                                  style: TextStyle(color: Colors.red, fontSize: 11.sp),
                                 ),
                                 const SizedBox(height: 17),
                                 Divider()
