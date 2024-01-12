@@ -3,8 +3,6 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ibank/app/components/dotted_circle.dart';
-import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
@@ -13,15 +11,15 @@ import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
-import 'package:ibank/utils/constants/app_colors.dart';
 import 'package:ibank/utils/core/users.dart';
+import 'package:sizer/sizer.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
 
   Widget _buildTitle(BuildContext context, String text, Color color) => Text(
         text.toUpperCase(),
-        style: TextStyle(fontSize: M3FontSizes.headlineSmall, fontWeight: FontWeight.bold, color: color, height: 1.5),
+        style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: color, height: 1.5),
       );
 
   @override
@@ -78,8 +76,10 @@ class HomeView extends GetView<HomeController> {
                               ],
                             ),
                             SizedBox(height: MediaQuery.of(context).size.height * .035),
-                            Text(Flu.formatDate(DateTime.now()).toUpperCase(),
-                                style: TextStyle(color: context.colorScheme.onBackground.withOpacity(.45))),
+                            Text(
+                              Flu.formatDate(DateTime.now()).toUpperCase(),
+                              style: TextStyle(fontSize: 12.sp),
+                            ),
                             _buildTitle(context, 'Votre argent, votre contrôle.'.toUpperCase(), context.colorScheme.onSurface),
                             FluLine(
                               height: 1,
@@ -145,6 +145,7 @@ class _CardState extends State<_Card> {
                         color: context.colorScheme.tertiary,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'neptune',
+                        fontSize: 11.sp,
                       ),
                     ),
                     Expanded(
@@ -158,7 +159,7 @@ class _CardState extends State<_Card> {
                                     ? Text(
                                         '######',
                                         style: TextStyle(
-                                          fontSize: M3FontSizes.displayMedium,
+                                          fontSize: 30.sp,
                                           fontWeight: FontWeight.bold,
                                           color: context.colorScheme.onPrimary,
                                         ),
@@ -166,7 +167,7 @@ class _CardState extends State<_Card> {
                                     : Text(
                                         controller.soldeFlooz.value,
                                         style: TextStyle(
-                                          fontSize: M3FontSizes.displayMedium,
+                                          fontSize: 30.sp,
                                           fontWeight: FontWeight.bold,
                                           color: context.colorScheme.onPrimary,
                                         ),
@@ -177,7 +178,7 @@ class _CardState extends State<_Card> {
                                 child: Text(
                                   " FCFA",
                                   style: TextStyle(
-                                    fontSize: M3FontSizes.bodySmall,
+                                    fontSize: 11.sp,
                                     fontWeight: FontWeight.bold,
                                     color: context.colorScheme.onPrimary,
                                   ),
@@ -353,17 +354,16 @@ class _Favorites extends StatelessWidget {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'envoi rapide',
-                  style: TextStyle(fontFamily: 'neptune'),
+                  style: TextStyle(fontSize: 12.sp),
                 ),
                 const SizedBox(height: 5),
                 Hero(
                   tag: '<title>',
                   child: Text(
                     'Personne favorites'.toUpperCase(),
-                    style: TextStyle(
-                        fontSize: M3FontSizes.headlineSmall, fontWeight: FontWeight.bold, color: context.colorScheme.onSurface, height: 1.5),
+                    style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: context.colorScheme.onSurface, height: 1.5),
                   ),
                 ),
               ],
@@ -475,7 +475,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         Text(
           '${action.description}.',
           style: TextStyle(
-            fontSize: M3FontSizes.displaySmall,
+            fontSize: 11.sp,
             fontWeight: FontWeight.w600,
             color: context.colorScheme.onSurface,
           ),
@@ -500,7 +500,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         Text(
           'Selectionnez votre offre.',
           style: TextStyle(
-            fontSize: M3FontSizes.displaySmall,
+            fontSize: 11.sp,
             fontWeight: FontWeight.w600,
             color: context.colorScheme.onBackground,
           ),
@@ -518,14 +518,13 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         Text(
           'canalBox',
           style: TextStyle(
-            fontFamily: 'neptune',
             color: context.colorScheme.primary,
           ),
         ),
         Text(
           'Selectionnez votre box.',
           style: TextStyle(
-            fontSize: M3FontSizes.displaySmall,
+            fontSize: 11.sp,
             fontWeight: FontWeight.w600,
             color: context.colorScheme.onBackground,
           ),
@@ -639,10 +638,9 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                           children: [
                             const Text('Offre start.'),
                             Text.rich(
-                              const TextSpan(
-                                  children: [TextSpan(text: '15000'), TextSpan(text: ' F/Mois', style: TextStyle(fontSize: M3FontSizes.labelSmall))]),
+                              TextSpan(children: [const TextSpan(text: '15000'), TextSpan(text: ' F/Mois', style: TextStyle(fontSize: 11.sp))]),
                               style: TextStyle(
-                                fontSize: M3FontSizes.displaySmall,
+                                fontSize: 11.sp,
                                 fontWeight: FontWeight.w600,
                                 color: context.colorScheme.onSurface,
                               ),
@@ -698,7 +696,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                             Text(
                               '0085764',
                               style: TextStyle(
-                                fontSize: M3FontSizes.headlineSmall,
+                                fontSize: 11.sp,
                                 fontWeight: FontWeight.w600,
                                 color: context.colorScheme.onSurface,
                               ),
@@ -773,15 +771,14 @@ class _PromotionsAndOffers extends StatelessWidget {
                   'Juste pour vous.',
                   style: TextStyle(
                     color: context.colorScheme.primary,
-                    fontFamily: 'neptune',
-                    fontSize: M3FontSizes.bodyLarge,
+                    fontSize: 12.sp,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   'Rechargez, envoyez et gagnez!'.toUpperCase(),
                   style: TextStyle(
-                    fontSize: M3FontSizes.headlineSmall,
+                    fontSize: 17.sp,
                     fontWeight: FontWeight.bold,
                     color: context.colorScheme.onSurface,
                   ),
@@ -848,10 +845,10 @@ class _PromotionsAndOffers extends StatelessWidget {
         //         ),
         //       ],
         //     )),
-        const Text(
+        Text(
           'Rechargez, envoyez, payez et parier pour faire partie des heureux gagnants de diverse lots dont un SUV luxueux de chez Toyota...Vous avez l\'art de deviner? Participer à nos jeux concours sur nos réseaux et tentez de remporter un superbe voyage pour deux à Los angeles.',
           style: TextStyle(
-            fontSize: M3FontSizes.bodyMedium,
+            fontSize: 11.sp,
           ),
         )
       ]);

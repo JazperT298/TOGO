@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:sizer/sizer.dart';
 
 class TransacFailedView extends StatelessWidget {
   const TransacFailedView({super.key});
@@ -36,23 +37,23 @@ class TransacFailedView extends StatelessWidget {
                 ),
                 Padding(
                   padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
-                  child: const Align(
+                  child: Align(
                     alignment: Alignment.center,
                     child: Text(
                       "Échec de l'Opération",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: M3FontSizes.headlineLarge),
+                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 11.sp),
                     ),
                   ),
                 ),
                 Padding(
                   padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
-                  child: const Align(
+                  child: Align(
                     alignment: Alignment.center,
                     child: Text(
                       "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: M3FontSizes.headlineTiny),
+                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 11.sp),
                     ),
                   ),
                 ),
@@ -81,7 +82,7 @@ class TransacFailedView extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
                 ),
                 const SizedBox(
                   height: 12,
@@ -93,7 +94,7 @@ class TransacFailedView extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed(AppRoutes.BOTTOMNAV);
                   },
-                  height: 55,
+                  height: 5.8.h,
 
                   width: MediaQuery.of(context).size.width * 16,
                   cornerRadius: UISettings.minButtonCornerRadius,
@@ -108,7 +109,7 @@ class TransacFailedView extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge, color: context.colorScheme.primary),
+                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp, color: context.colorScheme.primary),
                 ),
               ],
             ),

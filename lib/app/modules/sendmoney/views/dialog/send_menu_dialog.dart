@@ -11,6 +11,7 @@ import 'package:ibank/app/modules/sendmoney/views/modals/envoi_national_bottom_s
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
+import 'package:sizer/sizer.dart';
 
 class SendMenuDialog {
   static void showMenuDialog(context) {
@@ -122,7 +123,7 @@ class SendMenuDialog {
                 Text(
                   'Bénéficiaire'.toUpperCase(),
                   style: TextStyle(
-                    fontSize: M3FontSizes.headlineTiny,
+                    fontSize: 14.sp,
                     color: context.colorScheme.onSurface,
                   ),
                 ),
@@ -133,14 +134,14 @@ class SendMenuDialog {
                 //     const Expanded(
                 //       child: Text(
                 //         'Nom',
-                //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                //         style: TextStyle(fontSize: 11.sp color: Colors.grey),
                 //       ),
                 //     ),
                 //     Expanded(
                 //       child: Text(
                 //         'Karim Razack',
                 //         style: TextStyle(
-                //           fontSize: M3FontSizes.headlineTiny,
+                //           fontSize: 11.sp
                 //           color: context.colorScheme.onSurface,
                 //         ),
                 //       ),
@@ -151,17 +152,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Prénom',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         AppGlobal.beneficiare.toString(),
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -172,17 +173,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Numéro',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         AppGlobal.numbers,
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -195,7 +196,7 @@ class SendMenuDialog {
                 Text(
                   'DETAILS'.toUpperCase(),
                   style: TextStyle(
-                    fontSize: M3FontSizes.headlineTiny,
+                    fontSize: 11.sp,
                     color: context.colorScheme.onSurface,
                   ),
                 ),
@@ -206,14 +207,14 @@ class SendMenuDialog {
                 //     const Expanded(
                 //       child: Text(
                 //         'Frais',
-                //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                //         style: TextStyle(fontSize: 11.sp color: Colors.grey),
                 //       ),
                 //     ),
                 //     Expanded(
                 //       child: Text(
                 //         '0 FCFA',
                 //         style: TextStyle(
-                //           fontSize: M3FontSizes.headlineTiny,
+                //           fontSize: 11.sp
                 //           color: context.colorScheme.onSurface,
                 //         ),
                 //       ),
@@ -224,17 +225,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Montant',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         AppGlobal.amount,
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -247,7 +248,7 @@ class SendMenuDialog {
                 Text(
                   'Infos operation'.toUpperCase(),
                   style: TextStyle(
-                    fontSize: M3FontSizes.headlineTiny,
+                    fontSize: 11.sp,
                     color: context.colorScheme.onSurface,
                   ),
                 ),
@@ -255,17 +256,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Date',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         AppGlobal.date,
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -276,17 +277,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Heure',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         AppGlobal.time,
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -296,17 +297,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Txn ID',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         AppGlobal.txn,
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -317,17 +318,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Nouveau solde',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         AppGlobal.remainingBal,
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -369,10 +370,7 @@ class SendMenuDialog {
                     children: [
                       Text(
                         'Votre opération a été e\nffectué avec succès.'.toUpperCase(),
-                        style: TextStyle(
-                          color: context.colorScheme.onSurface,
-                          fontSize: M3FontSizes.headlineTiny,
-                        ),
+                        style: TextStyle(color: context.colorScheme.onSurface, fontSize: 11.sp),
                       ),
                       FluIcon(
                         FluIcons.checkCircleUnicon,
@@ -388,7 +386,7 @@ class SendMenuDialog {
                   style: TextStyle(
                     color: context.colorScheme.secondary,
                     fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.headlineTiny,
+                    fontSize: 11.sp,
                     letterSpacing: 1.0,
                   ),
                 ),
@@ -404,7 +402,7 @@ class SendMenuDialog {
                 Text(
                   'Bénéficiaire'.toUpperCase(),
                   style: TextStyle(
-                    fontSize: M3FontSizes.headlineTiny,
+                    fontSize: 11.sp,
                     color: context.colorScheme.onSurface,
                   ),
                 ),
@@ -415,14 +413,14 @@ class SendMenuDialog {
                 //     const Expanded(
                 //       child: Text(
                 //         'Nom',
-                //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                //         style: TextStyle(fontSize: 11.sp color: Colors.grey),
                 //       ),
                 //     ),
                 //     Expanded(
                 //       child: Text(
                 //         'Karim Razack',
                 //         style: TextStyle(
-                //           fontSize: M3FontSizes.headlineTiny,
+                //           fontSize: 11.sp
                 //           color: context.colorScheme.onSurface,
                 //         ),
                 //       ),
@@ -433,17 +431,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Prénom',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         'Razack',
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -454,17 +452,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Numéro',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         '99 77 77 77',
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -477,7 +475,7 @@ class SendMenuDialog {
                 Text(
                   'DETAILS'.toUpperCase(),
                   style: TextStyle(
-                    fontSize: M3FontSizes.headlineTiny,
+                    fontSize: 11.sp,
                     color: context.colorScheme.onSurface,
                   ),
                 ),
@@ -488,14 +486,14 @@ class SendMenuDialog {
                     // const Expanded(
                     //   child: Text(
                     //     'Frais',
-                    //     style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                    //     style: TextStyle(fontSize: 11.sp color: Colors.grey),
                     //   ),
                     // ),
                     Expanded(
                       child: Text(
                         '0 FCFA',
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -506,17 +504,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Montant',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         '20 000 FCFA',
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -529,7 +527,7 @@ class SendMenuDialog {
                 Text(
                   'Infos operation'.toUpperCase(),
                   style: TextStyle(
-                    fontSize: M3FontSizes.headlineTiny,
+                    fontSize: 11.sp,
                     color: context.colorScheme.onSurface,
                   ),
                 ),
@@ -537,17 +535,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Date',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         '01/02/2024',
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -558,17 +556,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Heure',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         '09:30:10',
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -578,17 +576,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Txn ID',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         '12469081234',
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -599,17 +597,17 @@ class SendMenuDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Nouveau solde',
-                        style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
+                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         '70 000 FCFA',
                         style: TextStyle(
-                          fontSize: M3FontSizes.headlineTiny,
+                          fontSize: 11.sp,
                           color: context.colorScheme.onSurface,
                         ),
                       ),
@@ -637,7 +635,7 @@ class SendMenuDialog {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
                 ),
                 const SizedBox(
                   height: 12,

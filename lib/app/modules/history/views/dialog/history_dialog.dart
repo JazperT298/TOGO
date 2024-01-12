@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ibank/app/components/line_separator.dart';
-import 'package:ibank/utils/constants/app_global.dart';
+import 'package:sizer/sizer.dart';
 
 class HistoryDialog {
   static void showHistoryDialog(context, message) {
@@ -15,9 +14,7 @@ class HistoryDialog {
           insetPadding: const EdgeInsets.all(12), // Outside Padding
           contentPadding: const EdgeInsets.all(12), // Content Padding
           content: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.35,
-              child: Center(child: Text(message))),
+              width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.35, child: Center(child: Text(message))),
         );
       },
     );
@@ -26,10 +23,13 @@ class HistoryDialog {
   static showMessageDialog({required String message}) async {
     Get.dialog(AlertDialog(
         backgroundColor: Colors.white,
-        content: Container(
-          color: Colors.white,
-          child: Flexible(
-            child: Text(message),
+        content: SizedBox(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              message,
+              style: TextStyle(fontSize: 11.sp),
+            ),
           ),
           // child: Column(
           //   mainAxisAlignment: MainAxisAlignment.center,
