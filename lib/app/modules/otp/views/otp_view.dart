@@ -196,18 +196,36 @@ class _OtpViewState extends State<OtpView> {
                         color: context.colorScheme.secondary,
                       ),
                     )
-                  : Obx(
-                      () => controller.isResendShow.value == false
-                          ? const SizedBox()
-                          : Text(
-                              'Renvoyer le code',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 11.sp,
-                                  color: context.colorScheme.primary,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                    ),
+                  : const SizedBox(),
+              Obx(
+                () => controller.isResendShow.value == false
+                    ? const SizedBox()
+                    : InkWell(
+                        onTap: () {
+                          if (controller.requestVia.value == "sms") {
+                            controller.resendencryptionExample(
+                                msisdn: controller.msisdn.value,
+                                formattedMSISDN:
+                                    controller.formatedMSISDN.value,
+                                countryCode: controller.countryCode.value);
+                          } else {
+                            controller.otpRequestViaApi(
+                                msisdn: controller.msisdn.value,
+                                formattedMSISDN:
+                                    controller.formatedMSISDN.value,
+                                countryCode: controller.countryCode.value);
+                          }
+                        },
+                        child: Text(
+                          'Renvoyer le code',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 11.sp,
+                              color: context.colorScheme.primary,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+              ),
               const SizedBox(height: 16),
               FluButton.text(
                 'Verifier',

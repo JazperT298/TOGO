@@ -76,6 +76,7 @@ class OtpController extends GetxController {
   startTimer() async {
     Timer(const Duration(seconds: 15), () {
       isResendShow.value = true;
+      log(isResendShow.value.toString());
     });
   }
 
@@ -191,6 +192,7 @@ class OtpController extends GetxController {
     countryCode.value = await Get.arguments['countryCode'];
     requestVia.value = await Get.arguments['requestVia'];
     startTimer();
+    log(isResendShow.value.toString());
     super.onInit();
   }
 }
