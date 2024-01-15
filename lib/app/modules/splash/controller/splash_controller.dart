@@ -21,11 +21,9 @@ class SplashController extends GetxController {
   late RxString messages;
   late Eula eula;
   final verifyUser = VerifyUser;
-
   final storage = GetStorage();
   @override
   void onInit() {
-    // TODO: implement onInit
     // initPlatformState();
     isUserLogin();
     // validateSim();
@@ -47,14 +45,18 @@ class SplashController extends GetxController {
 
     if (storage.read('msisdn') != null) {
       if (storage.read('isPrivacyCheck') == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.PRIVACY)));
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(
+            2.seconds, () => Get.offAllNamed(AppRoutes.PRIVACY)));
       } else if (storage.read('isLoginSuccessClick') == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(
+            2.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
       } else {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV)));
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(
+            2.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV)));
       }
     } else {
-      WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.ONBOARD)));
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.ONBOARD)));
     }
   }
 
@@ -69,7 +71,8 @@ class SplashController extends GetxController {
   Future<void> initPlatformState() async {
     final bool? result = await telephony.requestPhoneAndSmsPermissions;
     if (result != null && result) {
-      telephony.listenIncomingSms(onNewMessage: onMessage, onBackgroundMessage: onBackgroundMessage);
+      telephony.listenIncomingSms(
+          onNewMessage: onMessage, onBackgroundMessage: onBackgroundMessage);
     }
   }
 
@@ -133,7 +136,8 @@ class SplashController extends GetxController {
 
       String hits = 'VRFY ANDROIDAPP $token ANDROID V2 F';
 
-      SoapSender.sendSoap(context, hits, '', SmsOption.WAIT_RESPONSE, '', false);
+      SoapSender.sendSoap(
+          context, hits, '', SmsOption.WAIT_RESPONSE, '', false);
 
       //response for sending soap
 
