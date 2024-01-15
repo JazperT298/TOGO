@@ -29,7 +29,6 @@ class BottomNavController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     pageController.value = PageController();
     AppGlobal.MSISDN = Get.find<StorageServices>().storage.read('msisdn');
     AppGlobal.TOKEN = Get.find<StorageServices>().storage.read('token');

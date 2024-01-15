@@ -19,7 +19,6 @@ class _LoginSuccessState extends State<LoginSuccess> {
   bool showProgressIndicator = true;
   @override
   void initState() {
-    // TODO: implement initState
     Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         showProgressIndicator = false;

@@ -202,7 +202,6 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     log('MSISDN ${AppGlobal.MSISDN}');
     verifyGetProfile(msidsn: AppGlobal.MSISDN, token: AppGlobal.TOKEN, message: 'VRFY GETPROFILE F', sendsms: 'false');
     super.onInit();

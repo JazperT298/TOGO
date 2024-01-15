@@ -13,7 +13,6 @@ class StorageServices extends GetxService {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     storage.writeIfNull('profile', "");
     super.onInit();
   }

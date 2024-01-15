@@ -87,7 +87,8 @@ class Eula extends EulaPresenter with SendSmsListeners {
   }
 
   @override
-  void onVerifyMsisdn(bool isEncrypted, bool sendsms, String msisdn, String message) {
+  void onVerifyMsisdn(
+      bool isEncrypted, bool sendsms, String msisdn, String message) {
     // TODO: implement onVerifyMsisdn
     super.onVerifyMsisdn(isEncrypted, sendsms, msisdn, message);
   }
@@ -99,14 +100,16 @@ class Eula extends EulaPresenter with SendSmsListeners {
   }
 
   @override
-  void onRequestOtp(BuildContext context, bool isEncrypted, String msisdn, String message) {
+  void onRequestOtp(
+      BuildContext context, bool isEncrypted, String msisdn, String message) {
     // TODO: implement onRequestOtp
     super.onRequestOtp(context, isEncrypted, msisdn, message);
   }
 
   @override
   bool onResponse(String sender, String message) {
-    RegExp pattern = RegExp(r"^(?<success>(?<string1>.*)(?<= \()(?<otp>\d{6})(?=\))(?<string2>.*))$");
+    RegExp pattern = RegExp(
+        r"^(?<success>(?<string1>.*)(?<= \()(?<otp>\d{6})(?=\))(?<string2>.*))$");
     RegExpMatch? matcher = pattern.firstMatch(message);
 
     if (matcher != null) {
@@ -148,12 +151,15 @@ class Eula extends EulaPresenter with SendSmsListeners {
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   static bool isNewAppVersion() {
-    if (SqlHelper.getProperty(SysProp.PROP_VERSION_CODE, "0") == AppConfig.app_version_code &&
-        SqlHelper.getProperty(SysProp.PROP_VERSION_NAME, "0") == AppConfig.app_package_name) {
+    if (SqlHelper.getProperty(SysProp.PROP_VERSION_CODE, "0") ==
+            AppConfig.app_version_code &&
+        SqlHelper.getProperty(SysProp.PROP_VERSION_NAME, "0") ==
+            AppConfig.app_package_name) {
       return false;
     }
     SqlHelper.getProperty(SysProp.PROP_STAT_LOGIN, "0");

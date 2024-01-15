@@ -69,7 +69,8 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                               Get.offNamed(AppRoutes.LOGIN);
                             },
                             cornerRadius: 14,
-                            backgroundColor: context.colorScheme.background.withOpacity(.25),
+                            backgroundColor:
+                                context.colorScheme.background.withOpacity(.25),
                             foregroundColor: Colors.white,
                             height: UISettings.minButtonSize - 10,
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -90,13 +91,17 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                       iconSize: 18,
                       iconStrokeWidth: 1.8,
                       onPressed: () {
-                        controller.isLastPage.value ? Get.offNamed(AppRoutes.LOGIN) : controller.toNextPage();
-                        print(controller.isLastPage.value);
+                        controller.isLastPage.value
+                            ? Get.offNamed(AppRoutes.LOGIN)
+                            : controller.toNextPage();
+                        // print(controller.isLastPage.value);
                       },
                       height: UISettings.buttonSize - 10,
                       width: MediaQuery.of(context).size.width * .42,
                       cornerRadius: UISettings.buttonCornerRadius,
-                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .025, bottom: MediaQuery.of(context).size.height * .08),
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * .025,
+                          bottom: MediaQuery.of(context).size.height * .08),
                       backgroundColor: context.colorScheme.primary,
                       foregroundColor: context.colorScheme.onPrimary,
                       boxShadow: [
@@ -114,7 +119,8 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                     ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * .010),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * .010),
               child: SmoothPageIndicator(
                 controller: controller.pageController,
                 count: onboardingScreenPage.length,
@@ -153,7 +159,9 @@ class _Page extends GetView<OnboardController> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: UISettings.pagePaddingSize).copyWith(top: MediaQuery.of(context).size.height * .035),
+          padding:
+              const EdgeInsets.symmetric(horizontal: UISettings.pagePaddingSize)
+                  .copyWith(top: MediaQuery.of(context).size.height * .035),
           child: Column(
             children: [
               Text(

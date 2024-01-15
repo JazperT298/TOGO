@@ -48,7 +48,6 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     favorites = widget.favorites;
 

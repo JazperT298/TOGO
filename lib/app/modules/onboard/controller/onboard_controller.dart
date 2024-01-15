@@ -11,16 +11,16 @@ class OnboardController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     pageController = PageController();
     super.onInit();
   }
 
   void toNextPage() {
     if (pageCount.value != 2) {
-      pageController.nextPage(duration: animationDuration, curve: animationCurve);
+      pageController.nextPage(
+          duration: animationDuration, curve: animationCurve);
       pageCount.value++;
-      print(pageCount.value);
+      // print(pageCount.value);
     } else {
       isLastPage.value = true;
     }
