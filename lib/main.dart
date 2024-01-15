@@ -10,8 +10,11 @@ import 'package:ibank/app/routes/app_pages.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/config/theme/theme_manager.dart';
 import 'package:ibank/config/theme/theme_provider.dart';
+import 'package:ibank/utils/constants/app_global.dart';
+import 'package:ibank/utils/constants/app_locale.dart';
 import 'package:ibank/utils/constants/ws_const.dart';
 import 'package:ibank/utils/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:telephony/telephony.dart';
 
@@ -38,6 +41,13 @@ Future<void> main() async {
   await GetStorage.init();
   await SqlHelper.initDatabase();
   // cameras = await availableCameras();
+
+  final sharedPref = await SharedPreferences.getInstance();
+  if (sharedPref.getBool('first_run') ?? true) {
+    AppGlobal.isAppFirstRun = true;
+    await sharedPref.setBool('first_run', false);
+  }
+
   await Get.putAsync<StorageServices>(() async => StorageServices());
   runApp(const App());
 }
@@ -56,16 +66,21 @@ class App extends StatelessWidget {
           //   final themeManager = ref.watch(themeProvider);
 
           return GetMaterialApp(
-            title: Configs.appName,
+            title: AppLocalizations.translate(context, 'title'),
             debugShowCheckedModeBanner: false,
             theme: ThemeManager().lightTheme,
             darkTheme: ThemeManager().darkTheme,
             initialRoute: AppRoutes.SPLASH, //  Routes.splash.path,
             getPages: AppPages.list,
-            supportedLocales: flc.CountryLocalizations.supportedLocales.map(Locale.new),
+            // locale: Get.locale ?? const Locale('fr'),
+            // fallbackLocale: const Locale('fr'),
+            supportedLocales: AppLocalizations.supportedLocales,
+            //flc.CountryLocalizations.supportedLocales.map(Locale.new),
             localizationsDelegates: const [
               // Package's localization delegate.
               // You can still add other delegates from your app.
+              DefaultMaterialLocalizations.delegate,
+              DefaultWidgetsLocalizations.delegate,
               flc.CountryLocalizations.delegate,
             ],
           );

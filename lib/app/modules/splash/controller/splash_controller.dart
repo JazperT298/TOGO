@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:ibank/app/components/permission_bottom_sheet.dart';
 // import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/routes/app_routes.dart';
@@ -13,6 +14,7 @@ import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/helpers/flooz_helper.dart';
 import 'package:ibank/utils/sms/sms_option_enum.dart';
 import 'package:ibank/utils/soap/soap_sender.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:telephony/telephony.dart';
 
 class SplashController extends GetxController {
@@ -28,6 +30,7 @@ class SplashController extends GetxController {
     // TODO: implement onInit
     // initPlatformState();
     isUserLogin();
+    requestAllPermissionOnStart();
     // validateSim();
     // WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(5.seconds, () => Get.toNamed(AppRoutes.ONBOARD)));
     super.onInit();
@@ -71,6 +74,22 @@ class SplashController extends GetxController {
     if (result != null && result) {
       telephony.listenIncomingSms(onNewMessage: onMessage, onBackgroundMessage: onBackgroundMessage);
     }
+  }
+
+  Future<void> requestAllPermissionOnStart() async {
+    // add following permission here, we have location only so far
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+    ].request();
+    print(statuses[Permission.location]);
+
+    // Check the status of each permission
+    statuses.forEach((permission, status) {
+      if (!status.isGranted) {
+        // Handle denied permissions
+        showPermissionDeniedDialog(context, permission);
+      }
+    });
   }
 
   // Future<bool> checkUser() async {

@@ -51,19 +51,13 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Historique',
-                    style: TextStyle(
-                      fontFamily: 'neptune',
-                    ),
+                    style: TextStyle(fontSize: 12.sp),
                   ),
                   Text(
                     'Historique des transactions.'.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: M3FontSizes.displaySmall,
-                      fontWeight: FontWeight.bold,
-                      color: context.colorScheme.onSurface,
-                    ),
+                    style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: context.colorScheme.onSurface, height: 1.5),
                   ),
                   const SizedBox(height: 25),
                   Row(

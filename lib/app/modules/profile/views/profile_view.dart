@@ -14,6 +14,7 @@ import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/ui/options.dart';
+import 'package:sizer/sizer.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -179,7 +180,10 @@ class _ProfileViewState extends State<ProfileView> {
                             margin: const EdgeInsets.only(bottom: 12),
                             color: context.colorScheme.tertiary,
                           ),
-                          Text('Agences à proximité.', style: TextStyle(color: context.colorScheme.primary, fontFamily: 'neptune')),
+                          Text(
+                            'Agences à proximité.',
+                            style: TextStyle(fontSize: 12.sp),
+                          ),
                           const SizedBox(height: 10),
                           const Hero(
                             tag: "descriptionTextHeroTag",
@@ -211,7 +215,7 @@ class _ProfileViewState extends State<ProfileView> {
                           children: [
                             Text(
                               'Mon Flooz.',
-                              style: TextStyle(color: context.colorScheme.primary, fontFamily: 'neptune'),
+                              style: TextStyle(fontSize: 12.sp),
                             ),
                             Options(profileScreenOptions)
                           ],
