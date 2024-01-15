@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/string_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:developer';
 
@@ -49,15 +50,21 @@ class LoginController extends GetxController {
 
       log("STATUS CODE: ${response.statusCode}");
       // log(response.body);
+
       if (response.statusCode == 200) {
         var decodedData = jsonDecode(responsebody);
+        if (decodedData['extended-data']['issubscribed'] == false &&
+            decodedData['extended-data']['othernet'] == true) {
+          // SOAP REQUEST
+          await otpRequestViaApi(
+              msisdn: msisdn,
+              formattedMSISDN: formattedMSISDN,
+              countryCode: countryCode);
+        }
         if (decodedData['extended-data']['issubscribed'] == true &&
             decodedData['extended-data']['othernet'] == false) {
           // VIA SMS
-          // encryptionExample(msisdn: msisdn);
-
-          // SOAP REQUEST
-          await otpRequestViaApi(
+          encryptionExample(
               msisdn: msisdn,
               formattedMSISDN: formattedMSISDN,
               countryCode: countryCode);
@@ -122,7 +129,8 @@ class LoginController extends GetxController {
           Get.offAllNamed(AppRoutes.OTP, arguments: {
             "msisdn": msisdn,
             "formatedMSISDN": formattedMSISDN,
-            "countryCode": countryCode
+            "countryCode": countryCode,
+            "requestVia": "api"
           });
         } else {
           Get.back();
@@ -140,11 +148,26 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> encryptionExample({required String msisdn}) async {
+  opensMessagingApp({required String encrptedText}) async {
+    if (Platform.isAndroid) {
+      // const uri = 'sms:+39 348 060 888?body=hello%20there';
+      var uri = 'sms:150?body=$encrptedText';
+      await launchUrl(Uri.parse(uri));
+    } else if (Platform.isIOS) {
+      // const uri = 'sms:0039-222-060-888&body=hello%20there';
+      var uri = 'sms:150&body=$encrptedText';
+      await launchUrl(Uri.parse(uri));
+    }
+  }
+
+  Future<void> encryptionExample(
+      {required String msisdn,
+      required String formattedMSISDN,
+      required String countryCode}) async {
     // String plainPrefix = 'A'; // it must be random character if possible
     // String plainData = 'Hello World';
     // String data = plainPrefix + plainData;
-    String data = 'EULA GETOTP ANDROID $msisdn';
+    String data = 'AEULA GETOTP ANDROID $msisdn';
     final List<int> bytes = utf8.encode(data);
     debugPrint(bytes.toString());
     Uint8List xorData = await xor(data);
@@ -155,6 +178,14 @@ class LoginController extends GetxController {
     String encryptPrefix = 'c';
     String base64 = encryptPrefix + base64Encode(encrypted);
     log(base64);
+    Get.back();
+    await opensMessagingApp(encrptedText: base64);
+    Get.offAllNamed(AppRoutes.OTP, arguments: {
+      "msisdn": msisdn,
+      "formatedMSISDN": formattedMSISDN,
+      "countryCode": countryCode,
+      "requestVia": "sms"
+    });
   }
 
   Future<Uint8List> xor(String data) async {
