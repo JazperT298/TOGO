@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:flutter/material.dart';
@@ -29,15 +30,12 @@ class HomeController extends GetxController {
     verifyAndroid(msisdn: msisdn.value, version: version);
   }
 
-  static void verifyAndroid(
-      {required String msisdn, required String version}) async {
+  static void verifyAndroid({required String msisdn, required String version}) async {
     ProgressAlertDialog.progressAlertDialog(Get.context!, "Chargement..");
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -66,8 +64,7 @@ class HomeController extends GetxController {
         if (decodedData['description'] == 'TOKEN_FOUND') {
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
         } else if (decodedData['description'] == 'VERSION NOT UP TO DATE') {
-          HomeAlertDialog.showMessageVersionNotUpToDate(
-              controller: Get.find<HomeController>());
+          HomeAlertDialog.showMessageVersionNotUpToDate(controller: Get.find<HomeController>());
         } else {}
       } else {
         log("ERROR ${response.reasonPhrase}'");
@@ -87,17 +84,15 @@ class HomeController extends GetxController {
     isLoadingDialog(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header />
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990137</msisdn>
+          <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
           <message i:type="d:string">BALN $code F</message>
           <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">true</sendsms>
@@ -134,17 +129,12 @@ class HomeController extends GetxController {
           firstname.value = dataDecoded['Prenoms'];
           msisdn.value = dataDecoded['Compte'];
           birthdate.value = dataDecoded['Date de naissance'];
-          soldeFlooz.value = dataDecoded['Solde Flooz']
-              .toString()
-              .replaceAll("FCFA", "")
-              .trim()
-              .toString();
+          soldeFlooz.value = dataDecoded['Solde Flooz'].toString().replaceAll("FCFA", "").trim().toString();
           afficherSolde.value = false;
           log(soldeFlooz.value);
           Get.back();
         } else {
-          Get.snackbar("Message", jsonString,
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         print(response.reasonPhrase);

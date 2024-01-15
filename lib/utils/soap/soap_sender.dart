@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/core/soap_config.dart';
 import 'package:ibank/utils/helpers/flooz_helper.dart';
 import 'package:ibank/utils/sms/sms_listener.dart';
@@ -131,7 +132,7 @@ class SoapSender {
       log('soapActionUrl $token');
       log('soapActionUrl $sendsms');
 
-      final soapEnvelope = buildSoapEnvelope(namespace, methodName, "22899990137", msg, token, sendsms);
+      final soapEnvelope = buildSoapEnvelope(namespace, methodName, AppGlobal.MSISDN, msg, token, sendsms);
       log('soapActionUrl FROM SOAP $soapEnvelope');
       final response = await connect.post(url, headers: headers, soapEnvelope);
       log('soapActionUrl ${response.body}');

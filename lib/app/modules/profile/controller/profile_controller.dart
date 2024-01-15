@@ -95,7 +95,7 @@ class ProfileController extends GetxController {
           <v:Header />
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990137</msisdn>
+          <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
           <message i:type="d:string">BALN $code F</message>
           <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">true</sendsms>
@@ -171,7 +171,7 @@ class ProfileController extends GetxController {
           <v:Header />
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990137</msisdn>
+          <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
           <message i:type="d:string">PASS $oldPin $newPin F</message>
           <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">true</sendsms>
@@ -203,6 +203,7 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
+    log('MSISDN ${AppGlobal.MSISDN}');
     verifyGetProfile(msidsn: AppGlobal.MSISDN, token: AppGlobal.TOKEN, message: 'VRFY GETPROFILE F', sendsms: 'false');
     super.onInit();
   }
