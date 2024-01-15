@@ -18,8 +18,9 @@ class StorageServices extends GetxService {
     super.onInit();
   }
 
-  saveMsisdn({required String msisdn}) {
+  saveMsisdn({required String msisdn, required String formattedMSISDN}) {
     storage.write('msisdn', msisdn);
+    storage.write('formattedMSISDN', formattedMSISDN);
   }
 
   saveOTP({required String otp}) {

@@ -3,6 +3,7 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
@@ -275,7 +276,7 @@ class _CardState extends State<_Card> {
                     ),
                   ),
                   Text(
-                    '99 99 01 37',
+                    Get.find<StorageServices>().storage.read('formattedMSISDN'),
                     style: TextStyle(
                       color: context.colorScheme.onPrimary,
                     ),

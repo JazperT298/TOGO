@@ -202,18 +202,30 @@ class _OtpViewState extends State<OtpView> {
                     ? const SizedBox()
                     : InkWell(
                         onTap: () {
-                          if (controller.requestVia.value == "sms") {
-                            controller.resendencryptionExample(
-                                msisdn: controller.msisdn.value,
-                                formattedMSISDN:
-                                    controller.formatedMSISDN.value,
-                                countryCode: controller.countryCode.value);
+                          controller.tries.value++;
+
+                          if (controller.tries.value < 4) {
+                            if (controller.requestVia.value == "sms") {
+                              controller.resendencryptionExample(
+                                  msisdn: controller.msisdn.value,
+                                  formattedMSISDN:
+                                      controller.formatedMSISDN.value,
+                                  countryCode: controller.countryCode.value);
+                            } else {
+                              controller.otpRequestViaApi(
+                                  msisdn: controller.msisdn.value,
+                                  formattedMSISDN:
+                                      controller.formatedMSISDN.value,
+                                  countryCode: controller.countryCode.value);
+                            }
+                            controller.isResendShow.value = false;
+                            controller.startTimer();
                           } else {
-                            controller.otpRequestViaApi(
-                                msisdn: controller.msisdn.value,
-                                formattedMSISDN:
-                                    controller.formatedMSISDN.value,
-                                countryCode: controller.countryCode.value);
+                            // controller.isResendShow.value = false;
+                            Get.snackbar("Message",
+                                "Nombre maximal de tentatives atteint",
+                                backgroundColor: Colors.lightBlue,
+                                colorText: Colors.white);
                           }
                         },
                         child: Text(

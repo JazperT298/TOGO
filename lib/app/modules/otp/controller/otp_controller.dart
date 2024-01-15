@@ -22,6 +22,7 @@ class OtpController extends GetxController {
   RxString countryCode = ''.obs;
   RxString requestVia = ''.obs;
   RxBool isResendShow = false.obs;
+  RxInt tries = 0.obs;
 
   verifyOTP({required String otp}) async {
     try {
@@ -52,7 +53,8 @@ class OtpController extends GetxController {
         if (jsonString
             .contains("Connexion à l'application Flooz réussie. Merci!")) {
           //Save the msisdn and token to storage if success
-          Get.find<StorageServices>().saveMsisdn(msisdn: msisdn.value);
+          Get.find<StorageServices>().saveMsisdn(
+              msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
           Get.find<StorageServices>().setToken(token: 'F3C8DEBDBA27B035');
           // SUCCESS OTP
           Get.back();
