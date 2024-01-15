@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:fast_rsa/fast_rsa.dart';
@@ -167,7 +168,12 @@ class LoginController extends GetxController {
     // String plainPrefix = 'A'; // it must be random character if possible
     // String plainData = 'Hello World';
     // String data = plainPrefix + plainData;
-    String data = 'AEULA GETOTP ANDROID $msisdn';
+    math.Random random = math.Random();
+    int randomCharCode = random.nextInt(26) + 65;
+    String randomLetter = String.fromCharCode(randomCharCode);
+
+    String data = '${randomLetter}EULA GETOTP ANDROID $msisdn';
+    log(data);
     final List<int> bytes = utf8.encode(data);
     debugPrint(bytes.toString());
     Uint8List xorData = await xor(data);

@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
+import 'dart:math' as math;
 import 'package:fast_rsa/fast_rsa.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,7 +76,7 @@ class OtpController extends GetxController {
   }
 
   startTimer() async {
-    Timer(const Duration(seconds: 15), () {
+    Timer(const Duration(seconds: 60), () {
       isResendShow.value = true;
       log(isResendShow.value.toString());
     });
@@ -101,7 +101,12 @@ class OtpController extends GetxController {
     // String plainPrefix = 'A'; // it must be random character if possible
     // String plainData = 'Hello World';
     // String data = plainPrefix + plainData;
-    String data = 'AEULA GETOTP ANDROID $msisdn';
+    math.Random random = math.Random();
+    int randomCharCode = random.nextInt(26) + 65;
+    String randomLetter = String.fromCharCode(randomCharCode);
+
+    String data = '${randomLetter}EULA GETOTP ANDROID $msisdn';
+    log(data);
     final List<int> bytes = utf8.encode(data);
     debugPrint(bytes.toString());
     Uint8List xorData = await xor(data);
