@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 import '../controller/home_controller.dart';
 
@@ -18,7 +19,9 @@ class HomeAlertDialog {
                 if (code.text.isNotEmpty) {
                   controller.enterPinForInformationPersonelles(code: code.text);
                 } else {
-                  Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                  Get.snackbar("Message", "Entrées manquantes",
+                      backgroundColor: Colors.lightBlue,
+                      colorText: Colors.white);
                 }
               },
               child: const Text("CONTINUER")),
@@ -53,7 +56,9 @@ class HomeAlertDialog {
                       ),
                       Container(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(Get.context!).size.width * 0.05, right: MediaQuery.of(Get.context!).size.width * 0.05),
+                            left: MediaQuery.of(Get.context!).size.width * 0.05,
+                            right:
+                                MediaQuery.of(Get.context!).size.width * 0.05),
                         height: MediaQuery.of(Get.context!).size.height * 0.07,
                         width: MediaQuery.of(Get.context!).size.width,
                         child: TextField(
@@ -66,9 +71,12 @@ class HomeAlertDialog {
                           decoration: InputDecoration(
                             fillColor: Colors.lightBlue[100],
                             filled: true,
-                            contentPadding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.width * 0.03),
+                            contentPadding: EdgeInsets.only(
+                                left: MediaQuery.of(Get.context!).size.width *
+                                    0.03),
                             alignLabelWithHint: false,
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30)),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
@@ -106,5 +114,34 @@ class HomeAlertDialog {
                   ),
           ),
         )));
+  }
+
+  static showMessageVersionNotUpToDate(
+      {required HomeController controller}) async {
+    Get.dialog(
+        WillPopScope(
+          onWillPop: () async {
+            return false;
+          },
+          child: AlertDialog(
+              backgroundColor: Colors.white,
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      controller.launch();
+                    },
+                    child: const Text("MISE À JOUR"))
+              ],
+              content: SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "La version de l'application n'est pas à jour",
+                    style: TextStyle(fontSize: 11.sp),
+                  ),
+                ),
+              )),
+        ),
+        barrierDismissible: false);
   }
 }
