@@ -17,6 +17,8 @@ class AppGlobal {
   static const int DOWNLOAD_DIALOG_ID = 3;
   static const int BURGER_MENU_ID = 4;
 
+  static String MSISDN = "";
+  static String TOKEN = "";
   static bool isSendVerificationLoading = false;
   static bool isEditedTransferNational = true;
   static bool isSubscribedTransferNational = false;

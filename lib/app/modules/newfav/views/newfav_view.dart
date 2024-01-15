@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field, use_build_context_synchronously
+// ignore_for_file: unused_field, use_build_context_synchronously, avoid_print
 
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +47,7 @@ class _NewFavViewState extends State<NewFavView> {
   }
   void filterContacts(String query) {
     setState(() {
-      displayedContacts = _contacts!.where((contact) => contact.displayName?.toLowerCase().contains(query.toLowerCase()) == true).toList();
+      displayedContacts = _contacts!.where((contact) => contact.displayName.toLowerCase().contains(query.toLowerCase()) == true).toList();
     });
   }
 

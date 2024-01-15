@@ -1,6 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:ibank/app/data/local/getstorage_services.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +14,7 @@ import '../../../routes/app_routes.dart';
 class ProfileController extends GetxController {
   RxString selectedRoute = ''.obs;
   RxBool isLoading = false.obs;
+  RxBool isLoadingProfile = false.obs;
 
   RxString name = ''.obs;
   RxString firstname = ''.obs;
@@ -29,14 +34,61 @@ class ProfileController extends GetxController {
     Get.back();
   }
 
+  verifyGetProfile({required String msidsn, required String token, required String message, required String sendsms}) async {
+    isLoadingProfile(true);
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope
+            xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:d="http://www.w3.org/2001/XMLSchema"
+            xmlns:c="http://schemas.xmlsoap.org/soap/encoding/"
+            xmlns:v="http://schemas.xmlsoap.org/soap/envelope/"
+          xmlns:web="http://applicationmanager.tlc.com">
+             	<v:Header/>
+              <v:Body>
+                <n0:RequestToken
+                    xmlns:n0="http://applicationmanager.tlc.com">
+                  <msisdn i:type="d:string"><![CDATA[$msidsn]]></msisdn>
+                  <message i:type="d:string"><![CDATA[$message]]></message>
+                  <token i:type="d:string"><![CDATA[$token]]></token>
+                  <sendsms i:type="d:string"><![CDATA[$sendsms]]></sendsms>
+                </n0:RequestToken>
+              </v:Body>
+            </v:Envelope>''';
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var document = xml.XmlDocument.parse(result);
+        var soapBody = document.findAllElements('soapenv:Body').single;
+        var requestTokenResponse = soapBody.findAllElements('ns1:RequestTokenResponse').single;
+        var requestTokenReturn = requestTokenResponse.findAllElements('RequestTokenReturn').single;
+        var jsonString = requestTokenReturn.innerText;
+        jsonString = jsonString.replaceAll('&quot;', '"');
+        // Convert to JSON
+        var json = jsonDecode(jsonString);
+
+        String profile = json.containsKey("profile") ? json["profile"] : "";
+        String description = json.containsKey("description") ? json["description"] : "";
+        String msg = json.containsKey("message") ? json["message"] : "";
+        String status = json.containsKey("status") ? json["status"] : "";
+
+        Get.find<StorageServices>().saveVerifyProfile(profile: profile, description: description, message: msg, status: status);
+      }
+    } on Exception catch (_) {
+      log("ERROR $_");
+    }
+    isLoadingProfile(false);
+  }
+
   enterPinForInformationPersonelles({required String code}) async {
     isLoading(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -86,10 +138,17 @@ class ProfileController extends GetxController {
           } else {
             commission.value = "N/A";
           }
+          //Save lang nko sa storage just in case
+          Get.find<StorageServices>().saveUserData(
+              name: name.value,
+              firstname: firstname.value,
+              msisdn: msisdn.value,
+              birthdate: birthdate.value,
+              soldeFlooz: soldeFlooz.value,
+              commission: commission.value);
           Get.toNamed(AppRoutes.PROFILEINFORMATIONPERSONELLES);
         } else {
-          Get.snackbar("Message", jsonString,
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         print(response.reasonPhrase);
@@ -104,10 +163,8 @@ class ProfileController extends GetxController {
     isLoading(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -133,10 +190,7 @@ class ProfileController extends GetxController {
         var jsonString = soapElement.innerText;
         log(jsonString.toString());
         Get.back();
-        Get.snackbar("Message", jsonString,
-            backgroundColor: Colors.lightBlue,
-            colorText: Colors.white,
-            duration: const Duration(seconds: 10));
+        Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 10));
       } else {
         print(response.reasonPhrase);
       }
@@ -144,5 +198,12 @@ class ProfileController extends GetxController {
       log("ERROR $_");
     }
     isLoading(false);
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    verifyGetProfile(msidsn: AppGlobal.MSISDN, token: AppGlobal.TOKEN, message: 'VRFY GETPROFILE F', sendsms: 'false');
+    super.onInit();
   }
 }

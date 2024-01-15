@@ -55,6 +55,33 @@ class AppThemes {
   );
 }
 
+// class AppTheme {
+//   static ThemeData appTheme = ThemeData(
+//     brightness: Brightness.light,
+//     primaryColor: AppColors.primaryColor,
+//     indicatorColor: AppColors.bodyColor,
+//     scaffoldBackgroundColor: Colors.white,
+//     fontFamily: 'Roboto',
+//     textTheme: const TextTheme(
+//       displayLarge: TextStyle(),
+//       displayMedium: TextStyle(),
+//       displaySmall: TextStyle(),
+//       headlineLarge: TextStyle(),
+//       headlineMedium: TextStyle(),
+//       headlineSmall: TextStyle(),
+//       titleLarge: TextStyle(),
+//       titleMedium: TextStyle(),
+//       titleSmall: TextStyle(),
+//       bodyLarge: TextStyle(),
+//       bodyMedium: TextStyle(),
+//       bodySmall: TextStyle(),
+//       labelLarge: TextStyle(),
+//       labelMedium: TextStyle(),
+//       labelSmall: TextStyle(),
+//     ),
+//   );
+// }
+
 class M3FontSizess {
   static const double displayTiny = 28;
   static const double displaySmall = 36;

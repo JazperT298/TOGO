@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/components/line_separator.dart';
-import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_international_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_national_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';

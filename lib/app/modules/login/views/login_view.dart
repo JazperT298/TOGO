@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +9,6 @@ import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../../providers/auth_provider.dart';
-import '../../../routes/app_routes.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -29,6 +28,11 @@ class _LoginViewState extends State<LoginView> {
   late final FlCountryCodePicker countryPicker;
   @override
   void initState() {
+    setCountryCodePicker();
+    super.initState();
+  }
+
+  void setCountryCodePicker() {
     final filteredCountries = ['TG'];
     countryPicker = FlCountryCodePicker(
         localize: true,
@@ -38,7 +42,6 @@ class _LoginViewState extends State<LoginView> {
         // favorites: _yourFavorites,
         title: title,
         filteredCountries: filteredCountries);
-    super.initState();
   }
 
   Widget title = Padding(
@@ -59,16 +62,12 @@ class _LoginViewState extends State<LoginView> {
           padding: const EdgeInsets.only(top: 4.0, left: 0),
           child: Text(
             'Votre pays',
-            style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.black),
+            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black),
           ),
         ),
         Padding(
             padding: const EdgeInsets.only(top: 8.0, left: 0),
-            child: Text(
-                'Choisissez votre pays et bénéficiez d’une expérience personnalisée ainsi que des transactions optimisées.',
+            child: Text('Choisissez votre pays et bénéficiez d’une expérience personnalisée ainsi que des transactions optimisées.',
                 style: TextStyle(fontSize: 10.sp))),
       ],
     ),
@@ -83,8 +82,7 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: SafeArea(
         child: Padding(
-          padding:
-              UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+          padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -106,10 +104,7 @@ class _LoginViewState extends State<LoginView> {
                 child: Text(
                   'Saisissez vos informations de connexion et connectez-vous à votre compte en toute simplicité',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 11.sp,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 11.sp, color: Colors.grey, fontWeight: FontWeight.w400),
                 ),
               ),
               const SizedBox(height: 42),
@@ -117,37 +112,27 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   GestureDetector(
                     onTap: () async {
-                      // Show the country code picker when tapped.
-
-                      final picked =
-                          await countryPicker.showPicker(context: context);
+                      final picked = await countryPicker.showPicker(context: context);
                       // Null check
-                      // ignore: avoid_print
-                      if (picked != null) print(picked.dialCode);
-                      setState(() {
-                        _selectedCountryCode = picked!.dialCode;
-                      });
+                      if (picked != null) {
+                        setState(() {
+                          print(picked.dialCode);
+                          _selectedCountryCode = picked.dialCode;
+                        });
+                      } else {
+                        _selectedCountryCode = '+228';
+                      }
                     },
                     child: Container(
                       height: 5.h,
                       width: MediaQuery.of(context).size.width / 4.8,
-                      padding: EdgeInsets.symmetric(
-                          horizontal:
-                              _selectedCountryCode.length <= 3 ? 18.0 : 12.0,
-                          vertical: 4.0),
-                      decoration: BoxDecoration(
-                          color: context.colorScheme.primaryContainer,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0))),
+                      padding: EdgeInsets.symmetric(horizontal: _selectedCountryCode.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
+                      decoration:
+                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                              _selectedCountryCode.isEmpty
-                                  ? '+228'
-                                  : _selectedCountryCode,
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 11.sp)),
+                          Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: TextStyle(color: Colors.black, fontSize: 11.sp)),
                           const FluIcon(FluIcons.arrowDown2, size: 20)
                         ],
                       ),
@@ -172,39 +157,26 @@ class _LoginViewState extends State<LoginView> {
                             (match) => '${match.group(0)} ',
                           );
                         }
-                        numberController.value =
-                            numberController.value.copyWith(
+                        numberController.value = numberController.value.copyWith(
                           text: text,
-                          selection:
-                              TextSelection.collapsed(offset: text.length),
+                          selection: TextSelection.collapsed(offset: text.length),
                         );
                         setState(() {
                           isTextFieldEmpty = false;
                           errorMessage = '';
                         });
                       },
-                      textStyle: TextStyle(
-                          fontSize: 11.sp), // context.textTheme.bodyMedium,
+                      textStyle: TextStyle(fontSize: 11.sp), // context.textTheme.bodyMedium,
 
                       onFieldSubmitted: (p0) {
                         if (numberController.text.isNotEmpty) {
                           print(numberController.text);
-                          String replacedString = numberController.text
-                              .replaceAll(" ", "")
-                              .trim()
-                              .toString();
-                          String msisdn =
-                              (_selectedCountryCode + replacedString)
-                                  .replaceAll("+", "")
-                                  .toString();
+                          String replacedString = numberController.text.replaceAll(" ", "").trim().toString();
+                          String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
                           print(msisdn);
 
-                          ProgressAlertDialog.progressAlertDialog(
-                              context, "Chargement..");
-                          controller.kycInquiryRequest(
-                              msisdn: msisdn,
-                              formattedMSISDN: numberController.text,
-                              countryCode: _selectedCountryCode);
+                          ProgressAlertDialog.progressAlertDialog(context, "Chargement..");
+                          controller.kycInquiryRequest(msisdn: msisdn, formattedMSISDN: numberController.text, countryCode: _selectedCountryCode);
                           isTextFieldEmpty = false;
                         } else if (numberController.text.isEmpty) {
                           setState(() {
@@ -245,21 +217,12 @@ class _LoginViewState extends State<LoginView> {
                 onPressed: () async {
                   if (numberController.text.isNotEmpty) {
                     print(numberController.text);
-                    String replacedString = numberController.text
-                        .replaceAll(" ", "")
-                        .trim()
-                        .toString();
-                    String msisdn = (_selectedCountryCode + replacedString)
-                        .replaceAll("+", "")
-                        .toString();
+                    String replacedString = numberController.text.replaceAll(" ", "").trim().toString();
+                    String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
                     print(msisdn);
 
-                    ProgressAlertDialog.progressAlertDialog(
-                        context, "Chargement..");
-                    controller.kycInquiryRequest(
-                        msisdn: msisdn,
-                        formattedMSISDN: numberController.text,
-                        countryCode: _selectedCountryCode);
+                    ProgressAlertDialog.progressAlertDialog(context, "Chargement..");
+                    controller.kycInquiryRequest(msisdn: msisdn, formattedMSISDN: numberController.text, countryCode: _selectedCountryCode);
                     isTextFieldEmpty = false;
                   } else if (numberController.text.isEmpty) {
                     setState(() {
@@ -280,8 +243,7 @@ class _LoginViewState extends State<LoginView> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
               const SizedBox(height: 30),
             ],

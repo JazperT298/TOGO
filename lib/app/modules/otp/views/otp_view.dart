@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
-import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/modules/otp/controller/otp_controller.dart';
 import 'package:flukit/flukit.dart';
-import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -49,8 +47,7 @@ class _OtpViewState extends State<OtpView> {
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -62,8 +59,7 @@ class _OtpViewState extends State<OtpView> {
       ),
       body: SafeArea(
         child: Padding(
-          padding:
-              UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+          padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -85,20 +81,14 @@ class _OtpViewState extends State<OtpView> {
                 child: Text(
                   'Veuillez saisir le code à 06 chiffres que nous vous avons envoyé sur votre numéro',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 11.sp,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 11.sp, color: Colors.grey, fontWeight: FontWeight.w400),
                 ),
               ),
               Obx(
                 () => Text(
                   '${controller.countryCode.value} ${controller.formatedMSISDN.value}',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 11.sp,
-                      color: const Color(0xFFFB6404),
-                      fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 11.sp, color: const Color(0xFFFB6404), fontWeight: FontWeight.w600),
                 ),
               ),
               const SizedBox(height: 28),
@@ -118,8 +108,7 @@ class _OtpViewState extends State<OtpView> {
                           isEmptyFields = true;
                         });
                       } else {
-                        ProgressAlertDialog.progressAlertDialog(
-                            context, "Chargement..");
+                        ProgressAlertDialog.progressAlertDialog(context, "Chargement..");
                         controller.verifyOTP(otp: textEditingController.text);
                         // SharedPrefService.saveLoginData(true, 'Malik Monk');
                         // ProgressAlertDialog.showALoadingDialog(context, "Chargement..", 5, AppRoutes.PRIVACY);
@@ -201,10 +190,7 @@ class _OtpViewState extends State<OtpView> {
                   : Text(
                       'Renvoyer le code',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 11.sp,
-                          color: context.colorScheme.primary,
-                          fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 11.sp, color: context.colorScheme.primary, fontWeight: FontWeight.w600),
                     ),
               const SizedBox(height: 16),
               FluButton.text(
@@ -217,8 +203,7 @@ class _OtpViewState extends State<OtpView> {
                       isEmptyFields = true;
                     });
                   } else {
-                    ProgressAlertDialog.progressAlertDialog(
-                        context, "Chargement..");
+                    ProgressAlertDialog.progressAlertDialog(context, "Chargement..");
                     controller.verifyOTP(otp: textEditingController.text);
                     // 632660
                     // SharedPrefService.saveLoginData(true, 'Malik Monk');
@@ -240,8 +225,7 @@ class _OtpViewState extends State<OtpView> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
               const SizedBox(height: 30),
             ],

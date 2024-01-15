@@ -1,8 +1,8 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ibank/config/theme/theme_manager.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:ibank/config/theme/theme_manager.dart';
 
-final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeManager>((ref) => ThemeNotifier());
+// final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeManager>((ref) => ThemeNotifier());
 
-class ThemeNotifier extends StateNotifier<ThemeManager> {
-  ThemeNotifier() : super(ThemeManager());
-}
+// class ThemeNotifier extends StateNotifier<ThemeManager> {
+//   ThemeNotifier() : super(ThemeManager());
+// }

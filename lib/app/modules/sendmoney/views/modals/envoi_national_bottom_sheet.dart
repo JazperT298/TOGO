@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors, constant_identifier_names, use_build_context_synchronously, unused_field
+// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors, constant_identifier_names, use_build_context_synchronously, unused_field, deprecated_member_use, unused_element
 
 import 'dart:convert';
 import 'dart:developer';
@@ -830,7 +830,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           <v:Header /><v:Body><n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
           <msisdn i:type="d:string">22899990137</msisdn>
           <message i:type="d:string">VRFY ANDROIDAPP F3C8DEBDBA27B035 ANDROID 3.0.1.0 F</message>
-          <token i:type="d:string">1234567890</token>
+          <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">false</sendsms>
           </n0:RequestToken></v:Body></v:Envelope>''';
       request.headers.addAll(headers);
@@ -935,7 +935,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
           Get.back();
           Get.back();
+          Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: "Transfert National");
           showSuccessOrderPlace(message: jsonString);
+
           // SqlHelper.setTransacHistory("-1", jsonString);
         } else {
           Get.back();

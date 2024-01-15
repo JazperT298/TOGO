@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors, constant_identifier_names, use_build_context_synchronously, unused_field
+// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors, constant_identifier_names, use_build_context_synchronously, unused_field, deprecated_member_use, unused_element
 
 import 'dart:convert';
 import 'dart:developer';
@@ -340,10 +340,14 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                       onTap: () async {
                         final picked = await countryPicker.showPicker(context: context);
                         // Null check
-                        if (picked != null) print(picked.dialCode);
-                        setState(() {
-                          _selectedCountryCode = picked!.dialCode;
-                        });
+                        if (picked != null) {
+                          setState(() {
+                            print(picked.dialCode);
+                            _selectedCountryCode = picked.dialCode;
+                          });
+                        } else {
+                          _selectedCountryCode = '+228';
+                        }
                       },
                       child: Container(
                         height: 45,

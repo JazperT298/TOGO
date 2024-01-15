@@ -1,16 +1,16 @@
-// ignore_for_file: non_constant_identifier_names, unnecessary_null_comparison, use_build_context_synchronously, unused_local_variable, deprecated_member_use, avoid_print
+// ignore_for_file: non_constant_identifier_names, unnecessary_null_comparison, use_build_context_synchronously, unused_local_variable, deprecated_member_use, avoid_log
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
-import 'package:ibank/utils/constants/sys_prop.dart';
 import 'package:ibank/utils/core/soap_config.dart';
 import 'package:ibank/utils/helpers/flooz_helper.dart';
 import 'package:ibank/utils/sms/sms_listener.dart';
 import 'package:ibank/utils/sms/sms_option_enum.dart';
-import 'package:ibank/utils/string_utils.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:xml/xml.dart' as xml;
 
@@ -48,14 +48,20 @@ class SoapSender {
       }
 
       SqlHelper.checkDB2(ctx);
-      String? token = await SqlHelper.getToken();
-      String stringProperty = await SqlHelper.getProperty(SysProp.PROP_MSISDN, "");
-      String? msisdn = StringUtil().isNullOrEmpty2(stringProperty, destination);
+
+      // String? token = await SqlHelper.getToken();
+      // String stringProperty = await SqlHelper.getProperty(SysProp.PROP_MSISDN, "");
+      // String? msisdn = StringUtil().isNullOrEmpty2(stringProperty, destination);
+      String? token = Get.find<StorageServices>().storage.read('token');
+      String? msisdn = Get.find<StorageServices>().storage.read('msisdn');
+      log('msisdn msisdn $msisdn');
+      log('token token $token');
+
       String msg = message; //EncryptionHelper.encryptData(ctx, message);
-      print('msg from sendSoap $msg');
+      log('msg from sendSoap $msg');
 
       //Log.d("INFODETAILS","1: "+token+"2: "+msisdn+" PLAIN 3: "+message+"4: "+msg);
-      print("INFODETAILS" "1: ${token}2: $msisdn PLAIN 3: ${message}4: $msg");
+      log("INFODETAILS" "1: ${token}2: $msisdn PLAIN 3: ${message}4: $msg");
 
       Map<String, dynamic> parameters = <String, dynamic>{};
       parameters.assign("message", msg);
@@ -64,36 +70,36 @@ class SoapSender {
 
       //Log.d("SOAP REQUEST",parameters.toString());
       // AppConfig.appendLog(ctx, "SOAP REQUEST", parameters.toString());
-      print('response soap_url $soap_url');
-      print('response soap_action $soap_action');
-      print('response soap_namespace $soap_namespace');
-      print('response soap_method_name $soap_method_name');
-      print('response parameters $parameters');
+      log('response soap_url $soap_url');
+      log('response soap_action $soap_action');
+      log('response soap_namespace $soap_namespace');
+      log('response soap_method_name $soap_method_name');
+      log('response parameters $parameters');
 
-      final responseString = await invokeSoap(soap_url, soap_action, soap_namespace, soap_method_name, msisdn, msg, token!, "false"); //parameters);
+      final responseString = await invokeSoap(soap_url, soap_action, soap_namespace, soap_method_name, msisdn!, msg, token!, "false"); //parameters);
       finalResponseString = responseString;
-      print('responseString $responseString');
+      log('responseString $responseString');
 
       // Additional logic based on the responseString
       if (finalResponseString == "REGISTER") {
-        print('responseString 1 $responseString');
+        log('responseString 1 $responseString');
         SqlHelper.getToken();
       } else if (finalResponseString == 'Data request failed') {
         showToast(ctx, responseString);
       } else {
         final responseJson = parseSoapResponseToJson(responseString);
-        print('responseString 2 $responseJson');
+        log('responseString 2 $responseJson');
         String profile = responseJson.containsKey("profile") ? responseJson["profile"] : "";
         String description = responseJson.containsKey("description") ? responseJson["description"] : "";
         String refid = responseJson.containsKey("refid") ? responseJson["refid"] : "";
         String msg = responseJson.containsKey("message") ? responseJson["message"] : "";
         String status = responseJson.containsKey("status") ? responseJson["status"] : "";
 
-        print("Profile: $profile");
-        print("Description: $description");
-        print("refid: $refid");
-        print("Message: $msg");
-        print("Status: $status");
+        log("Profile: $profile");
+        log("Description: $description");
+        log("refid: $refid");
+        log("Message: $msg");
+        log("Status: $status");
 
         FloozHelper.setUserType(profile);
         FloozHelper.setMessage(msg);
@@ -107,7 +113,7 @@ class SoapSender {
       if (sendSmsListenerss == null || !sendSmsListenerss.onFailed('')) {
         sendSmsListenerss.onFailed('');
       }
-      debugPrint('Exception Message: sendSoap ${e.toString()}');
+      log('Exception Message: sendSoap ${e.toString()}');
     } finally {
       isLoading = false;
     }
@@ -119,22 +125,22 @@ class SoapSender {
     try {
       final soapActionUrl = '$url/$methodName';
       final headers = {'Content-Type': 'application/xml'};
-      print('soapActionUrl $methodName');
-      print('soapActionUrl $msisdn');
-      print('soapActionUrl $msg');
-      print('soapActionUrl $token');
-      print('soapActionUrl $sendsms');
+      log('soapActionUrl $methodName');
+      log('soapActionUrl $msisdn');
+      log('soapActionUrl $msg');
+      log('soapActionUrl $token');
+      log('soapActionUrl $sendsms');
 
       final soapEnvelope = buildSoapEnvelope(namespace, methodName, "22899990137", msg, token, sendsms);
-      print('soapActionUrl $soapEnvelope');
+      log('soapActionUrl FROM SOAP $soapEnvelope');
       final response = await connect.post(url, headers: headers, soapEnvelope);
-      print('soapActionUrl ${response.body}');
+      log('soapActionUrl ${response.body}');
 
       // return parseSoapResponse(response.body).toString();
       return response.bodyString.toString();
       // return parseSoapResponseToJson(response.body).toString();
     } catch (e) {
-      debugPrint('Exception Message: ${e.toString()}');
+      log('Exception Message: ${e.toString()}');
       return 'Data request failed';
     }
   }
@@ -174,10 +180,10 @@ class SoapSender {
 
       // Convert to JSON
       Map<String, dynamic> json = jsonDecode(jsonString);
-      print('resposne $json');
+      log('resposne $json');
       return json;
     } catch (ex) {
-      print('parseSoapResponseToJson $ex');
+      log('parseSoapResponseToJson $ex');
       rethrow;
     }
   }
@@ -190,18 +196,18 @@ class SoapSender {
     // final soapBody = document.findAllElements('soapenv:Body').first;
     // final result = soapBody.findElements('web:$soap_method_name').first;
 
-    // You might want to print the jsonString to see its structure.
-    // print(jsonString);
+    // You might want to log the jsonString to see its structure.
+    // log(jsonString);
 
     // Assuming soapenv is the SOAP envelope namespace and web is the namespace for your web service.
     final soapBody = decodedJson['soapenv:Envelope']['soapenv:Body'];
     final result = soapBody['web:$soap_method_name'];
 
-    print('response 6 $soapBody');
+    log('response 6 $soapBody');
     // Check if result is null or not, depending on your SOAP response structure.
-    print('response 6 $result');
+    log('response 6 $result');
     // return result.toString(); // Return an empty string if result is null.
-    // print('response 6 $soapBody');
+    // log('response 6 $soapBody');
     return soapBody;
     //   final document = xml.XmlDocument.parse(soapResponse);
 
@@ -214,8 +220,8 @@ class SoapSender {
     //   // Convert XML to JSON
     //   final jsonData = _parseXmlElement(bodyElement);
 
-    //   // Print the resulting JSON
-    //   print('response 8 ${json.encode(jsonData)}');
+    //   // log the resulting JSON
+    //   log('response 8 ${json.encode(jsonData)}');
     //   return jsonData.toString();
   }
 
@@ -254,19 +260,19 @@ class SoapSender {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  // static void printAllXmlTags(String xmlString) {
+  // static void logAllXmlTags(String xmlString) {
   //   final document = xml.XmlDocument.parse(xmlString);
-  //   print('response 7 $document');
-  //   printXmlTags(document);
+  //   log('response 7 $document');
+  //   logXmlTags(document);
   // }
 
-  // static void printXmlTags(xml.XmlNode node) {
+  // static void logXmlTags(xml.XmlNode node) {
   //   if (node is xml.XmlElement) {
-  //     print('Tag: ${node.name.local}');
+  //     log('Tag: ${node.name.local}');
   //     for (var attribute in node.attributes) {
-  //       print('  Attribute: ${attribute.name.local} = ${attribute.value}');
+  //       log('  Attribute: ${attribute.name.local} = ${attribute.value}');
   //     }
-  //     node.children.forEach(printXmlTags);
+  //     node.children.forEach(logXmlTags);
   //   }
   // }
 

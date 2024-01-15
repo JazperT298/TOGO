@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ibank/app/data/local/shared_preference.dart';
+import 'package:get_storage/get_storage.dart';
+// import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/main.dart';
@@ -20,6 +21,8 @@ class SplashController extends GetxController {
   late RxString messages;
   late Eula eula;
   final verifyUser = VerifyUser;
+
+  final storage = GetStorage();
   @override
   void onInit() {
     // TODO: implement onInit
@@ -31,11 +34,27 @@ class SplashController extends GetxController {
   }
 
   void isUserLogin() async {
-    bool isLoginIn = await SharedPrefService.isLoggedIn();
-    if (isLoginIn == true) {
-      Get.toNamed(AppRoutes.BOTTOMNAV);
+    // bool isLoginIn = await SharedPrefService.isLoggedIn();
+    // if (isLoginIn == true) {
+    //   Get.toNamed(AppRoutes.BOTTOMNAV);
+    // } else {
+    //   Get.toNamed(AppRoutes.ONBOARD);
+    // }
+
+    // String? msisdn = Get.find<StorageServices>().storage.read('msisdn');
+    // bool? isPrivacyCheck = Get.find<StorageServices>().storage.read('isPrivacyCheck');
+    // bool? isLoginSuccessClick = Get.find<StorageServices>().storage.read('isLoginSuccessClick');
+
+    if (storage.read('msisdn') != null) {
+      if (storage.read('isPrivacyCheck') == null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.PRIVACY)));
+      } else if (storage.read('isLoginSuccessClick') == null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
+      } else {
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV)));
+      }
     } else {
-      Get.toNamed(AppRoutes.ONBOARD);
+      WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.ONBOARD)));
     }
   }
 

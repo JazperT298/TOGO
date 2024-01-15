@@ -20,62 +20,36 @@ class OnboardView extends ConsumerStatefulWidget {
 class _OnboardViewState extends ConsumerState<OnboardView> {
   final controller = Get.put(OnboardController());
 
-  late PageController pageController;
-  final Duration animationDuration = .3.seconds;
-  final Curve animationCurve = Curves.decelerate;
-
-  bool get onFirstPage => ref.read(currentPageProvider) == 0;
-  bool get onLastPage => ref.read(currentPageProvider) == (onboardingScreenPage.length - 1);
-
-  void getToAuthScreen() => Get.toNamed(AppRoutes.LOGIN); //KRouter.replace(context, Routes.loginNumber);
-
-  void onPageChanged(int index) => ref.read(currentPageProvider.notifier).state = index;
-
-  void toNextPage() {
-    if (onLastPage) {
-      getToAuthScreen();
-    } else {
-      pageController.nextPage(duration: animationDuration, curve: animationCurve);
-    }
-  }
-
-  Future<bool> onNavigatingBack() {
-    if (!onFirstPage) {
-      pageController.previousPage(duration: animationDuration, curve: animationCurve);
-      return Future.value(false);
-    } else {
-      return Future.value(true);
-    }
-  }
-
-  @override
-  void initState() {
-    pageController = PageController();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final currentPage = ref.watch(currentPageProvider);
 
-    return WillPopScope(
-      onWillPop: onNavigatingBack,
-      child: FluScreen(
-        overlayStyle: context.systemUiOverlayStyle.copyWith(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.light,
-        ),
-        body: Column(
+    return FluScreen(
+      overlayStyle: context.systemUiOverlayStyle.copyWith(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      ),
+      body: Container(
+        color: Colors.white,
+        child: Column(
           children: [
             Expanded(
                 child: Stack(
               children: [
-                PageView.builder(
-                  controller: pageController,
-                  onPageChanged: onPageChanged,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: onboardingScreenPage.length,
-                  itemBuilder: (context, index) => _Page(onboardingScreenPage[index]),
+                // PageView.builder(
+                //   controller: pageController,
+                //   onPageChanged: onPageChanged,
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   itemCount: onboardingScreenPage.length,
+                //   itemBuilder: (context, index) => _Page(onboardingScreenPage[index]),
+                // ),
+                PageView(
+                  controller: controller.pageController,
+                  children: [
+                    _Page(onboardingScreenPage[0], false),
+                    _Page(onboardingScreenPage[1], false),
+                    _Page(onboardingScreenPage[2], true),
+                  ],
                 ),
                 Positioned(
                   top: 0,
@@ -91,7 +65,9 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                           cornerRadius: 14,
                           child: FluButton.text(
                             "Skip.",
-                            onPressed: getToAuthScreen,
+                            onPressed: () {
+                              Get.offNamed(AppRoutes.LOGIN);
+                            },
                             cornerRadius: 14,
                             backgroundColor: context.colorScheme.background.withOpacity(.25),
                             foregroundColor: Colors.white,
@@ -105,42 +81,49 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                 ),
               ],
             )),
-            FluButton.text(
-              onboardingScreenPage[currentPage].buttonText,
-              prefixIcon: onboardingScreenPage[currentPage].buttonIcon,
-              iconSize: 18,
-              iconStrokeWidth: 1.8,
-              onPressed: toNextPage,
-              height: UISettings.buttonSize - 10,
-              width: MediaQuery.of(context).size.width * .42,
-              cornerRadius: UISettings.buttonCornerRadius,
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .025, bottom: MediaQuery.of(context).size.height * .08),
-              backgroundColor: context.colorScheme.primary,
-              foregroundColor: context.colorScheme.onPrimary,
-              boxShadow: [
-                BoxShadow(
-                  color: context.colorScheme.primary.withOpacity(.35),
-                  blurRadius: 25,
-                  spreadRadius: 3,
-                  offset: const Offset(0, 5),
-                )
-              ],
-              textStyle: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 12.sp,
-              ),
+            Obx(
+              () => controller.isLoading.value
+                  ? Container()
+                  : FluButton.text(
+                      onboardingScreenPage[currentPage].buttonText,
+                      prefixIcon: onboardingScreenPage[currentPage].buttonIcon,
+                      iconSize: 18,
+                      iconStrokeWidth: 1.8,
+                      onPressed: () {
+                        controller.isLastPage.value ? Get.offNamed(AppRoutes.LOGIN) : controller.toNextPage();
+                        print(controller.isLastPage.value);
+                      },
+                      height: UISettings.buttonSize - 10,
+                      width: MediaQuery.of(context).size.width * .42,
+                      cornerRadius: UISettings.buttonCornerRadius,
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .025, bottom: MediaQuery.of(context).size.height * .08),
+                      backgroundColor: context.colorScheme.primary,
+                      foregroundColor: context.colorScheme.onPrimary,
+                      boxShadow: [
+                        BoxShadow(
+                          color: context.colorScheme.primary.withOpacity(.35),
+                          blurRadius: 25,
+                          spreadRadius: 3,
+                          offset: const Offset(0, 5),
+                        )
+                      ],
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12.sp,
+                      ),
+                    ),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * .010),
               child: SmoothPageIndicator(
-                controller: pageController,
+                controller: controller.pageController,
                 count: onboardingScreenPage.length,
-                effect: WormEffect(
+                effect: const WormEffect(
                   dotHeight: 5,
                   dotWidth: 5,
                   spacing: 10.0,
-                  dotColor: context.colorScheme.surfaceVariant,
-                  activeDotColor: context.colorScheme.onBackground,
+                  dotColor: Colors.grey,
+                  activeDotColor: Colors.black,
                 ),
               ),
             )
@@ -153,8 +136,9 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
 
 class _Page extends GetView<OnboardController> {
   final OnboardingScreenPage data;
+  final bool isLastPage;
 
-  const _Page(this.data, {Key? key}) : super(key: key);
+  const _Page(this.data, this.isLastPage, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -175,13 +159,13 @@ class _Page extends GetView<OnboardController> {
               Text(
                 StringUtils(data.title).capitalizeFirst!,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: context.colorScheme.onSurface, fontSize: 18.sp),
+                style: TextStyle(color: Colors.black, fontSize: 18.sp),
               ),
               const SizedBox(height: 5),
               Text(
                 data.description,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 10.sp),
+                style: TextStyle(color: Colors.black54, fontSize: 10.sp),
               ),
             ],
           ),

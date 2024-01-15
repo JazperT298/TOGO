@@ -1,11 +1,8 @@
-import 'dart:convert';
-import 'dart:developer';
+// ignore_for_file: avoid_print
 
 import 'package:get/get.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/history_model.dart';
-
-import '../../../data/local/sql_helper.dart';
 
 class HistoryController extends GetxController {
   RxList<History> historytransactions = <History>[].obs;
@@ -54,8 +51,7 @@ class HistoryController extends GetxController {
       historytransactions.clear();
       DateTime now = DateTime.now();
       for (var i = 0; i < historytransactionsMasterList.length; i++) {
-        var daysCount =
-            now.difference(historytransactionsMasterList[i].date).inDays;
+        var daysCount = now.difference(historytransactionsMasterList[i].date).inDays;
         if (daysCount <= 7) {
           historytransactions.add(historytransactionsMasterList[i]);
         }
@@ -66,8 +62,7 @@ class HistoryController extends GetxController {
       historytransactions.clear();
       DateTime now = DateTime.now();
       for (var i = 0; i < historytransactionsMasterList.length; i++) {
-        var daysCount =
-            now.difference(historytransactionsMasterList[i].date).inDays;
+        var daysCount = now.difference(historytransactionsMasterList[i].date).inDays;
         if (daysCount <= 30) {
           historytransactions.add(historytransactionsMasterList[i]);
         }

@@ -4,40 +4,67 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class StorageServices extends GetxController {
+class StorageServices extends GetxService {
+  //Instance of get storage
   final storage = GetStorage();
 
-  // saveCredentials({
-  //   required String id,
-  //   required String username,
-  //   required String password,
-  //   required String firstname,
-  //   required String lastname,
-  //   required bool isNormalAccount,
-  //   required String contactno,
-  // }) {
-  //   storage.write("id", id);
-  //   storage.write("username", username);
-  //   storage.write("password", password);
-  //   storage.write("firstname", firstname);
-  //   storage.write("lastname", lastname);
-  //   storage.write("contactno", contactno);
-  //   storage.write("isNormalAccount", isNormalAccount);
-  // }
+  //Instance of introduction
+  final fresh = GetStorage('introduction');
 
-  // removeStorageCredentials() {
-  //   storage.remove("id");
-  //   storage.remove("username");
-  //   storage.remove("password");
-  //   storage.remove("firstname");
-  //   storage.remove("lastname");
-  //   storage.remove("contactno");
-  //   storage.remove("isNormalAccount");
-  // }
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    storage.writeIfNull('profile', "");
+    super.onInit();
+  }
 
-  // save_to_cart({required List cartList}) async {
-  //   storage.write("cart", cartList);
-  // }
+  saveMsisdn({required String msisdn}) {
+    storage.write('msisdn', msisdn);
+  }
+
+  saveOTP({required String otp}) {
+    storage.write('otp', otp);
+  }
+
+  isPrivacyCheck({required bool isPrivacyCheck}) {
+    storage.write('isPrivacyCheck', isPrivacyCheck);
+  }
+
+  isLoginSuccessClick({required bool isLoginSuccessClick}) {
+    storage.write('isLoginSuccessClick', isLoginSuccessClick);
+  }
+
+  //Store verify profile
+  saveVerifyProfile({required String profile, required String description, required String message, required String status}) {
+    storage.write('profile', profile);
+    storage.write('description', description);
+    storage.write('message', message);
+    storage.write('status', status);
+  }
+
+  saveUserData(
+      {required String name,
+      required String firstname,
+      required String msisdn,
+      required String birthdate,
+      required String soldeFlooz,
+      required String commission}) {
+    storage.write('name', name);
+    storage.write('firstname', firstname);
+    storage.write('msisdn', msisdn);
+    storage.write('birthdate', birthdate);
+    storage.write('soldeFlooz', soldeFlooz);
+    storage.write('commission', commission);
+  }
+
+  setProperty({required int key, required String value}) {
+    storage.write('key', key);
+    storage.write('value', value);
+  }
+
+  setToken({required String token}) {
+    storage.write('token', token);
+  }
 
   saveHistoryTransaction({
     required String message,
@@ -45,11 +72,7 @@ class StorageServices extends GetxController {
   }) async {
     if (storage.read('history') == null) {
       List data = [];
-      Map map = {
-        "service": service,
-        "message": message,
-        "date": DateTime.now().toString()
-      };
+      Map map = {"service": service, "message": message, "date": DateTime.now().toString()};
       data.add(map);
       storage.write("history", jsonEncode(data));
 
@@ -57,11 +80,7 @@ class StorageServices extends GetxController {
     } else {
       var stringdata = storage.read('history');
       var decodedData = jsonDecode(stringdata);
-      Map map = {
-        "service": service,
-        "message": message,
-        "date": DateTime.now().toString()
-      };
+      Map map = {"service": service, "message": message, "date": DateTime.now().toString()};
       decodedData.add(map);
       storage.write("history", jsonEncode(decodedData));
       log(storage.read('history'));

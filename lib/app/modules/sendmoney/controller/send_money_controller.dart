@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class SendMoneyController extends GetxController {
   void onInit() async {
     // await addNumberFromReceiver('99990228', 'F3C8DEBDBA27B035');
     // sendMoneyToReceiver('99990228', 'F3C8DEBDBA27B035', '123');
+
     super.onInit();
   }
 

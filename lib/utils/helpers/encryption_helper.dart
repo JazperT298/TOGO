@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:cryptography/cryptography.dart';
 import 'package:flutter/material.dart';
 import 'package:ibank/utils/common/obfuscate.dart';
 import 'package:ibank/utils/string_utils.dart';
@@ -336,12 +335,7 @@ class EncryptionHelper {
     0,
     0
   ];
-  static Cipher? encryptRSACipher;
-  static int? blocksizeRsa;
-  static Cipher? encryptRSACipherData;
-  static int? blocksizeRsaData;
-  static Cipher? encryptCipher;
-  static Cipher? decryptCipher;
+
 
   // static String encrypt(BuildContext ctx, String s) {
   //   List<int> plain = utf8.encode(s);

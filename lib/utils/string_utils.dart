@@ -21,6 +21,16 @@ class StringUtil {
   // String decodedString = base64Decode(encodedString, base64TableList);
   // print("Decoded String: $decodedString");
 
+  String? extractOTP(String input) {
+    RegExp regExp = RegExp(r'\((\d+)\)');
+    RegExpMatch? match = regExp.firstMatch(input);
+    if (match != null) {
+      String? otp = match.group(1);
+      return otp!;
+    }
+    return null;
+  }
+
   String base64Encode(List<int> bytes, List<int> base64Table) {
     StringBuffer result = StringBuffer();
     int padding = 0;

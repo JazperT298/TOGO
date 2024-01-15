@@ -30,7 +30,7 @@ environment:
 dependencies:
   qr_code_scanner: ^1.0.1
   flutter_otp_text_field: ^1.1.1
-  camera: ^0.10.4
+  # camera: ^0.10.4
   emojis: ^0.9.9
   flukit:
     git:
@@ -70,8 +70,6 @@ dependencies:
   flutter_html: ^3.0.0-beta.2
   xor_cipher: ^1.0.0+1
   fast_rsa: ^3.6.1
-  cryptography: ^2.7.0
-  cryptography_flutter: ^2.3.2
   sizer: ^2.0.15
   carousel_slider: ^4.2.1
 

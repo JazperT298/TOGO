@@ -3,6 +3,7 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
@@ -72,9 +73,12 @@ class _LoginSuccessState extends State<LoginSuccess> {
                 FluButton.text(
                   'Fermer',
                   iconStrokeWidth: 1.8,
-                  onPressed: () {
-                    Get.offAllNamed(AppRoutes.BOTTOMNAV);
-                  },
+                  onPressed: showProgressIndicator
+                      ? null
+                      : () {
+                          Get.find<StorageServices>().isLoginSuccessClick(isLoginSuccessClick: true);
+                          Get.offAllNamed(AppRoutes.BOTTOMNAV);
+                        },
                   height: 5.8.h,
                   width: MediaQuery.of(context).size.width * 16,
                   cornerRadius: UISettings.minButtonCornerRadius,

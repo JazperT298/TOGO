@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/privacy/controller/privacy_controller.dart';
 import 'package:flukit/flukit.dart';
 import 'package:ibank/app/routes/app_routes.dart';
@@ -100,7 +101,10 @@ class PrivacyView extends GetView<PrivacyController> {
                           FluButton.text(
                             'Je refuse',
                             iconStrokeWidth: 1.8,
-                            onPressed: () => print('Je refuse'),
+                            onPressed: () {
+                              // Get.find<StorageServices>().isPrivacyCheck(isClick: false);
+                              print('Je refuse');
+                            },
                             height: 5.8.h,
                             cornerRadius: UISettings.minButtonCornerRadius,
                             backgroundColor: Colors.transparent,
@@ -111,7 +115,8 @@ class PrivacyView extends GetView<PrivacyController> {
                             'J’accepte',
                             iconStrokeWidth: 1.8,
                             onPressed: () {
-                              Get.toNamed(AppRoutes.LOGINSUCCESS);
+                              Get.find<StorageServices>().isPrivacyCheck(isPrivacyCheck: true);
+                              Get.offAllNamed(AppRoutes.LOGINSUCCESS);
                             },
                             height: 5.8.h,
                             width: MediaQuery.of(context).size.width * .40,
