@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:ibank/app/data/local/getstorage_services.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:developer';
 
@@ -39,7 +40,7 @@ class WithdrawalController extends GetxController {
    <soapenv:Body>
       <app:RequestToken soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
          <msisdn xsi:type="xsd:string">22899990507</msisdn>
-         <message xsi:type="xsd:string">AGNTI 22899990137 500 9999 F</message>
+         <message xsi:type="xsd:string">AGNTI ${AppGlobal.MSISDN} 500 9999 F</message>
          <token xsi:type="xsd:string">1234567890</token>
          <sendsms xsi:type="xsd:string">true</sendsms>
       </app:RequestToken>
@@ -75,7 +76,7 @@ class WithdrawalController extends GetxController {
       <v:Header />
       <v:Body>
       <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-      <msisdn i:type="d:string">22899990137</msisdn>
+      <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
       <message i:type="d:string">AGNTGET F</message>
       <token i:type="d:string">F3C8DEBDBA27B035</token>
       <sendsms i:type="d:string">false</sendsms>
@@ -125,7 +126,7 @@ class WithdrawalController extends GetxController {
           <v:Header />
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990137</msisdn>
+          <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
           <message i:type="d:string">APPAGNT ${refID.value} $code F</message>
           <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">true</sendsms>

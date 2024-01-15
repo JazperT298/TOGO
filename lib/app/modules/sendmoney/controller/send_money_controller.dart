@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:developer';
 
@@ -34,7 +35,7 @@ class SendMoneyController extends GetxController {
     <v:Header />
     <v:Body>
         <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-            <msisdn i:type="d:string">22899990228</msisdn>
+            <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
             <message i:type="d:string">VRFY ANDROIDAPP F3C8DEBDBA27B035 ANDROID 3.0.1.0 F</message>
             <token i:type="d:string">F3C8DEBDBA27B035</token>
             <sendsms i:type="d:string">false</sendsms>
@@ -72,7 +73,7 @@ class SendMoneyController extends GetxController {
     <v:Header />
     <v:Body>
         <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-            <msisdn i:type="d:string">22899990228</msisdn>
+            <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
             <message i:type="d:string">APPCASH 22879397111 $amounts 1111 F</message>
             <token i:type="d:string">F3C8DEBDBA27B035</token>
             <sendsms i:type="d:string">true</sendsms>

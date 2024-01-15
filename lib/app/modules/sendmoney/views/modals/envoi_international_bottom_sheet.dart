@@ -867,7 +867,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
     );
   }
 
-//22899990137
+//${AppGlobal.MSISDN}
   static void onVerifySmidnSubmit(String destinationMsisdn, String selectedCountryCode) async {
     try {
       print(destinationMsisdn);
@@ -886,7 +886,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
           <v:Header />
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990137</msisdn>
+          <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
           <message i:type="d:string">VRFY GETNDC $finalmsisdn F</message>
           <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">false</sendsms>
@@ -948,7 +948,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
           <v:Header />
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990137</msisdn>
+          <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
           <message i:type="d:string">VRFY ANDROIDAPP F3C8DEBDBA27B035 ANDROID 3.0.1.0 F</message>
           <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">false</sendsms>
@@ -1013,7 +1013,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
           <v:Header />
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">22899990137</msisdn>
+          <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
           <message i:type="d:string">CASH $finalmsisdn $amount $code F</message>
           <token i:type="d:string">F3C8DEBDBA27B035</token>
           <sendsms i:type="d:string">true</sendsms></n0:RequestToken></v:Body></v:Envelope>''';
@@ -1048,7 +1048,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
             <v:Header />
             <v:Body>
             <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-            <msisdn i:type="d:string">22899990137</msisdn>
+            <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
             <message i:type="d:string">XMCASH MFS_AFRICA_SEND $finalmsisdn:::$alphacodetwo $amount $code F</message>
             <token i:type="d:string">F3C8DEBDBA27B035</token>
             <sendsms i:type="d:string">true</sendsms>
