@@ -56,35 +56,42 @@ class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => ProviderScope(
-        // overrides: [
-        //   authService.overrideWithProvider(Provider((ref) => AuthService())),
-        //   sharedPrefService.overrideWithProvider(Provider((ref) => SharedPrefService())),
-        // ],
-        child: Sizer(builder: (context, orientation, deviceType) {
-          // return Consumer(builder: (context, ref, child) {
-          //   final themeManager = ref.watch(themeProvider);
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      // overrides: [
+      //   authService.overrideWithProvider(Provider((ref) => AuthService())),
+      //   sharedPrefService.overrideWithProvider(Provider((ref) => SharedPrefService())),
+      // ],
+      child: Sizer(builder: (context, orientation, deviceType) {
+        // return Consumer(builder: (context, ref, child) {
+        //   final themeManager = ref.watch(themeProvider);
 
-          return GetMaterialApp(
-            title: AppLocalizations.translate(context, 'title'),
-            debugShowCheckedModeBanner: false,
-            theme: ThemeManager().lightTheme,
-            darkTheme: ThemeManager().darkTheme,
-            initialRoute: AppRoutes.SPLASH, //  Routes.splash.path,
-            getPages: AppPages.list,
-            locale: Get.locale ?? const Locale('fr'),
-            fallbackLocale: const Locale('fr'),
-            supportedLocales: AppLocalizations.supportedLocales,
-            //flc.CountryLocalizations.supportedLocales.map(Locale.new),
-            localizationsDelegates: const [
-              // Package's localization delegate.
-              // You can still add other delegates from your app.
-              DefaultMaterialLocalizations.delegate,
-              DefaultWidgetsLocalizations.delegate,
-              flc.CountryLocalizations.delegate,
-            ],
-          );
-          // });
-        }),
-      );
+        return GetMaterialApp(
+          title: Configs.appName,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeManager().lightTheme,
+          darkTheme: ThemeManager().darkTheme,
+          initialRoute: AppRoutes.SPLASH, //  Routes.splash.path,
+          getPages: AppPages.list,
+          locale: const Locale("en"),
+          // fallbackLocale: const Locale('fr'),
+          supportedLocales: const [
+            Locale('en', 'US'),
+            Locale('fr', 'FR'),
+          ],
+          // supportedLocales: AppLocalizations.supportedLocales,
+          // flc.CountryLocalizations.supportedLocales.map(Locale.new),
+          localizationsDelegates: const [
+            // Package's localization delegate.
+            // You can still add other delegates from your app.
+
+            DefaultMaterialLocalizations.delegate,
+            DefaultWidgetsLocalizations.delegate,
+            flc.CountryLocalizations.delegate,
+          ],
+        );
+        // });
+      }),
+    );
+  }
 }
