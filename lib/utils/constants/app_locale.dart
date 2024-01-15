@@ -7,10 +7,11 @@ class AppLocalizations {
 
   static String translate(BuildContext context, String key) {
     switch (Localizations.localeOf(context).languageCode) {
-      case 'fr':
-        return AppLocalizationsFr.translate(context, key);
-      default:
+      case 'en':
         return AppLocalizationsEn.translate(context, key);
+      default:
+        //default language is fr = french
+        return AppLocalizationsFr.translate(context, key);
     }
   }
 }

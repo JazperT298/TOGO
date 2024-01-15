@@ -72,8 +72,8 @@ class App extends StatelessWidget {
             darkTheme: ThemeManager().darkTheme,
             initialRoute: AppRoutes.SPLASH, //  Routes.splash.path,
             getPages: AppPages.list,
-            // locale: Get.locale ?? const Locale('fr'),
-            // fallbackLocale: const Locale('fr'),
+            locale: Get.locale ?? const Locale('fr'),
+            fallbackLocale: const Locale('fr'),
             supportedLocales: AppLocalizations.supportedLocales,
             //flc.CountryLocalizations.supportedLocales.map(Locale.new),
             localizationsDelegates: const [
