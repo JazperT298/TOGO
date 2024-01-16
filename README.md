@@ -19,7 +19,6 @@ A project created in flutter using GetX.
     |- assets/
         |-locales/
             |- en.json
-            |- es.json
             |- fr.json
 ```
 
