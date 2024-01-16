@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:fast_rsa/fast_rsa.dart';
@@ -24,6 +23,7 @@ class LoginController extends GetxController {
   RxBool isTextFieldEmpty = false.obs;
   final countryPicker = const FlCountryCodePicker().obs;
   static var client = http.Client();
+  RxList<String> existingLetters = <String>[].obs;
 
   kycInquiryRequest(
       {required String msisdn,
@@ -168,13 +168,21 @@ class LoginController extends GetxController {
     // String plainPrefix = 'A'; // it must be random character if possible
     // String plainData = 'Hello World';
     // String data = plainPrefix + plainData;
-    List<String> availableLetters =
-        List<String>.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
-    math.Random random = math.Random();
-    int randomIndex = random.nextInt(availableLetters.length);
-    String randomLetter = availableLetters[randomIndex];
-    log("Random letter: $randomLetter");
-    String data = '${randomLetter}EULA GETOTP ANDROID $msisdn';
+    String letter = "Z";
+    if (Get.find<StorageServices>().storage.read("incrementedLetter") != null) {
+      letter = Get.find<StorageServices>().storage.read("incrementedLetter");
+    }
+    int letterCode = letter.codeUnitAt(0);
+    int incrementedCode = letterCode + 1;
+    if (incrementedCode > 90) {
+      incrementedCode = 65; // Wrap around to 'A'
+    }
+    String incrementedLetter = String.fromCharCode(incrementedCode);
+    Get.find<StorageServices>()
+        .storage
+        .write('incrementedLetter', incrementedLetter);
+    log("Random letter: $incrementedLetter");
+    String data = '${incrementedLetter}EULA GETOTP ANDROID $msisdn';
     log(data);
     final List<int> bytes = utf8.encode(data);
     debugPrint(bytes.toString());
