@@ -28,7 +28,6 @@ class _ProfileViewState extends State<ProfileView> {
   final storage = GetStorage();
   @override
   void initState() {
-    // TODO: implement initState
     // getProfile();
 
     super.initState();

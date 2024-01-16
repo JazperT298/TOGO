@@ -11,14 +11,15 @@ import 'package:location/location.dart';
 
 /// Map
 /// This a map showing nearby agences.
-/// TODO add custom styles for the map.
-/// TODO add custom markers for agences.
+
 class AgenciesMap extends StatefulWidget {
   final double? height, radius;
   final bool fullScreen;
   final void Function(LatLng)? onTap;
 
-  const AgenciesMap({Key? key, this.height, this.radius, this.onTap, this.fullScreen = false}) : super(key: key);
+  const AgenciesMap(
+      {Key? key, this.height, this.radius, this.onTap, this.fullScreen = false})
+      : super(key: key);
 
   @override
   State<AgenciesMap> createState() => AgenciesMapState();
@@ -49,7 +50,6 @@ class AgenciesMapState extends State<AgenciesMap> {
         controller.animateCamera(CameraUpdate.newCameraPosition(position1));
       });
     }).catchError((error) {
-      //! TODO handle permission denied
       print(error);
     });
   } */
@@ -63,7 +63,8 @@ class AgenciesMapState extends State<AgenciesMap> {
         zoom: widget.fullScreen ? 14 : 10,
       );
       _controller.future.then((GoogleMapController controller) {
-        controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+        controller
+            .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
       });
       List<Placemark> placemarks = await placemarkFromCoordinates(
         position.latitude,
@@ -71,13 +72,14 @@ class AgenciesMapState extends State<AgenciesMap> {
       );
       if (placemarks != null && placemarks.isNotEmpty) {
         setState(() {
-          AppGlobal.currentAddress = '${placemarks.first.street}, ${placemarks.first.locality}, ${placemarks.first.administrativeArea}';
+          AppGlobal.currentAddress =
+              '${placemarks.first.street}, ${placemarks.first.locality}, ${placemarks.first.administrativeArea}';
           print('current location ${AppGlobal.currentAddress}');
         });
         setState(() {});
       }
     }).catchError((error) {
-      // TODO: Gérer les erreurs, par exemple, gérer le refus de la permission
+    
       print('Erreur lors de la récupération de la position : $error');
     });
   }
@@ -95,7 +97,10 @@ class AgenciesMapState extends State<AgenciesMap> {
   Widget build(BuildContext context) => Container(
         height: widget.height ?? double.infinity,
         clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(color: context.colorScheme.background, borderRadius: BorderRadius.circular(widget.radius ?? radius(context))),
+        decoration: BoxDecoration(
+            color: context.colorScheme.background,
+            borderRadius:
+                BorderRadius.circular(widget.radius ?? radius(context))),
         child: GoogleMap(
           mapType: MapType.normal,
           zoomControlsEnabled: false,

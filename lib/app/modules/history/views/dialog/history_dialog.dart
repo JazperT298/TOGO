@@ -31,28 +31,7 @@ class HistoryDialog {
               style: TextStyle(fontSize: 11.sp),
             ),
           ),
-          // child: Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: [
-          //     const Text(
-          //       "Message",
-          //       style: TextStyle(
-          //         fontWeight: FontWeight.bold,
-          //         fontSize: 15,
-          //       ),
-          //     ),
-          //     SizedBox(
-          //       height: MediaQuery.of(Get.context!).size.height * 0.032,
-          //     ),
-          //     Text(
-          //       message,
-          //       textAlign: TextAlign.center,
-          //       style: const TextStyle(
-          //           fontWeight: FontWeight.normal, fontSize: 12),
-          //     ),
-          //   ],
-          // ),
+    
         )));
   }
 }
