@@ -168,10 +168,12 @@ class LoginController extends GetxController {
     // String plainPrefix = 'A'; // it must be random character if possible
     // String plainData = 'Hello World';
     // String data = plainPrefix + plainData;
+    List<String> availableLetters =
+        List<String>.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
     math.Random random = math.Random();
-    int randomCharCode = random.nextInt(26) + 65;
-    String randomLetter = String.fromCharCode(randomCharCode);
-
+    int randomIndex = random.nextInt(availableLetters.length);
+    String randomLetter = availableLetters[randomIndex];
+    log("Random letter: $randomLetter");
     String data = '${randomLetter}EULA GETOTP ANDROID $msisdn';
     log(data);
     final List<int> bytes = utf8.encode(data);
@@ -184,14 +186,14 @@ class LoginController extends GetxController {
     String encryptPrefix = 'c';
     String base64 = encryptPrefix + base64Encode(encrypted);
     log(base64);
-    Get.back();
-    await opensMessagingApp(encrptedText: base64);
-    Get.offAllNamed(AppRoutes.OTP, arguments: {
-      "msisdn": msisdn,
-      "formatedMSISDN": formattedMSISDN,
-      "countryCode": countryCode,
-      "requestVia": "sms"
-    });
+    // Get.back();
+    // await opensMessagingApp(encrptedText: base64);
+    // Get.offAllNamed(AppRoutes.OTP, arguments: {
+    //   "msisdn": msisdn,
+    //   "formatedMSISDN": formattedMSISDN,
+    //   "countryCode": countryCode,
+    //   "requestVia": "sms"
+    // });
   }
 
   Future<Uint8List> xor(String data) async {

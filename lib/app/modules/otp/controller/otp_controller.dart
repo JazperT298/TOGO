@@ -101,10 +101,12 @@ class OtpController extends GetxController {
     // String plainPrefix = 'A'; // it must be random character if possible
     // String plainData = 'Hello World';
     // String data = plainPrefix + plainData;
+    List<String> availableLetters =
+        List<String>.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
     math.Random random = math.Random();
-    int randomCharCode = random.nextInt(26) + 65;
-    String randomLetter = String.fromCharCode(randomCharCode);
-
+    int randomIndex = random.nextInt(availableLetters.length);
+    String randomLetter = availableLetters[randomIndex];
+    log("Random letter: $randomLetter");
     String data = '${randomLetter}EULA GETOTP ANDROID $msisdn';
     log(data);
     final List<int> bytes = utf8.encode(data);
