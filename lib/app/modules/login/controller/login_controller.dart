@@ -186,14 +186,14 @@ class LoginController extends GetxController {
     String encryptPrefix = 'c';
     String base64 = encryptPrefix + base64Encode(encrypted);
     log(base64);
-    // Get.back();
-    // await opensMessagingApp(encrptedText: base64);
-    // Get.offAllNamed(AppRoutes.OTP, arguments: {
-    //   "msisdn": msisdn,
-    //   "formatedMSISDN": formattedMSISDN,
-    //   "countryCode": countryCode,
-    //   "requestVia": "sms"
-    // });
+    Get.back();
+    await opensMessagingApp(encrptedText: base64);
+    Get.offAllNamed(AppRoutes.OTP, arguments: {
+      "msisdn": msisdn,
+      "formatedMSISDN": formattedMSISDN,
+      "countryCode": countryCode,
+      "requestVia": "sms"
+    });
   }
 
   Future<Uint8List> xor(String data) async {
