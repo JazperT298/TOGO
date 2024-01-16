@@ -22,7 +22,7 @@ A project created in flutter using GetX.
             |- fr.json
 ```
 
-    - Here file name should be in the language code as defined above for English , Spanis and French.
+    - Here file name should be in the language code as defined above for English and French.
 
 * Define your whole app strings into this json files as per the language.
 
