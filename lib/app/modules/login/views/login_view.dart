@@ -234,6 +234,10 @@ class _LoginViewState extends State<LoginView> {
                 suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
                 onPressed: () async {
+                  // controller.encryptionExample(
+                  //     msisdn: "22879397111",
+                  //     formattedMSISDN: "79 39 71 11",
+                  //     countryCode: "228");
                   if (numberController.text.isNotEmpty) {
                     print(numberController.text);
                     String replacedString = numberController.text.replaceAll(" ", "").trim().toString();
