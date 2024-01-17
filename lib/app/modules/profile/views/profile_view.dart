@@ -45,13 +45,10 @@ class _ProfileViewState extends State<ProfileView> {
       FluOption(icon: FluIcons.people, title: LocaleKeys.strFavorites.tr, description: LocaleKeys.strFavoritesDesc.tr),
       FluOption(icon: FluIcons.cards, title: LocaleKeys.strMyCards.tr, description: LocaleKeys.strMyCardsDesc.tr),
       FluOption(icon: FluIcons.bank, title: LocaleKeys.strMyBanks.tr, description: LocaleKeys.strMyBanksDesc.tr),
-      FluOption(
-        icon: FluIcons.noteText,
-        title: LocaleKeys.strFaq.tr,
-        description: LocaleKeys.strFaqDesc.tr,
-      ),
+      FluOption(icon: FluIcons.noteText, title: LocaleKeys.strFaq.tr, description: LocaleKeys.strFaqDesc.tr),
       FluOption(icon: FluIcons.supportLikeQuestion24Support, title: LocaleKeys.strSupportHelp.tr, description: LocaleKeys.strSupportHelpDesc.tr),
       FluOption(icon: FluIcons.textalignCenter, title: LocaleKeys.strCredit.tr, description: LocaleKeys.strCreditDesc.tr),
+      FluOption(icon: FluIcons.logout, title: LocaleKeys.strLogout.tr, description: LocaleKeys.strLogoutDesc.tr),
     ];
   }
 
@@ -106,7 +103,7 @@ class _ProfileViewState extends State<ProfileView> {
                                           await storage.remove('msisdn').then((value) {
                                             storage.remove('isPrivacyCheck');
                                             storage.remove('isLoginSuccessClick');
-                                            ProgressAlertDialog.showALoadingDialog(context, LocaleKeys.strLogout.tr, 3, AppRoutes.LOGIN);
+                                            ProgressAlertDialog.showALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
                                           });
                                           // await SharedPrefService.logoutUserData(false, '').then((value) {
                                           //   ProgressAlertDialog.showALoadingDialog(context, 'Logging out...', 3, AppRoutes.LOGIN);
@@ -261,6 +258,8 @@ class _ProfileViewState extends State<ProfileView> {
                                             Get.find<ProfileController>().confirmNewPIN.clear();
                                           } else if (index == 2) {
                                             showSelectLanguageDialog(context);
+                                          } else if (index == 9) {
+                                            showLogoutDialog(context);
                                           } else {
                                             Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
                                                 backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
@@ -336,7 +335,7 @@ class _ProfileViewState extends State<ProfileView> {
                                     ),
                                   );
                                 }),
-                            Options(profileScreenOptions)
+                            // Options(profileScreenOptions)
                           ],
                         ))
                   ],
@@ -348,7 +347,6 @@ class _ProfileViewState extends State<ProfileView> {
 
   void showSelectLanguageDialog(BuildContext context) {
     List<bool> selectedLanguages = [false, false]; // Index 0: English, Index 1: French
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -434,14 +432,47 @@ class _ProfileViewState extends State<ProfileView> {
         });
       },
     ).then((value) {
-      // log('value $value');
-      // String enLang = Get.find<StorageServices>().storage.read('language');
-      // log('value $enLang');
-      // Get.updateLocale(Locale(enLang.toLowerCase()));
-      // AppGlobal.isSelectFrench = enLang == "FR" ? true : false;
-      // AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
       Get.find<BottomNavController>().getDataFromStorage();
       getDataFromProfileOptions();
     });
+  }
+
+  void showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          insetPadding: const EdgeInsets.all(12), // Outside Padding
+          contentPadding: const EdgeInsets.all(12), // Content Padding
+          title: Text(LocaleKeys.strLogout.tr),
+          content: SizedBox(
+            height: 20,
+            width: MediaQuery.of(context).size.width - 60,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 12.0),
+              child: Text(LocaleKeys.strLogoutWarning.tr),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                await storage.remove('msisdn').then((value) {
+                  storage.remove('isPrivacyCheck');
+                  storage.remove('isLoginSuccessClick');
+                  ProgressAlertDialog.showALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
+                });
+              },
+              child: Text(LocaleKeys.strYes.tr),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text(LocaleKeys.strNo.tr),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

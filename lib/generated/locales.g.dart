@@ -66,6 +66,9 @@ class LocaleKeys {
   static const strSupportHelpDesc = 'strSupportHelpDesc';
   static const strCredit = 'strCredit';
   static const strCreditDesc = 'strCreditDesc';
+  static const strLogout = 'strLogout';
+  static const strLogoutDesc = 'strLogoutDesc';
+  static const strLogoutWarning = 'strLogoutWarning';
   static const strSelectLanguage = 'strSelectLanguage';
   static const strPrivacyPolicy = 'strPrivacyPolicy';
   static const strDecline = 'strDecline';
@@ -76,7 +79,7 @@ class LocaleKeys {
   static const strAgenciesNearby = 'strAgenciesNearby';
   static const strAgenciesNearbyDesc = 'strAgenciesNearbyDesc';
   static const strMyFlooz = 'strMyFlooz';
-  static const strLogout = 'strLogout';
+  static const strLogoutMessage = 'strLogoutMessage';
   static const strEnglish = 'strEnglish';
   static const strFrench = 'strFrench';
   static const strSkip = 'strSkip';
@@ -84,6 +87,41 @@ class LocaleKeys {
   static const strSoundsGood = 'strSoundsGood';
   static const strGetStarted = 'strGetStarted';
   static const strPleaseWiat = 'strPleaseWiat';
+  static const strClose = 'strClose';
+  static const strLoginSuccessMessage = 'strLoginSuccessMessage';
+  static const strMoneyTransferTitle = 'strMoneyTransferTitle';
+  static const strNationalTransfer = 'strNationalTransfer';
+  static const strInternationalTransfer = 'strInternationalTransfer';
+  static const strReversal = 'strReversal';
+  static const strWalletSend = 'strWalletSend';
+  static const strWalletSendDesc = 'strWalletSendDesc';
+  static const strWalletPay = 'strWalletPay';
+  static const strWalletPayDesc = 'strWalletPayDesc';
+  static const strWalletWithdrawal = 'strWalletWithdrawal';
+  static const strWalletWithdrawalDesc = 'strWalletWithdrawalDesc';
+  static const strWalletRechange = 'strWalletRechange';
+  static const strWalletRechangeDesc = 'strWalletRechangeDesc';
+  static const strYes = 'strYes';
+  static const strNo = 'strNo';
+  static const strTransferHeader = 'strTransferHeader';
+  static const strTransferHeaderDesc = 'strTransferHeaderDesc';
+  static const strTransferInfo = 'strTransferInfo';
+  static const strTransferSummary = 'strTransferSummary';
+  static const strTransferBeneficiary = 'strTransferBeneficiary';
+  static const strTransferFirstName = 'strTransferFirstName';
+  static const strTransferNumber = 'strTransferNumber';
+  static const strTransferDetails = 'strTransferDetails';
+  static const strTransferAmount = 'strTransferAmount';
+  static const strTransferRecipientNumber = 'strTransferRecipientNumber';
+  static const strInvalidNumber = 'strInvalidNumber';
+  static const strEnterAmount = 'strEnterAmount';
+  static const strAmountSend = 'strAmountSend';
+  static const strAmountSendWarning = 'strAmountSendWarning';
+  static const strCodeSecret = 'strCodeSecret';
+  static const strCodeSecretEmpty = 'strCodeSecretEmpty';
+  static const strCodeSecretInvalid = 'strCodeSecretInvalid';
+  static const strSessionExpired = 'strSessionExpired';
+  static const strvalidate = 'strvalidate';
 }
 
 class Locales {
@@ -147,6 +185,9 @@ class Locales {
     'strSupportHelpDesc': 'Contact customer service.',
     'strCredit': 'Credit',
     'strCreditDesc': 'About this app.',
+    'strLogout': 'Logout',
+    'strLogoutDesc': 'Logout from the app.',
+    'strLogoutWarning': 'Are you sure you want to logout?',
     'strSelectLanguage': 'Select Language',
     'strPrivacyPolicy': 'Privacy Policy',
     'strDecline': 'Decline',
@@ -158,7 +199,7 @@ class Locales {
     'strAgenciesNearbyDesc':
         'Easily go to one of our nearest agencies. We are waiting for you there.',
     'strMyFlooz': 'My Flooz.',
-    'strLogout': 'Logging out...',
+    'strLogoutMessage': 'Logging out...',
     'strEnglish': 'English',
     'strFrench': 'French',
     'strSkip': 'Skip.',
@@ -166,6 +207,43 @@ class Locales {
     'strSoundsGood': 'Sound good',
     'strGetStarted': 'Get started.',
     'strPleaseWiat': 'Please wait...',
+    'strClose': 'Close',
+    'strLoginSuccessMessage': 'You have successfully configured your counter',
+    'strMoneyTransferTitle': 'Money transfer',
+    'strNationalTransfer': 'National Transfer',
+    'strInternationalTransfer': 'International Transfer',
+    'strReversal': 'Reversal',
+    'strWalletSend': 'Send',
+    'strWalletSendDesc': 'Send money',
+    'strWalletPay': 'Pay',
+    'strWalletPayDesc': 'Pay your bills',
+    'strWalletWithdrawal': 'Withdrawal',
+    'strWalletWithdrawalDesc': 'Cashout',
+    'strWalletRechange': 'Recharge',
+    'strWalletRechangeDesc': 'Top up your wallet',
+    'strYes': 'Yes',
+    'strNo': 'No',
+    'strTransferHeader': 'Simple and Fast',
+    'strTransferHeaderDesc':
+        'Please enter the recipient\'s number or choose their contact from your phone book.',
+    'strTransferInfo': 'You will send money to ',
+    'strTransferSummary': 'Summary',
+    'strTransferBeneficiary': 'Beneficiary',
+    'strTransferFirstName': 'First name',
+    'strTransferNumber': 'Number',
+    'strTransferDetails': 'Details',
+    'strTransferAmount': 'Amount',
+    'strTransferRecipientNumber': 'Recipient number',
+    'strInvalidNumber': 'Invalid Number',
+    'strEnterAmount': 'Enter the Amount',
+    'strAmountSend': 'Amount to send',
+    'strAmountSendWarning': 'Please enter the amount*',
+    'strCodeSecret': 'Your secret code',
+    'strCodeSecretEmpty': 'The secret code must not be empty',
+    'strCodeSecretInvalid': 'Invalid code. Please try again',
+    'strSessionExpired':
+        'The session has expired. You have been disconnected!...',
+    'strvalidate': 'Validate',
   };
   static const fr = {
     'strSignIn': 'Se connecter',
@@ -227,6 +305,9 @@ class Locales {
     'strSupportHelpDesc': 'Contactez le service client.',
     'strCredit': 'Credit',
     'strCreditDesc': 'A propos de cette application.',
+    'strLogout': 'Se déconnecter',
+    'strLogoutDesc': 'Se déconnecter de l\'application.',
+    'strLogoutWarning': 'Êtes-vous sûr de vouloir vous déconnecter?',
     'strSelectLanguage': 'Sélect Language',
     'strPrivacyPolicy': 'Politique de confidentialite',
     'strDecline': 'Je refuse',
@@ -239,7 +320,7 @@ class Locales {
     'strAgenciesNearbyDesc':
         'Rendez-vous facilement dans l"une de nos agences la plus proche. Nous vous y attendons.',
     'strMyFlooz': 'Mon Flooz.',
-    'strLogout': 'Déconnecter...',
+    'strLogoutMessage': 'Déconnecter...',
     'strEnglish': 'Anglais',
     'strFrench': 'Français',
     'strSkip': 'Sauter.',
@@ -247,5 +328,41 @@ class Locales {
     'strSoundsGood': 'Ça sonne bien !',
     'strGetStarted': 'Get Commencer.',
     'strPleaseWiat': 'S\'il vous plaît, attendez...',
+    'strClose': 'Fermer',
+    'strLoginSuccessMessage': 'Vouz avez configurer votre comtre avec succes',
+    'strMoneyTransferTitle': 'Transfert d\'argent',
+    'strNationalTransfer': 'Transfert National',
+    'strInternationalTransfer': 'Transfert International',
+    'strReversal': 'Rappel',
+    'strWalletSend': 'Send',
+    'strWalletSendDesc': 'Envoyer de l\'argent',
+    'strWalletPay': 'Pay',
+    'strWalletPayDesc': 'Paie tes factures',
+    'strWalletWithdrawal': 'Withdrawal',
+    'strWalletWithdrawalDesc': 'Retrait',
+    'strWalletRechange': 'Recharge',
+    'strWalletRechangeDesc': 'Rechargez votre portefeuille',
+    'strYes': 'Oui',
+    'strNo': 'Non',
+    'strTransferHeader': 'Simple et Rapide',
+    'strTransferHeaderDesc':
+        'euillez saisir le numéro du destinataire ou choisissez son contact dans votre répertoire téléphonique.',
+    'strTransferInfo': 'Vous allez envoyer de l’argent à ',
+    'strTransferSummary': 'Récapitulatif',
+    'strTransferBeneficiary': 'Bénéficiaire',
+    'strTransferFirstName': 'Prénom',
+    'strTransferNumber': 'Numéro',
+    'strTransferDetails': 'Détails',
+    'strTransferAmount': 'Montant',
+    'strTransferRecipientNumber': 'Numéro du destinataire',
+    'strInvalidNumber': 'Numero Invalide',
+    'strEnterAmount': 'Saisir le montant',
+    'strAmountSend': 'Montant à envoyer',
+    'strAmountSendWarning': 'Veuillez saisir le montant*',
+    'strCodeSecret': 'Votre code secret',
+    'strCodeSecretEmpty': 'Le code secret ne doit pas être vide',
+    'strCodeSecretInvalid': 'Code invalide. S\'il vous plaît essayer à nouveau',
+    'strSessionExpired': 'La session a expiré. Vous avez été déconnecté!...',
+    'strvalidate': 'Valider',
   };
 }

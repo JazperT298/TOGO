@@ -284,10 +284,12 @@ class _QuickActions extends StatelessWidget {
         Get.toNamed(AppRoutes.WITHDRAWAL);
         break;
       case WalletActions.pay:
-        Get.snackbar("Message", "À venir", backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+        Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+            backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
         break;
       case WalletActions.topUp:
-        Get.snackbar("Message", "À venir", backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+        Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+            backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
 
         // showModalBottomSheet(
         //     context: context,

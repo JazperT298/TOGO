@@ -53,7 +53,8 @@ class LoginController extends GetxController {
         }
         if (decodedData['extended-data']['issubscribed'] == true && decodedData['extended-data']['othernet'] == false) {
           // VIA SMS
-          encryptionExample(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
+          // encryptionExample(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
+          await otpRequestViaApi(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
         } else {
           Get.back();
           Get.snackbar("Message", "Numero Invalide", backgroundColor: Colors.lightBlue, colorText: Colors.white);
@@ -147,9 +148,7 @@ class LoginController extends GetxController {
       incrementedCode = 65; // Wrap around to 'A'
     }
     String incrementedLetter = String.fromCharCode(incrementedCode);
-    Get.find<StorageServices>()
-        .storage
-        .write('incrementedLetter', incrementedLetter);
+    Get.find<StorageServices>().storage.write('incrementedLetter', incrementedLetter);
     log("Random letter: $incrementedLetter");
     String data = '${incrementedLetter}EULA GETOTP ANDROID $msisdn';
     log(data);

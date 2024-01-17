@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:xml/xml.dart' as xml;
@@ -31,7 +32,7 @@ class HomeController extends GetxController {
   }
 
   static void verifyAndroid({required String msisdn, required String version}) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, "Chargement..");
+    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));

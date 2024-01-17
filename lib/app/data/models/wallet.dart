@@ -1,6 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flukit_icons/flukit_icons.dart';
+import 'package:get/get.dart';
+import 'package:ibank/generated/locales.g.dart';
 
 class Wallet {
   final int id, userId;
@@ -54,42 +56,46 @@ class WalletAction {
     return [
       /// Top up action.
       /// Used to refund wallet.
-      WalletAction(name: 'Recharge', description: 'Top up your wallet', icon: FluIcons.plus, children: <WalletAction>[
-        WalletAction(
-          icon: FluIcons.cards,
-          name: 'Ecobank',
-          description: 'Utilisez votre carte de credit pour recharger votre compte flooz...',
-        ),
-        WalletAction(
-          icon: FluIcons.bank,
-          name: 'Banque Atlantique',
-          description: 'Rechargez depuis votre compte bancaire.',
-        ),
-        WalletAction(
-          icon: FluIcons.people,
-          name: 'La Poste',
-          description: 'Lancez une tontine ou une collection',
-        ),
-        WalletAction(
-          icon: FluIcons.routing,
-          name: 'Collectes et tontine',
-          description: 'Effectuez un depôt en physique.',
-        ),
-        WalletAction(
-          icon: FluIcons.cards,
-          name: 'Agences à proximité',
-          description: 'Utilisez votre carte de credit pour recharger votre compte flooz...',
-        ),
-      ]),
+      WalletAction(
+          name: LocaleKeys.strWalletRechange.tr,
+          description: LocaleKeys.strWalletRechangeDesc.tr,
+          icon: FluIcons.plus,
+          children: <WalletAction>[
+            WalletAction(
+              icon: FluIcons.cards,
+              name: 'Ecobank',
+              description: 'Utilisez votre carte de credit pour recharger votre compte flooz...',
+            ),
+            WalletAction(
+              icon: FluIcons.bank,
+              name: 'Banque Atlantique',
+              description: 'Rechargez depuis votre compte bancaire.',
+            ),
+            WalletAction(
+              icon: FluIcons.people,
+              name: 'La Poste',
+              description: 'Lancez une tontine ou une collection',
+            ),
+            WalletAction(
+              icon: FluIcons.routing,
+              name: 'Collectes et tontine',
+              description: 'Effectuez un depôt en physique.',
+            ),
+            WalletAction(
+              icon: FluIcons.cards,
+              name: 'Agences à proximité',
+              description: 'Utilisez votre carte de credit pour recharger votre compte flooz...',
+            ),
+          ]),
 
       /// Send action.
       /// Used to send money to another user or another merchant.
-      WalletAction(name: 'Envoi', description: 'Send money', icon: FluIcons.moneySend),
+      WalletAction(name: LocaleKeys.strWalletSend.tr, description: LocaleKeys.strWalletSendDesc.tr, icon: FluIcons.moneySend),
 
       /// Payment action.
       /// Used for merchant payments.
       /// this concern only merchant that are partners & saved in api database.
-      WalletAction(name: 'paiement', description: 'Pay your bills', icon: FluIcons.barcode, children: [
+      WalletAction(name: LocaleKeys.strWalletPay.tr, description: LocaleKeys.strWalletPayDesc.tr, icon: FluIcons.barcode, children: [
         WalletAction(
           icon: FluIcons.monitorMobbile,
           name: 'Canal +',
@@ -124,7 +130,7 @@ class WalletAction {
 
       /// Cashout action.
       /// Used to retrieve money from wallet.
-      WalletAction(name: 'Retrait', description: 'Cashout', icon: FluIcons.import),
+      WalletAction(name: LocaleKeys.strWalletWithdrawal.tr, description: LocaleKeys.strWalletWithdrawalDesc.tr, icon: FluIcons.import),
     ];
   }
 }
@@ -148,13 +154,13 @@ extension WA on WalletActions {
   String get text {
     switch (this) {
       case WalletActions.send:
-        return "Envoi";
+        return LocaleKeys.strWalletSend.tr;
       case WalletActions.pay:
-        return "Payer";
+        return LocaleKeys.strWalletPay.tr;
       case WalletActions.withdraw:
-        return "Retrait";
+        return LocaleKeys.strWalletWithdrawal.tr;
       case WalletActions.topUp:
-        return "Recharger";
+        return LocaleKeys.strWalletRechange.tr;
     }
   }
 }

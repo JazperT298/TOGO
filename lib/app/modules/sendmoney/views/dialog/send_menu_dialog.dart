@@ -8,6 +8,7 @@ import 'package:ibank/app/components/line_separator.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_international_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_national_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:sizer/sizer.dart';
@@ -20,7 +21,7 @@ class SendMenuDialog {
       builder: (BuildContext context) {
         // return alert dialog object
         return AlertDialog(
-          title: Text("Transfert d'argent"),
+          title: Text(LocaleKeys.strMoneyTransferTitle.tr),
           content: Container(
             height: 100.0,
             child: Column(
@@ -36,16 +37,16 @@ class SendMenuDialog {
                         isScrollControlled: true,
                         context: context,
                         builder: (context) => _ModalBottomSheet(
-                              sendType: 'Transfert National',
+                              sendType: LocaleKeys.strNationalTransfer.tr,
                               siOTPPage: AppGlobal.siOTPPage,
                               child: EnvoiModalBottomSheet(
-                                sendType: 'Transfert National',
+                                sendType: LocaleKeys.strNationalTransfer.tr,
                               ),
                             ));
                   },
                   child: Container(
                     height: 20,
-                    child: Text('Transfert National'),
+                    child: Text(LocaleKeys.strNationalTransfer.tr),
                   ),
                 ),
                 SizedBox(
@@ -60,16 +61,16 @@ class SendMenuDialog {
                         isScrollControlled: true,
                         context: context,
                         builder: (context) => _ModalBottomSheet(
-                              sendType: 'Transfert International',
+                              sendType: LocaleKeys.strInternationalTransfer.tr,
                               siOTPPage: AppGlobal.siOTPPage,
                               child: EnvoiInternationalBottomSheet(
-                                sendType: 'Transfert International',
+                                sendType: LocaleKeys.strInternationalTransfer.tr,
                               ),
                             ));
                   },
                   child: Container(
                     height: 20,
-                    child: Text('Transfert International'),
+                    child: Text(LocaleKeys.strInternationalTransfer.tr),
                   ),
                 ),
                 SizedBox(
@@ -78,12 +79,12 @@ class SendMenuDialog {
                 GestureDetector(
                   onTap: () {
                     Get.back();
-                    Get.snackbar("Message", "À venir",
+                    Get.snackbar("Message", LocaleKeys.strLoading.tr,
                         backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
                   },
                   child: Container(
                     height: 20,
-                    child: Text('Rappel'),
+                    child: Text(LocaleKeys.strReversal.tr),
                   ),
                 ),
               ],

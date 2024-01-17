@@ -165,7 +165,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
           ),
         ),
         Text(
-          'Simple et Rapide',
+          LocaleKeys.strTransferHeader.tr,
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
@@ -175,7 +175,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         Padding(
           padding: EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
-            'Veuillez saisir le numéro du destinataire ou choisissez son contact dans votre répertoire téléphonique.',
+            LocaleKeys.strTransferHeaderDesc.tr,
             style: TextStyle(
               fontSize: 10.sp,
             ),
@@ -192,7 +192,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Envoi'.toUpperCase(),
+          LocaleKeys.strWalletSend.tr.toUpperCase(),
           style: TextStyle(
             color: context.colorScheme.secondary,
             fontWeight: FontWeight.w600,
@@ -204,7 +204,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
           TextSpan(
             children: [
               TextSpan(
-                text: 'Vous allez envoyer de l’argent à ',
+                text: LocaleKeys.strTransferInfo.tr, // 'Vous allez envoyer de l’argent à ',
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
@@ -233,7 +233,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Récapitulatif'.toUpperCase(),
+          LocaleKeys.strTransferSummary.tr.toUpperCase(),
           style: TextStyle(
             color: context.colorScheme.secondary,
             fontWeight: FontWeight.w600,
@@ -251,7 +251,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         ),
         const SizedBox(height: 24),
         Text(
-          'Bénéficiaire'.toUpperCase(),
+          LocaleKeys.strTransferBeneficiary.tr.toUpperCase(),
           style: TextStyle(
             fontSize: 11.sp,
             color: context.colorScheme.onSurface,
@@ -265,7 +265,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
           children: [
             Expanded(
               child: Text(
-                'Numéro',
+                LocaleKeys.strTransferNumber.tr, //       'Numéro',
                 style: TextStyle(fontSize: 14.sp, color: Colors.grey),
               ),
             ),
@@ -282,7 +282,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         ),
         const SizedBox(height: 24),
         Text(
-          'DETAILS'.toUpperCase(),
+          LocaleKeys.strTransferDetails.tr.toUpperCase(),
           style: TextStyle(
             fontSize: 14.sp,
             color: context.colorScheme.onSurface,
@@ -294,7 +294,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
           children: [
             Expanded(
               child: Text(
-                'Montant',
+                LocaleKeys.strTransferAmount.tr,
                 style: TextStyle(fontSize: 14.sp, color: Colors.grey),
               ),
             ),
@@ -331,7 +331,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
               children: [
                 Expanded(
                   child: FluTextField(
-                    hint: "Numéro du destinataire",
+                    hint: LocaleKeys.strTransferRecipientNumber.tr, // "Numéro du destinataire",
                     inputController: numberEditingCobntroller,
                     hintStyle: TextStyle(fontSize: 11.sp),
                     textStyle: TextStyle(fontSize: 11.sp),
@@ -390,7 +390,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     },
                     onFieldSubmitted: (p0) {
                       if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.length < 11) {
-                        Get.snackbar("Message", 'Numero Invalide', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       } else if (numberEditingCobntroller.text.isNotEmpty || numberEditingCobntroller.text.contains('99 99 02 28')) {
                         // AppGlobal.isEditedTransferNational = true;
                         // AppGlobal.isSubscribedTransferNational = false;
@@ -417,7 +417,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                 ),
                 GestureDetector(
                   onTap: () async {
-                    Get.snackbar("Message", "À venir",
+                    Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
                         backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
                     // showModalBottomSheet(
                     //     isScrollControlled: true,
@@ -454,7 +454,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      'Phone number is required*',
+                      LocaleKeys.strPhoneNumberRequired.tr,
                       style: TextStyle(
                         fontSize: 11.sp,
                         color: context.colorScheme.secondary,
@@ -466,7 +466,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
             Visibility(
               visible: isKeyboardVisible ? false : true,
               child: FluButton.text(
-                'Saisir le montant',
+                LocaleKeys.strEnterAmount.tr, //   'Saisir le montant',
                 suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
@@ -520,7 +520,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
             const SizedBox(height: 24),
             FluTextField(
               inputController: amountEditingController,
-              hint: "Montant à envoyer",
+              hint: LocaleKeys.strAmountSend.tr, // "Montant à envoyer",
               hintStyle: TextStyle(fontSize: 11.sp),
               textStyle: TextStyle(fontSize: 11.sp),
               height: 50,
@@ -548,7 +548,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      'Veuillez saisir le montant*',
+                      LocaleKeys.strAmountSendWarning.tr, //   'Veuillez saisir le montant*',
                       style: TextStyle(
                         fontSize: 11.sp,
                         color: context.colorScheme.secondary,
@@ -560,7 +560,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
             Visibility(
               visible: isKeyboardVisible ? false : true,
               child: FluButton.text(
-                'Continuer',
+                LocaleKeys.strContinue.tr, //    'Continuer',
                 suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
@@ -613,7 +613,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
             const SizedBox(height: 24),
             FluTextField(
                 inputController: codeEditingController,
-                hint: "Votre code secret",
+                hint: LocaleKeys.strCodeSecret.tr, // "Votre code secret",
                 height: 50,
                 cornerRadius: 15,
                 textAlign: TextAlign.center,
@@ -628,9 +628,9 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                 },
                 onFieldSubmitted: (p0) async {
                   if (codeEditingController.text.isEmpty) {
-                    showToast(context, 'Le code secret ne doit pas être vide');
+                    showToast(context, LocaleKeys.strCodeSecretEmpty.tr);
                     isInvalidCode = true;
-                    invalidCodeString = "Le code secret ne doit pas être vide";
+                    invalidCodeString = LocaleKeys.strCodeSecretEmpty.tr;
                     // } else if (!codeEditingController.text.trim().contains('4512')) {
                     //   showDialog(
                     //     context: context,
@@ -669,10 +669,10 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                           content: Row(
                             // mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
+                            children: [
                               CircularProgressIndicator(),
                               SizedBox(width: 16.0),
-                              Text("S'il vous plaît, attendez..."),
+                              Text(LocaleKeys.strPleaseWiat.tr),
                             ],
                           ),
                         );
@@ -710,14 +710,14 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
             Visibility(
               visible: isKeyboardVisible ? false : true,
               child: FluButton.text(
-                'Valider',
+                LocaleKeys.strvalidate.tr,
                 suffixIcon: FluIcons.checkCircleUnicon,
                 iconStrokeWidth: 1.8,
                 onPressed: () async {
                   if (codeEditingController.text.isEmpty) {
-                    showToast(context, 'Le code secret ne doit pas être vide');
+                    showToast(context, LocaleKeys.strCodeSecretEmpty.tr);
                     isInvalidCode = true;
-                    invalidCodeString = "Le code secret ne doit pas être vide";
+                    invalidCodeString = LocaleKeys.strCodeSecretEmpty.tr;
                     // } else if (!codeEditingController.text.trim().contains('4512')) {
                     //   showDialog(
                     //     context: context,
@@ -753,14 +753,14 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                       context: context,
                       barrierDismissible: false,
                       builder: (BuildContext context) {
-                        return const AlertDialog(
+                        return AlertDialog(
                           content: Row(
                             // mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               CircularProgressIndicator(),
                               SizedBox(width: 16.0),
-                              Text("S'il vous plaît, attendez..."),
+                              Text(LocaleKeys.strPleaseWiat.tr),
                             ],
                           ),
                         );
@@ -970,9 +970,9 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
           await Future.delayed(Duration(seconds: 1), () {});
           await SharedPrefService.logoutUserData(false, '').then((value) {
-            ProgressAlertDialog.showALoadingDialog(Get.context!, 'Déconnecter...', 3, AppRoutes.LOGIN);
+            ProgressAlertDialog.showALoadingDialog(Get.context!, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
           });
-          Get.snackbar("Message", "La session a expiré. Vous avez été déconnecté!...",
+          Get.snackbar("Message", LocaleKeys.strSessionExpired.tr,
               backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: Duration(seconds: 5));
         }
       } else {
@@ -1070,7 +1070,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         amountEditingController.clear();
         codeEditingController.clear();
         // SqlHelper.setTransacHistory("-1", jsonString);
-        Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: "Transfert International");
+        Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: LocaleKeys.strInternationalTransfer);
         showMessageDialog(message: jsonString);
       } else {
         numberEditingCobntroller.clear();
