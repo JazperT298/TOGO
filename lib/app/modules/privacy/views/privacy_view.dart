@@ -6,6 +6,7 @@ import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/privacy/controller/privacy_controller.dart';
 import 'package:flukit/flukit.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
@@ -36,7 +37,7 @@ class PrivacyView extends GetView<PrivacyController> {
                       children: [
                         const SizedBox(height: 35),
                         Text(
-                          'Politique de confidentialite'.toUpperCase(),
+                          LocaleKeys.strPrivacyPolicy.tr.toUpperCase(),
                           style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w500, color: context.colorScheme.primary),
                         ),
                         const SizedBox(height: 3),
@@ -99,11 +100,11 @@ class PrivacyView extends GetView<PrivacyController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           FluButton.text(
-                            'Je refuse',
+                            LocaleKeys.strDecline.tr,
                             iconStrokeWidth: 1.8,
                             onPressed: () {
                               // Get.find<StorageServices>().isPrivacyCheck(isClick: false);
-                              print('Je refuse');
+                              showWarningDialog(context);
                             },
                             height: 5.8.h,
                             cornerRadius: UISettings.minButtonCornerRadius,
@@ -112,7 +113,7 @@ class PrivacyView extends GetView<PrivacyController> {
                             textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge, color: Color(0xFFFB6404)),
                           ),
                           FluButton.text(
-                            'J’accepte',
+                            LocaleKeys.strAccept.tr,
                             iconStrokeWidth: 1.8,
                             onPressed: () {
                               Get.find<StorageServices>().isPrivacyCheck(isPrivacyCheck: true);
@@ -147,6 +148,27 @@ class PrivacyView extends GetView<PrivacyController> {
       //   color: Colors.green,
       // ),
       // Positioned(bottom: 0, left: 0, right: 0, child: Container(height: 100, width: double.infinity, color: Colors.red))
+    );
+  }
+
+  void showWarningDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(LocaleKeys.strWarning.tr),
+          content: Text(LocaleKeys.strWarningMessage.tr),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.find<StorageServices>().isPrivacyCheck(isPrivacyCheck: true);
+                Get.offAllNamed(AppRoutes.LOGINSUCCESS);
+              },
+              child: Text(LocaleKeys.strOk.tr),
+            ),
+          ],
+        );
+      },
     );
   }
 }

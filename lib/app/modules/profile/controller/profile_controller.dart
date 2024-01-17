@@ -204,6 +204,16 @@ class ProfileController extends GetxController {
   void onInit() {
     log('MSISDN ${AppGlobal.MSISDN}');
     verifyGetProfile(msidsn: AppGlobal.MSISDN, token: AppGlobal.TOKEN, message: 'VRFY GETPROFILE F', sendsms: 'false');
+    getLanguage();
     super.onInit();
+  }
+
+  void getLanguage() {
+    isLoadingProfile(true);
+    String enLang = Get.find<StorageServices>().storage.read('language');
+    Get.updateLocale(Locale(enLang.toLowerCase()));
+    AppGlobal.isSelectFrench = enLang == "FR" ? true : false;
+    AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
+    isLoadingProfile(false);
   }
 }

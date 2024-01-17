@@ -1,8 +1,16 @@
+// ignore_for_file: avoid_print
+
+import 'dart:developer';
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/data/local/getstorage_services.dart';
+import 'package:ibank/app/modules/bottomnav/controller/bottomnav_controller.dart';
 import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/generated/locales.g.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 
 class FluOption {
   final String title;
@@ -61,22 +69,20 @@ class Options extends StatelessWidget {
         return FluButton(
           onPressed: option.onPressed ??
               () {
-                if (options[index].title == 'Informations personelles.') {
-                  Get.find<ProfileController>().selectedRoute.value =
-                      "Informations personelles.";
+                if (index == 0) {
+                  Get.find<ProfileController>().selectedRoute.value = LocaleKeys.strPersonalInfo.tr;
                   Get.toNamed(AppRoutes.PROFILEOTP);
-                } else if (options[index].title == 'Changer de pass') {
-                  Get.find<ProfileController>().selectedRoute.value =
-                      "Changer de pass";
+                } else if (index == 1) {
+                  Get.find<ProfileController>().selectedRoute.value = LocaleKeys.strChangePass.tr;
                   Get.toNamed(AppRoutes.PROFILECHANGESPASSWORD);
                   Get.find<ProfileController>().oldPIN.clear();
                   Get.find<ProfileController>().newPIN.clear();
                   Get.find<ProfileController>().confirmNewPIN.clear();
+                } else if (index == 2) {
+                  showSelectLanguageDialog(context);
                 } else {
                   Get.snackbar("Message", "À venir",
-                      backgroundColor: Colors.lightBlue,
-                      colorText: Colors.white,
-                      duration: const Duration(seconds: 3));
+                      backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
                 }
               },
           backgroundColor: context.colorScheme.background,
@@ -99,60 +105,45 @@ class Options extends StatelessWidget {
                             strokeWidth: 1.5,
                             value: .25,
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              (isLogout
-                                      ? Colors.red
-                                      : context.colorScheme.primary)
-                                  .withOpacity(.1),
+                              (isLogout ? Colors.red : context.colorScheme.primary).withOpacity(.1),
                             ),
                           ),
                         )),
                     Container(
                       height: itemSize,
                       width: itemSize,
-                      decoration: BoxDecoration(
-                          color: (isLogout
-                                  ? Colors.red
-                                  : context.colorScheme.primary)
-                              .withOpacity(.045),
-                          shape: BoxShape.circle),
+                      decoration:
+                          BoxDecoration(color: (isLogout ? Colors.red : context.colorScheme.primary).withOpacity(.045), shape: BoxShape.circle),
                       child: FluIcon(
                         option.icon!,
                         size: 24,
                         strokeWidth: 1.6,
-                        color: isLogout
-                            ? Colors.red
-                            : context.colorScheme.onSurface,
+                        color: isLogout ? Colors.red : context.colorScheme.onSurface,
                       ),
                     ),
                   ],
                 ),
               ),
               Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                    Text(
-                      option.title,
-                      style: TextStyle(
-                        fontSize: M3FontSizes.bodyLarge,
-                        fontWeight: FontWeight.bold,
-                        color: isLogout
-                            ? Colors.red
-                            : context.colorScheme.onBackground,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      option.description!,
-                      style: TextStyle(
-                        color: isLogout
-                            ? Colors.red
-                            : context.colorScheme.onBackground.withOpacity(.75),
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ])),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(
+                  option.title,
+                  style: TextStyle(
+                    fontSize: M3FontSizes.bodyLarge,
+                    fontWeight: FontWeight.bold,
+                    color: isLogout ? Colors.red : context.colorScheme.onBackground,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  option.description!,
+                  style: TextStyle(
+                    color: isLogout ? Colors.red : context.colorScheme.onBackground.withOpacity(.75),
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ])),
               const SizedBox(width: 15),
               FluIcon(
                 FluIcons.arrowRight1,
@@ -163,4 +154,82 @@ class Options extends StatelessWidget {
           ),
         );
       });
+
+  void showSelectLanguageDialog(BuildContext context) {
+    List<bool> selectedLanguages = [false, false]; // Index 0: English, Index 1: French
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            title: Text(LocaleKeys.strSelectLanguage.tr),
+            content: SizedBox(
+              height: 100,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('English'),
+                      Checkbox(
+                        value: AppGlobal.isSelectEnglish,
+                        onChanged: (value) {
+                          // English checkbox
+                          setState(() {
+                            selectedLanguages[1] = false;
+                            AppGlobal.isSelectEnglish = true;
+                            AppGlobal.isSelectFrench = false;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('French'),
+                      Checkbox(
+                        value: AppGlobal.isSelectFrench,
+                        onChanged: (value) {
+                          // French checkbox
+                          setState(() {
+                            AppGlobal.isSelectEnglish = false;
+                            AppGlobal.isSelectFrench = true;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: AppGlobal.isSelectEnglish == false && AppGlobal.isSelectFrench == false
+                    ? null
+                    : () {
+                        if (AppGlobal.isSelectFrench == true && AppGlobal.isSelectEnglish == false) {
+                          Get.find<StorageServices>().saveLanguage(language: 'FR');
+                        } else {
+                          Get.find<StorageServices>().saveLanguage(language: 'EN');
+                        }
+                        Navigator.pop(context);
+                      },
+                child: const Text('Select'),
+              ),
+            ],
+          );
+        });
+      },
+    ).then((value) {
+      // log('value $value');
+      // String enLang = Get.find<StorageServices>().storage.read('language');
+      // log('value $enLang');
+      // Get.updateLocale(Locale(enLang.toLowerCase()));
+      // AppGlobal.isSelectFrench = enLang == "FR" ? true : false;
+      // AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
+      Get.find<BottomNavController>().getDataFromStorage();
+    });
+  }
 }

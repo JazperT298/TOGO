@@ -11,6 +11,7 @@ import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/core/users.dart';
 import 'package:sizer/sizer.dart';
@@ -20,11 +21,7 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildTitle(BuildContext context, String text, Color color) => Text(
         text.toUpperCase(),
-        style: TextStyle(
-            fontSize: 17.sp,
-            fontWeight: FontWeight.bold,
-            color: color,
-            height: 1.5),
+        style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: color, height: 1.5),
       );
 
   @override
@@ -38,8 +35,7 @@ class HomeView extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.only(
-                    top: 10, bottom: MediaQuery.of(context).size.height * .025),
+                padding: EdgeInsets.only(top: 10, bottom: MediaQuery.of(context).size.height * .025),
                 color: context.colorScheme.primary.withOpacity(.1),
                 child: SafeArea(
                   child: Column(
@@ -67,9 +63,7 @@ class HomeView extends GetView<HomeController> {
                                       outlineThickness: 1.5,
                                       icon: FluIcons.user,
                                       outlineGap: 3,
-                                      outlineColor: [
-                                        context.colorScheme.outlineVariant
-                                      ],
+                                      outlineColor: [context.colorScheme.outlineVariant],
                                       margin: const EdgeInsets.only(right: 10),
                                     ),
                                   ),
@@ -83,29 +77,19 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * .035),
+                            SizedBox(height: MediaQuery.of(context).size.height * .035),
                             Text(
                               Flu.formatDate(DateTime.now()).toUpperCase(),
                               style: TextStyle(fontSize: 12.sp),
                             ),
-                            _buildTitle(
-                                context,
-                                'Votre argent, votre contrôle.'.toUpperCase(),
-                                context.colorScheme.onSurface),
+                            _buildTitle(context, LocaleKeys.strMoneyControl.tr.toUpperCase(), context.colorScheme.onSurface),
                             FluLine(
                               height: 1,
                               width: double.infinity,
                               color: context.colorScheme.surface,
-                              margin: EdgeInsets.symmetric(
-                                      vertical:
-                                          MediaQuery.of(context).size.height *
-                                              .025)
-                                  .copyWith(
+                              margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025).copyWith(
                                 left: MediaQuery.of(context).size.height * .1,
-                                right:
-                                    MediaQuery.of(context).size.height * .015,
+                                right: MediaQuery.of(context).size.height * .015,
                               ),
                             ),
                             const _Card(),
@@ -119,8 +103,7 @@ class HomeView extends GetView<HomeController> {
               ),
               _Favorites(users..shuffle()),
               const Padding(
-                padding:
-                    EdgeInsets.only(right: 20, top: 50, left: 20, bottom: 15),
+                padding: EdgeInsets.only(right: 20, top: 50, left: 20, bottom: 15),
                 child: _PromotionsAndOffers(),
               ),
             ],
@@ -148,9 +131,7 @@ class _CardState extends State<_Card> {
     return Container(
         height: MediaQuery.of(context).size.height * .25,
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-            color: context.colorScheme.primary,
-            borderRadius: BorderRadius.circular(25)),
+        decoration: BoxDecoration(color: context.colorScheme.primary, borderRadius: BorderRadius.circular(25)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -161,7 +142,7 @@ class _CardState extends State<_Card> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'flooz',
+                      LocaleKeys.strFlooz.tr,
                       style: TextStyle(
                         color: context.colorScheme.tertiary,
                         fontWeight: FontWeight.bold,
@@ -195,9 +176,7 @@ class _CardState extends State<_Card> {
                                       ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height *
-                                        0.02),
+                                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
                                 child: Text(
                                   " FCFA",
                                   style: TextStyle(
@@ -228,13 +207,10 @@ class _CardState extends State<_Card> {
                           ),
                           Obx(
                             () => FluButton.icon(
-                              controller.afficherSolde.value == true
-                                  ? FluIcons.eye
-                                  : FluIcons.eyeSlash,
+                              controller.afficherSolde.value == true ? FluIcons.eye : FluIcons.eyeSlash,
                               onPressed: () {
                                 if (controller.afficherSolde.value == true) {
-                                  HomeAlertDialog.showOTPview(
-                                      controller: controller);
+                                  HomeAlertDialog.showOTPview(controller: controller);
                                 } else {
                                   controller.afficherSolde.value = true;
                                 }
@@ -243,8 +219,7 @@ class _CardState extends State<_Card> {
                               },
                               alignment: Alignment.centerRight,
                               backgroundColor: Colors.transparent,
-                              foregroundColor:
-                                  context.colorScheme.onPrimary.withOpacity(.5),
+                              foregroundColor: context.colorScheme.onPrimary.withOpacity(.5),
                               // margin: EdgeInsets.only(bottom: 5),
                             ),
                           ),
@@ -309,16 +284,10 @@ class _QuickActions extends StatelessWidget {
         Get.toNamed(AppRoutes.WITHDRAWAL);
         break;
       case WalletActions.pay:
-        Get.snackbar("Message", "À venir",
-            backgroundColor: Colors.lightBlue,
-            colorText: Colors.white,
-            duration: const Duration(seconds: 3));
+        Get.snackbar("Message", "À venir", backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
         break;
       case WalletActions.topUp:
-        Get.snackbar("Message", "À venir",
-            backgroundColor: Colors.lightBlue,
-            colorText: Colors.white,
-            duration: const Duration(seconds: 3));
+        Get.snackbar("Message", "À venir", backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
 
         // showModalBottomSheet(
         //     context: context,
@@ -353,8 +322,7 @@ class _QuickActions extends StatelessWidget {
               width: 1.5,
               color: context.colorScheme.primary.withOpacity(.1),
             ),
-            margin: EdgeInsets.only(
-                left: WalletActions.values.indexOf(action) == 0 ? 0 : 10),
+            margin: EdgeInsets.only(left: WalletActions.values.indexOf(action) == 0 ? 0 : 10),
             onPressed: () => onAction(context, action),
           );
         },
@@ -371,10 +339,7 @@ class _Favorites extends StatelessWidget {
   void onItemTap([int? index]) {
     // KRouter.noContextPush(index == null ? Routes.newFavorite : Routes.transfer);
     // Get.toNamed(index == null ? AppRoutes.NEWFAV : AppRoutes.TRANSFER);
-    Get.snackbar("Message", "À venir",
-        backgroundColor: Colors.lightBlue,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 3));
+    Get.snackbar("Message", "À venir", backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
   }
 
   @override
@@ -385,28 +350,22 @@ class _Favorites extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: UISettings.pagePadding.copyWith(
-              top: MediaQuery.of(context).size.height * .035,
-              bottom: MediaQuery.of(context).size.height * .035),
+          padding: UISettings.pagePadding.copyWith(top: MediaQuery.of(context).size.height * .035, bottom: MediaQuery.of(context).size.height * .035),
           child: Row(children: [
             Expanded(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'envoi rapide',
+                  LocaleKeys.strRapidCash.tr,
                   style: TextStyle(fontSize: 12.sp),
                 ),
                 const SizedBox(height: 5),
                 Hero(
                   tag: '<title>',
                   child: Text(
-                    'Personne favorites'.toUpperCase(),
-                    style: TextStyle(
-                        fontSize: 17.sp,
-                        fontWeight: FontWeight.bold,
-                        color: context.colorScheme.onSurface,
-                        height: 1.5),
+                    LocaleKeys.strFavoritePeople.tr.toUpperCase(),
+                    style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: context.colorScheme.onSurface, height: 1.5),
                   ),
                 ),
               ],
@@ -447,8 +406,7 @@ class _Favorites extends StatelessWidget {
                         width: itemSize,
                         margin: EdgeInsets.only(left: index == 0 ? 0 : 10),
                         child: Container(
-                          decoration:
-                              const BoxDecoration(shape: BoxShape.circle),
+                          decoration: const BoxDecoration(shape: BoxShape.circle),
                           // child: Center(
                           //   child: Text(
                           //     user.firstName.substring(0, 1),
@@ -494,15 +452,13 @@ class _ServicesModalBottomSheet extends StatefulWidget {
   const _ServicesModalBottomSheet();
 
   @override
-  State<_ServicesModalBottomSheet> createState() =>
-      _ServicesModalBottomSheetState();
+  State<_ServicesModalBottomSheet> createState() => _ServicesModalBottomSheetState();
 }
 
 class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
   final PageController pageController = PageController();
 
-  void toNextStep() => pageController.nextPage(
-      duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
 
   @override
   Widget build(BuildContext context) {
@@ -529,8 +485,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -538,7 +493,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'les offres canalBox',
+          LocaleKeys.strCanalboxOffers.tr,
           style: TextStyle(
             fontFamily: 'neptune',
             color: context.colorScheme.primary,
@@ -555,8 +510,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -580,8 +534,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -674,12 +627,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                   backgroundColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   margin: EdgeInsets.only(top: index == 0 ? 0 : 25),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  border: BorderSide(
-                      width: 1.5,
-                      color:
-                          context.colorScheme.outlineVariant.withOpacity(.5)),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  border: BorderSide(width: 1.5, color: context.colorScheme.outlineVariant.withOpacity(.5)),
                   cornerRadius: 25,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -689,13 +638,11 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Offre start.'),
+                            Text(LocaleKeys.strStartOffer.tr),
                             Text.rich(
                               TextSpan(children: [
                                 const TextSpan(text: '15000'),
-                                TextSpan(
-                                    text: ' F/Mois',
-                                    style: TextStyle(fontSize: 11.sp))
+                                TextSpan(text: ' ${LocaleKeys.strFmonth.tr}', style: TextStyle(fontSize: 11.sp))
                               ]),
                               style: TextStyle(
                                 fontSize: 11.sp,
@@ -734,18 +681,13 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                 final option = action.children[index];
 
                 return FluButton(
-                  onPressed: () => Get.toNamed(AppRoutes
-                      .BOTTOMNAV), //KRouter.to(context, Routes.subscriptionTransferConfirmation),
+                  onPressed: () => Get.toNamed(AppRoutes.BOTTOMNAV), //KRouter.to(context, Routes.subscriptionTransferConfirmation),
                   width: double.infinity,
                   backgroundColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   margin: EdgeInsets.only(top: index == 0 ? 0 : 10),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  border: BorderSide(
-                      width: 1.5,
-                      color:
-                          context.colorScheme.outlineVariant.withOpacity(.5)),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  border: BorderSide(width: 1.5, color: context.colorScheme.outlineVariant.withOpacity(.5)),
                   cornerRadius: 25,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -755,7 +697,7 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Maison $index'),
+                            Text('${LocaleKeys.strHome.tr} $index'),
                             Text(
                               '0085764',
                               style: TextStyle(
@@ -776,10 +718,9 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                 );
               }),
           FluButton.text(
-            "Ajouter une box",
+            LocaleKeys.strAddABox.tr,
             prefixIcon: FluIcons.add,
-            margin:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * .015),
+            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .015),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           ),
         ],
@@ -804,8 +745,7 @@ class _PromotionsAndOffers extends StatelessWidget {
   const _PromotionsAndOffers({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  Widget build(BuildContext context) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -833,7 +773,7 @@ class _PromotionsAndOffers extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Juste pour vous.',
+                  LocaleKeys.strJustForYou.tr,
                   style: TextStyle(
                     color: context.colorScheme.primary,
                     fontSize: 12.sp,
@@ -841,7 +781,7 @@ class _PromotionsAndOffers extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Rechargez, envoyez et gagnez!'.toUpperCase(),
+                  LocaleKeys.strRechargeSendWin.tr.toUpperCase(),
                   style: TextStyle(
                     fontSize: 17.sp,
                     fontWeight: FontWeight.bold,
@@ -911,7 +851,7 @@ class _PromotionsAndOffers extends StatelessWidget {
         //       ],
         //     )),
         Text(
-          'Rechargez, envoyez, payez et parier pour faire partie des heureux gagnants de diverse lots dont un SUV luxueux de chez Toyota...Vous avez l\'art de deviner? Participer à nos jeux concours sur nos réseaux et tentez de remporter un superbe voyage pour deux à Los angeles.',
+          LocaleKeys.strRechargeSendWinDesc.tr,
           style: TextStyle(
             fontSize: 11.sp,
           ),
@@ -933,8 +873,7 @@ class _StoryIndicator extends StatelessWidget {
       child: LinearProgressIndicator(
         value: progress,
         backgroundColor: context.colorScheme.onPrimary.withOpacity(.5),
-        valueColor:
-            AlwaysStoppedAnimation<Color>(context.colorScheme.onPrimary),
+        valueColor: AlwaysStoppedAnimation<Color>(context.colorScheme.onPrimary),
       ),
     );
   }

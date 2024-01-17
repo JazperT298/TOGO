@@ -10,6 +10,7 @@ import 'package:ibank/app/routes/app_pages.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/config/theme/theme_manager.dart';
 import 'package:ibank/config/theme/theme_provider.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/constants/app_locale.dart';
 import 'package:ibank/utils/constants/ws_const.dart';
@@ -73,12 +74,14 @@ class App extends StatelessWidget {
           darkTheme: ThemeManager().darkTheme,
           initialRoute: AppRoutes.SPLASH, //  Routes.splash.path,
           getPages: AppPages.list,
-          locale: const Locale("en"),
-          // fallbackLocale: const Locale('fr'),
-          supportedLocales: const [
-            Locale('en', 'US'),
-            Locale('fr', 'FR'),
-          ],
+          translationsKeys: AppTranslation.translations,
+          locale: Get.locale ?? const Locale('en'),
+          fallbackLocale: const Locale('en'),
+          // supportedLocales: const [
+          //   Locale('en', 'US'),
+          //   Locale('fr', 'FR'),
+          // ],
+          supportedLocales: const [Locale('en')],
           // supportedLocales: AppLocalizations.supportedLocales,
           // flc.CountryLocalizations.supportedLocales.map(Locale.new),
           localizationsDelegates: const [

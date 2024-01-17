@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:ibank/app/data/models/transaction.dart';
 import 'package:ibank/app/modules/history/controller/history_controller.dart';
 import 'package:ibank/app/modules/history/views/dialog/history_dialog.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/core/transactions.dart';
 import 'package:intl/intl.dart';
@@ -52,11 +53,11 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Historique',
+                    LocaleKeys.strHistory.tr,
                     style: TextStyle(fontSize: 12.sp),
                   ),
                   Text(
-                    'Historique des transactions.'.toUpperCase(),
+                    LocaleKeys.strHistoryTransaction.tr.toUpperCase(),
                     style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: context.colorScheme.onSurface, height: 1.5),
                   ),
                   const SizedBox(height: 25),
@@ -236,11 +237,11 @@ extension on _Filters {
   String get label {
     switch (this) {
       case _Filters.today:
-        return "Aujourd'hui";
+        return LocaleKeys.strToday.tr;
       case _Filters.month:
-        return "Ce mois";
+        return LocaleKeys.strThisMonth.tr;
       case _Filters.recents:
-        return "Semaine";
+        return LocaleKeys.strWeek.tr;
       default:
         return name;
     }
