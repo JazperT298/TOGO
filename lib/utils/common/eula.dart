@@ -87,26 +87,6 @@ class Eula extends EulaPresenter with SendSmsListeners {
   }
 
   @override
-  void onVerifyMsisdn(
-      bool isEncrypted, bool sendsms, String msisdn, String message) {
-    // TODO: implement onVerifyMsisdn
-    super.onVerifyMsisdn(isEncrypted, sendsms, msisdn, message);
-  }
-
-  @override
-  bool onDelivered() {
-    // TODO: implement onDelivered
-    return true;
-  }
-
-  @override
-  void onRequestOtp(
-      BuildContext context, bool isEncrypted, String msisdn, String message) {
-    // TODO: implement onRequestOtp
-    super.onRequestOtp(context, isEncrypted, msisdn, message);
-  }
-
-  @override
   bool onResponse(String sender, String message) {
     RegExp pattern = RegExp(
         r"^(?<success>(?<string1>.*)(?<= \()(?<otp>\d{6})(?=\))(?<string2>.*))$");
@@ -130,24 +110,12 @@ class Eula extends EulaPresenter with SendSmsListeners {
   }
 
   @override
-  bool onSent() {
-    // TODO: implement onSent
-    return true;
-  }
-
-  @override
   bool onTimeout() {
     if (time != null) {
       time.cancel();
     }
     showToast(ctx, AppLabels.unable_to_send_sms);
     return super.onTimeout();
-  }
-
-  @override
-  void onVerify(bool isEncrypted, String msisdn, String message, String token) {
-    // TODO: implement onVerify
-    super.onVerify(isEncrypted, msisdn, message, token);
   }
 
   void showToast(BuildContext context, String message) {

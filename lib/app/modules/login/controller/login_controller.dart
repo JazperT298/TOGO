@@ -187,7 +187,7 @@ class LoginController extends GetxController {
     final List<int> bytes = utf8.encode(data);
     debugPrint(bytes.toString());
     Uint8List xorData = await xor(data);
-    debugPrint(xorData.toString());
+    log("XOR DATA: ${xorData.toString()}");
 
     Uint8List encrypted = await rsa(xorData);
 
