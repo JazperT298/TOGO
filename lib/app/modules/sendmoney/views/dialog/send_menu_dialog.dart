@@ -95,6 +95,8 @@ class SendMenuDialog {
     );
   }
 
+
+
   static void showRecapOperationDialog(context) async {
     print('Amount: ${AppGlobal.amount}');
     print('Beneficiary: ${AppGlobal.beneficiare}');
