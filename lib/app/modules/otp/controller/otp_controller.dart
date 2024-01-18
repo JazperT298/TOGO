@@ -26,8 +26,7 @@ class OtpController extends GetxController {
   verifyOTP({required String otp}) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
             <soapenv:Header/>
@@ -49,19 +48,16 @@ class OtpController extends GetxController {
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
         log(jsonString);
-        if (jsonString
-            .contains("Connexion à l'application Flooz réussie. Merci!")) {
+        if (jsonString.contains("Connexion à l'application Flooz réussie. Merci!")) {
           //Save the msisdn and token to storage if success
-          Get.find<StorageServices>().saveMsisdn(
-              msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
+          Get.find<StorageServices>().saveMsisdn(msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
           Get.find<StorageServices>().setToken(token: 'F3C8DEBDBA27B035');
           // SUCCESS OTP
           Get.back();
           Get.offAllNamed(AppRoutes.PRIVACY);
         } else {
           Get.back();
-          Get.snackbar("Message", jsonString,
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
         // print('JSON Response: $jsonResponse');
@@ -93,10 +89,7 @@ class OtpController extends GetxController {
     }
   }
 
-  Future<void> resendencryptionExample(
-      {required String msisdn,
-      required String formattedMSISDN,
-      required String countryCode}) async {
+  Future<void> resendencryptionExample({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
     // String plainPrefix = 'A'; // it must be random character if possible
     // String plainData = 'Hello World';
     // String data = plainPrefix + plainData;
@@ -148,14 +141,10 @@ class OtpController extends GetxController {
     return encrypted;
   }
 
-  otpRequestViaApi(
-      {required String msisdn,
-      required String formattedMSISDN,
-      required String countryCode}) async {
+  otpRequestViaApi({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
             <soapenv:Header/>
@@ -178,8 +167,7 @@ class OtpController extends GetxController {
         var jsonString = soapElement.innerText;
         log(jsonString);
         print('jsonString $jsonString');
-        if (jsonString
-            .contains('Votre application est en cours d’activation.')) {
+        if (jsonString.contains('Votre application est en cours d’activation.')) {
           String otp = StringUtil().extractOTP(jsonString)!;
           //Save OTP to local Storage
           Get.find<StorageServices>().saveOTP(otp: otp);
@@ -187,8 +175,7 @@ class OtpController extends GetxController {
           Get.back();
         } else {
           Get.back();
-          Get.snackbar("Message", jsonString,
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
         // print('JSON Response: $jsonResponse');

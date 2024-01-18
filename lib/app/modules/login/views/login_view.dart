@@ -5,8 +5,11 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
+import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
 
@@ -51,7 +54,7 @@ class _LoginViewState extends State<LoginView> {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 12.0, left: 0),
-          child: Text('Selectionner'.toUpperCase(),
+          child: Text(LocaleKeys.strSelect.tr.toUpperCase(),
               style: TextStyle(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w500,
@@ -61,18 +64,12 @@ class _LoginViewState extends State<LoginView> {
         Padding(
           padding: const EdgeInsets.only(top: 4.0, left: 0),
           child: Text(
-            'Votre pays',
-            style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.black),
+            LocaleKeys.strYourCountry.tr,
+            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black),
           ),
         ),
         Padding(
-            padding: const EdgeInsets.only(top: 8.0, left: 0),
-            child: Text(
-                'Choisissez votre pays et bénéficiez d’une expérience personnalisée ainsi que des transactions optimisées.',
-                style: TextStyle(fontSize: 10.sp))),
+            padding: const EdgeInsets.only(top: 8.0, left: 0), child: Text(LocaleKeys.strChooseCountryDesc.tr, style: TextStyle(fontSize: 10.sp))),
       ],
     ),
   );
@@ -86,11 +83,28 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: SafeArea(
         child: Padding(
-          padding:
-              UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+          padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              GestureDetector(
+                onTap: () {
+                  showSelectLanguageDialog(context);
+                },
+                child: const SizedBox(
+                  height: 35,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FluIcon(
+                        FluIcons.settingUnicon,
+                        color: Colors.black54,
+                        size: 35,
+                      )
+                    ],
+                  ),
+                ),
+              ),
               Expanded(
                 child: Image.asset(
                   AppImages.loginImage,
@@ -100,19 +114,16 @@ class _LoginViewState extends State<LoginView> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Accédez à votre compte',
+                LocaleKeys.strAccessAccount.tr,
                 style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
                 child: Text(
-                  'Saisissez vos informations de connexion et connectez-vous à votre compte en toute simplicité',
+                  LocaleKeys.strAccessAccountDesc.tr,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 11.sp,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 11.sp, color: Colors.grey, fontWeight: FontWeight.w400),
                 ),
               ),
               const SizedBox(height: 42),
@@ -120,8 +131,7 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   GestureDetector(
                     onTap: () async {
-                      final picked =
-                          await countryPicker.showPicker(context: context);
+                      final picked = await countryPicker.showPicker(context: context);
                       // Null check
                       if (picked != null) {
                         setState(() {
@@ -135,23 +145,13 @@ class _LoginViewState extends State<LoginView> {
                     child: Container(
                       height: 5.h,
                       width: MediaQuery.of(context).size.width / 4.6,
-                      padding: EdgeInsets.symmetric(
-                          horizontal:
-                              _selectedCountryCode.length <= 3 ? 18.0 : 12.0,
-                          vertical: 4.0),
-                      decoration: BoxDecoration(
-                          color: context.colorScheme.primaryContainer,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0))),
+                      padding: EdgeInsets.symmetric(horizontal: _selectedCountryCode.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
+                      decoration:
+                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                              _selectedCountryCode.isEmpty
-                                  ? '+228'
-                                  : _selectedCountryCode,
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 11.sp)),
+                          Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: TextStyle(color: Colors.black, fontSize: 11.sp)),
                           const FluIcon(FluIcons.arrowDown2, size: 20)
                         ],
                       ),
@@ -160,7 +160,7 @@ class _LoginViewState extends State<LoginView> {
                   SizedBox(width: 1.w),
                   Expanded(
                     child: FluTextField(
-                      hint: "Numéro de téléphone",
+                      hint: LocaleKeys.strPhoneNumber.tr,
                       inputController: numberController,
                       height: 5.h,
                       cornerRadius: 15,
@@ -176,39 +176,26 @@ class _LoginViewState extends State<LoginView> {
                             (match) => '${match.group(0)} ',
                           );
                         }
-                        numberController.value =
-                            numberController.value.copyWith(
+                        numberController.value = numberController.value.copyWith(
                           text: text,
-                          selection:
-                              TextSelection.collapsed(offset: text.length),
+                          selection: TextSelection.collapsed(offset: text.length),
                         );
                         setState(() {
                           isTextFieldEmpty = false;
                           errorMessage = '';
                         });
                       },
-                      textStyle: TextStyle(
-                          fontSize: 11.sp), // context.textTheme.bodyMedium,
+                      textStyle: TextStyle(fontSize: 11.sp), // context.textTheme.bodyMedium,
 
                       onFieldSubmitted: (p0) {
                         if (numberController.text.isNotEmpty) {
                           print(numberController.text);
-                          String replacedString = numberController.text
-                              .replaceAll(" ", "")
-                              .trim()
-                              .toString();
-                          String msisdn =
-                              (_selectedCountryCode + replacedString)
-                                  .replaceAll("+", "")
-                                  .toString();
+                          String replacedString = numberController.text.replaceAll(" ", "").trim().toString();
+                          String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
                           print(msisdn);
 
-                          ProgressAlertDialog.progressAlertDialog(
-                              context, "Chargement..");
-                          controller.kycInquiryRequest(
-                              msisdn: msisdn,
-                              formattedMSISDN: numberController.text,
-                              countryCode: _selectedCountryCode);
+                          ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                          controller.kycInquiryRequest(msisdn: msisdn, formattedMSISDN: numberController.text, countryCode: _selectedCountryCode);
                           isTextFieldEmpty = false;
                         } else if (numberController.text.isEmpty) {
                           setState(() {
@@ -234,7 +221,7 @@ class _LoginViewState extends State<LoginView> {
                       : Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(
-                            'Phone number is required*',
+                            LocaleKeys.strPhoneNumberRequired.tr,
                             style: TextStyle(
                               fontSize: 11.sp,
                               color: context.colorScheme.secondary,
@@ -243,7 +230,7 @@ class _LoginViewState extends State<LoginView> {
                         )
                   : const SizedBox(height: 35),
               FluButton.text(
-                'Continuer',
+                LocaleKeys.strContinue.tr,
                 suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
                 onPressed: () async {
@@ -253,20 +240,12 @@ class _LoginViewState extends State<LoginView> {
                   //     countryCode: "228");
                   if (numberController.text.isNotEmpty) {
                     print(numberController.text);
-                    String replacedString = numberController.text
-                        .replaceAll(" ", "")
-                        .trim()
-                        .toString();
-                    String msisdn = (_selectedCountryCode + replacedString)
-                        .replaceAll("+", "")
-                        .toString();
+                    String replacedString = numberController.text.replaceAll(" ", "").trim().toString();
+                    String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
                     print(msisdn);
-                    ProgressAlertDialog.progressAlertDialog(
-                        context, "Chargement..");
-                    controller.kycInquiryRequest(
-                        msisdn: msisdn,
-                        formattedMSISDN: numberController.text,
-                        countryCode: _selectedCountryCode);
+
+                    ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                    controller.kycInquiryRequest(msisdn: msisdn, formattedMSISDN: numberController.text, countryCode: _selectedCountryCode);
                     isTextFieldEmpty = false;
                   } else if (numberController.text.isEmpty) {
                     setState(() {
@@ -287,8 +266,7 @@ class _LoginViewState extends State<LoginView> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
               const SizedBox(height: 30),
             ],
@@ -296,5 +274,108 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+
+  void showSelectLanguageDialog(BuildContext context) {
+    List<bool> selectedLanguages = [false, false]; // Index 0: English, Index 1: French
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.all(12), // Outside Padding
+            contentPadding: const EdgeInsets.all(12), // Content Padding
+
+            title: Text(LocaleKeys.strSelectLanguage.tr),
+            content: SizedBox(
+              height: 100,
+              width: MediaQuery.of(context).size.width - 60,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Image.asset(AppImages.ukFlag, height: 30, width: 30),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Text(LocaleKeys.strEnglish.tr),
+                            ),
+                          ],
+                        ),
+                        Checkbox(
+                          value: AppGlobal.isSelectEnglish,
+                          onChanged: (value) {
+                            // English checkbox
+                            setState(() {
+                              selectedLanguages[1] = false;
+                              AppGlobal.isSelectEnglish = true;
+                              AppGlobal.isSelectFrench = false;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Image.asset(AppImages.franceFlag, height: 30, width: 30),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Text(LocaleKeys.strFrench.tr),
+                            ),
+                          ],
+                        ),
+                        Checkbox(
+                          value: AppGlobal.isSelectFrench,
+                          onChanged: (value) {
+                            // French checkbox
+                            setState(() {
+                              AppGlobal.isSelectEnglish = false;
+                              AppGlobal.isSelectFrench = true;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: AppGlobal.isSelectEnglish == false && AppGlobal.isSelectFrench == false
+                    ? null
+                    : () {
+                        if (AppGlobal.isSelectFrench == true && AppGlobal.isSelectEnglish == false) {
+                          Get.find<StorageServices>().saveLanguage(language: 'FR');
+                        } else {
+                          Get.find<StorageServices>().saveLanguage(language: 'EN');
+                        }
+
+                        Navigator.pop(context);
+                      },
+                child: Text(LocaleKeys.strSelect.tr),
+              ),
+            ],
+          );
+        });
+      },
+    ).then((value) {
+      String enLang = Get.find<StorageServices>().storage.read('language');
+      Get.updateLocale(Locale(enLang.toLowerCase()));
+      AppGlobal.isSelectFrench = enLang == "FR" ? true : false;
+      AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
+      setState(() {});
+    });
   }
 }

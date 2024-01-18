@@ -3,7 +3,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:flutter/material.dart';
@@ -35,7 +37,7 @@ class ProfileController extends GetxController {
   }
 
   verifyGetProfile({required String msidsn, required String token, required String message, required String sendsms}) async {
-    isLoadingProfile(true);
+    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -69,7 +71,7 @@ class ProfileController extends GetxController {
         jsonString = jsonString.replaceAll('&quot;', '"');
         // Convert to JSON
         var json = jsonDecode(jsonString);
-
+        Get.back();
         String profile = json.containsKey("profile") ? json["profile"] : "";
         String description = json.containsKey("description") ? json["description"] : "";
         String msg = json.containsKey("message") ? json["message"] : "";
@@ -80,7 +82,6 @@ class ProfileController extends GetxController {
     } on Exception catch (_) {
       log("ERROR $_");
     }
-    isLoadingProfile(false);
   }
 
   enterPinForInformationPersonelles({required String code}) async {
@@ -204,6 +205,16 @@ class ProfileController extends GetxController {
   void onInit() {
     log('MSISDN ${AppGlobal.MSISDN}');
     verifyGetProfile(msidsn: AppGlobal.MSISDN, token: AppGlobal.TOKEN, message: 'VRFY GETPROFILE F', sendsms: 'false');
+    getLanguage();
     super.onInit();
+  }
+
+  void getLanguage() {
+    isLoadingProfile(true);
+    String enLang = Get.find<StorageServices>().storage.read('language');
+    Get.updateLocale(Locale(enLang.toLowerCase()));
+    AppGlobal.isSelectFrench = enLang == "FR" ? true : false;
+    AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
+    isLoadingProfile(false);
   }
 }

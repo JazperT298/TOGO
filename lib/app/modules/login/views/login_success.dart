@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
@@ -50,7 +51,7 @@ class _LoginSuccessState extends State<LoginSuccess> {
                     : FluIcon(
                         FluIcons.checkCircleUnicon,
                         color: Colors.green,
-                        size: 48,
+                        size: 60,
                       ),
                 const SizedBox(
                   height: 32,
@@ -60,7 +61,7 @@ class _LoginSuccessState extends State<LoginSuccess> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Vouz avez configurer votre comtre avec succes',
+                      LocaleKeys.strLoginSuccessMessage.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24.sp),
                     ),
@@ -70,7 +71,7 @@ class _LoginSuccessState extends State<LoginSuccess> {
                   height: 32,
                 ),
                 FluButton.text(
-                  'Fermer',
+                  LocaleKeys.strClose.tr,
                   iconStrokeWidth: 1.8,
                   onPressed: showProgressIndicator
                       ? null

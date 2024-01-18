@@ -9,11 +9,14 @@ import 'package:ibank/app/components/line.dart';
 import 'package:ibank/app/components/map.dart';
 import 'package:ibank/app/components/options.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
+import 'package:ibank/app/data/local/getstorage_services.dart';
+import 'package:ibank/app/modules/bottomnav/controller/bottomnav_controller.dart';
 import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
-import 'package:ibank/utils/ui/options.dart';
+import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileView extends StatefulWidget {
@@ -26,11 +29,27 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   final controller = Get.put(ProfileController());
   final storage = GetStorage();
+  final bool lastIsLogout = false;
+  List<FluOption> profileScreenOptions = [];
   @override
   void initState() {
-    // getProfile();
-
+    getDataFromProfileOptions();
     super.initState();
+  }
+
+  void getDataFromProfileOptions() {
+    profileScreenOptions = [
+      FluOption(icon: FluIcons.profile, title: LocaleKeys.strPersonalInfo.tr, description: LocaleKeys.strPersonalInfoDesc.tr),
+      FluOption(icon: FluIcons.password, title: LocaleKeys.strChangePass.tr, description: LocaleKeys.strChangePassDesc.tr),
+      FluOption(icon: FluIcons.flag, title: LocaleKeys.strLanguage.tr, description: LocaleKeys.strLanguageDesc.tr),
+      FluOption(icon: FluIcons.people, title: LocaleKeys.strFavorites.tr, description: LocaleKeys.strFavoritesDesc.tr),
+      FluOption(icon: FluIcons.cards, title: LocaleKeys.strMyCards.tr, description: LocaleKeys.strMyCardsDesc.tr),
+      FluOption(icon: FluIcons.bank, title: LocaleKeys.strMyBanks.tr, description: LocaleKeys.strMyBanksDesc.tr),
+      FluOption(icon: FluIcons.noteText, title: LocaleKeys.strFaq.tr, description: LocaleKeys.strFaqDesc.tr),
+      FluOption(icon: FluIcons.supportLikeQuestion24Support, title: LocaleKeys.strSupportHelp.tr, description: LocaleKeys.strSupportHelpDesc.tr),
+      FluOption(icon: FluIcons.textalignCenter, title: LocaleKeys.strCredit.tr, description: LocaleKeys.strCreditDesc.tr),
+      FluOption(icon: FluIcons.logout, title: LocaleKeys.strLogout.tr, description: LocaleKeys.strLogoutDesc.tr),
+    ];
   }
 
   @override
@@ -39,7 +58,7 @@ class _ProfileViewState extends State<ProfileView> {
       body: Obx(
         () => controller.isLoadingProfile.value
             ? LoadingWidget(
-                progressMessage: "Chargement! S'il vous plaît, attendez...",
+                progressMessage: LocaleKeys.strLoading.tr,
               )
             : SafeArea(
                 child: SingleChildScrollView(
@@ -84,7 +103,7 @@ class _ProfileViewState extends State<ProfileView> {
                                           await storage.remove('msisdn').then((value) {
                                             storage.remove('isPrivacyCheck');
                                             storage.remove('isLoginSuccessClick');
-                                            ProgressAlertDialog.showALoadingDialog(context, 'Déconnecter...', 3, AppRoutes.LOGIN);
+                                            ProgressAlertDialog.showALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
                                           });
                                           // await SharedPrefService.logoutUserData(false, '').then((value) {
                                           //   ProgressAlertDialog.showALoadingDialog(context, 'Logging out...', 3, AppRoutes.LOGIN);
@@ -180,14 +199,14 @@ class _ProfileViewState extends State<ProfileView> {
                             color: context.colorScheme.tertiary,
                           ),
                           Text(
-                            'Agences à proximité.',
+                            LocaleKeys.strAgenciesNearby.tr,
                             style: TextStyle(fontSize: 12.sp),
                           ),
                           const SizedBox(height: 10),
-                          const Hero(
+                          Hero(
                             tag: "descriptionTextHeroTag",
                             child: Text(
-                              'Rendez-vous facilement dans l\'une de nos agences la plus proche. Nous vous y attendons.',
+                              LocaleKeys.strAgenciesNearbyDesc.tr,
                               maxLines: null,
                               overflow: TextOverflow.visible,
                             ),
@@ -213,16 +232,247 @@ class _ProfileViewState extends State<ProfileView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Mon Flooz.',
+                              LocaleKeys.strMyFlooz.tr,
                               style: TextStyle(fontSize: 12.sp),
                             ),
-                            Options(profileScreenOptions)
+                            ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: const EdgeInsets.only(top: 45),
+                                itemCount: profileScreenOptions.length,
+                                itemBuilder: (context, index) {
+                                  FluOption option = profileScreenOptions[index];
+                                  bool isLogout = lastIsLogout && index == profileScreenOptions.length - 1;
+
+                                  return FluButton(
+                                    onPressed: option.onPressed ??
+                                        () {
+                                          if (index == 0) {
+                                            Get.find<ProfileController>().selectedRoute.value = LocaleKeys.strPersonalInfo.tr;
+                                            Get.toNamed(AppRoutes.PROFILEOTP);
+                                          } else if (index == 1) {
+                                            Get.find<ProfileController>().selectedRoute.value = LocaleKeys.strChangePass.tr;
+                                            Get.toNamed(AppRoutes.PROFILECHANGESPASSWORD);
+                                            Get.find<ProfileController>().oldPIN.clear();
+                                            Get.find<ProfileController>().newPIN.clear();
+                                            Get.find<ProfileController>().confirmNewPIN.clear();
+                                          } else if (index == 2) {
+                                            showSelectLanguageDialog(context);
+                                          } else if (index == 9) {
+                                            showLogoutDialog(context);
+                                          } else {
+                                            Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+                                                backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+                                          }
+                                        },
+                                    backgroundColor: context.colorScheme.background,
+                                    margin: EdgeInsets.only(top: index == 0 ? 0 : 25),
+                                    padding: EdgeInsets.zero,
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.only(right: 10),
+                                          child: Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              SizedBox(
+                                                  height: 60 + 8,
+                                                  width: 60 + 8,
+                                                  child: RotatedBox(
+                                                    quarterTurns: 2,
+                                                    child: CircularProgressIndicator(
+                                                      strokeWidth: 1.5,
+                                                      value: .25,
+                                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                                        (isLogout ? Colors.red : context.colorScheme.primary).withOpacity(.1),
+                                                      ),
+                                                    ),
+                                                  )),
+                                              Container(
+                                                height: 60,
+                                                width: 60,
+                                                decoration: BoxDecoration(
+                                                    color: (isLogout ? Colors.red : context.colorScheme.primary).withOpacity(.045),
+                                                    shape: BoxShape.circle),
+                                                child: FluIcon(
+                                                  option.icon!,
+                                                  size: 24,
+                                                  strokeWidth: 1.6,
+                                                  color: isLogout ? Colors.red : context.colorScheme.onSurface,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                          Text(
+                                            option.title,
+                                            style: TextStyle(
+                                              fontSize: M3FontSizes.bodyLarge,
+                                              fontWeight: FontWeight.bold,
+                                              color: isLogout ? Colors.red : context.colorScheme.onBackground,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            option.description!,
+                                            style: TextStyle(
+                                              color: isLogout ? Colors.red : context.colorScheme.onBackground.withOpacity(.75),
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ])),
+                                        const SizedBox(width: 15),
+                                        FluIcon(
+                                          FluIcons.arrowRight1,
+                                          size: 18,
+                                          color: isLogout ? Colors.red : context.colorScheme.onBackground,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                            // Options(profileScreenOptions)
                           ],
                         ))
                   ],
                 ),
               )),
       ),
+    );
+  }
+
+  void showSelectLanguageDialog(BuildContext context) {
+    List<bool> selectedLanguages = [false, false]; // Index 0: English, Index 1: French
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.all(12), // Outside Padding
+            contentPadding: const EdgeInsets.all(12), // Content Padding
+            title: Text(LocaleKeys.strSelectLanguage.tr),
+            content: SizedBox(
+              height: 100,
+              width: MediaQuery.of(context).size.width - 60,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(AppImages.ukFlag, height: 30, width: 30),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Text(LocaleKeys.strEnglish.tr),
+                          ),
+                        ],
+                      ),
+                      Checkbox(
+                        value: AppGlobal.isSelectEnglish,
+                        onChanged: (value) {
+                          // English checkbox
+                          setState(() {
+                            selectedLanguages[1] = false;
+                            AppGlobal.isSelectEnglish = true;
+                            AppGlobal.isSelectFrench = false;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(AppImages.franceFlag, height: 30, width: 30),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Text(LocaleKeys.strFrench.tr),
+                          ),
+                        ],
+                      ),
+                      Checkbox(
+                        value: AppGlobal.isSelectFrench,
+                        onChanged: (value) {
+                          // French checkbox
+                          setState(() {
+                            AppGlobal.isSelectEnglish = false;
+                            AppGlobal.isSelectFrench = true;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: AppGlobal.isSelectEnglish == false && AppGlobal.isSelectFrench == false
+                    ? null
+                    : () {
+                        if (AppGlobal.isSelectFrench == true && AppGlobal.isSelectEnglish == false) {
+                          Get.find<StorageServices>().saveLanguage(language: 'FR');
+                        } else {
+                          Get.find<StorageServices>().saveLanguage(language: 'EN');
+                        }
+
+                        Navigator.pop(context);
+                      },
+                child: Text(LocaleKeys.strSelect.tr),
+              ),
+            ],
+          );
+        });
+      },
+    ).then((value) {
+      Get.find<BottomNavController>().getDataFromStorage();
+      getDataFromProfileOptions();
+    });
+  }
+
+  void showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          insetPadding: const EdgeInsets.all(12), // Outside Padding
+          contentPadding: const EdgeInsets.all(12), // Content Padding
+          title: Text(LocaleKeys.strLogout.tr),
+          content: SizedBox(
+            height: 20,
+            width: MediaQuery.of(context).size.width - 60,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 12.0),
+              child: Text(LocaleKeys.strLogoutWarning.tr),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                await storage.remove('msisdn').then((value) {
+                  storage.remove('isPrivacyCheck');
+                  storage.remove('isLoginSuccessClick');
+                  ProgressAlertDialog.showALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
+                });
+              },
+              child: Text(LocaleKeys.strYes.tr),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text(LocaleKeys.strNo.tr),
+            ),
+          ],
+        );
+      },
     );
   }
 }

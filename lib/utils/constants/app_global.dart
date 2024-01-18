@@ -18,6 +18,9 @@ class AppGlobal {
   static const int BURGER_MENU_ID = 4;
 
   static bool isAppFirstRun = false;
+  static bool isSelectFrench = false;
+  static bool isSelectEnglish = false;
+  static String enLang = '';
 
   static String MSISDN = "";
   static String TOKEN = "";

@@ -30,9 +30,26 @@ class BottomNavController extends GetxController {
   @override
   void onInit() {
     pageController.value = PageController();
+    //getDataFromStorage();
+    super.onInit();
+  }
+
+  void getDataFromStorage() {
     AppGlobal.MSISDN = Get.find<StorageServices>().storage.read('msisdn');
     AppGlobal.TOKEN = Get.find<StorageServices>().storage.read('token');
 
-    super.onInit();
+    if (Get.find<StorageServices>().storage.read('language') != null) {
+      String enLang = Get.find<StorageServices>().storage.read('language');
+      Get.updateLocale(Locale(enLang.toLowerCase()));
+      AppGlobal.isSelectFrench = enLang == "FR" ? true : false;
+      AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
+    } else {
+      Get.find<StorageServices>().saveLanguage(language: 'EN');
+
+      String enLang = Get.find<StorageServices>().storage.read('language');
+      Get.updateLocale(Locale(enLang.toLowerCase()));
+      AppGlobal.isSelectFrench = enLang == "FR" ? true : false;
+      AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
+    }
   }
 }

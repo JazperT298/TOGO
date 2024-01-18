@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/modules/otp/controller/otp_controller.dart';
 import 'package:flukit/flukit.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -47,8 +48,7 @@ class _OtpViewState extends State<OtpView> {
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -60,8 +60,7 @@ class _OtpViewState extends State<OtpView> {
       ),
       body: SafeArea(
         child: Padding(
-          padding:
-              UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+          padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -74,29 +73,23 @@ class _OtpViewState extends State<OtpView> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Confirmez votre numéro',
+                LocaleKeys.strConfirmNumber.tr,
                 style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
                 child: Text(
-                  'Veuillez saisir le code à 06 chiffres que nous vous avons envoyé sur votre numéro',
+                  LocaleKeys.strEnterCodeDesc.tr,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 11.sp,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 11.sp, color: Colors.grey, fontWeight: FontWeight.w400),
                 ),
               ),
               Obx(
                 () => Text(
                   '${controller.countryCode.value} ${controller.formatedMSISDN.value}',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 11.sp,
-                      color: const Color(0xFFFB6404),
-                      fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 11.sp, color: const Color(0xFFFB6404), fontWeight: FontWeight.w600),
                 ),
               ),
               const SizedBox(height: 28),
@@ -117,7 +110,9 @@ class _OtpViewState extends State<OtpView> {
                         });
                       } else {
                         ProgressAlertDialog.progressAlertDialog(
-                            context, "Chargement..");
+                          context,
+                          LocaleKeys.strLoading.tr,
+                        );
                         controller.verifyOTP(otp: textEditingController.text);
                         // SharedPrefService.saveLoginData(true, 'Malik Monk');
                         // ProgressAlertDialog.showALoadingDialog(context, "Chargement..", 5, AppRoutes.PRIVACY);
@@ -190,7 +185,7 @@ class _OtpViewState extends State<OtpView> {
               ),
               isEmptyFields == true
                   ? Text(
-                      'Pin Code is required*',
+                      LocaleKeys.strPinCodeRequired.tr,
                       style: TextStyle(
                         fontSize: 11.sp,
                         color: context.colorScheme.secondary,
@@ -208,39 +203,31 @@ class _OtpViewState extends State<OtpView> {
                             if (controller.requestVia.value == "sms") {
                               controller.resendencryptionExample(
                                   msisdn: controller.msisdn.value,
-                                  formattedMSISDN:
-                                      controller.formatedMSISDN.value,
+                                  formattedMSISDN: controller.formatedMSISDN.value,
                                   countryCode: controller.countryCode.value);
                             } else {
                               controller.otpRequestViaApi(
                                   msisdn: controller.msisdn.value,
-                                  formattedMSISDN:
-                                      controller.formatedMSISDN.value,
+                                  formattedMSISDN: controller.formatedMSISDN.value,
                                   countryCode: controller.countryCode.value);
                             }
                             controller.isResendShow.value = false;
                             controller.startTimer();
                           } else {
                             // controller.isResendShow.value = false;
-                            Get.snackbar("Message",
-                                "Nombre maximal de tentatives atteint",
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
+                            Get.snackbar("Message", LocaleKeys.strPinCodeWarning.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                           }
                         },
                         child: Text(
-                          'Renvoyer le code',
+                          LocaleKeys.strResentCode.tr,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 11.sp,
-                              color: context.colorScheme.primary,
-                              fontWeight: FontWeight.w600),
+                          style: TextStyle(fontSize: 11.sp, color: context.colorScheme.primary, fontWeight: FontWeight.w600),
                         ),
                       ),
               ),
               const SizedBox(height: 16),
               FluButton.text(
-                'Verifier',
+                LocaleKeys.strVerify.tr,
                 suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
@@ -249,8 +236,7 @@ class _OtpViewState extends State<OtpView> {
                       isEmptyFields = true;
                     });
                   } else {
-                    ProgressAlertDialog.progressAlertDialog(
-                        context, "Chargement..");
+                    ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
                     controller.verifyOTP(otp: textEditingController.text);
                     // 632660
                     // SharedPrefService.saveLoginData(true, 'Malik Monk');
@@ -272,8 +258,7 @@ class _OtpViewState extends State<OtpView> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
               const SizedBox(height: 30),
             ],

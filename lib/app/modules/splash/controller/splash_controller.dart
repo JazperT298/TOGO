@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ibank/app/components/permission_bottom_sheet.dart';
+import 'package:ibank/app/data/local/getstorage_services.dart';
 // import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/routes/app_routes.dart';
@@ -48,18 +49,20 @@ class SplashController extends GetxController {
 
     if (storage.read('msisdn') != null) {
       if (storage.read('isPrivacyCheck') == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(
-            2.seconds, () => Get.offAllNamed(AppRoutes.PRIVACY)));
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.PRIVACY)));
       } else if (storage.read('isLoginSuccessClick') == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(
-            2.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
       } else {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(
-            2.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV)));
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV)));
       }
     } else {
-      WidgetsBinding.instance.addPostFrameCallback((_) =>
-          Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.ONBOARD)));
+      WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.ONBOARD)).then((value) {
+            Get.find<StorageServices>().saveLanguage(language: 'EN');
+            String enLang = Get.find<StorageServices>().storage.read('language');
+            Get.updateLocale(Locale(enLang.toLowerCase()));
+            AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
+            AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
+          }));
     }
   }
 
@@ -74,8 +77,7 @@ class SplashController extends GetxController {
   Future<void> initPlatformState() async {
     final bool? result = await telephony.requestPhoneAndSmsPermissions;
     if (result != null && result) {
-      telephony.listenIncomingSms(
-          onNewMessage: onMessage, onBackgroundMessage: onBackgroundMessage);
+      telephony.listenIncomingSms(onNewMessage: onMessage, onBackgroundMessage: onBackgroundMessage);
     }
   }
 
@@ -155,8 +157,7 @@ class SplashController extends GetxController {
 
       String hits = 'VRFY ANDROIDAPP $token ANDROID V2 F';
 
-      SoapSender.sendSoap(
-          context, hits, '', SmsOption.WAIT_RESPONSE, '', false);
+      SoapSender.sendSoap(context, hits, '', SmsOption.WAIT_RESPONSE, '', false);
 
       //response for sending soap
 

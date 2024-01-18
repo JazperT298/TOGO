@@ -26,6 +26,10 @@ class StorageServices extends GetxService {
     storage.write('otp', otp);
   }
 
+  saveLanguage({required String language}) {
+    storage.write('language', language);
+  }
+
   isPrivacyCheck({required bool isPrivacyCheck}) {
     storage.write('isPrivacyCheck', isPrivacyCheck);
   }
@@ -35,11 +39,7 @@ class StorageServices extends GetxService {
   }
 
   //Store verify profile
-  saveVerifyProfile(
-      {required String profile,
-      required String description,
-      required String message,
-      required String status}) {
+  saveVerifyProfile({required String profile, required String description, required String message, required String status}) {
     storage.write('profile', profile);
     storage.write('description', description);
     storage.write('message', message);
@@ -76,11 +76,7 @@ class StorageServices extends GetxService {
   }) async {
     if (storage.read('history') == null) {
       List data = [];
-      Map map = {
-        "service": service,
-        "message": message,
-        "date": DateTime.now().toString()
-      };
+      Map map = {"service": service, "message": message, "date": DateTime.now().toString()};
       data.add(map);
       storage.write("history", jsonEncode(data));
 
@@ -88,11 +84,7 @@ class StorageServices extends GetxService {
     } else {
       var stringdata = storage.read('history');
       var decodedData = jsonDecode(stringdata);
-      Map map = {
-        "service": service,
-        "message": message,
-        "date": DateTime.now().toString()
-      };
+      Map map = {"service": service, "message": message, "date": DateTime.now().toString()};
       decodedData.add(map);
       storage.write("history", jsonEncode(decodedData));
       log(storage.read('history'));
