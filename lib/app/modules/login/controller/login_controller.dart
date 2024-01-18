@@ -50,7 +50,7 @@ class LoginController extends GetxController {
       var responsebody = await response.transform(utf8.decoder).join();
 
       log("STATUS CODE: ${response.statusCode}");
-      // log(response.body);
+      log('responsebody $responsebody');
 
       if (response.statusCode == 200) {
         var decodedData = jsonDecode(responsebody);
@@ -75,6 +75,7 @@ class LoginController extends GetxController {
           Get.snackbar("Message", "Numero Invalide",
               backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
+        
       } else {
         log("ERROR something went wrong");
       }

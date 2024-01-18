@@ -74,7 +74,7 @@ class _OtpViewState extends State<OtpView> {
               const SizedBox(height: 20),
               Text(
                 LocaleKeys.strConfirmNumber.tr,
-                style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Padding(
@@ -82,14 +82,14 @@ class _OtpViewState extends State<OtpView> {
                 child: Text(
                   LocaleKeys.strEnterCodeDesc.tr,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 11.sp, color: Colors.grey, fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 10.sp, color: Colors.grey, fontWeight: FontWeight.w400),
                 ),
               ),
               Obx(
                 () => Text(
                   '${controller.countryCode.value} ${controller.formatedMSISDN.value}',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 11.sp, color: const Color(0xFFFB6404), fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 10.sp, color: const Color(0xFFFB6404), fontWeight: FontWeight.w600),
                 ),
               ),
               const SizedBox(height: 28),
@@ -187,7 +187,7 @@ class _OtpViewState extends State<OtpView> {
                   ? Text(
                       LocaleKeys.strPinCodeRequired.tr,
                       style: TextStyle(
-                        fontSize: 11.sp,
+                        fontSize: 10.sp,
                         color: context.colorScheme.secondary,
                       ),
                     )
@@ -221,7 +221,7 @@ class _OtpViewState extends State<OtpView> {
                         child: Text(
                           LocaleKeys.strResentCode.tr,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 11.sp, color: context.colorScheme.primary, fontWeight: FontWeight.w600),
+                          style: TextStyle(fontSize: 10.sp, color: context.colorScheme.primary, fontWeight: FontWeight.w600),
                         ),
                       ),
               ),

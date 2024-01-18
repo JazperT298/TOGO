@@ -53,7 +53,9 @@ class SplashController extends GetxController {
       } else if (storage.read('isLoginSuccessClick') == null) {
         WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
       } else {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV)));
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+       await   Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV));
+        });
       }
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.ONBOARD)).then((value) {

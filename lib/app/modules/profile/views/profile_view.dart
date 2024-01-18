@@ -57,9 +57,7 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
       body: Obx(
         () => controller.isLoadingProfile.value
-            ? LoadingWidget(
-                progressMessage: LocaleKeys.strLoading.tr,
-              )
+            ? const CircularProgressIndicator()
             : SafeArea(
                 child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),

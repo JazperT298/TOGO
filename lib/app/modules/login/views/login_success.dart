@@ -63,7 +63,7 @@ class _LoginSuccessState extends State<LoginSuccess> {
                     child: Text(
                       LocaleKeys.strLoginSuccessMessage.tr,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24.sp),
+                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 20.sp),
                     ),
                   ),
                 ),
@@ -92,7 +92,7 @@ class _LoginSuccessState extends State<LoginSuccess> {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp),
                 ),
               ],
             ),
