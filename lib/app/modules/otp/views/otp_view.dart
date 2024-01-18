@@ -84,7 +84,6 @@ class _OtpViewState extends State<OtpView> {
                         ))),
                     onPressed: () {
                       Get.back();
-                      Get.back();
                     },
                     child: const FluIcon(
                       FluIcons.arrowLeft,
