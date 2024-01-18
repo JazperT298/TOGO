@@ -4,7 +4,6 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:ibank/app/components/alert_loading.dart';
 import 'package:ibank/app/components/line.dart';
 import 'package:ibank/app/components/map.dart';
 import 'package:ibank/app/components/options.dart';
@@ -39,16 +38,46 @@ class _ProfileViewState extends State<ProfileView> {
 
   void getDataFromProfileOptions() {
     profileScreenOptions = [
-      FluOption(icon: FluIcons.profile, title: LocaleKeys.strPersonalInfo.tr, description: LocaleKeys.strPersonalInfoDesc.tr),
-      FluOption(icon: FluIcons.password, title: LocaleKeys.strChangePass.tr, description: LocaleKeys.strChangePassDesc.tr),
-      FluOption(icon: FluIcons.flag, title: LocaleKeys.strLanguage.tr, description: LocaleKeys.strLanguageDesc.tr),
-      FluOption(icon: FluIcons.people, title: LocaleKeys.strFavorites.tr, description: LocaleKeys.strFavoritesDesc.tr),
-      FluOption(icon: FluIcons.cards, title: LocaleKeys.strMyCards.tr, description: LocaleKeys.strMyCardsDesc.tr),
-      FluOption(icon: FluIcons.bank, title: LocaleKeys.strMyBanks.tr, description: LocaleKeys.strMyBanksDesc.tr),
-      FluOption(icon: FluIcons.noteText, title: LocaleKeys.strFaq.tr, description: LocaleKeys.strFaqDesc.tr),
-      FluOption(icon: FluIcons.supportLikeQuestion24Support, title: LocaleKeys.strSupportHelp.tr, description: LocaleKeys.strSupportHelpDesc.tr),
-      FluOption(icon: FluIcons.textalignCenter, title: LocaleKeys.strCredit.tr, description: LocaleKeys.strCreditDesc.tr),
-      FluOption(icon: FluIcons.logout, title: LocaleKeys.strLogout.tr, description: LocaleKeys.strLogoutDesc.tr),
+      FluOption(
+          icon: FluIcons.profile,
+          title: LocaleKeys.strPersonalInfo.tr,
+          description: LocaleKeys.strPersonalInfoDesc.tr),
+      FluOption(
+          icon: FluIcons.password,
+          title: LocaleKeys.strChangePass.tr,
+          description: LocaleKeys.strChangePassDesc.tr),
+      FluOption(
+          icon: FluIcons.flag,
+          title: LocaleKeys.strLanguage.tr,
+          description: LocaleKeys.strLanguageDesc.tr),
+      FluOption(
+          icon: FluIcons.people,
+          title: LocaleKeys.strFavorites.tr,
+          description: LocaleKeys.strFavoritesDesc.tr),
+      FluOption(
+          icon: FluIcons.cards,
+          title: LocaleKeys.strMyCards.tr,
+          description: LocaleKeys.strMyCardsDesc.tr),
+      FluOption(
+          icon: FluIcons.bank,
+          title: LocaleKeys.strMyBanks.tr,
+          description: LocaleKeys.strMyBanksDesc.tr),
+      FluOption(
+          icon: FluIcons.noteText,
+          title: LocaleKeys.strFaq.tr,
+          description: LocaleKeys.strFaqDesc.tr),
+      FluOption(
+          icon: FluIcons.supportLikeQuestion24Support,
+          title: LocaleKeys.strSupportHelp.tr,
+          description: LocaleKeys.strSupportHelpDesc.tr),
+      FluOption(
+          icon: FluIcons.textalignCenter,
+          title: LocaleKeys.strCredit.tr,
+          description: LocaleKeys.strCreditDesc.tr),
+      FluOption(
+          icon: FluIcons.logout,
+          title: LocaleKeys.strLogout.tr,
+          description: LocaleKeys.strLogoutDesc.tr),
     ];
   }
 
@@ -90,7 +119,9 @@ class _ProfileViewState extends State<ProfileView> {
                                         child: CircularProgressIndicator(
                                           strokeWidth: 2,
                                           value: .15,
-                                          valueColor: AlwaysStoppedAnimation<Color>(context.colorScheme.primary),
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  context.colorScheme.primary),
                                         ),
                                       ),
                                     ),
@@ -98,10 +129,19 @@ class _ProfileViewState extends State<ProfileView> {
                                       tag: 'user_avatar',
                                       child: GestureDetector(
                                         onTap: () async {
-                                          await storage.remove('msisdn').then((value) {
+                                          await storage
+                                              .remove('msisdn')
+                                              .then((value) {
                                             storage.remove('isPrivacyCheck');
-                                            storage.remove('isLoginSuccessClick');
-                                            ProgressAlertDialog.showALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
+                                            storage
+                                                .remove('isLoginSuccessClick');
+                                            ProgressAlertDialog
+                                                .showALoadingDialog(
+                                                    context,
+                                                    LocaleKeys
+                                                        .strLogoutMessage.tr,
+                                                    3,
+                                                    AppRoutes.LOGIN);
                                           });
                                           // await SharedPrefService.logoutUserData(false, '').then((value) {
                                           //   ProgressAlertDialog.showALoadingDialog(context, 'Logging out...', 3, AppRoutes.LOGIN);
@@ -152,7 +192,9 @@ class _ProfileViewState extends State<ProfileView> {
                                         const SizedBox(width: 5),
                                         Expanded(
                                           child: Text(
-                                            AppGlobal.currentAddress.isEmpty ? '' : AppGlobal.currentAddress,
+                                            AppGlobal.currentAddress.isEmpty
+                                                ? ''
+                                                : AppGlobal.currentAddress,
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                           ),
@@ -165,7 +207,8 @@ class _ProfileViewState extends State<ProfileView> {
                               FluLine(
                                 height: UISettings.minButtonSize / 2,
                                 width: 1,
-                                color: context.colorScheme.onBackground.withOpacity(.5),
+                                color: context.colorScheme.onBackground
+                                    .withOpacity(.5),
                                 margin: const EdgeInsets.only(right: 10),
                               ),
                               Hero(
@@ -174,10 +217,13 @@ class _ProfileViewState extends State<ProfileView> {
                                   FluIcons.setting2,
                                   // onPressed: () => Get.toNamed(AppRoutes.SETTINGS),
                                   size: UISettings.minButtonSize,
-                                  cornerRadius: UISettings.minButtonCornerRadius,
-                                  backgroundColor: context.colorScheme.background,
+                                  cornerRadius:
+                                      UISettings.minButtonCornerRadius,
+                                  backgroundColor:
+                                      context.colorScheme.background,
                                   iconSize: 24,
-                                  foregroundColor: context.colorScheme.onBackground,
+                                  foregroundColor:
+                                      context.colorScheme.onBackground,
                                 ),
                               ),
                             ],
@@ -212,8 +258,10 @@ class _ProfileViewState extends State<ProfileView> {
                           Container(
                             margin: const EdgeInsets.only(top: 25, bottom: 45),
                             child: AgenciesMap(
-                                height: MediaQuery.of(context).size.height * .25,
-                                radius: MediaQuery.of(context).size.height * .045,
+                                height:
+                                    MediaQuery.of(context).size.height * .25,
+                                radius:
+                                    MediaQuery.of(context).size.height * .045,
                                 onTap: (lat) {
                                   Get.toNamed(AppRoutes.MAP);
                                 }),
@@ -239,38 +287,62 @@ class _ProfileViewState extends State<ProfileView> {
                                 padding: const EdgeInsets.only(top: 45),
                                 itemCount: profileScreenOptions.length,
                                 itemBuilder: (context, index) {
-                                  FluOption option = profileScreenOptions[index];
-                                  bool isLogout = lastIsLogout && index == profileScreenOptions.length - 1;
+                                  FluOption option =
+                                      profileScreenOptions[index];
+                                  bool isLogout = lastIsLogout &&
+                                      index == profileScreenOptions.length - 1;
 
                                   return FluButton(
                                     onPressed: option.onPressed ??
                                         () {
                                           if (index == 0) {
-                                            Get.find<ProfileController>().selectedRoute.value = LocaleKeys.strPersonalInfo.tr;
+                                            Get.find<ProfileController>()
+                                                    .selectedRoute
+                                                    .value =
+                                                LocaleKeys.strPersonalInfo.tr;
                                             Get.toNamed(AppRoutes.PROFILEOTP);
                                           } else if (index == 1) {
-                                            Get.find<ProfileController>().selectedRoute.value = LocaleKeys.strChangePass.tr;
-                                            Get.toNamed(AppRoutes.PROFILECHANGESPASSWORD);
-                                            Get.find<ProfileController>().oldPIN.clear();
-                                            Get.find<ProfileController>().newPIN.clear();
-                                            Get.find<ProfileController>().confirmNewPIN.clear();
+                                            Get.find<ProfileController>()
+                                                    .selectedRoute
+                                                    .value =
+                                                LocaleKeys.strChangePass.tr;
+                                            Get.toNamed(AppRoutes
+                                                .PROFILECHANGESPASSWORD);
+                                            Get.find<ProfileController>()
+                                                .oldPIN
+                                                .clear();
+                                            Get.find<ProfileController>()
+                                                .newPIN
+                                                .clear();
+                                            Get.find<ProfileController>()
+                                                .confirmNewPIN
+                                                .clear();
                                           } else if (index == 2) {
                                             showSelectLanguageDialog(context);
                                           } else if (index == 9) {
                                             showLogoutDialog(context);
                                           } else {
-                                            Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                                                backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+                                            Get.snackbar("Message",
+                                                LocaleKeys.strComingSoon.tr,
+                                                backgroundColor:
+                                                    Colors.lightBlue,
+                                                colorText: Colors.white,
+                                                duration:
+                                                    const Duration(seconds: 3));
                                           }
                                         },
-                                    backgroundColor: context.colorScheme.background,
-                                    margin: EdgeInsets.only(top: index == 0 ? 0 : 25),
+                                    backgroundColor:
+                                        context.colorScheme.background,
+                                    margin: EdgeInsets.only(
+                                        top: index == 0 ? 0 : 25),
                                     padding: EdgeInsets.zero,
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          margin: const EdgeInsets.only(right: 10),
+                                          margin:
+                                              const EdgeInsets.only(right: 10),
                                           child: Stack(
                                             alignment: Alignment.center,
                                             children: [
@@ -279,11 +351,19 @@ class _ProfileViewState extends State<ProfileView> {
                                                   width: 60 + 8,
                                                   child: RotatedBox(
                                                     quarterTurns: 2,
-                                                    child: CircularProgressIndicator(
+                                                    child:
+                                                        CircularProgressIndicator(
                                                       strokeWidth: 1.5,
                                                       value: .25,
-                                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                                        (isLogout ? Colors.red : context.colorScheme.primary).withOpacity(.1),
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                              Color>(
+                                                        (isLogout
+                                                                ? Colors.red
+                                                                : context
+                                                                    .colorScheme
+                                                                    .primary)
+                                                            .withOpacity(.1),
                                                       ),
                                                     ),
                                                   )),
@@ -291,43 +371,65 @@ class _ProfileViewState extends State<ProfileView> {
                                                 height: 60,
                                                 width: 60,
                                                 decoration: BoxDecoration(
-                                                    color: (isLogout ? Colors.red : context.colorScheme.primary).withOpacity(.045),
+                                                    color: (isLogout
+                                                            ? Colors.red
+                                                            : context
+                                                                .colorScheme
+                                                                .primary)
+                                                        .withOpacity(.045),
                                                     shape: BoxShape.circle),
                                                 child: FluIcon(
                                                   option.icon!,
                                                   size: 24,
                                                   strokeWidth: 1.6,
-                                                  color: isLogout ? Colors.red : context.colorScheme.onSurface,
+                                                  color: isLogout
+                                                      ? Colors.red
+                                                      : context.colorScheme
+                                                          .onSurface,
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
                                         Expanded(
-                                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                          Text(
-                                            option.title,
-                                            style: TextStyle(
-                                              fontSize: M3FontSizes.bodyLarge,
-                                              fontWeight: FontWeight.bold,
-                                              color: isLogout ? Colors.red : context.colorScheme.onBackground,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 2),
-                                          Text(
-                                            option.description!,
-                                            style: TextStyle(
-                                              color: isLogout ? Colors.red : context.colorScheme.onBackground.withOpacity(.75),
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ])),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                              Text(
+                                                option.title,
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      M3FontSizes.bodyLarge,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: isLogout
+                                                      ? Colors.red
+                                                      : context.colorScheme
+                                                          .onBackground,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 2),
+                                              Text(
+                                                option.description!,
+                                                style: TextStyle(
+                                                  color: isLogout
+                                                      ? Colors.red
+                                                      : context.colorScheme
+                                                          .onBackground
+                                                          .withOpacity(.75),
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ])),
                                         const SizedBox(width: 15),
                                         FluIcon(
                                           FluIcons.arrowRight1,
                                           size: 18,
-                                          color: isLogout ? Colors.red : context.colorScheme.onBackground,
+                                          color: isLogout
+                                              ? Colors.red
+                                              : context
+                                                  .colorScheme.onBackground,
                                         ),
                                       ],
                                     ),
@@ -344,7 +446,10 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   void showSelectLanguageDialog(BuildContext context) {
-    List<bool> selectedLanguages = [false, false]; // Index 0: English, Index 1: French
+    List<bool> selectedLanguages = [
+      false,
+      false
+    ]; // Index 0: English, Index 1: French
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -388,7 +493,8 @@ class _ProfileViewState extends State<ProfileView> {
                     children: [
                       Row(
                         children: [
-                          Image.asset(AppImages.franceFlag, height: 30, width: 30),
+                          Image.asset(AppImages.franceFlag,
+                              height: 30, width: 30),
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
                             child: Text(LocaleKeys.strFrench.tr),
@@ -412,13 +518,17 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             actions: [
               ElevatedButton(
-                onPressed: AppGlobal.isSelectEnglish == false && AppGlobal.isSelectFrench == false
+                onPressed: AppGlobal.isSelectEnglish == false &&
+                        AppGlobal.isSelectFrench == false
                     ? null
                     : () {
-                        if (AppGlobal.isSelectFrench == true && AppGlobal.isSelectEnglish == false) {
-                          Get.find<StorageServices>().saveLanguage(language: 'FR');
+                        if (AppGlobal.isSelectFrench == true &&
+                            AppGlobal.isSelectEnglish == false) {
+                          Get.find<StorageServices>()
+                              .saveLanguage(language: 'FR');
                         } else {
-                          Get.find<StorageServices>().saveLanguage(language: 'EN');
+                          Get.find<StorageServices>()
+                              .saveLanguage(language: 'EN');
                         }
 
                         Navigator.pop(context);
@@ -457,7 +567,8 @@ class _ProfileViewState extends State<ProfileView> {
                 await storage.remove('msisdn').then((value) {
                   storage.remove('isPrivacyCheck');
                   storage.remove('isLoginSuccessClick');
-                  ProgressAlertDialog.showALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
+                  ProgressAlertDialog.showALoadingDialog(context,
+                      LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
                 });
               },
               child: Text(LocaleKeys.strYes.tr),

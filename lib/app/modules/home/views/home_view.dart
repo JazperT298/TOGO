@@ -21,21 +21,26 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildTitle(BuildContext context, String text, Color color) => Text(
         text.toUpperCase(),
-        style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: color, height: 1.5),
+        style: TextStyle(
+            fontSize: 17.sp,
+            fontWeight: FontWeight.bold,
+            color: color,
+            height: 1.5),
       );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        top: false,
+        // top: false,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.only(top: 10, bottom: MediaQuery.of(context).size.height * .025),
+                padding: EdgeInsets.only(
+                    top: 10, bottom: MediaQuery.of(context).size.height * .025),
                 color: context.colorScheme.primary.withOpacity(.1),
                 child: SafeArea(
                   child: Column(
@@ -63,7 +68,9 @@ class HomeView extends GetView<HomeController> {
                                       outlineThickness: 1.5,
                                       icon: FluIcons.user,
                                       outlineGap: 3,
-                                      outlineColor: [context.colorScheme.outlineVariant],
+                                      outlineColor: [
+                                        context.colorScheme.outlineVariant
+                                      ],
                                       margin: const EdgeInsets.only(right: 10),
                                     ),
                                   ),
@@ -77,19 +84,29 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: MediaQuery.of(context).size.height * .035),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * .035),
                             Text(
                               Flu.formatDate(DateTime.now()).toUpperCase(),
                               style: TextStyle(fontSize: 12.sp),
                             ),
-                            _buildTitle(context, LocaleKeys.strMoneyControl.tr.toUpperCase(), context.colorScheme.onSurface),
+                            _buildTitle(
+                                context,
+                                LocaleKeys.strMoneyControl.tr.toUpperCase(),
+                                context.colorScheme.onSurface),
                             FluLine(
                               height: 1,
                               width: double.infinity,
                               color: context.colorScheme.surface,
-                              margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025).copyWith(
+                              margin: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              .025)
+                                  .copyWith(
                                 left: MediaQuery.of(context).size.height * .1,
-                                right: MediaQuery.of(context).size.height * .015,
+                                right:
+                                    MediaQuery.of(context).size.height * .015,
                               ),
                             ),
                             const _Card(),
@@ -103,7 +120,8 @@ class HomeView extends GetView<HomeController> {
               ),
               _Favorites(users..shuffle()),
               const Padding(
-                padding: EdgeInsets.only(right: 20, top: 50, left: 20, bottom: 15),
+                padding:
+                    EdgeInsets.only(right: 20, top: 50, left: 20, bottom: 15),
                 child: _PromotionsAndOffers(),
               ),
             ],
@@ -131,7 +149,9 @@ class _CardState extends State<_Card> {
     return Container(
         height: MediaQuery.of(context).size.height * .25,
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(color: context.colorScheme.primary, borderRadius: BorderRadius.circular(25)),
+        decoration: BoxDecoration(
+            color: context.colorScheme.primary,
+            borderRadius: BorderRadius.circular(25)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -176,7 +196,9 @@ class _CardState extends State<_Card> {
                                       ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
+                                padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height *
+                                        0.02),
                                 child: Text(
                                   " FCFA",
                                   style: TextStyle(
@@ -207,10 +229,13 @@ class _CardState extends State<_Card> {
                           ),
                           Obx(
                             () => FluButton.icon(
-                              controller.afficherSolde.value == true ? FluIcons.eye : FluIcons.eyeSlash,
+                              controller.afficherSolde.value == true
+                                  ? FluIcons.eye
+                                  : FluIcons.eyeSlash,
                               onPressed: () {
                                 if (controller.afficherSolde.value == true) {
-                                  HomeAlertDialog.showOTPview(controller: controller);
+                                  HomeAlertDialog.showOTPview(
+                                      controller: controller);
                                 } else {
                                   controller.afficherSolde.value = true;
                                 }
@@ -219,7 +244,8 @@ class _CardState extends State<_Card> {
                               },
                               alignment: Alignment.centerRight,
                               backgroundColor: Colors.transparent,
-                              foregroundColor: context.colorScheme.onPrimary.withOpacity(.5),
+                              foregroundColor:
+                                  context.colorScheme.onPrimary.withOpacity(.5),
                               // margin: EdgeInsets.only(bottom: 5),
                             ),
                           ),
@@ -285,11 +311,15 @@ class _QuickActions extends StatelessWidget {
         break;
       case WalletActions.pay:
         Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-            backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+            backgroundColor: Colors.lightBlue,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 3));
         break;
       case WalletActions.topUp:
         Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-            backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+            backgroundColor: Colors.lightBlue,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 3));
 
         // showModalBottomSheet(
         //     context: context,
@@ -324,7 +354,8 @@ class _QuickActions extends StatelessWidget {
               width: 1.5,
               color: context.colorScheme.primary.withOpacity(.1),
             ),
-            margin: EdgeInsets.only(left: WalletActions.values.indexOf(action) == 0 ? 0 : 10),
+            margin: EdgeInsets.only(
+                left: WalletActions.values.indexOf(action) == 0 ? 0 : 10),
             onPressed: () => onAction(context, action),
           );
         },
@@ -341,7 +372,10 @@ class _Favorites extends StatelessWidget {
   void onItemTap([int? index]) {
     // KRouter.noContextPush(index == null ? Routes.newFavorite : Routes.transfer);
     // Get.toNamed(index == null ? AppRoutes.NEWFAV : AppRoutes.TRANSFER);
-    Get.snackbar("Message", "À venir", backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+    Get.snackbar("Message", "À venir",
+        backgroundColor: Colors.lightBlue,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3));
   }
 
   @override
@@ -352,7 +386,9 @@ class _Favorites extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: UISettings.pagePadding.copyWith(top: MediaQuery.of(context).size.height * .035, bottom: MediaQuery.of(context).size.height * .035),
+          padding: UISettings.pagePadding.copyWith(
+              top: MediaQuery.of(context).size.height * .035,
+              bottom: MediaQuery.of(context).size.height * .035),
           child: Row(children: [
             Expanded(
                 child: Column(
@@ -367,7 +403,11 @@ class _Favorites extends StatelessWidget {
                   tag: '<title>',
                   child: Text(
                     LocaleKeys.strFavoritePeople.tr.toUpperCase(),
-                    style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: context.colorScheme.onSurface, height: 1.5),
+                    style: TextStyle(
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.bold,
+                        color: context.colorScheme.onSurface,
+                        height: 1.5),
                   ),
                 ),
               ],
@@ -408,7 +448,8 @@ class _Favorites extends StatelessWidget {
                         width: itemSize,
                         margin: EdgeInsets.only(left: index == 0 ? 0 : 10),
                         child: Container(
-                          decoration: const BoxDecoration(shape: BoxShape.circle),
+                          decoration:
+                              const BoxDecoration(shape: BoxShape.circle),
                           // child: Center(
                           //   child: Text(
                           //     user.firstName.substring(0, 1),
@@ -454,13 +495,15 @@ class _ServicesModalBottomSheet extends StatefulWidget {
   const _ServicesModalBottomSheet();
 
   @override
-  State<_ServicesModalBottomSheet> createState() => _ServicesModalBottomSheetState();
+  State<_ServicesModalBottomSheet> createState() =>
+      _ServicesModalBottomSheetState();
 }
 
 class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
   final PageController pageController = PageController();
 
-  void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  void toNextStep() => pageController.nextPage(
+      duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
 
   @override
   Widget build(BuildContext context) {
@@ -487,7 +530,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -512,7 +556,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -536,7 +581,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -629,8 +675,12 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                   backgroundColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   margin: EdgeInsets.only(top: index == 0 ? 0 : 25),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  border: BorderSide(width: 1.5, color: context.colorScheme.outlineVariant.withOpacity(.5)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  border: BorderSide(
+                      width: 1.5,
+                      color:
+                          context.colorScheme.outlineVariant.withOpacity(.5)),
                   cornerRadius: 25,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -644,7 +694,9 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                             Text.rich(
                               TextSpan(children: [
                                 const TextSpan(text: '15000'),
-                                TextSpan(text: ' ${LocaleKeys.strFmonth.tr}', style: TextStyle(fontSize: 11.sp))
+                                TextSpan(
+                                    text: ' ${LocaleKeys.strFmonth.tr}',
+                                    style: TextStyle(fontSize: 11.sp))
                               ]),
                               style: TextStyle(
                                 fontSize: 11.sp,
@@ -683,13 +735,18 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                 final option = action.children[index];
 
                 return FluButton(
-                  onPressed: () => Get.toNamed(AppRoutes.BOTTOMNAV), //KRouter.to(context, Routes.subscriptionTransferConfirmation),
+                  onPressed: () => Get.toNamed(AppRoutes
+                      .BOTTOMNAV), //KRouter.to(context, Routes.subscriptionTransferConfirmation),
                   width: double.infinity,
                   backgroundColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   margin: EdgeInsets.only(top: index == 0 ? 0 : 10),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  border: BorderSide(width: 1.5, color: context.colorScheme.outlineVariant.withOpacity(.5)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  border: BorderSide(
+                      width: 1.5,
+                      color:
+                          context.colorScheme.outlineVariant.withOpacity(.5)),
                   cornerRadius: 25,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -722,7 +779,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
           FluButton.text(
             LocaleKeys.strAddABox.tr,
             prefixIcon: FluIcons.add,
-            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .015),
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * .015),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           ),
         ],
@@ -747,7 +805,8 @@ class _PromotionsAndOffers extends StatelessWidget {
   const _PromotionsAndOffers({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  Widget build(BuildContext context) =>
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -875,7 +934,8 @@ class _StoryIndicator extends StatelessWidget {
       child: LinearProgressIndicator(
         value: progress,
         backgroundColor: context.colorScheme.onPrimary.withOpacity(.5),
-        valueColor: AlwaysStoppedAnimation<Color>(context.colorScheme.onPrimary),
+        valueColor:
+            AlwaysStoppedAnimation<Color>(context.colorScheme.onPrimary),
       ),
     );
   }
