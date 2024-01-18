@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import, deprecated_member_use
 
+import 'dart:async';
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +17,7 @@ import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/constants/app_locale.dart';
 import 'package:ibank/utils/constants/ws_const.dart';
 import 'package:ibank/utils/theme.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:telephony/telephony.dart';
@@ -50,11 +53,48 @@ Future<void> main() async {
   }
 
   await Get.putAsync<StorageServices>(() async => StorageServices());
-  runApp(const App());
+  initializeDateFormatting().then((value) => runApp(
+        const AutoLogoutView(),
+      ));
 }
 
-class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+class AutoLogoutView extends StatefulWidget {
+  const AutoLogoutView({super.key});
+
+  @override
+  State<AutoLogoutView> createState() => _AutoLogoutViewState();
+}
+
+class _AutoLogoutViewState extends State<AutoLogoutView> with WidgetsBindingObserver {
+  // Timer? _timer;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  late AppLifecycleState notification;
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {
+      notification = state;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const AppView();
+  }
+}
+
+class AppView extends StatelessWidget {
+  const AppView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

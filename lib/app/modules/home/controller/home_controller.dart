@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
@@ -31,16 +32,12 @@ class HomeController extends GetxController {
     verifyAndroid(msisdn: msisdn.value, version: version);
   }
 
-  static void verifyAndroid(
-      {required String msisdn, required String version}) async {
-    ProgressAlertDialog.progressAlertDialog(
-        Get.context!, LocaleKeys.strLoading.tr);
+  static void verifyAndroid({required String msisdn, required String version}) async {
+    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -69,8 +66,7 @@ class HomeController extends GetxController {
         if (decodedData['description'] == 'TOKEN_FOUND') {
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
         } else if (decodedData['description'] == 'VERSION NOT UP TO DATE') {
-          HomeAlertDialog.showMessageVersionNotUpToDate(
-              controller: Get.find<HomeController>());
+          HomeAlertDialog.showMessageVersionNotUpToDate(controller: Get.find<HomeController>());
         } else {}
       } else {
         log("ERROR ${response.reasonPhrase}'");
@@ -90,10 +86,8 @@ class HomeController extends GetxController {
     isLoadingDialog(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -137,17 +131,12 @@ class HomeController extends GetxController {
           firstname.value = dataDecoded['Prenoms'];
           msisdn.value = dataDecoded['Compte'];
           birthdate.value = dataDecoded['Date de naissance'];
-          soldeFlooz.value = dataDecoded['Solde Flooz']
-              .toString()
-              .replaceAll("FCFA", "")
-              .trim()
-              .toString();
+          soldeFlooz.value = dataDecoded['Solde Flooz'].toString().replaceAll("FCFA", "").trim().toString();
           afficherSolde.value = false;
           log(soldeFlooz.value);
           Get.back();
         } else {
-          Get.snackbar("Message", jsonString,
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         print(response.reasonPhrase);

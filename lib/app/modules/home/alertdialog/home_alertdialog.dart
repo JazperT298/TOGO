@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -19,9 +21,7 @@ class HomeAlertDialog {
                 if (code.text.isNotEmpty) {
                   controller.enterPinForInformationPersonelles(code: code.text);
                 } else {
-                  Get.snackbar("Message", "Entrées manquantes",
-                      backgroundColor: Colors.lightBlue,
-                      colorText: Colors.white);
+                  Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                 }
               },
               child: const Text("CONTINUER")),
@@ -56,9 +56,7 @@ class HomeAlertDialog {
                       ),
                       Container(
                         padding: EdgeInsets.only(
-                            left: MediaQuery.of(Get.context!).size.width * 0.05,
-                            right:
-                                MediaQuery.of(Get.context!).size.width * 0.05),
+                            left: MediaQuery.of(Get.context!).size.width * 0.05, right: MediaQuery.of(Get.context!).size.width * 0.05),
                         height: MediaQuery.of(Get.context!).size.height * 0.07,
                         width: MediaQuery.of(Get.context!).size.width,
                         child: TextField(
@@ -71,12 +69,9 @@ class HomeAlertDialog {
                           decoration: InputDecoration(
                             fillColor: Colors.lightBlue[100],
                             filled: true,
-                            contentPadding: EdgeInsets.only(
-                                left: MediaQuery.of(Get.context!).size.width *
-                                    0.03),
+                            contentPadding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.width * 0.03),
                             alignLabelWithHint: false,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30)),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
@@ -116,8 +111,7 @@ class HomeAlertDialog {
         )));
   }
 
-  static showMessageVersionNotUpToDate(
-      {required HomeController controller}) async {
+  static showMessageVersionNotUpToDate({required HomeController controller}) async {
     Get.dialog(
         WillPopScope(
           onWillPop: () async {
@@ -128,7 +122,11 @@ class HomeAlertDialog {
               actions: [
                 TextButton(
                     onPressed: () {
-                      controller.launch();
+                      if (Platform.isIOS) {
+                        Get.back();
+                      } else {
+                        controller.launch();
+                      }
                     },
                     child: const Text("MISE À JOUR"))
               ],

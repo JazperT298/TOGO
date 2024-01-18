@@ -26,6 +26,8 @@ PODS:
   - location (0.0.1):
     - Flutter
   - MTBBarcodeScanner (5.0.11)
+  - package_info_plus (0.4.5):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -46,6 +48,8 @@ PODS:
     - FMDB (>= 2.7.5)
   - telephony (0.0.1):
     - Flutter
+  - url_launcher_ios (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
@@ -57,6 +61,7 @@ DEPENDENCIES:
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - location (from `.symlinks/plugins/location/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - phone_number (from `.symlinks/plugins/phone_number/ios`)
@@ -65,6 +70,7 @@ DEPENDENCIES:
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - telephony (from `.symlinks/plugins/telephony/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -91,6 +97,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
@@ -108,6 +116,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   telephony:
     :path: ".symlinks/plugins/telephony/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 CHECKOUT OPTIONS:
   PhoneNumberKit:
@@ -115,7 +125,7 @@ CHECKOUT OPTIONS:
     :tag: 3.5.10
 
 SPEC CHECKSUMS:
-  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
+  device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   fast_rsa: 7b778581f548a7ba665bd7a12fc6c2f9ba4cb2e8
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_contacts: edb1c5ce76aa433e20e6cb14c615f4c0b66e0983
@@ -127,6 +137,7 @@ SPEC CHECKSUMS:
   GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
+  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   phone_number: 3f4cef3301f0df6a8cc76d66d48968d63a2cf8ea
@@ -135,6 +146,7 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   telephony: c41768fae9fb5495781b05a72004106ca33ec777
+  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
 
 PODFILE CHECKSUM: f58a87418a83cd1076e473b6c17acb83e1a4191c
 
