@@ -75,7 +75,6 @@ class LoginController extends GetxController {
           Get.snackbar("Message", "Numero Invalide",
               backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
-        
       } else {
         log("ERROR something went wrong");
       }
@@ -129,7 +128,7 @@ class LoginController extends GetxController {
           Get.find<StorageServices>().saveOTP(otp: otp);
           // VERIFY OTP
           Get.back();
-          Get.offAllNamed(AppRoutes.OTP, arguments: {
+          Get.toNamed(AppRoutes.OTP, arguments: {
             "msisdn": msisdn,
             "formatedMSISDN": formattedMSISDN,
             "countryCode": countryCode,
