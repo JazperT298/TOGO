@@ -37,7 +37,7 @@ class ProfileController extends GetxController {
   }
 
   verifyGetProfile({required String msidsn, required String token, required String message, required String sendsms}) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    // ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -71,7 +71,7 @@ class ProfileController extends GetxController {
         jsonString = jsonString.replaceAll('&quot;', '"');
         // Convert to JSON
         var json = jsonDecode(jsonString);
-        Get.back();
+        // Get.back();
         String profile = json.containsKey("profile") ? json["profile"] : "";
         String description = json.containsKey("description") ? json["description"] : "";
         String msg = json.containsKey("message") ? json["message"] : "";
@@ -209,10 +209,10 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
-  void getLanguage() {
+  void getLanguage() async {
     isLoadingProfile(true);
-    String enLang = Get.find<StorageServices>().storage.read('language');
-    Get.updateLocale(Locale(enLang.toLowerCase()));
+    String enLang = await Get.find<StorageServices>().storage.read('language');
+    await Get.updateLocale(Locale(enLang.toLowerCase()));
     AppGlobal.isSelectFrench = enLang == "FR" ? true : false;
     AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
     isLoadingProfile(false);

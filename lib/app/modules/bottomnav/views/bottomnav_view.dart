@@ -44,7 +44,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
     pageController = PageController();
     Get.put(HomeController());
     Get.put(HistoryController());
-    Get.put(ProfileController());
+    // Get.put(ProfileController());
     contoller.getDataFromStorage();
     super.initState();
   }

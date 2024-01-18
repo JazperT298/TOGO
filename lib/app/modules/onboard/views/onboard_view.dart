@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ibank/app/data/ui/onboarding_screen_page.dart';
 import 'package:ibank/app/modules/onboard/controller/onboard_controller.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/ui/onboarding_pages.dart';
 import 'package:sizer/sizer.dart';
@@ -64,7 +65,7 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                           intensity: 7.0,
                           cornerRadius: 14,
                           child: FluButton.text(
-                            "Skip.",
+                           LocaleKeys.strSkip.tr,
                             onPressed: () {
                               Get.offNamed(AppRoutes.LOGIN);
                             },
@@ -72,7 +73,7 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                             backgroundColor:
                                 context.colorScheme.background.withOpacity(.25),
                             foregroundColor: Colors.white,
-                            height: UISettings.minButtonSize - 10,
+                            height:5.8.h,
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                           ),
                         ),
@@ -88,7 +89,7 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                   : FluButton.text(
                       onboardingScreenPage[currentPage].buttonText,
                       prefixIcon: onboardingScreenPage[currentPage].buttonIcon,
-                      iconSize: 18,
+                      iconSize: 15,
                       iconStrokeWidth: 1.8,
                       onPressed: () {
                         controller.isLastPage.value
@@ -96,12 +97,12 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                             : controller.toNextPage();
                         // print(controller.isLastPage.value);
                       },
-                      height: UISettings.buttonSize - 10,
+                      height:5.8.h,
                       width: MediaQuery.of(context).size.width * .42,
                       cornerRadius: UISettings.buttonCornerRadius,
                       margin: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * .025,
-                          bottom: MediaQuery.of(context).size.height * .08),
+                          bottom: MediaQuery.of(context).size.height * .03),
                       backgroundColor: context.colorScheme.primary,
                       foregroundColor: context.colorScheme.onPrimary,
                       boxShadow: [
@@ -114,7 +115,7 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                       ],
                       textStyle: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 12.sp,
+                        fontSize: 10.sp,
                       ),
                     ),
             ),
@@ -167,13 +168,13 @@ class _Page extends GetView<OnboardController> {
               Text(
                 StringUtils(data.title).capitalizeFirst!,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black, fontSize: 18.sp),
+                style: TextStyle(color: Colors.black, fontSize: 16.sp),
               ),
               const SizedBox(height: 5),
               Text(
                 data.description,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black54, fontSize: 10.sp),
+                style: TextStyle(color: Colors.black54, fontSize: 9.sp),
               ),
             ],
           ),

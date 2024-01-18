@@ -43,42 +43,42 @@ class PrivacyView extends GetView<PrivacyController> {
                         const SizedBox(height: 3),
                         Text(
                           'Gorem ipsum dolor sit \namet.',
-                          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black),
+                          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'Horem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
-                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(height: 24),
                         Text(
                           'Nunc vulputate libero et velit interdum.',
-                          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black),
+                          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'Sorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac ',
-                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus. Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. ',
-                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(height: 24),
                         Text(
                           'Nunc vulputate libero et velit interdum.',
-                          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black),
+                          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'Sorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac ',
-                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus. Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. ',
-                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(height: 110),
                       ],
@@ -110,7 +110,7 @@ class PrivacyView extends GetView<PrivacyController> {
                             cornerRadius: UISettings.minButtonCornerRadius,
                             backgroundColor: Colors.transparent,
                             foregroundColor: Colors.transparent,
-                            textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge, color: Color(0xFFFB6404)),
+                            textStyle:  TextStyle(fontWeight: FontWeight.w600,  fontSize: 10.sp, color:const Color(0xFFFB6404)),
                           ),
                           FluButton.text(
                             LocaleKeys.strAccept.tr,
@@ -132,7 +132,7 @@ class PrivacyView extends GetView<PrivacyController> {
                                 offset: const Offset(0, 5),
                               )
                             ],
-                            textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                            textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp),
                           ),
                         ],
                       ),

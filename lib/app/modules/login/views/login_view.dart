@@ -115,7 +115,7 @@ class _LoginViewState extends State<LoginView> {
               const SizedBox(height: 20),
               Text(
                 LocaleKeys.strAccessAccount.tr,
-                style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Padding(
@@ -123,7 +123,7 @@ class _LoginViewState extends State<LoginView> {
                 child: Text(
                   LocaleKeys.strAccessAccountDesc.tr,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 11.sp, color: Colors.grey, fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 10.sp, color: Colors.grey, fontWeight: FontWeight.w400),
                 ),
               ),
               const SizedBox(height: 42),
@@ -151,8 +151,8 @@ class _LoginViewState extends State<LoginView> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: TextStyle(color: Colors.black, fontSize: 11.sp)),
-                          const FluIcon(FluIcons.arrowDown2, size: 20)
+                          Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: TextStyle(color: Colors.black, fontSize: 10.sp)),
+                          const FluIcon(FluIcons.arrowDown2, size: 16)
                         ],
                       ),
                     ),
@@ -162,7 +162,7 @@ class _LoginViewState extends State<LoginView> {
                     child: FluTextField(
                       hint: LocaleKeys.strPhoneNumber.tr,
                       inputController: numberController,
-                      height: 5.h,
+                      height: 5.8.h,
                       cornerRadius: 15,
                       keyboardType: TextInputType.number,
                       fillColor: context.colorScheme.primaryContainer,
@@ -185,7 +185,7 @@ class _LoginViewState extends State<LoginView> {
                           errorMessage = '';
                         });
                       },
-                      textStyle: TextStyle(fontSize: 11.sp), // context.textTheme.bodyMedium,
+                      textStyle: TextStyle(fontSize: 10.sp), // context.textTheme.bodyMedium,
 
                       onFieldSubmitted: (p0) {
                         if (numberController.text.isNotEmpty) {
@@ -214,7 +214,7 @@ class _LoginViewState extends State<LoginView> {
                           child: Text(
                             errorMessage,
                             style: TextStyle(
-                              fontSize: 11.sp,
+                              fontSize: 10.sp,
                               color: context.colorScheme.secondary,
                             ),
                           ))
@@ -223,7 +223,7 @@ class _LoginViewState extends State<LoginView> {
                           child: Text(
                             LocaleKeys.strPhoneNumberRequired.tr,
                             style: TextStyle(
-                              fontSize: 11.sp,
+                              fontSize: 10.sp,
                               color: context.colorScheme.secondary,
                             ),
                           ),
@@ -266,7 +266,7 @@ class _LoginViewState extends State<LoginView> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp),
               ),
               const SizedBox(height: 30),
             ],
