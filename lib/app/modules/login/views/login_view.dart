@@ -222,7 +222,6 @@ class _LoginViewState extends State<LoginView> {
                                   .replaceAll("+", "")
                                   .toString();
                           print(msisdn);
-
                           ProgressAlertDialog.progressAlertDialog(
                               context, LocaleKeys.strLoading.tr);
                           controller.kycInquiryRequest(
@@ -271,8 +270,9 @@ class _LoginViewState extends State<LoginView> {
                   //     msisdn: "22879397111",
                   //     formattedMSISDN: "79 39 71 11",
                   //     countryCode: "228");
-                  if (numberController.text.isNotEmpty) {
-                    print(numberController.text);
+                  print(numberController.text.trim().toString().length);
+                  if (numberController.text.isNotEmpty &&
+                      numberController.text.trim().toString().length == 11) {
                     if (numberController.text.contains(" ")) {
                       print("wala ge input ang 228");
                       String replacedString = numberController.text
@@ -283,20 +283,43 @@ class _LoginViewState extends State<LoginView> {
                           .replaceAll("+", "")
                           .toString();
                       print(msisdn);
-                      ProgressAlertDialog.progressAlertDialog(
-                          context, LocaleKeys.strLoading.tr);
-                      controller.kycInquiryRequest(
-                          msisdn: msisdn,
-                          formattedMSISDN: numberController.text,
-                          countryCode: _selectedCountryCode);
+                      print(_selectedCountryCode);
+
+                      if (msisdn.substring(0, 3) ==
+                          _selectedCountryCode.replaceAll("+", "")) {
+                        ProgressAlertDialog.progressAlertDialog(
+                            context, LocaleKeys.strLoading.tr);
+                        controller.kycInquiryRequest(
+                            msisdn: msisdn,
+                            formattedMSISDN: numberController.text,
+                            countryCode: _selectedCountryCode);
+                      } else {
+                        Get.snackbar("Message", "Numero Invalide",
+                            backgroundColor: Colors.lightBlue,
+                            colorText: Colors.white);
+                      }
                     } else {
                       print("ge input ang 228");
-                      ProgressAlertDialog.progressAlertDialog(
-                          context, LocaleKeys.strLoading.tr);
-                      controller.kycInquiryRequest(
-                          msisdn: numberController.text,
-                          formattedMSISDN: numberController.text,
-                          countryCode: _selectedCountryCode);
+                      print(numberController.text);
+                      if (numberController.text.substring(0, 3) ==
+                          _selectedCountryCode.replaceAll("+", "")) {
+                        ProgressAlertDialog.progressAlertDialog(
+                            context, LocaleKeys.strLoading.tr);
+                        String stringRemoveCountryCode =
+                            numberController.text.substring(3);
+                        String formattedMSISDN =
+                            stringRemoveCountryCode.replaceAllMapped(
+                                RegExp(r".{2}"),
+                                (match) => "${match.group(0)} ");
+                        controller.kycInquiryRequest(
+                            msisdn: numberController.text,
+                            formattedMSISDN: formattedMSISDN,
+                            countryCode: _selectedCountryCode);
+                      } else {
+                        Get.snackbar("Message", "Numero Invalide",
+                            backgroundColor: Colors.lightBlue,
+                            colorText: Colors.white);
+                      }
                     }
 
                     isTextFieldEmpty = false;
@@ -304,6 +327,11 @@ class _LoginViewState extends State<LoginView> {
                     setState(() {
                       isTextFieldEmpty = true;
                     });
+                  } else if (numberController.text.trim().toString().length !=
+                      11) {
+                    Get.snackbar("Message", "Numero Invalide",
+                        backgroundColor: Colors.lightBlue,
+                        colorText: Colors.white);
                   }
                 },
                 height: 5.8.h,
