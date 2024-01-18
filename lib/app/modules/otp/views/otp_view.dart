@@ -48,7 +48,8 @@ class _OtpViewState extends State<OtpView> {
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -60,39 +61,72 @@ class _OtpViewState extends State<OtpView> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+          padding:
+              UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                child: Image.asset(
-                  AppImages.otpImage,
-                  height: MediaQuery.of(context).size.height * .3,
-                  width: MediaQuery.of(context).size.height * .3,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.07,
+                  width: MediaQuery.of(context).size.width * 0.13,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color.fromARGB(255, 175, 221, 243)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ))),
+                    onPressed: () {
+                      Get.back();
+                      Get.back();
+                    },
+                    child: const FluIcon(
+                      FluIcons.arrowLeft,
+                      size: 30,
+                      strokeWidth: 2,
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(height: 20),
+              Expanded(
+                child: SizedBox(
+                  child: Image.asset(AppImages.otpImage, width: 100.w),
+                ),
+              ),
+              SizedBox(height: 2.h),
               Text(
                 LocaleKeys.strConfirmNumber.tr,
                 style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 2.h),
               Padding(
                 padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
                 child: Text(
                   LocaleKeys.strEnterCodeDesc.tr,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 10.sp, color: Colors.grey, fontWeight: FontWeight.w400),
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w400),
                 ),
               ),
               Obx(
                 () => Text(
                   '${controller.countryCode.value} ${controller.formatedMSISDN.value}',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 10.sp, color: const Color(0xFFFB6404), fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      color: const Color(0xFFFB6404),
+                      fontWeight: FontWeight.w600),
                 ),
               ),
-              const SizedBox(height: 28),
+              SizedBox(height: 2.h),
               Form(
                 key: formKey,
                 child: Padding(
@@ -203,25 +237,33 @@ class _OtpViewState extends State<OtpView> {
                             if (controller.requestVia.value == "sms") {
                               controller.resendencryptionExample(
                                   msisdn: controller.msisdn.value,
-                                  formattedMSISDN: controller.formatedMSISDN.value,
+                                  formattedMSISDN:
+                                      controller.formatedMSISDN.value,
                                   countryCode: controller.countryCode.value);
                             } else {
                               controller.otpRequestViaApi(
                                   msisdn: controller.msisdn.value,
-                                  formattedMSISDN: controller.formatedMSISDN.value,
+                                  formattedMSISDN:
+                                      controller.formatedMSISDN.value,
                                   countryCode: controller.countryCode.value);
                             }
                             controller.isResendShow.value = false;
                             controller.startTimer();
                           } else {
                             // controller.isResendShow.value = false;
-                            Get.snackbar("Message", LocaleKeys.strPinCodeWarning.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                            Get.snackbar(
+                                "Message", LocaleKeys.strPinCodeWarning.tr,
+                                backgroundColor: Colors.lightBlue,
+                                colorText: Colors.white);
                           }
                         },
                         child: Text(
                           LocaleKeys.strResentCode.tr,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 10.sp, color: context.colorScheme.primary, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontSize: 10.sp,
+                              color: context.colorScheme.primary,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
               ),
@@ -236,7 +278,8 @@ class _OtpViewState extends State<OtpView> {
                       isEmptyFields = true;
                     });
                   } else {
-                    ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                    ProgressAlertDialog.progressAlertDialog(
+                        context, LocaleKeys.strLoading.tr);
                     controller.verifyOTP(otp: textEditingController.text);
                     // 632660
                     // SharedPrefService.saveLoginData(true, 'Malik Monk');
@@ -258,7 +301,8 @@ class _OtpViewState extends State<OtpView> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle:
+                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
               const SizedBox(height: 30),
             ],
