@@ -154,7 +154,9 @@ class _WithdrawalViewState extends State<WithdrawalView> {
                               top: MediaQuery.of(context).size.height * 0.02,
                               left: MediaQuery.of(context).size.width * 0.02,
                             ),
-                            decoration: BoxDecoration(color: const Color.fromARGB(255, 193, 224, 238), borderRadius: BorderRadius.circular(20)),
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 193, 224, 238),
+                                borderRadius: BorderRadius.circular(20)),
                             child: Obx(
                               () => Text(
                                 controller.nickname.value,
@@ -191,7 +193,9 @@ class _WithdrawalViewState extends State<WithdrawalView> {
                               top: MediaQuery.of(context).size.height * 0.02,
                               left: MediaQuery.of(context).size.width * 0.02,
                             ),
-                            decoration: BoxDecoration(color: const Color.fromARGB(255, 193, 224, 238), borderRadius: BorderRadius.circular(20)),
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 193, 224, 238),
+                                borderRadius: BorderRadius.circular(20)),
                             child: Obx(
                               () => Text(
                                 controller.amount.value,
@@ -220,13 +224,16 @@ class _WithdrawalViewState extends State<WithdrawalView> {
                           foregroundColor: context.colorScheme.onPrimary,
                           boxShadow: [
                             BoxShadow(
-                              color: context.colorScheme.primary.withOpacity(.35),
+                              color:
+                                  context.colorScheme.primary.withOpacity(.35),
                               blurRadius: 25,
                               spreadRadius: 3,
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                          textStyle: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: M3FontSizes.bodyLarge),
                         ),
                       ),
                       // Expanded(flex: 4, child: _buildQrView(context)),
@@ -278,13 +285,21 @@ class _WithdrawalViewState extends State<WithdrawalView> {
 
   Widget _buildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    var scanArea = (MediaQuery.of(context).size.width < 400 || MediaQuery.of(context).size.height < 400) ? 150.0 : 300.0;
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+            MediaQuery.of(context).size.height < 400)
+        ? 150.0
+        : 300.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(borderColor: Colors.red, borderRadius: 10, borderLength: 30, borderWidth: 10, cutOutSize: scanArea),
+      overlay: QrScannerOverlayShape(
+          borderColor: Colors.red,
+          borderRadius: 10,
+          borderLength: 30,
+          borderWidth: 10,
+          cutOutSize: scanArea),
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }
@@ -314,9 +329,3 @@ class _WithdrawalViewState extends State<WithdrawalView> {
     super.dispose();
   }
 }
-
-// WITHDRAWAL - AFTER ENTERING WITHDRAWAL SCREEN - CHECK IF THERE IS PENDING CASHOUT
-// <v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" xmlns:v="http://schemas.xmlsoap.org/soap/envelope/"><v:Header /><v:Body><n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com"><msisdn i:type="d:string">22899990228</msisdn><message i:type="d:string">AGNTGET F</message><token i:type="d:string">F3C8DEBDBA27B035</token><sendsms i:type="d:string">false</sendsms></n0:RequestToken></v:Body></v:Envelope>
-
-// WITHDRAWAL - ENTER PIN  2240107000004  2240106000042
-//<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" xmlns:v="http://schemas.xmlsoap.org/soap/envelope/"><v:Header /><v:Body><n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com"><msisdn i:type="d:string">22899990228</msisdn><message i:type="d:string">APPAGNT 2240106000042 4512 F</message><token i:type="d:string">F3C8DEBDBA27B035</token><sendsms i:type="d:string">true</sendsms></n0:RequestToken></v:Body></v:Envelope>

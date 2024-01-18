@@ -18,6 +18,7 @@ import 'package:ibank/utils/constants/app_global.dart';
 
 import '../../history/controller/history_controller.dart';
 import '../../home/controller/home_controller.dart';
+import '../../recharge/controller/recharge_controller.dart';
 
 final currentPageProvider = StateProvider.autoDispose<int>((ref) => 0);
 
@@ -45,7 +46,8 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
     pageController = PageController();
     Get.put(HomeController());
     Get.put(HistoryController());
-    // Get.put(ProfileController());
+    Get.put(ProfileController());
+    Get.put(RechargeController());
     contoller.getDataFromStorage();
     super.initState();
   }

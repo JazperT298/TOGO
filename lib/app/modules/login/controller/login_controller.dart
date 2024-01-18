@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/utils/string_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml/xml.dart' as xml;
@@ -106,7 +107,7 @@ class LoginController extends GetxController {
                 <app:RequestToken soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
                   <msisdn xsi:type="xsd:string">$msisdn</msisdn>
                   <message xsi:type="xsd:string">EULA GETOTP ANDROID $msisdn</message>
-                  <token xsi:type="xsd:string">F3C8DEBDBA27B035</token>
+                  <token xsi:type="xsd:string">${Get.find<DevicePlatformServices>().deviceID}</token>
                   <sendsms xsi:type="xsd:string">true</sendsms>
                 </app:RequestToken>
             </soapenv:Body>

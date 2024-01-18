@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ibank/generated/locales.g.dart';
+import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
+import 'package:sizer/sizer.dart';
+
+import '../modals/recharge_credit_input_amount_bottom_sheet.dart';
+import '../modals/recharge_credit_input_number_bottom_sheet.dart';
 
 class RechargeMenuDialog {
-  static void showRechargeMenuDialog(context) {
+  static void showRechargeMenuDialog({required BuildContext context}) {
     // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return alert dialog object
         return AlertDialog(
-          title: Text('Credit transfer'),
+          title: const Text('Credit transfer'),
           content: SizedBox(
             height: 80.0,
             child: Column(
@@ -19,18 +23,13 @@ class RechargeMenuDialog {
                 // Text('Transfert National'),
                 GestureDetector(
                   onTap: () {
-                    // showModalBottomSheet(
-                    //     isScrollControlled: true,
-                    //     context: context,
-                    //     builder: (context) => _ModalBottomSheet(
-                    //           sendType: LocaleKeys.strNationalTransfer.tr,
-                    //           siOTPPage: AppGlobal.siOTPPage,
-                    //           child: EnvoiModalBottomSheet(
-                    //             sendType: LocaleKeys.strNationalTransfer.tr,
-                    //           ),
-                    //         ));
+                    Get.back();
+                    showCreditSelectOption(context: context);
+                    // Get.toNamed(AppRoutes.RECHARGE, arguments: {
+                    //   "screens": "credit",
+                    // });
                   },
-                  child: SizedBox(
+                  child: const SizedBox(
                     height: 20,
                     child: Text('Credit'),
                   ),
@@ -40,18 +39,12 @@ class RechargeMenuDialog {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // showModalBottomSheet(
-                    //     isScrollControlled: true,
-                    //     context: context,
-                    //     builder: (context) => _ModalBottomSheet(
-                    //           sendType: LocaleKeys.strInternationalTransfer.tr,
-                    //           siOTPPage: AppGlobal.siOTPPage,
-                    //           child: EnvoiInternationalBottomSheet(
-                    //             sendType: LocaleKeys.strInternationalTransfer.tr,
-                    //           ),
-                    //         ));
+                    Get.back();
+                    // Get.toNamed(AppRoutes.RECHARGE, arguments: {
+                    //   "screens": "internet",
+                    // });
                   },
-                  child: SizedBox(
+                  child: const SizedBox(
                     height: 20,
                     child: Text('Internet'),
                   ),
@@ -65,5 +58,83 @@ class RechargeMenuDialog {
         );
       },
     );
+  }
+
+  static void showCreditSelectOption({required BuildContext context}) {
+    // flutter defined function
+    var controller = Get.find<RechargeController>();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return alert dialog object
+        return AlertDialog(
+          title: const Text('Select Options'),
+          content: SizedBox(
+            height: 80.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                    controller.amountTextField.clear();
+                    controller.code.clear();
+                    controller.numberTextField.clear();
+                    controller.selectedOption.value = 'For myself';
+                    RechargeCreditInputAmountBottomSheet
+                        .showBottomSheetInputAmount();
+                    // Get.toNamed(AppRoutes.RECHARGE, arguments: {
+                    //   "screens": "credit",
+                    // });
+                  },
+                  child: const SizedBox(
+                    height: 20,
+                    child: Text('For Myself'),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                    controller.amountTextField.clear();
+                    controller.code.clear();
+                    controller.numberTextField.clear();
+                    controller.selectedOption.value = 'For others';
+                    RechargeCreditInputNumberBottomSheet
+                        .showBottomSheetInputNumber();
+                    // Get.toNamed(AppRoutes.RECHARGE, arguments: {
+                    //   "screens": "internet",
+                    // });
+                  },
+                  child: const SizedBox(
+                    height: 20,
+                    child: Text('For Others'),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static showMessageDialog({required String message}) async {
+    Get.dialog(AlertDialog(
+        backgroundColor: Colors.white,
+        content: SizedBox(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              message,
+              style: TextStyle(fontSize: 11.sp),
+            ),
+          ),
+        )));
   }
 }

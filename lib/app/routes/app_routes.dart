@@ -22,10 +22,13 @@ class AppRoutes {
   static const String WITHDRAWALSUCCESS = '/withdrawalsuccess';
 
   static const String PROFILE = '/profile';
-  static const String PROFILEINFORMATIONPERSONELLES = '/profileinformationpersonelles';
+  static const String PROFILEINFORMATIONPERSONELLES =
+      '/profileinformationpersonelles';
   static const String PROFILEOTP = '/profileotpview';
   static const String PROFILECHANGESPASSWORD = '/profilechangepassword';
   static const String TRANSACCOMPLETE = '/transaccomplete';
   static const String TRANSACFAILED = '/transcafailed';
   static const String TRANSACSUCCESS = '/transacsuccess';
+  static const String RECHARGE = '/recharge';
+  static const String RECHARGEOTP = '/rechargeotp';
 }

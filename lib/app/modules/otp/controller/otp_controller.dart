@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/utils/string_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml/xml.dart' as xml;
@@ -34,8 +35,8 @@ class OtpController extends GetxController {
             <soapenv:Body>
                 <app:RequestToken soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
                   <msisdn xsi:type="xsd:string">${msisdn.value}</msisdn>
-                  <message xsi:type="xsd:string">EULA OTP $otp F3C8DEBDBA27B035 ANDROID 3.0.1.0</message>
-                  <token xsi:type="xsd:string">F3C8DEBDBA27B035</token>
+                  <message xsi:type="xsd:string">EULA OTP $otp ${Get.find<DevicePlatformServices>().deviceID} ANDROID 3.0.1.0</message>
+                  <token xsi:type="xsd:string">${Get.find<DevicePlatformServices>().deviceID}</token>
                   <sendsms xsi:type="xsd:string">false</sendsms>
                 </app:RequestToken>
             </soapenv:Body>
@@ -54,7 +55,8 @@ class OtpController extends GetxController {
           //Save the msisdn and token to storage if success
           Get.find<StorageServices>().saveMsisdn(
               msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
-          Get.find<StorageServices>().setToken(token: 'F3C8DEBDBA27B035');
+          Get.find<StorageServices>()
+              .setToken(token: Get.find<DevicePlatformServices>().deviceID);
           // SUCCESS OTP
           Get.back();
           Get.offAllNamed(AppRoutes.PRIVACY);
@@ -163,7 +165,7 @@ class OtpController extends GetxController {
                 <app:RequestToken soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
                   <msisdn xsi:type="xsd:string">$msisdn</msisdn>
                   <message xsi:type="xsd:string">EULA GETOTP ANDROID $msisdn</message>
-                  <token xsi:type="xsd:string">F3C8DEBDBA27B035</token>
+                  <token xsi:type="xsd:string">${Get.find<DevicePlatformServices>().deviceID}</token>
                   <sendsms xsi:type="xsd:string">true</sendsms>
                 </app:RequestToken>
             </soapenv:Body>

@@ -10,6 +10,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/routes/app_pages.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/config/theme/theme_manager.dart';
 import 'package:ibank/config/theme/theme_provider.dart';
 import 'package:ibank/generated/locales.g.dart';
@@ -44,6 +45,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await SqlHelper.initDatabase();
+  Get.put(DevicePlatformServices());
   // cameras = await availableCameras();
 
   final sharedPref = await SharedPreferences.getInstance();
@@ -65,7 +67,8 @@ class AutoLogoutView extends StatefulWidget {
   State<AutoLogoutView> createState() => _AutoLogoutViewState();
 }
 
-class _AutoLogoutViewState extends State<AutoLogoutView> with WidgetsBindingObserver {
+class _AutoLogoutViewState extends State<AutoLogoutView>
+    with WidgetsBindingObserver {
   // Timer? _timer;
   @override
   void initState() {
