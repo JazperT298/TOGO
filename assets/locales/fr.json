@@ -109,6 +109,7 @@
     "strCodeSecretEmpty": "Le code secret ne doit pas être vide",
     "strCodeSecretInvalid": "Code invalide. S'il vous plaît essayer à nouveau",
     "strSessionExpired": "La session a expiré. Vous avez été déconnecté!...",
-    "strvalidate": "Valider"
+    "strvalidate": "Valider",
+    "strNewPassword": "Nouveau mot de passe"
 
 }

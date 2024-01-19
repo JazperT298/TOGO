@@ -54,10 +54,8 @@ class AuthProvider {
 
   static Future<VerificationResponse> sendVerification(String msisdn) async {
     try {
-      AppGlobal.isSendVerificationLoading = true;
-      String stringProperty = await SqlHelper.getProperty(SysProp.PROP_MSISDN, msisdn);
-      String genRequestId = generateRequestId(stringProperty);
-      KYCInquiryRequest request = KYCInquiryRequest(commandId: 'kycinquiry', requestId: 'INQ-$genRequestId', destination: msisdn);
+      KYCInquiryRequest request =
+          KYCInquiryRequest(commandId: 'kycinquiry', requestId: 'INQ-$msisdn${DateTime.now().millisecondsSinceEpoch}', destination: msisdn);
       log('request ${request.toJson()}');
       if (request != null) {
         String verifyMsisdnUrl = 'https://flooznfctest.moov-africa.tg/kyctest/inquiry';

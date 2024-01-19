@@ -42,8 +42,7 @@ enum FieldType { NORMAL, PHONEBOOK }
 class EnvoiModalBottomSheet extends StatefulWidget {
   final String? countryCode;
   final String? formatPhone;
-  const EnvoiModalBottomSheet(
-      {super.key, required this.sendType, this.countryCode, this.formatPhone});
+  const EnvoiModalBottomSheet({super.key, required this.sendType, this.countryCode, this.formatPhone});
   final String sendType;
 
   @override
@@ -56,7 +55,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   static final amountEditingController = TextEditingController();
   static final codeEditingController = TextEditingController();
   static bool isKeyboardVis = false;
-
+  final String _selectedCountryCode = '+228'; // Default country code
   static String? phoneContactNumer;
   static bool isTextFieldEmpty = false;
   static bool isInvalidCode = false;
@@ -78,8 +77,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
     super.initState();
   }
 
-  final controller = Get.put(
-      SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  final controller =
+      Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   static void toNextStep() async {
     showDialog(
       barrierDismissible: false,
@@ -104,14 +103,12 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       Navigator.of(Get.context!).pop(); // Close the alert dialog
 
       // Navigate to the next page
-      pageController.nextPage(
-          duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+      pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
     });
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   void onUserSelected(String usersNumber) {
@@ -120,9 +117,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       phoneContactNumer = usersNumber;
       print('phoneContactNumer $phoneContactNumer');
       numberEditingCobntroller.text = phoneContactNumer.toString();
-      AppGlobal.phonenumberspan = phoneContactNumer.toString().replaceAll(
-          "[^0-9]",
-          ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
+      AppGlobal.phonenumberspan = phoneContactNumer
+          .toString()
+          .replaceAll("[^0-9]", ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
     });
   }
 
@@ -162,8 +159,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -183,30 +179,37 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           TextSpan(
             children: [
               TextSpan(
-                text: LocaleKeys
-                    .strTransferInfo.tr, // 'Vous allez envoyer de l’argent à ',
+                text: LocaleKeys.strTransferInfo.tr, // 'Vous allez envoyer de l’argent à ',
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                   color: context.colorScheme.onSurface,
                 ),
               ),
-              TextSpan(
-                text: '\n+228 ${numberEditingCobntroller.text.toString()}',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: context.colorScheme.primary,
-                ),
-              ),
+              numberEditingCobntroller.text.length <= 11
+                  ? TextSpan(
+                      text: '\n+${numberEditingCobntroller.text.toString()}',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: context.colorScheme.primary,
+                      ),
+                    )
+                  : TextSpan(
+                      text: '\n+228 ${numberEditingCobntroller.text.toString()}',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: context.colorScheme.primary,
+                      ),
+                    ),
             ],
           ),
         ),
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -340,8 +343,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             Expanded(
               child: Text(
                 LocaleKeys.strTransferAmount.tr,
-                style: TextStyle(
-                    fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
+                style: TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -377,8 +379,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               children: [
                 Expanded(
                   child: FluTextField(
-                    hint: LocaleKeys.strTransferRecipientNumber
-                        .tr, // "Numéro du destinataire",
+                    hint: LocaleKeys.strTransferRecipientNumber.tr, // "Numéro du destinataire",
                     inputController: numberEditingCobntroller,
                     hintStyle: TextStyle(fontSize: 11.sp),
                     textStyle: TextStyle(fontSize: 11.sp),
@@ -396,8 +397,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                           (match) => '${match.group(0)} ',
                         );
                       }
-                      numberEditingCobntroller.value =
-                          numberEditingCobntroller.value.copyWith(
+                      numberEditingCobntroller.value = numberEditingCobntroller.value.copyWith(
                         text: text,
                         selection: TextSelection.collapsed(offset: text.length),
                       );
@@ -405,31 +405,62 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                         isTextFieldEmpty = false;
                       });
                     },
+
                     onFieldSubmitted: (p0) {
-                      if (numberEditingCobntroller.text.isNotEmpty &&
-                          numberEditingCobntroller.text.length < 11) {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
-                      } else if (numberEditingCobntroller.text.isNotEmpty ||
-                          numberEditingCobntroller.text
-                              .contains('99 99 02 28')) {
-                        // AppGlobal.isEditedTransferNational = true;
-                        // AppGlobal.isSubscribedTransferNational = false;
-                        // AppGlobal.isOtherNetTransferNational = false;
-                        onVerifySmidnSubmit(numberEditingCobntroller,
-                            amountEditingController, context);
-                        // addNumberFromReceiver(numberEditingCobntroller.text, '${Get.find<DevicePlatformServices>().deviceID}');
-                        isTextFieldEmpty = false;
-                        setState(() {});
-                        if (phoneContactNumer == null) {
-                          AppGlobal.phonenumberspan = null;
+                      print(numberEditingCobntroller.text.trim().toString().length);
+                      if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.trim().toString().length == 11) {
+                        if (numberEditingCobntroller.text.contains(" ")) {
+                          log("wala ge input ang 228");
+                          String replacedString = numberEditingCobntroller.text.replaceAll(" ", "").trim().toString();
+                          String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
+                          log(msisdn);
+                          log(_selectedCountryCode);
+
+                          if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                            ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                            onVerifySmidnSubmit(msisdn, amountEditingController, context);
+                          } else {
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                          }
+                        } else {
+                          log("ge input ang 228");
+                          log(numberEditingCobntroller.text);
+                          if (numberEditingCobntroller.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                            ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                            String stringRemoveCountryCode = numberEditingCobntroller.text.substring(3);
+                            String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+                            onVerifySmidnSubmit(numberEditingCobntroller.text, amountEditingController, context);
+                          } else {
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                          }
                         }
-                      } else {
+
+                        isTextFieldEmpty = false;
+                      } else if (numberEditingCobntroller.text.isEmpty) {
                         setState(() {
                           isTextFieldEmpty = true;
                         });
+                      } else if (numberEditingCobntroller.text.trim().toString().length != 11) {
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
+                      // if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.length < 11) {
+                      //   Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                      // } else if (numberEditingCobntroller.text.isNotEmpty || numberEditingCobntroller.text.contains('99 99 02 28')) {
+                      //   // AppGlobal.isEditedTransferNational = true;
+                      //   // AppGlobal.isSubscribedTransferNational = false;
+                      //   // AppGlobal.isOtherNetTransferNational = false;
+                      //   onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
+                      //   // addNumberFromReceiver(numberEditingCobntroller.text, '${Get.find<DevicePlatformServices>().deviceID}');
+                      //   isTextFieldEmpty = false;
+                      //   setState(() {});
+                      //   if (phoneContactNumer == null) {
+                      //     AppGlobal.phonenumberspan = null;
+                      //   }
+                      // } else {
+                      //   setState(() {
+                      //     isTextFieldEmpty = true;
+                      //   });
+                      // }
                     },
                   ),
                 ),
@@ -456,19 +487,14 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     //   }
                     // });
                     Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white,
-                        duration: const Duration(seconds: 3));
+                        backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
                   },
                   child: Container(
                       height: 45,
                       width: MediaQuery.of(context).size.width / 7.8,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 4.0),
-                      decoration: BoxDecoration(
-                          color: context.colorScheme.primaryContainer,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0))),
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                      decoration:
+                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
                       child: const FluIcon(FluIcons.userSearch, size: 20)),
                 ),
               ],
@@ -493,23 +519,58 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
-                  if (numberEditingCobntroller.text.isNotEmpty) {
-                    onVerifySmidnSubmit(numberEditingCobntroller,
-                        amountEditingController, context);
-                    // addNumberFromReceiver(numberEditingCobntroller.text, '${Get.find<DevicePlatformServices>().deviceID}');
-                    AppGlobal.isEditedTransferNational = true;
-                    AppGlobal.isSubscribedTransferNational = false;
-                    AppGlobal.isOtherNetTransferNational = false;
-                    isTextFieldEmpty = false;
+                  print(numberEditingCobntroller.text.trim().toString().length);
+                  if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.trim().toString().length == 11) {
+                    if (numberEditingCobntroller.text.contains(" ")) {
+                      print("wala ge input ang 228");
+                      String replacedString = numberEditingCobntroller.text.replaceAll(" ", "").trim().toString();
+                      String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
+                      print(msisdn);
+                      print(_selectedCountryCode);
 
-                    if (phoneContactNumer == null) {
-                      AppGlobal.phonenumberspan = null;
+                      if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                        ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                        onVerifySmidnSubmit(msisdn, amountEditingController, context);
+                      } else {
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                      }
+                    } else {
+                      print("ge input ang 228");
+                      print(numberEditingCobntroller.text);
+                      if (numberEditingCobntroller.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                        ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                        String stringRemoveCountryCode = numberEditingCobntroller.text.substring(3);
+                        String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+                        onVerifySmidnSubmit(numberEditingCobntroller.text, amountEditingController, context);
+                      } else {
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                      }
                     }
-                  } else {
+
+                    isTextFieldEmpty = false;
+                  } else if (numberEditingCobntroller.text.isEmpty) {
                     setState(() {
                       isTextFieldEmpty = true;
                     });
+                  } else if (numberEditingCobntroller.text.trim().toString().length != 11) {
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   }
+                  // if (numberEditingCobntroller.text.isNotEmpty) {
+                  //   onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
+                  //   // addNumberFromReceiver(numberEditingCobntroller.text, '${Get.find<DevicePlatformServices>().deviceID}');
+                  //   AppGlobal.isEditedTransferNational = true;
+                  //   AppGlobal.isSubscribedTransferNational = false;
+                  //   AppGlobal.isOtherNetTransferNational = false;
+                  //   isTextFieldEmpty = false;
+
+                  //   if (phoneContactNumer == null) {
+                  //     AppGlobal.phonenumberspan = null;
+                  //   }
+                  // } else {
+                  //   setState(() {
+                  //     isTextFieldEmpty = true;
+                  //   });
+                  // }
                 },
                 height: 55,
                 width: MediaQuery.of(context).size.width * 16,
@@ -524,8 +585,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
           ],
@@ -574,8 +634,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      LocaleKeys.strAmountSendWarning
-                          .tr, //   'Veuillez saisir le montant*',
+                      LocaleKeys.strAmountSendWarning.tr, //   'Veuillez saisir le montant*',
                       style: TextStyle(
                         fontSize: 11.sp,
                         color: context.colorScheme.secondary,
@@ -615,8 +674,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
             const SizedBox(height: 30),
@@ -683,8 +741,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       //   });
                     } else {
                       setState(() {
-                        addNumberFromReceiver(numberEditingCobntroller.text,
-                            Get.find<DevicePlatformServices>().deviceID);
+                        addNumberFromReceiver(numberEditingCobntroller.text, Get.find<DevicePlatformServices>().deviceID);
                       });
                       showDialog(
                         context: context,
@@ -730,8 +787,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 onPressed: () async {
                   if (codeEditingController.text.isNotEmpty) {
                     setState(() {
-                      addNumberFromReceiver(numberEditingCobntroller.text,
-                          Get.find<DevicePlatformServices>().deviceID);
+                      addNumberFromReceiver(numberEditingCobntroller.text, Get.find<DevicePlatformServices>().deviceID);
                     });
                     showDialog(
                       barrierDismissible: false,
@@ -833,8 +889,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
             const SizedBox(height: 30),
@@ -861,10 +916,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       // print('strToken ${strToken!.replaceAll(".", "")}');
       // var toe = strToken.replaceAll(".", "");
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -889,13 +942,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         String description = decodedData['description'];
         if (description.contains('TOKEN_FOUND')) {
           var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
-          print(asd);
+          log(asd);
           sendMoneyToReceiver(
-              asd,
-              Get.find<DevicePlatformServices>().deviceID,
-              amountEditingController.text,
-              codeEditingController.text,
-              messageType);
+              asd, Get.find<DevicePlatformServices>().deviceID, amountEditingController.text, codeEditingController.text, messageType);
           // } else if (description.contains('VERSION NOT UP TO DATE')) {
         } else {
           isInvalidCode = true;
@@ -904,36 +953,34 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           } else if (description.contains('TOKEN_NOT_FOUND')) {
             await Future.delayed(Duration(seconds: 1), () {});
             await SharedPrefService.logoutUserData(false, '').then((value) {
-              ProgressAlertDialog.showALoadingDialog(Get.context!,
-                  LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
+              ProgressAlertDialog.showALoadingDialog(Get.context!, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
             });
             Get.snackbar("Message", LocaleKeys.strSessionExpired.tr,
-                backgroundColor: Colors.lightBlue,
-                colorText: Colors.white,
-                duration: Duration(seconds: 5));
+                backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: Duration(seconds: 5));
           }
         }
         // var jsonResponse = jsonDecode(jsonString);
         print('JSON Response: $jsonString');
       } else {
         numberEditingCobntroller.clear();
+        Get.snackbar("Message", 'An Error Occured', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+
         print('asda ${response.reasonPhrase}');
       }
     } catch (e) {
+      Get.snackbar("Message", e.toString(), backgroundColor: Colors.lightBlue, colorText: Colors.white);
+
       print('addNumberFromReceiver $e');
     }
   }
 
   //1111 and code if kani 22879397111 nga user
   // 99990137
-  static void sendMoneyToReceiver(String msisdn, String token, String amounts,
-      String code, String mess) async {
+  static void sendMoneyToReceiver(String msisdn, String token, String amounts, String code, String mess) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header /><v:Body><n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
@@ -951,8 +998,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
         var documentss = xml.XmlDocument.parse(parseResult);
-        var requestTokenReturnElement =
-            document.findAllElements('RequestTokenReturn').single;
+        var requestTokenReturnElement = document.findAllElements('RequestTokenReturn').single;
 
         if (jsonString.contains('Transfert reussi')) {
           String trimString = jsonString.replaceAll('Transfert reussi', '');
@@ -989,15 +1035,13 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
           Get.back();
           Get.back();
-          Get.find<StorageServices>().saveHistoryTransaction(
-              message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
+          Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
           showMessageDialog(message: jsonString);
 
           // SqlHelper.setTransacHistory("-1", jsonString);
         } else {
           Get.back();
-          Get.find<StorageServices>().saveHistoryTransaction(
-              message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
+          Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
           showMessageDialog(message: jsonString);
 
           invalidCodeString = jsonString;
@@ -1093,69 +1137,43 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
     return transferInfo;
   }
 
-  static void onVerifySmidnSubmit(
-      TextEditingController numberEditingController,
-      TextEditingController amountEditingController,
-      BuildContext context) async {
+  static void onVerifySmidnSubmit(String msisdn, TextEditingController amountEditingController, BuildContext context) async {
     try {
-      String msisdn = "";
-      print(
-          'onSendMoneySubmit AppGlobal.phonenumberspan  ${AppGlobal.phonenumberspan}');
-      if (AppGlobal.phonenumberspan != null) {
-        // List<dynamic> url = AppGlobal.phonenumberspan.getSpans(0, AppGlobal.phonenumberspan.length) as List<dynamic>;
-        msisdn = AppGlobal.phonenumberspan;
-        //url[0].url;
-        fieldtype = FieldType.PHONEBOOK;
-      } else {
-        //assign receivers number
-        msisdn = numberEditingController.text.replaceAll(" ", "");
+      fieldtype = FieldType.NORMAL;
+      // }
+      log('onSendMoneySubmit fieldtype 1 $fieldtype');
+      log('onSendMoneySubmit fieldtype 2 $msisdn');
 
-        fieldtype = FieldType.NORMAL;
-      }
-      print('onSendMoneySubmit fieldtype $fieldtype');
-      print('onSendMoneySubmit fieldtype $msisdn');
-      //msisdn = verifyMsisdn(msisdn);
-      if (msisdn.length <= 8) {
-        msisdn = ParserValidator.validateMsisdn("228", msisdn, context);
-      } else {
-        msisdn = ParserValidator.validateMsisdn("", msisdn, context);
-      }
-
-      print('onSendMoneySubmit msisdn $msisdn');
-
-      if (StringUtil().isNullOrEmpty(msisdn)) {
-        showToast2(context, AppStringValidation.destinationRequired);
-        print(
-            'onSendMoneySubmit fieldtype ${AppStringValidation.destinationRequired}}');
-        return;
-      }
       if (AppGlobal.isEditedTransferNational) {
         var res = await AuthProvider.sendVerification(msisdn);
-        if (res.extendedData.issubscribed == false &&
-            res.extendedData.othernet == true) {
+        if (res.extendedData.issubscribed == false && res.extendedData.othernet == true) {
           AppGlobal.isEditedTransferNational = false;
           messageType = 'CASHOFF';
+          Get.back();
           toNextStep();
         } else {
           AppGlobal.isEditedTransferNational = false;
           messageType = 'APPCASH';
+          Get.back();
           toNextStep();
         }
       } else {
         var res = await AuthProvider.sendVerification(msisdn);
-        if (res.extendedData.issubscribed == false &&
-            res.extendedData.othernet == true) {
+        if (res.extendedData.issubscribed == false && res.extendedData.othernet == true) {
           AppGlobal.isEditedTransferNational = false;
           messageType = 'CASHOFF';
+          Get.back();
           toNextStep();
         } else {
           AppGlobal.isEditedTransferNational = false;
           messageType = 'APPCASH';
+          Get.back();
           toNextStep();
         }
       }
     } catch (ex) {
-      print('onSendMoneySubmit ex $ex');
+      Get.back();
+      log('onSendMoneySubmit ex $ex');
     }
   }
 
@@ -1168,8 +1186,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   }
 
   static void showToast2(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   static void resetMessage() {

@@ -1,6 +1,9 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors, sized_box_for_whitespace, avoid_print
 
+import 'dart:io';
+
 import 'package:flukit/flukit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
@@ -20,82 +23,158 @@ class SendMenuDialog {
       context: context,
       builder: (BuildContext context) {
         // return alert dialog object
-        return AlertDialog(
+        if (!Platform.isIOS) {
+          return AlertDialog(
+            title: Text(LocaleKeys.strMoneyTransferTitle.tr),
+            content: Container(
+              height: 100.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // Text('Transfert National'),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                      AppGlobal.siOTPPage = false;
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            // <-- SEE HERE
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(25.0),
+                            ),
+                          ),
+                          builder: (context) => _ModalBottomSheet(
+                                sendType: LocaleKeys.strNationalTransfer.tr,
+                                siOTPPage: AppGlobal.siOTPPage,
+                                child: EnvoiModalBottomSheet(
+                                  sendType: LocaleKeys.strNationalTransfer.tr,
+                                ),
+                              ));
+                    },
+                    child: Container(
+                      height: 20,
+                      child: Text(LocaleKeys.strNationalTransfer.tr),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                      AppGlobal.siOTPPage = false;
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => _ModalBottomSheet(
+                                sendType: LocaleKeys.strInternationalTransfer.tr,
+                                siOTPPage: AppGlobal.siOTPPage,
+                                child: EnvoiInternationalBottomSheet(
+                                  sendType: LocaleKeys.strInternationalTransfer.tr,
+                                ),
+                              ));
+                    },
+                    child: Container(
+                      height: 20,
+                      child: Text(LocaleKeys.strInternationalTransfer.tr),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                      Get.snackbar("Message", LocaleKeys.strLoading.tr,
+                          backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+                    },
+                    child: Container(
+                      height: 20,
+                      child: Text(LocaleKeys.strReversal.tr),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+        return CupertinoAlertDialog(
           title: Text(LocaleKeys.strMoneyTransferTitle.tr),
           content: Container(
-            height: 100.0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                // Text('Transfert National'),
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                    AppGlobal.siOTPPage = false;
-
-                    showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) => _ModalBottomSheet(
-                              sendType: LocaleKeys.strNationalTransfer.tr,
-                              siOTPPage: AppGlobal.siOTPPage,
-                              child: EnvoiModalBottomSheet(
+            height: 120.0,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // Text('Transfert National'),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                      AppGlobal.siOTPPage = false;
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => _ModalBottomSheet(
                                 sendType: LocaleKeys.strNationalTransfer.tr,
-                              ),
-                            ));
-                  },
-                  child: Container(
-                    height: 20,
-                    child: Text(LocaleKeys.strNationalTransfer.tr),
+                                siOTPPage: AppGlobal.siOTPPage,
+                                child: EnvoiModalBottomSheet(
+                                  sendType: LocaleKeys.strNationalTransfer.tr,
+                                ),
+                              ));
+                    },
+                    child: Container(
+                      height: 20,
+                      child: Text(LocaleKeys.strNationalTransfer.tr),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                    AppGlobal.siOTPPage = false;
-
-                    showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) => _ModalBottomSheet(
-                              sendType: LocaleKeys.strInternationalTransfer.tr,
-                              siOTPPage: AppGlobal.siOTPPage,
-                              child: EnvoiInternationalBottomSheet(
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                      AppGlobal.siOTPPage = false;
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => _ModalBottomSheet(
                                 sendType: LocaleKeys.strInternationalTransfer.tr,
-                              ),
-                            ));
-                  },
-                  child: Container(
-                    height: 20,
-                    child: Text(LocaleKeys.strInternationalTransfer.tr),
+                                siOTPPage: AppGlobal.siOTPPage,
+                                child: EnvoiInternationalBottomSheet(
+                                  sendType: LocaleKeys.strInternationalTransfer.tr,
+                                ),
+                              ));
+                    },
+                    child: Container(
+                      height: 20,
+                      child: Text(LocaleKeys.strInternationalTransfer.tr),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                    Get.snackbar("Message", LocaleKeys.strLoading.tr,
-                        backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
-                  },
-                  child: Container(
-                    height: 20,
-                    child: Text(LocaleKeys.strReversal.tr),
+                  SizedBox(
+                    height: 20.0,
                   ),
-                ),
-              ],
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                      Get.snackbar("Message", LocaleKeys.strLoading.tr,
+                          backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+                    },
+                    child: Container(
+                      height: 20,
+                      child: Text(LocaleKeys.strReversal.tr),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
       },
     );
   }
-
-
 
   static void showRecapOperationDialog(context) async {
     print('Amount: ${AppGlobal.amount}');

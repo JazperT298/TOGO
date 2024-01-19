@@ -65,16 +65,11 @@ class _LoginViewState extends State<LoginView> {
           padding: const EdgeInsets.only(top: 4.0, left: 0),
           child: Text(
             LocaleKeys.strYourCountry.tr,
-            style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.black),
+            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black),
           ),
         ),
         Padding(
-            padding: const EdgeInsets.only(top: 8.0, left: 0),
-            child: Text(LocaleKeys.strChooseCountryDesc.tr,
-                style: TextStyle(fontSize: 10.sp))),
+            padding: const EdgeInsets.only(top: 8.0, left: 0), child: Text(LocaleKeys.strChooseCountryDesc.tr, style: TextStyle(fontSize: 10.sp))),
       ],
     ),
   );
@@ -88,8 +83,7 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: SafeArea(
         child: Padding(
-          padding:
-              UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+          padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -129,10 +123,7 @@ class _LoginViewState extends State<LoginView> {
                 child: Text(
                   LocaleKeys.strAccessAccountDesc.tr,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 10.sp,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 10.sp, color: Colors.grey, fontWeight: FontWeight.w400),
                 ),
               ),
               const SizedBox(height: 42),
@@ -140,8 +131,7 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   GestureDetector(
                     onTap: () async {
-                      final picked =
-                          await countryPicker.showPicker(context: context);
+                      final picked = await countryPicker.showPicker(context: context);
                       // Null check
                       if (picked != null) {
                         setState(() {
@@ -155,23 +145,13 @@ class _LoginViewState extends State<LoginView> {
                     child: Container(
                       height: 5.h,
                       width: MediaQuery.of(context).size.width / 4.6,
-                      padding: EdgeInsets.symmetric(
-                          horizontal:
-                              _selectedCountryCode.length <= 3 ? 18.0 : 12.0,
-                          vertical: 4.0),
-                      decoration: BoxDecoration(
-                          color: context.colorScheme.primaryContainer,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0))),
+                      padding: EdgeInsets.symmetric(horizontal: _selectedCountryCode.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
+                      decoration:
+                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                              _selectedCountryCode.isEmpty
-                                  ? '+228'
-                                  : _selectedCountryCode,
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 10.sp)),
+                          Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: TextStyle(color: Colors.black, fontSize: 10.sp)),
                           const FluIcon(FluIcons.arrowDown2, size: 16)
                         ],
                       ),
@@ -196,43 +176,54 @@ class _LoginViewState extends State<LoginView> {
                             (match) => '${match.group(0)} ',
                           );
                         }
-                        numberController.value =
-                            numberController.value.copyWith(
+                        numberController.value = numberController.value.copyWith(
                           text: text,
-                          selection:
-                              TextSelection.collapsed(offset: text.length),
+                          selection: TextSelection.collapsed(offset: text.length),
                         );
                         setState(() {
                           isTextFieldEmpty = false;
                           errorMessage = '';
                         });
                       },
-                      textStyle: TextStyle(
-                          fontSize: 10.sp), // context.textTheme.bodyMedium,
+                      textStyle: TextStyle(fontSize: 10.sp), // context.textTheme.bodyMedium,
 
                       onFieldSubmitted: (p0) {
-                        if (numberController.text.isNotEmpty) {
-                          print(numberController.text);
-                          String replacedString = numberController.text
-                              .replaceAll(" ", "")
-                              .trim()
-                              .toString();
-                          String msisdn =
-                              (_selectedCountryCode + replacedString)
-                                  .replaceAll("+", "")
-                                  .toString();
-                          print(msisdn);
-                          ProgressAlertDialog.progressAlertDialog(
-                              context, LocaleKeys.strLoading.tr);
-                          controller.kycInquiryRequest(
-                              msisdn: msisdn,
-                              formattedMSISDN: numberController.text,
-                              countryCode: _selectedCountryCode);
+                        print(numberController.text.trim().toString().length);
+                        if (numberController.text.isNotEmpty && numberController.text.trim().toString().length == 11) {
+                          if (numberController.text.contains(" ")) {
+                            print("wala ge input ang 228");
+                            String replacedString = numberController.text.replaceAll(" ", "").trim().toString();
+                            String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
+                            print(msisdn);
+                            print(_selectedCountryCode);
+
+                            if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                              ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                              controller.kycInquiryRequest(msisdn: msisdn, formattedMSISDN: numberController.text, countryCode: _selectedCountryCode);
+                            } else {
+                              Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                            }
+                          } else {
+                            print("ge input ang 228");
+                            print(numberController.text);
+                            if (numberController.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                              ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                              String stringRemoveCountryCode = numberController.text.substring(3);
+                              String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+                              controller.kycInquiryRequest(
+                                  msisdn: numberController.text, formattedMSISDN: formattedMSISDN, countryCode: _selectedCountryCode);
+                            } else {
+                              Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                            }
+                          }
+
                           isTextFieldEmpty = false;
                         } else if (numberController.text.isEmpty) {
                           setState(() {
                             isTextFieldEmpty = true;
                           });
+                        } else if (numberController.text.trim().toString().length != 11) {
+                          Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                         }
                       },
                     ),
@@ -271,54 +262,31 @@ class _LoginViewState extends State<LoginView> {
                   //     formattedMSISDN: "79 39 71 11",
                   //     countryCode: "228");
                   print(numberController.text.trim().toString().length);
-                  if (numberController.text.isNotEmpty &&
-                      numberController.text.trim().toString().length == 11) {
+                  if (numberController.text.isNotEmpty && numberController.text.trim().toString().length == 11) {
                     if (numberController.text.contains(" ")) {
                       print("wala ge input ang 228");
-                      String replacedString = numberController.text
-                          .replaceAll(" ", "")
-                          .trim()
-                          .toString();
-                      String msisdn = (_selectedCountryCode + replacedString)
-                          .replaceAll("+", "")
-                          .toString();
+                      String replacedString = numberController.text.replaceAll(" ", "").trim().toString();
+                      String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
                       print(msisdn);
                       print(_selectedCountryCode);
 
-                      if (msisdn.substring(0, 3) ==
-                          _selectedCountryCode.replaceAll("+", "")) {
-                        ProgressAlertDialog.progressAlertDialog(
-                            context, LocaleKeys.strLoading.tr);
-                        controller.kycInquiryRequest(
-                            msisdn: msisdn,
-                            formattedMSISDN: numberController.text,
-                            countryCode: _selectedCountryCode);
+                      if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                        ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                        controller.kycInquiryRequest(msisdn: msisdn, formattedMSISDN: numberController.text, countryCode: _selectedCountryCode);
                       } else {
-                        Get.snackbar("Message", "Numero Invalide",
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
                     } else {
                       print("ge input ang 228");
                       print(numberController.text);
-                      if (numberController.text.substring(0, 3) ==
-                          _selectedCountryCode.replaceAll("+", "")) {
-                        ProgressAlertDialog.progressAlertDialog(
-                            context, LocaleKeys.strLoading.tr);
-                        String stringRemoveCountryCode =
-                            numberController.text.substring(3);
-                        String formattedMSISDN =
-                            stringRemoveCountryCode.replaceAllMapped(
-                                RegExp(r".{2}"),
-                                (match) => "${match.group(0)} ");
+                      if (numberController.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                        ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                        String stringRemoveCountryCode = numberController.text.substring(3);
+                        String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
                         controller.kycInquiryRequest(
-                            msisdn: numberController.text,
-                            formattedMSISDN: formattedMSISDN,
-                            countryCode: _selectedCountryCode);
+                            msisdn: numberController.text, formattedMSISDN: formattedMSISDN, countryCode: _selectedCountryCode);
                       } else {
-                        Get.snackbar("Message", "Numero Invalide",
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
                     }
 
@@ -327,11 +295,8 @@ class _LoginViewState extends State<LoginView> {
                     setState(() {
                       isTextFieldEmpty = true;
                     });
-                  } else if (numberController.text.trim().toString().length !=
-                      11) {
-                    Get.snackbar("Message", "Numero Invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                  } else if (numberController.text.trim().toString().length != 11) {
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   }
                 },
                 height: 5.8.h,
@@ -347,8 +312,7 @@ class _LoginViewState extends State<LoginView> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp),
               ),
               const SizedBox(height: 30),
             ],
@@ -359,10 +323,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void showSelectLanguageDialog(BuildContext context) {
-    List<bool> selectedLanguages = [
-      false,
-      false
-    ]; // Index 0: English, Index 1: French
+    List<bool> selectedLanguages = [false, false]; // Index 0: English, Index 1: French
 
     showDialog(
       context: context,
@@ -385,8 +346,7 @@ class _LoginViewState extends State<LoginView> {
                       children: [
                         Row(
                           children: [
-                            Image.asset(AppImages.ukFlag,
-                                height: 30, width: 30),
+                            Image.asset(AppImages.ukFlag, height: 30, width: 30),
                             Padding(
                               padding: const EdgeInsets.only(left: 12.0),
                               child: Text(LocaleKeys.strEnglish.tr),
@@ -414,8 +374,7 @@ class _LoginViewState extends State<LoginView> {
                       children: [
                         Row(
                           children: [
-                            Image.asset(AppImages.franceFlag,
-                                height: 30, width: 30),
+                            Image.asset(AppImages.franceFlag, height: 30, width: 30),
                             Padding(
                               padding: const EdgeInsets.only(left: 12.0),
                               child: Text(LocaleKeys.strFrench.tr),
@@ -440,17 +399,13 @@ class _LoginViewState extends State<LoginView> {
             ),
             actions: [
               ElevatedButton(
-                onPressed: AppGlobal.isSelectEnglish == false &&
-                        AppGlobal.isSelectFrench == false
+                onPressed: AppGlobal.isSelectEnglish == false && AppGlobal.isSelectFrench == false
                     ? null
                     : () {
-                        if (AppGlobal.isSelectFrench == true &&
-                            AppGlobal.isSelectEnglish == false) {
-                          Get.find<StorageServices>()
-                              .saveLanguage(language: 'FR');
+                        if (AppGlobal.isSelectFrench == true && AppGlobal.isSelectEnglish == false) {
+                          Get.find<StorageServices>().saveLanguage(language: 'FR');
                         } else {
-                          Get.find<StorageServices>()
-                              .saveLanguage(language: 'EN');
+                          Get.find<StorageServices>().saveLanguage(language: 'EN');
                         }
 
                         Navigator.pop(context);
