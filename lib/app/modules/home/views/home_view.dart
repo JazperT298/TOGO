@@ -9,13 +9,14 @@ import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
 import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
-import 'package:ibank/app/modules/recharge/views/dialog/recharge_menu_dialog.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/core/users.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../recharge/views/modals/recharge_menu_bottom_sheet.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -321,7 +322,19 @@ class _QuickActions extends StatelessWidget {
         //     backgroundColor: Colors.lightBlue,
         //     colorText: Colors.white,
         //     duration: const Duration(seconds: 3));
-        RechargeMenuDialog.showRechargeMenuDialog(context: context);
+        // RechargeMenuDialog.showRechargeMenuDialog();
+        RechargeMainMenuBottomSheet.showBottomSheetRechargeMainMenu();
+        // showModalBottomSheet(
+        // context: context,
+        // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
+        break;
+      case WalletActions.mBanking:
+        // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+        //     backgroundColor: Colors.lightBlue,
+        //     colorText: Colors.white,
+        //     duration: const Duration(seconds: 3));
+        // RechargeMenuDialog.showRechargeMenuDialog();
+
         // showModalBottomSheet(
         // context: context,
         // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));

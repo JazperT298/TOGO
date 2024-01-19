@@ -64,7 +64,8 @@ class WalletAction {
             WalletAction(
               icon: FluIcons.cards,
               name: 'Ecobank',
-              description: 'Utilisez votre carte de credit pour recharger votre compte flooz...',
+              description:
+                  'Utilisez votre carte de credit pour recharger votre compte flooz...',
             ),
             WalletAction(
               icon: FluIcons.bank,
@@ -84,58 +85,71 @@ class WalletAction {
             WalletAction(
               icon: FluIcons.cards,
               name: 'Agences à proximité',
-              description: 'Utilisez votre carte de credit pour recharger votre compte flooz...',
+              description:
+                  'Utilisez votre carte de credit pour recharger votre compte flooz...',
             ),
           ]),
 
       /// Send action.
       /// Used to send money to another user or another merchant.
-      WalletAction(name: LocaleKeys.strWalletSend.tr, description: LocaleKeys.strWalletSendDesc.tr, icon: FluIcons.moneySend),
+      WalletAction(
+          name: LocaleKeys.strWalletSend.tr,
+          description: LocaleKeys.strWalletSendDesc.tr,
+          icon: FluIcons.moneySend),
 
       /// Payment action.
       /// Used for merchant payments.
       /// this concern only merchant that are partners & saved in api database.
-      WalletAction(name: LocaleKeys.strWalletPay.tr, description: LocaleKeys.strWalletPayDesc.tr, icon: FluIcons.barcode, children: [
-        WalletAction(
-          icon: FluIcons.monitorMobbile,
-          name: 'Canal +',
-          description: 'Profitez de nombreux bonus en effectuant votre abonnement canal+',
-        ),
-        WalletAction(
-          icon: FluIcons.airdrop,
-          name: 'CanalBox Fiber',
-          description: 'Fibrez comme jamais. Souscrivez à votre connexion internet',
-        ),
-        WalletAction(
-          icon: FluIcons.flash,
-          name: 'Ceet.',
-          description: 'Payez vos factures d\'electricité',
-        ),
-        WalletAction(
-          icon: FluIcons.drop,
-          name: 'TDE.',
-          description: 'Payez vos factures d\'eau',
-        ),
-        WalletAction(
-          icon: FluIcons.driving,
-          name: 'Assurance',
-          description: 'Gerez votre assurance',
-        ),
-        WalletAction(
-          icon: FluIcons.teacher,
-          name: 'Frais de scolarité',
-          description: 'Assurez l\'education de vos enfants',
-        ),
-      ]),
+      WalletAction(
+          name: LocaleKeys.strWalletPay.tr,
+          description: LocaleKeys.strWalletPayDesc.tr,
+          icon: FluIcons.barcode,
+          children: [
+            WalletAction(
+              icon: FluIcons.monitorMobbile,
+              name: 'Canal +',
+              description:
+                  'Profitez de nombreux bonus en effectuant votre abonnement canal+',
+            ),
+            WalletAction(
+              icon: FluIcons.airdrop,
+              name: 'CanalBox Fiber',
+              description:
+                  'Fibrez comme jamais. Souscrivez à votre connexion internet',
+            ),
+            WalletAction(
+              icon: FluIcons.flash,
+              name: 'Ceet.',
+              description: 'Payez vos factures d\'electricité',
+            ),
+            WalletAction(
+              icon: FluIcons.drop,
+              name: 'TDE.',
+              description: 'Payez vos factures d\'eau',
+            ),
+            WalletAction(
+              icon: FluIcons.driving,
+              name: 'Assurance',
+              description: 'Gerez votre assurance',
+            ),
+            WalletAction(
+              icon: FluIcons.teacher,
+              name: 'Frais de scolarité',
+              description: 'Assurez l\'education de vos enfants',
+            ),
+          ]),
 
       /// Cashout action.
       /// Used to retrieve money from wallet.
-      WalletAction(name: LocaleKeys.strWalletWithdrawal.tr, description: LocaleKeys.strWalletWithdrawalDesc.tr, icon: FluIcons.import),
+      WalletAction(
+          name: LocaleKeys.strWalletWithdrawal.tr,
+          description: LocaleKeys.strWalletWithdrawalDesc.tr,
+          icon: FluIcons.import),
     ];
   }
 }
 
-enum WalletActions { send, withdraw, pay, topUp }
+enum WalletActions { send, withdraw, pay, topUp, mBanking }
 
 extension WA on WalletActions {
   FluIcons get icon {
@@ -148,6 +162,8 @@ extension WA on WalletActions {
         return FluIcons.import;
       case WalletActions.topUp:
         return FluIcons.addCircle;
+      case WalletActions.mBanking:
+        return FluIcons.bank;
     }
   }
 
@@ -161,6 +177,8 @@ extension WA on WalletActions {
         return LocaleKeys.strWalletWithdrawal.tr;
       case WalletActions.topUp:
         return LocaleKeys.strWalletRechange.tr;
+      case WalletActions.mBanking:
+        return "Mbanking";
     }
   }
 }

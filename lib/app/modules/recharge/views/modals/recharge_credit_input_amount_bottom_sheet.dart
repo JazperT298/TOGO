@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'recharge_credit_otp_bottom_sheet.dart';
 
 class RechargeCreditInputAmountBottomSheet {
-  static void showBottomSheetInputAmount() {
+  static void showBottomSheetInputAmount({required String selectedMenu}) {
     var controller = Get.find<RechargeController>();
     Get.bottomSheet(Container(
       height: 40.h,
@@ -27,9 +27,9 @@ class RechargeCreditInputAmountBottomSheet {
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Text(
-                "CREDIT".toUpperCase(),
+                selectedMenu.toUpperCase(),
                 style: TextStyle(
-                  color: Colors.orange[500],
+                  color: const Color(0xFFfb6708),
                   fontWeight: FontWeight.w600,
                   fontSize: 11.sp,
                   letterSpacing: 1.0,
@@ -41,43 +41,96 @@ class RechargeCreditInputAmountBottomSheet {
             ),
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
-              child: Obx(
-                () => controller.selectedOption.value == "For myself"
-                    ? Text(
-                        "For My Self.",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
+              child: Obx(() => controller.selectedOption.value == "For myself"
+                  ? RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                          text:
+                              'Please enter the amount you want to recharge your ',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
                         ),
-                      )
-                    : Text(
-                        "For Others.",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                        TextSpan(
+                          text: 'Moov ',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF295fe7),
+                          ),
                         ),
-                      ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.w, right: 5.w),
-              child: Text(
-                "Please input amount.",
-                style: TextStyle(
-                  fontSize: 10.sp,
-                ),
-              ),
+                        TextSpan(
+                          text: 'account using ',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Flooz.',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFFfb6708),
+                          ),
+                        )
+                      ]),
+                    )
+                  : RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                          text:
+                              'Please enter the amount you wish to recharge for ${controller.numberTextField.text} ',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Moov ',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF295fe7),
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'account using ',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Flooz.',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFFfb6708),
+                          ),
+                        )
+                      ]),
+                    )),
             ),
             SizedBox(
               height: 4.h,
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.w, right: 5.w),
-              child: FluLine(
-                width: 100.w,
-              ),
+            Row(
+              children: [
+                FluLine(
+                  width: 30.w,
+                  color: const Color(0xFFfb6708),
+                ),
+                CircleAvatar(
+                  radius: 1.w,
+                  backgroundColor: const Color(0xFFfb6708),
+                )
+              ],
             ),
             SizedBox(
               height: 4.h,
@@ -92,7 +145,7 @@ class RechargeCreditInputAmountBottomSheet {
                 height: 50,
                 cornerRadius: 15,
                 keyboardType: TextInputType.number,
-                fillColor: Colors.lightBlue[100],
+                fillColor: const Color(0xFFf4f5fa),
                 onChanged: (text) {},
                 onFieldSubmitted: (p0) {
                   if (controller.amountTextField.text.isEmpty) {
@@ -125,7 +178,7 @@ class RechargeCreditInputAmountBottomSheet {
               ),
               child: FluButton.text(
                 'Continuer',
-                suffixIcon: FluIcons.passwordCheck,
+                suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (controller.amountTextField.text.isEmpty) {

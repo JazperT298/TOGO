@@ -5,10 +5,10 @@ import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
-import 'recharge_credit_input_amount_bottom_sheet.dart';
+import 'recharge_internet_otp_bottom_sheet.dart';
 
-class RechargeCreditInputNumberBottomSheet {
-  static void showBottomSheetInputNumber() {
+class RechargeInternetInputAmountBottomSheet {
+  static void showBottomSheetInputAmount() {
     var controller = Get.find<RechargeController>();
     Get.bottomSheet(Container(
       height: 40.h,
@@ -27,9 +27,9 @@ class RechargeCreditInputNumberBottomSheet {
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Text(
-                "OTHERS".toUpperCase(),
+                "INTERNET".toUpperCase(),
                 style: TextStyle(
-                  color: const Color(0xFFfb6708),
+                  color: Colors.orange[500],
                   fontWeight: FontWeight.w600,
                   fontSize: 11.sp,
                   letterSpacing: 1.0,
@@ -41,29 +41,43 @@ class RechargeCreditInputNumberBottomSheet {
             ),
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
+              child: Obx(
+                () => controller.selectedOption.value == "For myself"
+                    ? Text(
+                        "For My Self.",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      )
+                    : Text(
+                        "For Others.",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Text(
-                "Please enter the mobile number of the recipient.",
+                "Please input amount.",
                 style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
+                  fontSize: 10.sp,
                 ),
               ),
             ),
             SizedBox(
               height: 4.h,
             ),
-            Row(
-              children: [
-                FluLine(
-                  width: 30.w,
-                  color: const Color(0xFFfb6708),
-                ),
-                CircleAvatar(
-                  radius: 1.w,
-                  backgroundColor: const Color(0xFFfb6708),
-                )
-              ],
+            Padding(
+              padding: EdgeInsets.only(left: 5.w, right: 5.w),
+              child: FluLine(
+                width: 100.w,
+              ),
             ),
             SizedBox(
               height: 4.h,
@@ -71,24 +85,32 @@ class RechargeCreditInputNumberBottomSheet {
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: FluTextField(
-                inputController: controller.numberTextField,
-                hint: "Number",
+                inputController: controller.amountTextField,
+                hint: "Enter amount",
                 hintStyle: TextStyle(fontSize: 11.sp),
                 textStyle: TextStyle(fontSize: 11.sp),
                 height: 50,
                 cornerRadius: 15,
                 keyboardType: TextInputType.number,
-                fillColor: const Color(0xFFf4f5fa),
+                fillColor: Colors.lightBlue[100],
                 onChanged: (text) {},
                 onFieldSubmitted: (p0) {
-                  if (controller.numberTextField.text.isEmpty) {
-                    Get.snackbar("Message", "Numero invalide",
+                  if (controller.amountTextField.text.isEmpty) {
+                    Get.snackbar("Message", "Montant invalide",
+                        backgroundColor: Colors.lightBlue,
+                        colorText: Colors.white);
+                  } else if (controller.amountTextField.text.length > 8) {
+                    Get.snackbar("Message", "Montant invalide",
+                        backgroundColor: Colors.lightBlue,
+                        colorText: Colors.white);
+                  } else if (double.parse(controller.amountTextField.text) <=
+                      0) {
+                    Get.snackbar("Message", "Montant invalide",
                         backgroundColor: Colors.lightBlue,
                         colorText: Colors.white);
                   } else {
                     Get.back();
-                    RechargeCreditInputAmountBottomSheet
-                        .showBottomSheetInputAmount(selectedMenu: "OTHERS");
+                    RechargeInternetOTPBottomSheet.showBottomSheetOTP();
                   }
                 },
               ),
@@ -106,37 +128,22 @@ class RechargeCreditInputNumberBottomSheet {
                 suffixIcon: FluIcons.passwordCheck,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
-                  if (controller.numberTextField.text.isEmpty) {
-                    Get.snackbar("Message", "Numero invalide",
+                  if (controller.amountTextField.text.isEmpty) {
+                    Get.snackbar("Message", "Montant invalide",
+                        backgroundColor: Colors.lightBlue,
+                        colorText: Colors.white);
+                  } else if (controller.amountTextField.text.length > 8) {
+                    Get.snackbar("Message", "Montant invalide",
+                        backgroundColor: Colors.lightBlue,
+                        colorText: Colors.white);
+                  } else if (double.parse(controller.amountTextField.text) <=
+                      0) {
+                    Get.snackbar("Message", "Montant invalide",
                         backgroundColor: Colors.lightBlue,
                         colorText: Colors.white);
                   } else {
-                    if (controller.numberTextField.text.length == 8 ||
-                        controller.numberTextField.text.length == 11) {
-                      if (controller.numberTextField.text.length == 8) {
-                        controller.numberTextField.text =
-                            "228${controller.numberTextField.text}";
-                        Get.back();
-                        RechargeCreditInputAmountBottomSheet
-                            .showBottomSheetInputAmount(selectedMenu: "OTHERS");
-                      } else {
-                        if (controller.numberTextField.text.substring(0, 3) ==
-                            "228") {
-                          Get.back();
-                          RechargeCreditInputAmountBottomSheet
-                              .showBottomSheetInputAmount(
-                                  selectedMenu: "OTHERS");
-                        } else {
-                          Get.snackbar("Message", "Numero invalide",
-                              backgroundColor: Colors.lightBlue,
-                              colorText: Colors.white);
-                        }
-                      }
-                    } else {
-                      Get.snackbar("Message", "Numero invalide",
-                          backgroundColor: Colors.lightBlue,
-                          colorText: Colors.white);
-                    }
+                    Get.back();
+                    RechargeInternetOTPBottomSheet.showBottomSheetOTP();
                   }
                 },
                 height: 55,
