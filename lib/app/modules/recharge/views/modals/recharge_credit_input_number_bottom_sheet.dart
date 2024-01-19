@@ -13,10 +13,8 @@ class RechargeCreditInputNumberBottomSheet {
     Get.bottomSheet(Container(
       height: 40.h,
       width: 100.w,
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+      decoration:
+          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,13 +80,10 @@ class RechargeCreditInputNumberBottomSheet {
                 onChanged: (text) {},
                 onFieldSubmitted: (p0) {
                   if (controller.numberTextField.text.isEmpty) {
-                    Get.snackbar("Message", "Numero invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                    Get.snackbar("Message", "Numero invalide", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   } else {
                     Get.back();
-                    RechargeCreditInputAmountBottomSheet
-                        .showBottomSheetInputAmount(selectedMenu: "OTHERS");
+                    RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: "OTHERS");
                   }
                 },
               ),
@@ -107,35 +102,23 @@ class RechargeCreditInputNumberBottomSheet {
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (controller.numberTextField.text.isEmpty) {
-                    Get.snackbar("Message", "Numero invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                    Get.snackbar("Message", "Numero invalide", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   } else {
-                    if (controller.numberTextField.text.length == 8 ||
-                        controller.numberTextField.text.length == 11) {
+                    if (controller.numberTextField.text.length == 8 || controller.numberTextField.text.length == 11) {
                       if (controller.numberTextField.text.length == 8) {
-                        controller.numberTextField.text =
-                            "228${controller.numberTextField.text}";
+                        controller.numberTextField.text = "228${controller.numberTextField.text}";
                         Get.back();
-                        RechargeCreditInputAmountBottomSheet
-                            .showBottomSheetInputAmount(selectedMenu: "OTHERS");
+                        RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: "OTHERS");
                       } else {
-                        if (controller.numberTextField.text.substring(0, 3) ==
-                            "228") {
+                        if (controller.numberTextField.text.substring(0, 3) == "228") {
                           Get.back();
-                          RechargeCreditInputAmountBottomSheet
-                              .showBottomSheetInputAmount(
-                                  selectedMenu: "OTHERS");
+                          RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: "OTHERS");
                         } else {
-                          Get.snackbar("Message", "Numero invalide",
-                              backgroundColor: Colors.lightBlue,
-                              colorText: Colors.white);
+                          Get.snackbar("Message", "Numero invalide", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                         }
                       }
                     } else {
-                      Get.snackbar("Message", "Numero invalide",
-                          backgroundColor: Colors.lightBlue,
-                          colorText: Colors.white);
+                      Get.snackbar("Message", "Numero invalide", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                     }
                   }
                 },
@@ -152,9 +135,7 @@ class RechargeCreditInputNumberBottomSheet {
                     offset: Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             SizedBox(

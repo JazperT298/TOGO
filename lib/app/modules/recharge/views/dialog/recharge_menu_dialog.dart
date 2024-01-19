@@ -72,8 +72,7 @@ class RechargeMenuDialog {
                 controller.code.clear();
                 controller.numberTextField.clear();
                 controller.selectedOption.value = 'For myself';
-                RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount(
-                    selectedMenu: "OWN");
+                RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: "OWN");
                 // Get.toNamed(AppRoutes.RECHARGE, arguments: {
                 //   "screens": "credit",
                 // });
@@ -93,8 +92,7 @@ class RechargeMenuDialog {
                 controller.code.clear();
                 controller.numberTextField.clear();
                 controller.selectedOption.value = 'For others';
-                RechargeCreditInputNumberBottomSheet
-                    .showBottomSheetInputNumber();
+                RechargeCreditInputNumberBottomSheet.showBottomSheetInputNumber();
                 // Get.toNamed(AppRoutes.RECHARGE, arguments: {
                 //   "screens": "internet",
                 // });
@@ -177,8 +175,7 @@ class RechargeMenuDialog {
                 controller.numberTextField.clear();
                 controller.selectedOption.value = 'For myself';
 
-                RechargeInternetSelectPackageBottomSheet
-                    .showBottomSheetSelectPackageAmount();
+                RechargeInternetSelectPackageBottomSheet.showBottomSheetSelectPackageAmount();
               },
               child: const SizedBox(
                 height: 20,
@@ -195,8 +192,7 @@ class RechargeMenuDialog {
                 controller.code.clear();
                 controller.numberTextField.clear();
                 controller.selectedOption.value = 'For others';
-                RechargeInternetSelectPackageBottomSheet
-                    .showBottomSheetSelectPackageAmount();
+                RechargeInternetSelectPackageBottomSheet.showBottomSheetSelectPackageAmount();
               },
               child: const SizedBox(
                 height: 20,

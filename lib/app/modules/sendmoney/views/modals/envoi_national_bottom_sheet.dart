@@ -7,6 +7,7 @@ import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
@@ -43,8 +44,7 @@ enum FieldType { NORMAL, PHONEBOOK }
 class EnvoiModalBottomSheet extends StatefulWidget {
   final String? countryCode;
   final String? formatPhone;
-  const EnvoiModalBottomSheet(
-      {super.key, required this.sendType, this.countryCode, this.formatPhone});
+  const EnvoiModalBottomSheet({super.key, required this.sendType, this.countryCode, this.formatPhone});
   final String sendType;
 
   @override
@@ -58,7 +58,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   static final codeEditingController = TextEditingController();
   static bool isKeyboardVis = false;
   final String _selectedCountryCode = '+228'; // Default country code
-  static String? phoneContactNumer;
+  static String phoneContactNumer = '';
+  static String countryCodes = '';
   static bool isTextFieldEmpty = false;
   static bool isInvalidCode = false;
   static String invalidCodeString = '';
@@ -70,6 +71,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   static FieldType? fieldtype;
 
   static String messageType = '';
+
   // 96 04 78 78
   @override
   void initState() {
@@ -79,8 +81,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
     super.initState();
   }
 
-  final controller = Get.put(
-      SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  final controller =
+      Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   static void toNextStep() async {
     showDialog(
       barrierDismissible: false,
@@ -105,25 +107,21 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       Navigator.of(Get.context!).pop(); // Close the alert dialog
 
       // Navigate to the next page
-      pageController.nextPage(
-          duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+      pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
     });
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  void onUserSelected(String usersNumber) {
+  void onUserSelected(String usersNumber, String countryCode) {
     setState(() {
-      // selectedContact = usersNumber;
-      phoneContactNumer = usersNumber;
-      print('phoneContactNumer $phoneContactNumer');
-      numberEditingCobntroller.text = phoneContactNumer.toString();
-      AppGlobal.phonenumberspan = phoneContactNumer.toString().replaceAll(
-          "[^0-9]",
-          ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
+      print('phoneContactNumer $usersNumber');
+      numberEditingCobntroller.text = '${countryCode.replaceAll("+", "")} $usersNumber'; //countryCode.toString()  usersNumber.toString();
+      AppGlobal.phonenumberspan = usersNumber
+          .toString()
+          .replaceAll("[^0-9]", ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
     });
   }
 
@@ -160,11 +158,19 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             ),
           ),
         ),
-        FluLine(
-          height: 1,
-          width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+        Row(
+          children: [
+            FluLine(
+              width: 25.w,
+              color: context.colorScheme.secondary,
+              height: 1,
+              margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+            ),
+            CircleAvatar(
+              radius: 1.w,
+              backgroundColor: context.colorScheme.secondary,
+            )
+          ],
         ),
       ],
     );
@@ -184,8 +190,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           TextSpan(
             children: [
               TextSpan(
-                text: LocaleKeys
-                    .strTransferInfo.tr, // 'Vous allez envoyer de l’argent à ',
+                text: LocaleKeys.strTransferInfo.tr, // 'Vous allez envoyer de l’argent à ',
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
@@ -202,8 +207,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       ),
                     )
                   : TextSpan(
-                      text:
-                          '\n+228 ${numberEditingCobntroller.text.toString()}',
+                      text: '\n+228 ${numberEditingCobntroller.text.toString()}',
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
@@ -213,11 +217,24 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             ],
           ),
         ),
-        FluLine(
-          height: 1,
-          width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+        // FluLine(
+        //   height: 1,
+        //   width: double.infinity,
+        //   margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+        // ),
+        Row(
+          children: [
+            FluLine(
+              width: 25.w,
+              color: context.colorScheme.secondary,
+              height: 1,
+              margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+            ),
+            CircleAvatar(
+              radius: 1.w,
+              backgroundColor: context.colorScheme.secondary,
+            )
+          ],
         ),
       ],
     );
@@ -351,8 +368,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             Expanded(
               child: Text(
                 LocaleKeys.strTransferAmount.tr,
-                style: TextStyle(
-                    fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
+                style: TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
               ),
             ),
             Expanded(
@@ -388,8 +404,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               children: [
                 Expanded(
                   child: FluTextField(
-                    hint: LocaleKeys.strTransferRecipientNumber
-                        .tr, // "Numéro du destinataire",
+                    hint: LocaleKeys.strTransferRecipientNumber.tr, // "Numéro du destinataire",
                     inputController: numberEditingCobntroller,
                     hintStyle: TextStyle(fontSize: 11.sp),
                     textStyle: TextStyle(fontSize: 11.sp),
@@ -410,8 +425,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                           (match) => '${match.group(0)} ',
                         );
                       }
-                      numberEditingCobntroller.value =
-                          numberEditingCobntroller.value.copyWith(
+                      numberEditingCobntroller.value = numberEditingCobntroller.value.copyWith(
                         text: text,
                         selection: TextSelection.collapsed(offset: text.length),
                       );
@@ -421,57 +435,29 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     },
 
                     onFieldSubmitted: (p0) {
-                      print(numberEditingCobntroller.text
-                          .trim()
-                          .toString()
-                          .length);
-                      if (numberEditingCobntroller.text.isNotEmpty &&
-                          numberEditingCobntroller.text
-                                  .trim()
-                                  .toString()
-                                  .length ==
-                              11) {
+                      print(numberEditingCobntroller.text.trim().toString().length);
+                      if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.trim().toString().length == 11) {
                         if (numberEditingCobntroller.text.contains(" ")) {
                           log("wala ge input ang 228");
-                          String replacedString = numberEditingCobntroller.text
-                              .replaceAll(" ", "")
-                              .trim()
-                              .toString();
-                          String msisdn =
-                              (_selectedCountryCode + replacedString)
-                                  .replaceAll("+", "")
-                                  .toString();
+                          String replacedString = numberEditingCobntroller.text.replaceAll(" ", "").trim().toString();
+                          String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
                           log(msisdn);
                           log(_selectedCountryCode);
 
-                          if (msisdn.substring(0, 3) ==
-                              _selectedCountryCode.replaceAll("+", "")) {
-                            onVerifySmidnSubmit(
-                                msisdn, amountEditingController, context);
+                          if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                            onVerifySmidnSubmit(msisdn, amountEditingController, context);
                           } else {
-                            Get.snackbar(
-                                "Message", LocaleKeys.strInvalidNumber.tr,
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                           }
                         } else {
                           log("ge input ang 228");
                           log(numberEditingCobntroller.text);
-                          if (numberEditingCobntroller.text.substring(0, 3) ==
-                              _selectedCountryCode.replaceAll("+", "")) {
-                            String stringRemoveCountryCode =
-                                numberEditingCobntroller.text.substring(3);
-                            String formattedMSISDN =
-                                stringRemoveCountryCode.replaceAllMapped(
-                                    RegExp(r".{2}"),
-                                    (match) => "${match.group(0)} ");
-                            onVerifySmidnSubmit(numberEditingCobntroller.text,
-                                amountEditingController, context);
+                          if (numberEditingCobntroller.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                            String stringRemoveCountryCode = numberEditingCobntroller.text.substring(3);
+                            String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+                            onVerifySmidnSubmit(numberEditingCobntroller.text, amountEditingController, context);
                           } else {
-                            Get.snackbar(
-                                "Message", LocaleKeys.strInvalidNumber.tr,
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                           }
                         }
 
@@ -480,14 +466,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                         setState(() {
                           isTextFieldEmpty = true;
                         });
-                      } else if (numberEditingCobntroller.text
-                              .trim()
-                              .toString()
-                              .length !=
-                          11) {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
+                      } else if (numberEditingCobntroller.text.trim().toString().length != 11) {
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
                       // if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.length < 11) {
                       //   Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
@@ -516,36 +496,33 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    // showModalBottomSheet(
-                    //     isScrollControlled: true,
-                    //     context: context,
-                    //     builder: (context) => Container(
-                    //         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                    //         child: ModalBottomSheet(child: EnvoiModalBottomSheet(sendType: widget.sendType)))).then((value) {
-                    //   if (value != null) {
-                    //     setState(() {
-                    //       phoneContactNumer = value;
-                    //       onUserSelected(phoneContactNumer!);
-                    //       AppGlobal.isEditedTransferNational = false;
-                    //       // print('selected User ${selectedContact!.fullName}');
-                    //       // print('selected User ${selectedUser!.phoneNumber}');
-                    //     });
-                    //   }
-                    // });
-                    Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white,
-                        duration: const Duration(seconds: 3));
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => Container(
+                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                            child: ModalBottomSheet(child: EnvoiModalBottomSheet(sendType: widget.sendType)))).then((value) {
+                      if (value != null) {
+                        setState(() {
+                          print('value 2 $value');
+                          phoneContactNumer = value['formatPhone'];
+                          countryCodes = value['countryCode'];
+                          onUserSelected(phoneContactNumer, countryCodes);
+                          AppGlobal.isEditedTransferNational = false;
+                          // print('selected User ${selectedContact!.fullName}');
+                          // print('selected User ${selectedUser!.phoneNumber}');
+                        });
+                      }
+                    });
+                    // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+                    // backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
                   },
                   child: Container(
                       height: 45,
                       width: MediaQuery.of(context).size.width / 7.8,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 4.0),
-                      decoration: BoxDecoration(
-                          color: context.colorScheme.primaryContainer,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0))),
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                      decoration:
+                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
                       child: const FluIcon(FluIcons.userSearch, size: 20)),
                 ),
               ],
@@ -571,47 +548,28 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   print(numberEditingCobntroller.text.trim().toString().length);
-                  if (numberEditingCobntroller.text.isNotEmpty &&
-                      numberEditingCobntroller.text.trim().toString().length ==
-                          11) {
+                  if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.trim().toString().length == 11) {
                     if (numberEditingCobntroller.text.contains(" ")) {
                       print("wala ge input ang 228");
-                      String replacedString = numberEditingCobntroller.text
-                          .replaceAll(" ", "")
-                          .trim()
-                          .toString();
-                      String msisdn = (_selectedCountryCode + replacedString)
-                          .replaceAll("+", "")
-                          .toString();
+                      String replacedString = numberEditingCobntroller.text.replaceAll(" ", "").trim().toString();
+                      String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
                       print(msisdn);
                       print(_selectedCountryCode);
 
-                      if (msisdn.substring(0, 3) ==
-                          _selectedCountryCode.replaceAll("+", "")) {
-                        onVerifySmidnSubmit(
-                            msisdn, amountEditingController, context);
+                      if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                        onVerifySmidnSubmit(msisdn, amountEditingController, context);
                       } else {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
                     } else {
                       print("ge input ang 228");
                       print(numberEditingCobntroller.text);
-                      if (numberEditingCobntroller.text.substring(0, 3) ==
-                          _selectedCountryCode.replaceAll("+", "")) {
-                        String stringRemoveCountryCode =
-                            numberEditingCobntroller.text.substring(3);
-                        String formattedMSISDN =
-                            stringRemoveCountryCode.replaceAllMapped(
-                                RegExp(r".{2}"),
-                                (match) => "${match.group(0)} ");
-                        onVerifySmidnSubmit(numberEditingCobntroller.text,
-                            amountEditingController, context);
+                      if (numberEditingCobntroller.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                        String stringRemoveCountryCode = numberEditingCobntroller.text.substring(3);
+                        String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+                        onVerifySmidnSubmit(numberEditingCobntroller.text, amountEditingController, context);
                       } else {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
                     }
 
@@ -620,14 +578,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     setState(() {
                       isTextFieldEmpty = true;
                     });
-                  } else if (numberEditingCobntroller.text
-                          .trim()
-                          .toString()
-                          .length !=
-                      11) {
-                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                  } else if (numberEditingCobntroller.text.trim().toString().length != 11) {
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   }
                   // if (numberEditingCobntroller.text.isNotEmpty) {
                   //   onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
@@ -659,8 +611,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
           ],
@@ -709,8 +660,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      LocaleKeys.strAmountSendWarning
-                          .tr, //   'Veuillez saisir le montant*',
+                      LocaleKeys.strAmountSendWarning.tr, //   'Veuillez saisir le montant*',
                       style: TextStyle(
                         fontSize: 11.sp,
                         color: context.colorScheme.secondary,
@@ -750,8 +700,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
             const SizedBox(height: 30),
@@ -821,8 +770,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       //   });
                     } else {
                       setState(() {
-                        addNumberFromReceiver(numberEditingCobntroller.text,
-                            Get.find<DevicePlatformServices>().deviceID);
+                        addNumberFromReceiver(numberEditingCobntroller.text, Get.find<DevicePlatformServices>().deviceID);
                       });
                       showDialog(
                         context: context,
@@ -868,8 +816,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 onPressed: () async {
                   if (codeEditingController.text.isNotEmpty) {
                     setState(() {
-                      addNumberFromReceiver(numberEditingCobntroller.text,
-                          Get.find<DevicePlatformServices>().deviceID);
+                      addNumberFromReceiver(numberEditingCobntroller.text, Get.find<DevicePlatformServices>().deviceID);
                     });
                     showDialog(
                       barrierDismissible: false,
@@ -971,8 +918,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
             const SizedBox(height: 30),
@@ -999,10 +945,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       // print('strToken ${strToken!.replaceAll(".", "")}');
       // var toe = strToken.replaceAll(".", "");
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -1029,11 +973,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
           log(asd);
           sendMoneyToReceiver(
-              asd,
-              Get.find<DevicePlatformServices>().deviceID,
-              amountEditingController.text,
-              codeEditingController.text,
-              messageType);
+              asd, Get.find<DevicePlatformServices>().deviceID, amountEditingController.text, codeEditingController.text, messageType);
           // } else if (description.contains('VERSION NOT UP TO DATE')) {
         } else {
           isInvalidCode = true;
@@ -1042,27 +982,22 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           } else if (description.contains('TOKEN_NOT_FOUND')) {
             await Future.delayed(Duration(seconds: 1), () {});
             await SharedPrefService.logoutUserData(false, '').then((value) {
-              ProgressAlertDialog.showALoadingDialog(Get.context!,
-                  LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
+              ProgressAlertDialog.showALoadingDialog(Get.context!, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
             });
             Get.snackbar("Message", LocaleKeys.strSessionExpired.tr,
-                backgroundColor: Colors.lightBlue,
-                colorText: Colors.white,
-                duration: Duration(seconds: 5));
+                backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: Duration(seconds: 5));
           }
         }
         // var jsonResponse = jsonDecode(jsonString);
         print('JSON Response: $jsonString');
       } else {
         numberEditingCobntroller.clear();
-        Get.snackbar("Message", 'An Error Occured',
-            backgroundColor: Colors.lightBlue, colorText: Colors.white);
+        Get.snackbar("Message", 'An Error Occured', backgroundColor: Colors.lightBlue, colorText: Colors.white);
 
         print('asda ${response.reasonPhrase}');
       }
     } catch (e) {
-      Get.snackbar("Message", e.toString(),
-          backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      Get.snackbar("Message", e.toString(), backgroundColor: Colors.lightBlue, colorText: Colors.white);
 
       print('addNumberFromReceiver $e');
     }
@@ -1070,14 +1005,11 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
   //1111 and code if kani 22879397111 nga user
   // 99990137
-  static void sendMoneyToReceiver(String msisdn, String token, String amounts,
-      String code, String mess) async {
+  static void sendMoneyToReceiver(String msisdn, String token, String amounts, String code, String mess) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header /><v:Body><n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
@@ -1095,8 +1027,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
         var documentss = xml.XmlDocument.parse(parseResult);
-        var requestTokenReturnElement =
-            document.findAllElements('RequestTokenReturn').single;
+        var requestTokenReturnElement = document.findAllElements('RequestTokenReturn').single;
 
         if (jsonString.contains('Transfert reussi')) {
           String trimString = jsonString.replaceAll('Transfert reussi', '');
@@ -1133,15 +1064,13 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
           Get.back();
           Get.back();
-          Get.find<StorageServices>().saveHistoryTransaction(
-              message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
+          Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
           showMessageDialog(message: jsonString);
 
           // SqlHelper.setTransacHistory("-1", jsonString);
         } else {
           Get.back();
-          Get.find<StorageServices>().saveHistoryTransaction(
-              message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
+          Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
           showMessageDialog(message: jsonString);
 
           invalidCodeString = jsonString;
@@ -1237,10 +1166,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
     return transferInfo;
   }
 
-  static void onVerifySmidnSubmit(
-      String msisdn,
-      TextEditingController amountEditingController,
-      BuildContext context) async {
+  static void onVerifySmidnSubmit(String msisdn, TextEditingController amountEditingController, BuildContext context) async {
     try {
       fieldtype = FieldType.NORMAL;
       // }
@@ -1249,8 +1175,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
       if (AppGlobal.isEditedTransferNational) {
         var res = await AuthProvider.sendVerification(msisdn);
-        if (res.extendedData.issubscribed == false &&
-            res.extendedData.othernet == true) {
+        if (res.extendedData.issubscribed == false && res.extendedData.othernet == true) {
           AppGlobal.isEditedTransferNational = false;
           messageType = 'CASHOFF';
           toNextStep();
@@ -1261,8 +1186,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         }
       } else {
         var res = await AuthProvider.sendVerification(msisdn);
-        if (res.extendedData.issubscribed == false &&
-            res.extendedData.othernet == true) {
+        if (res.extendedData.issubscribed == false && res.extendedData.othernet == true) {
           AppGlobal.isEditedTransferNational = false;
           messageType = 'CASHOFF';
           toNextStep();
@@ -1287,8 +1211,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   }
 
   static void showToast2(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   static void resetMessage() {

@@ -43,17 +43,14 @@ enum FieldType { NORMAL, PHONEBOOK }
 class EnvoiInternationalBottomSheet extends StatefulWidget {
   final String? countryCode;
   final String? formatPhone;
-  const EnvoiInternationalBottomSheet(
-      {super.key, required this.sendType, this.countryCode, this.formatPhone});
+  const EnvoiInternationalBottomSheet({super.key, required this.sendType, this.countryCode, this.formatPhone});
   final String sendType;
 
   @override
-  State<EnvoiInternationalBottomSheet> createState() =>
-      _EnvoiInternationalBottomSheetState();
+  State<EnvoiInternationalBottomSheet> createState() => _EnvoiInternationalBottomSheetState();
 }
 
-class _EnvoiInternationalBottomSheetState
-    extends State<EnvoiInternationalBottomSheet> {
+class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottomSheet> {
   static final PageController pageController = PageController();
   static final numberEditingCobntroller = TextEditingController();
   static final amountEditingController = TextEditingController();
@@ -62,7 +59,8 @@ class _EnvoiInternationalBottomSheetState
   static bool isTextFieldEmpty = false;
   static bool isInvalidCode = false;
   static String invalidCodeString = '';
-  static String? phoneContactNumer;
+  static String phoneContactNumer = '';
+  static String countryCodes = '';
 
   static bool isLoading = false;
   static final message = StringBuffer();
@@ -86,11 +84,7 @@ class _EnvoiInternationalBottomSheetState
     codeEditingController.clear();
 
     countryPicker = FlCountryCodePicker(
-        localize: true,
-        showDialCode: true,
-        showSearchBar: false,
-        title: title,
-        filteredCountries: ['BJ', 'CI', 'NE', 'BF', 'ML', 'GW', 'SN']);
+        localize: true, showDialCode: true, showSearchBar: false, title: title, filteredCountries: ['BJ', 'CI', 'NE', 'BF', 'ML', 'GW', 'SN']);
     super.initState();
   }
 
@@ -102,28 +96,18 @@ class _EnvoiInternationalBottomSheetState
         Padding(
           padding: const EdgeInsets.only(top: 12.0, left: 0),
           child: Text(LocaleKeys.strSelect.tr.toUpperCase(),
-              style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFFFB6404))),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFFFB6404))),
         ),
         Padding(
           padding: EdgeInsets.only(top: 4.0, left: 0),
-          child: Text(LocaleKeys.strYourCountry.tr,
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black)),
+          child: Text(LocaleKeys.strYourCountry.tr, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black)),
         ),
-        Padding(
-            padding: EdgeInsets.only(top: 8.0, left: 0),
-            child: Text(LocaleKeys.strChooseCountryDesc.tr,
-                style: TextStyle(fontSize: 14))),
+        Padding(padding: EdgeInsets.only(top: 8.0, left: 0), child: Text(LocaleKeys.strChooseCountryDesc.tr, style: TextStyle(fontSize: 14))),
       ],
     ),
   );
-  final controller = Get.put(
-      SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  final controller =
+      Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   static void toNextStep() async {
     showDialog(
       barrierDismissible: false,
@@ -148,24 +132,23 @@ class _EnvoiInternationalBottomSheetState
       Navigator.of(Get.context!).pop(); // Close the alert dialog
 
       // Navigate to the next page
-      pageController.nextPage(
-          duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+      pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
     });
   }
 
   void showToast(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  void onUserSelected(String usersNumber) {
+  void onUserSelected(String usersNumber, String countryCode) {
     setState(() {
-      phoneContactNumer = usersNumber;
-      print('phoneContactNumer $phoneContactNumer');
-      numberEditingCobntroller.text = phoneContactNumer!;
-      AppGlobal.phonenumberspan = phoneContactNumer.toString().replaceAll(
-          "[^0-9]",
-          ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
+      print('phoneContactNumer $usersNumber');
+      // _selectedCountryCode = countryCodes[0] == '+' ? countryCodes : '+$countryCodes';
+      print('_selectedCountryCode $_selectedCountryCode');
+      numberEditingCobntroller.text = usersNumber.toString(); //countryCode.toString()  usersNumber.toString();
+      AppGlobal.phonenumberspan = usersNumber
+          .toString()
+          .replaceAll("[^0-9]", ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
     });
   }
 
@@ -205,8 +188,7 @@ class _EnvoiInternationalBottomSheetState
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -226,8 +208,7 @@ class _EnvoiInternationalBottomSheetState
           TextSpan(
             children: [
               TextSpan(
-                text: LocaleKeys
-                    .strTransferInfo.tr, // 'Vous allez envoyer de l’argent à ',
+                text: LocaleKeys.strTransferInfo.tr, // 'Vous allez envoyer de l’argent à ',
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
@@ -235,8 +216,7 @@ class _EnvoiInternationalBottomSheetState
                 ),
               ),
               TextSpan(
-                text:
-                    '\n$_selectedCountryCode ${numberEditingCobntroller.text.toString()}',
+                text: '\n$_selectedCountryCode ${numberEditingCobntroller.text.toString()}',
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
@@ -249,8 +229,7 @@ class _EnvoiInternationalBottomSheetState
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -356,8 +335,7 @@ class _EnvoiInternationalBottomSheetState
               children: [
                 Expanded(
                   child: FluTextField(
-                    hint: LocaleKeys.strTransferRecipientNumber
-                        .tr, // "Numéro du destinataire",
+                    hint: LocaleKeys.strTransferRecipientNumber.tr, // "Numéro du destinataire",
                     inputController: numberEditingCobntroller,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
@@ -366,8 +344,7 @@ class _EnvoiInternationalBottomSheetState
                     textStyle: TextStyle(fontSize: 11.sp),
                     prefix: GestureDetector(
                       onTap: () async {
-                        final picked =
-                            await countryPicker.showPicker(context: context);
+                        final picked = await countryPicker.showPicker(context: context);
                         // Null check
                         if (picked != null) {
                           setState(() {
@@ -381,27 +358,16 @@ class _EnvoiInternationalBottomSheetState
                       child: Container(
                         height: 45,
                         width: MediaQuery.of(context).size.width / 5,
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                _selectedCountryCode.length <= 3 ? 18.0 : 12.0,
-                            vertical: 4.0),
-                        decoration: BoxDecoration(
-                            color: context.colorScheme.primaryContainer,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10.0))),
+                        padding: EdgeInsets.symmetric(horizontal: _selectedCountryCode.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
+                        decoration:
+                            BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                                _selectedCountryCode.isEmpty
-                                    ? '+228'
-                                    : _selectedCountryCode,
-                                style: const TextStyle(color: Colors.black)),
+                            Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: const TextStyle(color: Colors.black)),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: Container(
-                                  width: 1.5, color: Colors.grey, height: 20),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: Container(width: 1.5, color: Colors.grey, height: 20),
                             ),
                           ],
                         ),
@@ -421,8 +387,7 @@ class _EnvoiInternationalBottomSheetState
                           (match) => '${match.group(0)} ',
                         );
                       }
-                      numberEditingCobntroller.value =
-                          numberEditingCobntroller.value.copyWith(
+                      numberEditingCobntroller.value = numberEditingCobntroller.value.copyWith(
                         text: text,
                         selection: TextSelection.collapsed(offset: text.length),
                       );
@@ -431,57 +396,30 @@ class _EnvoiInternationalBottomSheetState
                       });
                     },
                     onFieldSubmitted: (p0) {
-                      print(numberEditingCobntroller.text
-                          .trim()
-                          .toString()
-                          .length);
-                      if (numberEditingCobntroller.text.isNotEmpty &&
-                          numberEditingCobntroller.text
-                                  .trim()
-                                  .toString()
-                                  .length ==
-                              11) {
+                      print(numberEditingCobntroller.text.trim().toString().length);
+                      if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.trim().toString().length == 11) {
                         if (numberEditingCobntroller.text.contains(" ")) {
                           log("wala ge input ang 228");
-                          String replacedString = numberEditingCobntroller.text
-                              .replaceAll(" ", "")
-                              .trim()
-                              .toString();
-                          String msisdn =
-                              (_selectedCountryCode + replacedString)
-                                  .replaceAll("+", "")
-                                  .toString();
+                          String replacedString = numberEditingCobntroller.text.replaceAll(" ", "").trim().toString();
+                          String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
                           log(msisdn);
                           log(_selectedCountryCode);
-                          if (msisdn.substring(0, 3) ==
-                              _selectedCountryCode.replaceAll("+", "")) {
+                          if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
                             onVerifySmidnSubmit(msisdn, _selectedCountryCode);
                           } else {
-                            Get.snackbar(
-                                "Message", LocaleKeys.strInvalidNumber.tr,
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                           }
                         } else {
                           log("ge input ang 228");
                           log(numberEditingCobntroller.text);
-                          if (numberEditingCobntroller.text.substring(0, 3) ==
-                              _selectedCountryCode.replaceAll("+", "")) {
-                            String stringRemoveCountryCode =
-                                numberEditingCobntroller.text.substring(3);
-                            String formattedMSISDN =
-                                stringRemoveCountryCode.replaceAllMapped(
-                                    RegExp(r".{2}"),
-                                    (match) => "${match.group(0)} ");
+                          if (numberEditingCobntroller.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                            String stringRemoveCountryCode = numberEditingCobntroller.text.substring(3);
+                            String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
                             log(numberEditingCobntroller.text);
                             log(_selectedCountryCode);
-                            onVerifySmidnSubmit(numberEditingCobntroller.text,
-                                _selectedCountryCode);
+                            onVerifySmidnSubmit(numberEditingCobntroller.text, _selectedCountryCode);
                           } else {
-                            Get.snackbar(
-                                "Message", LocaleKeys.strInvalidNumber.tr,
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                           }
                         }
 
@@ -490,14 +428,8 @@ class _EnvoiInternationalBottomSheetState
                         setState(() {
                           isTextFieldEmpty = true;
                         });
-                      } else if (numberEditingCobntroller.text
-                              .trim()
-                              .toString()
-                              .length !=
-                          11) {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
+                      } else if (numberEditingCobntroller.text.trim().toString().length != 11) {
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
 
                       // if (numberEditingCobntroller.text.isNotEmpty &&
@@ -533,40 +465,33 @@ class _EnvoiInternationalBottomSheetState
                 ),
                 GestureDetector(
                   onTap: () async {
-                    Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white,
-                        duration: const Duration(seconds: 3));
-                    // showModalBottomSheet(
-                    //     isScrollControlled: true,
-                    //     context: context,
-                    //     builder: (context) => Container(
-                    //         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                    //         child: ModalBottomSheet(child: EnvoiInternationalBottomSheet(sendType: widget.sendType)))).then((value) {
-                    //   if (value != null) {
-                    //     print('value $value');
-                    //     setState(() {
-                    //       phoneContactNumer = value['formatPhone'];
-                    //       String countryCodes = value['countryCode'];
-                    //       _selectedCountryCode = '+$countryCodes';
-                    //       onUserSelected(phoneContactNumer!);
-                    //       print('selectedContact $phoneContactNumer');
-                    //       AppGlobal.isEditedTransferNational = false;
-                    //       // print('selected User ${selectedUser!.fullName}');
-                    //       // print('selected User ${selectedUser!.phoneNumber}');
-                    //     });
-                    //   }
-                    // });
+                    // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+                    //     backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => Container(
+                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                            child: ModalBottomSheet(child: EnvoiInternationalBottomSheet(sendType: widget.sendType)))).then((value) {
+                      if (value != null) {
+                        print('value $value');
+                        setState(() {
+                          phoneContactNumer = value['formatPhone'];
+                          countryCodes = value['countryCode'];
+                          onUserSelected(phoneContactNumer, countryCodes);
+                          AppGlobal.isEditedTransferNational = false;
+                          // print('selected User ${selectedUser!.fullName}');
+                          // print('selected User ${selectedUser!.phoneNumber}');
+                        });
+                      }
+                    });
                   },
                   child: Container(
                       height: 45,
                       width: MediaQuery.of(context).size.width / 7.8,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 4.0),
-                      decoration: BoxDecoration(
-                          color: context.colorScheme.primaryContainer,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0))),
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                      decoration:
+                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
                       child: const FluIcon(FluIcons.userSearch, size: 20)),
                 ),
               ],
@@ -592,47 +517,29 @@ class _EnvoiInternationalBottomSheetState
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   print(numberEditingCobntroller.text.trim().toString().length);
-                  if (numberEditingCobntroller.text.isNotEmpty &&
-                      numberEditingCobntroller.text.trim().toString().length ==
-                          11) {
+                  if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.trim().toString().length == 11) {
                     if (numberEditingCobntroller.text.contains(" ")) {
                       log("wala ge input ang 228");
-                      String replacedString = numberEditingCobntroller.text
-                          .replaceAll(" ", "")
-                          .trim()
-                          .toString();
-                      String msisdn = (_selectedCountryCode + replacedString)
-                          .replaceAll("+", "")
-                          .toString();
+                      String replacedString = numberEditingCobntroller.text.replaceAll(" ", "").trim().toString();
+                      String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
 
-                      if (msisdn.substring(0, 3) ==
-                          _selectedCountryCode.replaceAll("+", "")) {
+                      if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
                         log("MSISDN ---> 1 {$msisdn}");
                         log(_selectedCountryCode);
                         onVerifySmidnSubmit(msisdn, _selectedCountryCode);
                       } else {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
                     } else {
                       log("ge input ang 228");
-                      if (numberEditingCobntroller.text.substring(0, 3) ==
-                          _selectedCountryCode.replaceAll("+", "")) {
-                        String stringRemoveCountryCode =
-                            numberEditingCobntroller.text.substring(3);
-                        String formattedMSISDN =
-                            stringRemoveCountryCode.replaceAllMapped(
-                                RegExp(r".{2}"),
-                                (match) => "${match.group(0)} ");
+                      if (numberEditingCobntroller.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                        String stringRemoveCountryCode = numberEditingCobntroller.text.substring(3);
+                        String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
                         log("MSISDN ---> 2 ${numberEditingCobntroller.text}");
                         log(_selectedCountryCode);
-                        onVerifySmidnSubmit(numberEditingCobntroller.text,
-                            _selectedCountryCode);
+                        onVerifySmidnSubmit(numberEditingCobntroller.text, _selectedCountryCode);
                       } else {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
                     }
 
@@ -641,14 +548,8 @@ class _EnvoiInternationalBottomSheetState
                     setState(() {
                       isTextFieldEmpty = true;
                     });
-                  } else if (numberEditingCobntroller.text
-                          .trim()
-                          .toString()
-                          .length !=
-                      11) {
-                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                  } else if (numberEditingCobntroller.text.trim().toString().length != 11) {
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   }
                   // if (numberEditingCobntroller.text.isNotEmpty) {
                   //   onVerifySmidnSubmit(numberEditingCobntroller.text, _selectedCountryCode);
@@ -679,8 +580,7 @@ class _EnvoiInternationalBottomSheetState
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
           ],
@@ -729,8 +629,7 @@ class _EnvoiInternationalBottomSheetState
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      LocaleKeys.strAmountSendWarning
-                          .tr, //   'Veuillez saisir le montant*',
+                      LocaleKeys.strAmountSendWarning.tr, //   'Veuillez saisir le montant*',
                       style: TextStyle(
                         fontSize: 11.sp,
                         color: context.colorScheme.secondary,
@@ -975,8 +874,7 @@ class _EnvoiInternationalBottomSheetState
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
             const SizedBox(height: 30),
@@ -1030,8 +928,7 @@ class _EnvoiInternationalBottomSheetState
                     offset: const Offset(0, 5),
                   )
                 ],
-                textStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
             const SizedBox(height: 30),
@@ -1051,22 +948,18 @@ class _EnvoiInternationalBottomSheetState
   }
 
 //${AppGlobal.MSISDN}
-  void onVerifySmidnSubmit(
-      String destinationMsisdn, String selectedCountryCode) async {
+  void onVerifySmidnSubmit(String destinationMsisdn, String selectedCountryCode) async {
     try {
       print(" --- $destinationMsisdn");
       print(" --- $selectedCountryCode");
       String removeFirstThreeCharacter = destinationMsisdn.substring(3);
       setState(() {
-        numberEditingCobntroller.text = removeFirstThreeCharacter
-            .replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+        numberEditingCobntroller.text = removeFirstThreeCharacter.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
       });
       print(" destinationMsisdn --- $destinationMsisdn");
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -1094,15 +987,13 @@ class _EnvoiInternationalBottomSheetState
         log(decodedData.toString());
 
         if (decodedData['onNet'] == true || decodedData['offNet'] == true) {
-          Get.snackbar("Message", "Le numéro n'est pas autorisé",
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", "Le numéro n'est pas autorisé", backgroundColor: Colors.lightBlue, colorText: Colors.white);
         } else {
           if (decodedData['description'] == "SUCCESS") {
             AppGlobal.internationalType = decodedData['international'];
             toNextStep();
           } else {
-            Get.snackbar("Message", "Le numéro n'est pas autorisé",
-                backgroundColor: Colors.lightBlue, colorText: Colors.white);
+            Get.snackbar("Message", "Le numéro n'est pas autorisé", backgroundColor: Colors.lightBlue, colorText: Colors.white);
           }
         }
       } else {
@@ -1115,16 +1006,11 @@ class _EnvoiInternationalBottomSheetState
 
   //vshould verify the receiver
   static void verifyAndroid(
-      {required String destinationMSISDN,
-      required String selectedCountryCode,
-      required String amount,
-      required String code}) async {
+      {required String destinationMSISDN, required String selectedCountryCode, required String amount, required String code}) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -1150,21 +1036,14 @@ class _EnvoiInternationalBottomSheetState
         var decodedData = jsonDecode(jsonString);
         log(decodedData.toString());
         if (decodedData['description'] == 'TOKEN_FOUND') {
-          sendMoneyInternational(
-              selectedCountryCode: selectedCountryCode,
-              destinationMSISDN: destinationMSISDN,
-              amount: amount,
-              code: code);
+          sendMoneyInternational(selectedCountryCode: selectedCountryCode, destinationMSISDN: destinationMSISDN, amount: amount, code: code);
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
           await Future.delayed(Duration(seconds: 1), () {});
           await SharedPrefService.logoutUserData(false, '').then((value) {
-            ProgressAlertDialog.showALoadingDialog(Get.context!,
-                LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
+            ProgressAlertDialog.showALoadingDialog(Get.context!, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
           });
           Get.snackbar("Message", LocaleKeys.strSessionExpired.tr,
-              backgroundColor: Colors.lightBlue,
-              colorText: Colors.white,
-              duration: Duration(seconds: 5));
+              backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: Duration(seconds: 5));
         }
       } else {
         numberEditingCobntroller.clear();
@@ -1178,10 +1057,7 @@ class _EnvoiInternationalBottomSheetState
   //1111 and code if kani 22879397111 nga user
   // 99990137
   static void sendMoneyInternational(
-      {required String destinationMSISDN,
-      required String amount,
-      required String selectedCountryCode,
-      required String code}) async {
+      {required String destinationMSISDN, required String amount, required String selectedCountryCode, required String code}) async {
     try {
       print("CALLED_HERE");
       print(destinationMSISDN);
@@ -1190,20 +1066,16 @@ class _EnvoiInternationalBottomSheetState
 
       print(AppGlobal.internationalType);
 
-      String toReplaceSpaces =
-          (selectedCountryCode + destinationMSISDN).trim().toString();
+      String toReplaceSpaces = (selectedCountryCode + destinationMSISDN).trim().toString();
       String toReplacePlusSign = toReplaceSpaces.replaceAll(" ", "");
-      String finalmsisdn =
-          toReplacePlusSign.replaceAll("+", "").trim().toString();
+      String finalmsisdn = toReplacePlusSign.replaceAll("+", "").trim().toString();
       print(finalmsisdn);
 
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
 
       if (AppGlobal.internationalType == "xcash") {
-        request.body =
-            '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+        request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -1238,8 +1110,7 @@ class _EnvoiInternationalBottomSheetState
         if (selectedCountryCode == "+221") {
           alphacodetwo = 'SN';
         }
-        request.body =
-            '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+        request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
             xmlns:d="http://www.w3.org/2001/XMLSchema" 
             xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
             xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -1269,8 +1140,7 @@ class _EnvoiInternationalBottomSheetState
         amountEditingController.clear();
         codeEditingController.clear();
         // SqlHelper.setTransacHistory("-1", jsonString);
-        Get.find<StorageServices>().saveHistoryTransaction(
-            message: jsonString, service: LocaleKeys.strInternationalTransfer);
+        Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: LocaleKeys.strInternationalTransfer);
         showMessageDialog(message: jsonString);
       } else {
         numberEditingCobntroller.clear();
@@ -1410,18 +1280,13 @@ class _EnvoiInternationalBottomSheetState
     String confirm = "";
     switch (fieldtype) {
       case FieldType.NORMAL:
-        confirm = AppStringConfirmation.confirmtransfertnationalmanual
-            .replaceAll("<amount>", amount)
-            .replaceAll("<msisdn>", msisdn);
+        confirm = AppStringConfirmation.confirmtransfertnationalmanual.replaceAll("<amount>", amount).replaceAll("<msisdn>", msisdn);
         print("HITS 3 ${message.toString()}");
         break;
       case FieldType.PHONEBOOK:
         confirm = AppStringConfirmation.confirmtransfertnational
             .replaceAll("<amount>", amount)
-            .replaceAll(
-                "<contactname>",
-                StringUtil().setText(AppGlobal.addressBookDisplayName,
-                    AppGlobal.addressBookDisplayName, ""))
+            .replaceAll("<contactname>", StringUtil().setText(AppGlobal.addressBookDisplayName, AppGlobal.addressBookDisplayName, ""))
             .replaceAll("<msisdn>", msisdn);
         print("HITS 4 ${message.toString()}");
         break;
@@ -1440,8 +1305,7 @@ class _EnvoiInternationalBottomSheetState
   }
 
   static void showToast2(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   static void resetMessage() {

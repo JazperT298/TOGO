@@ -2,6 +2,7 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
@@ -13,10 +14,8 @@ class RechargeCreditInputAmountBottomSheet {
     Get.bottomSheet(Container(
       height: 40.h,
       width: 100.w,
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+      decoration:
+          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +26,7 @@ class RechargeCreditInputAmountBottomSheet {
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Text(
-                selectedMenu.toUpperCase(),
+                LocaleKeys.strCredit.tr.toUpperCase(), //   "CREDIT".toUpperCase(),
                 style: TextStyle(
                   color: const Color(0xFFfb6708),
                   fontWeight: FontWeight.w600,
@@ -41,81 +40,34 @@ class RechargeCreditInputAmountBottomSheet {
             ),
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
-              child: Obx(() => controller.selectedOption.value == "For myself"
-                  ? RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text:
-                              'Please enter the amount you want to recharge your ',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
+              child: Obx(
+                () => controller.selectedOption.value == LocaleKeys.strForMyself.tr // "For myself"
+                    ? Text(
+                        LocaleKeys.strForMyself.tr, //     "For My Self.",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
                         ),
-                        TextSpan(
-                          text: 'Moov ',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF295fe7),
-                          ),
+                      )
+                    : Text(
+                        LocaleKeys.strForOthers.tr, //   "For Others.",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
                         ),
-                        TextSpan(
-                          text: 'account using ',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'Flooz.',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFFfb6708),
-                          ),
-                        )
-                      ]),
-                    )
-                  : RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text:
-                              'Please enter the amount you wish to recharge for ${controller.numberTextField.text} ',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'Moov ',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF295fe7),
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'account using ',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'Flooz.',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFFfb6708),
-                          ),
-                        )
-                      ]),
-                    )),
+                      ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 5.w, right: 5.w),
+              child: Text(
+                LocaleKeys.strPleaseInputAmount.tr, //     "Please input amount.",
+                style: TextStyle(
+                  fontSize: 10.sp,
+                ),
+              ),
             ),
             SizedBox(
               height: 4.h,
@@ -139,7 +91,7 @@ class RechargeCreditInputAmountBottomSheet {
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: FluTextField(
                 inputController: controller.amountTextField,
-                hint: "Enter amount",
+                hint: LocaleKeys.strEnterAmounts.tr, // "Enter amount",
                 hintStyle: TextStyle(fontSize: 11.sp),
                 textStyle: TextStyle(fontSize: 11.sp),
                 height: 50,
@@ -149,18 +101,11 @@ class RechargeCreditInputAmountBottomSheet {
                 onChanged: (text) {},
                 onFieldSubmitted: (p0) {
                   if (controller.amountTextField.text.isEmpty) {
-                    Get.snackbar("Message", "Montant invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   } else if (controller.amountTextField.text.length > 8) {
-                    Get.snackbar("Message", "Montant invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
-                  } else if (double.parse(controller.amountTextField.text) <=
-                      0) {
-                    Get.snackbar("Message", "Montant invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                  } else if (double.parse(controller.amountTextField.text) <= 0) {
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   } else {
                     Get.back();
                     RechargeCreditOTPBottomSheet.showBottomSheetOTP();
@@ -177,23 +122,16 @@ class RechargeCreditInputAmountBottomSheet {
                 right: 5.w,
               ),
               child: FluButton.text(
-                'Continuer',
-                suffixIcon: FluIcons.arrowRight,
+                LocaleKeys.strContinue.tr, // 'Continuer',
+                suffixIcon: FluIcons.passwordCheck,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (controller.amountTextField.text.isEmpty) {
-                    Get.snackbar("Message", "Montant invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   } else if (controller.amountTextField.text.length > 8) {
-                    Get.snackbar("Message", "Montant invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
-                  } else if (double.parse(controller.amountTextField.text) <=
-                      0) {
-                    Get.snackbar("Message", "Montant invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                  } else if (double.parse(controller.amountTextField.text) <= 0) {
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   } else {
                     Get.back();
                     RechargeCreditOTPBottomSheet.showBottomSheetOTP();
@@ -212,9 +150,7 @@ class RechargeCreditInputAmountBottomSheet {
                     offset: Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             SizedBox(

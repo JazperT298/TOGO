@@ -1,6 +1,7 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/generated/locales.g.dart';
 
 import '../controller/profile_controller.dart';
 
@@ -30,13 +31,9 @@ class ProfileInformationPersonellesView extends GetView<ProfileController> {
                   width: MediaQuery.of(context).size.width * 0.13,
                   child: ElevatedButton(
                     style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 175, 221, 243)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 175, 221, 243)),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ))),
                     onPressed: () {
@@ -59,15 +56,16 @@ class ProfileInformationPersonellesView extends GetView<ProfileController> {
                     left: MediaQuery.of(context).size.width * 0.05,
                     right: MediaQuery.of(context).size.width * 0.05,
                   ),
-                  child: const Text("COMPTE")),
+                  child: Text(LocaleKeys.strAccount.tr)),
               Padding(
                   padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width * 0.05,
                     right: MediaQuery.of(context).size.width * 0.05,
                   ),
-                  child: const Text(
-                    "INFOS PERSONELLE.",
-                    style: TextStyle(
+                  child: Text(
+                    LocaleKeys.strPersonalInfos.tr.toUpperCase(),
+                    //  "INFOS PERSONELLE.",
+                    style: const TextStyle(
                       fontSize: M3FontSizes.headlineSmall,
                     ),
                   )),
@@ -91,9 +89,9 @@ class ProfileInformationPersonellesView extends GetView<ProfileController> {
                     left: MediaQuery.of(context).size.width * 0.05,
                     right: MediaQuery.of(context).size.width * 0.05,
                   ),
-                  child: const Text(
-                    "Nom",
-                    style: TextStyle(
+                  child: Text(
+                    LocaleKeys.strName.tr, //   "Nom",
+                    style: const TextStyle(
                       fontSize: M3FontSizes.bodySmall,
                     ),
                   )),
@@ -116,9 +114,9 @@ class ProfileInformationPersonellesView extends GetView<ProfileController> {
                     left: MediaQuery.of(context).size.width * 0.05,
                     right: MediaQuery.of(context).size.width * 0.05,
                   ),
-                  child: const Text(
-                    "Prenoms",
-                    style: TextStyle(
+                  child: Text(
+                    LocaleKeys.strFirstName.tr, // "Prenoms",
+                    style: const TextStyle(
                       fontSize: M3FontSizes.bodySmall,
                     ),
                   )),
@@ -141,9 +139,9 @@ class ProfileInformationPersonellesView extends GetView<ProfileController> {
                     left: MediaQuery.of(context).size.width * 0.05,
                     right: MediaQuery.of(context).size.width * 0.05,
                   ),
-                  child: const Text(
-                    "Solde Flooz",
-                    style: TextStyle(
+                  child: Text(
+                    LocaleKeys.strFloozSale.tr, //    "Solde Flooz",
+                    style: const TextStyle(
                       fontSize: M3FontSizes.bodySmall,
                     ),
                   )),
@@ -166,9 +164,9 @@ class ProfileInformationPersonellesView extends GetView<ProfileController> {
                     left: MediaQuery.of(context).size.width * 0.05,
                     right: MediaQuery.of(context).size.width * 0.05,
                   ),
-                  child: const Text(
-                    "Commission",
-                    style: TextStyle(
+                  child: Text(
+                    LocaleKeys.strCommission.tr, // "Commission",
+                    style: const TextStyle(
                       fontSize: M3FontSizes.bodySmall,
                     ),
                   )),
@@ -191,9 +189,9 @@ class ProfileInformationPersonellesView extends GetView<ProfileController> {
                     left: MediaQuery.of(context).size.width * 0.05,
                     right: MediaQuery.of(context).size.width * 0.05,
                   ),
-                  child: const Text(
-                    "Date de naissance",
-                    style: TextStyle(
+                  child: Text(
+                    LocaleKeys.strDateOfBirth.tr, //   "Date de naissance",
+                    style: const TextStyle(
                       fontSize: M3FontSizes.bodySmall,
                     ),
                   )),

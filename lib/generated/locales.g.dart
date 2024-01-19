@@ -23,6 +23,7 @@ class LocaleKeys {
   static const strLoading = 'strLoading';
   static const strPhoneNumberRequired = 'strPhoneNumberRequired';
   static const strContinue = 'strContinue';
+  static const strCancel = 'strCancel';
   static const strSelect = 'strSelect';
   static const strYourCountry = 'strYourCountry';
   static const strChooseCountryDesc = 'strChooseCountryDesc';
@@ -122,6 +123,44 @@ class LocaleKeys {
   static const strCodeSecretInvalid = 'strCodeSecretInvalid';
   static const strSessionExpired = 'strSessionExpired';
   static const strvalidate = 'strvalidate';
+  static const strAccount = 'strAccount';
+  static const strChangePassword = 'strChangePassword';
+  static const strOldPassword = 'strOldPassword';
+  static const strNewPassword = 'strNewPassword';
+  static const strConfirmNewPassword = 'strConfirmNewPassword';
+  static const strChangePin = 'strChangePin';
+  static const strPasswordWarning = 'strPasswordWarning';
+  static const strPasswordWarnings = 'strPasswordWarnings';
+  static const strPasswordNotMatch = 'strPasswordNotMatch';
+  static const strPersonalInfos = 'strPersonalInfos';
+  static const strName = 'strName';
+  static const strFirstName = 'strFirstName';
+  static const strFloozSale = 'strFloozSale';
+  static const strCommission = 'strCommission';
+  static const strDateOfBirth = 'strDateOfBirth';
+  static const strVerificationCode = 'strVerificationCode';
+  static const strAnErrorOccured = 'strAnErrorOccured';
+  static const strEnterPinCode = 'strEnterPinCode';
+  static const strUpdate = 'strUpdate';
+  static const strAppNoUptoDate = 'strAppNoUptoDate';
+  static const strCreditTransfer = 'strCreditTransfer';
+  static const strSelectOptions = 'strSelectOptions';
+  static const strForMyself = 'strForMyself';
+  static const strForOthers = 'strForOthers';
+  static const strEnterAmounts = 'strEnterAmounts';
+  static const strPleaseInputAmount = 'strPleaseInputAmount';
+  static const strEnterNumber = 'strEnterNumber';
+  static const strPleaseInputNumber = 'strPleaseInputNumber';
+  static const strSummary = 'strSummary';
+  static const strAmount = 'strAmount';
+  static const strCollectionDetails = 'strCollectionDetails';
+  static const strWithdrawMoneyDesc = 'strWithdrawMoneyDesc';
+  static const strNewFloozBalance = 'strNewFloozBalance';
+  static const strTaf = 'strTaf';
+  static const strYouWithdraw = 'strYouWithdraw';
+  static const strAtTheHouse = 'strAtTheHouse';
+  static const strOperationCoses = 'strOperationCoses';
+  static const strInternet = 'strInternet';
 }
 
 class Locales {
@@ -139,6 +178,7 @@ class Locales {
     'strLoading': 'Loading...',
     'strPhoneNumberRequired': 'Phone number is required*',
     'strContinue': 'Continue',
+    'strCancel': 'Cancel',
     'strSelect': 'Select',
     'strYourCountry': 'Your country',
     'strChooseCountryDesc':
@@ -244,6 +284,43 @@ class Locales {
     'strSessionExpired':
         'The session has expired. You have been disconnected!...',
     'strvalidate': 'Validate',
+    'strAccount': 'Account',
+    'strChangePassword': 'Change Pass',
+    'strOldPassword': 'Old Password',
+    'strNewPassword': 'New Password',
+    'strConfirmNewPassword': 'Confirm new password',
+    'strChangePin': 'Change PIN',
+    'strPasswordWarning': 'Missing entry',
+    'strPasswordWarnings': 'Missing entries',
+    'strPasswordNotMatch': 'PIN code does not match',
+    'strPersonalInfos': 'Personal information.',
+    'strName': 'Name',
+    'strFirstName': 'First name',
+    'strFloozSale': 'Flooz Sale',
+    'strCommission': 'Commission',
+    'strDateOfBirth': 'Date of birth',
+    'strVerificationCode': 'Verfication Code',
+    'strAnErrorOccured': 'An error has occurred. Try Again...',
+    'strEnterPinCode': 'Enter PIN Code',
+    'strUpdate': 'Update',
+    'strAppNoUptoDate': 'The application version is not up to date',
+    'strCreditTransfer': 'Credit transfer',
+    'strSelectOptions': 'Select Options',
+    'strForMyself': 'For myself',
+    'strForOthers': 'For others',
+    'strEnterAmounts': 'Entrer amount',
+    'strPleaseInputAmount': 'Please input amount.',
+    'strEnterNumber': 'Enter number',
+    'strPleaseInputNumber': 'Please input number.',
+    'strSummary': 'Summmary',
+    'strAmount': 'Amount',
+    'strCollectionDetails': 'Collection details Flooz Point of sale',
+    'strWithdrawMoneyDesc': 'You will withdraw money from',
+    'strNewFloozBalance': 'New Flooz balance: ',
+    'strTaf': 'JOB: ',
+    'strYouWithdraw': 'You Withdraw',
+    'strAtTheHouse': 'Chez',
+    'strOperationCoses': 'Operation costs: ',
   };
   static const fr = {
     'strSignIn': 'Se connecter',
@@ -259,6 +336,7 @@ class Locales {
     'strLoading': 'Chargement...',
     'strPhoneNumberRequired': 'Le numéro de téléphone est requis*',
     'strContinue': 'Continuer',
+    'strCancel': 'Annuler',
     'strSelect': 'Selectionner',
     'strYourCountry': 'Votre pays',
     'strChooseCountryDesc':
@@ -364,5 +442,42 @@ class Locales {
     'strCodeSecretInvalid': 'Code invalide. S\'il vous plaît essayer à nouveau',
     'strSessionExpired': 'La session a expiré. Vous avez été déconnecté!...',
     'strvalidate': 'Valider',
+    'strAccount': 'Compte',
+    'strChangePassword': 'Changer de Pass',
+    'strOldPassword': 'Ancien mot de passe',
+    'strNewPassword': 'Nouveau mot de passe',
+    'strConfirmNewPassword': 'Confirmer nouveau mot de passe',
+    'strChangePin': 'Changer le code PIN',
+    'strPasswordWarning': 'Entrée manquante',
+    'strPasswordWarnings': 'Entrées manquantes',
+    'strPasswordNotMatch': 'Le code PIN ne correspond pas',
+    'strPersonalInfos': 'Infos personelle.',
+    'strName': 'Nom',
+    'strFirstName': 'Prenoms',
+    'strFloozSale': 'Solde Flooz',
+    'strCommission': 'Commission',
+    'strDateOfBirth': 'Date de naissance',
+    'strVerificationCode': 'Le code de vérification',
+    'strAnErrorOccured': 'An error has occurred. Try Again...',
+    'strEnterPinCode': 'Entrer le Code PIN',
+    'strUpdate': 'Mise à jour',
+    'strAppNoUptoDate': 'La version de l\'application n\'est pas à jour',
+    'strCreditTransfer': 'Transfert de crédit',
+    'strInternet': 'l\'Internet',
+    'strSelectOptions': 'Sélectionnez les options',
+    'strForMyself': 'Pour moi-même',
+    'strForOthers': 'Pour les autres',
+    'strEnterAmounts': 'Entrer le montant',
+    'strPleaseInputAmount': 'Veuillez saisir le montant.',
+    'strEnterNumber': 'Entrer un nombre',
+    'strPleaseInputNumber': 'Veuillez saisir le numéro.',
+    'strAmount': 'Montant',
+    'strCollectionDetails': 'Details du retrait Flooz Point de vente',
+    'strWithdrawMoneyDesc': 'Vous allez retirer de l\'argent chez',
+    'strNewFloozBalance': 'Nouveau solde Flooz: ',
+    'strTaf': 'TAF: ',
+    'strYouWithdraw': 'You Withdraw',
+    'strAtTheHouse': 'At the house of',
+    'strOperationCoses': 'Frais de l\'operation: ',
   };
 }

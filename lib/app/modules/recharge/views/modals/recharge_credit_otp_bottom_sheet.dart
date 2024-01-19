@@ -15,10 +15,8 @@ class RechargeCreditOTPBottomSheet {
       Container(
         height: 65.h,
         width: 100.w,
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+        decoration:
+            const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,23 +134,18 @@ class RechargeCreditOTPBottomSheet {
                     ? Container(
                         height: 7.h,
                         width: 100.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: const Color(0xFFe7edfc)),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: const Color(0xFFe7edfc)),
                         child: Center(
                           child: Text(
                             "Moi meme",
-                            style:
-                                TextStyle(fontSize: 14.sp, color: Colors.black),
+                            style: TextStyle(fontSize: 14.sp, color: Colors.black),
                           ),
                         ),
                       )
                     : Container(
                         height: 7.h,
                         width: 100.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: const Color(0xFFf4f5fa)),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: const Color(0xFFf4f5fa)),
                         child: Center(
                           child: Text(
                             controller.numberTextField.text,
@@ -193,9 +186,7 @@ class RechargeCreditOTPBottomSheet {
                     const Expanded(
                       child: Text(
                         "Fees",
-                        style: TextStyle(
-                            fontSize: M3FontSizes.bodyLarge,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -221,9 +212,7 @@ class RechargeCreditOTPBottomSheet {
                     Expanded(
                       child: Text(
                         LocaleKeys.strTransferAmount.tr,
-                        style: const TextStyle(
-                            fontSize: M3FontSizes.bodyLarge,
-                            color: Colors.grey),
+                        style: const TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
                       ),
                     ),
                     Expanded(
@@ -260,19 +249,13 @@ class RechargeCreditOTPBottomSheet {
                         controller.verifyAndroid(
                             code: controller.code.text,
                             amount: controller.amountTextField.text,
-                            msisdn: Get.find<StorageServices>()
-                                .storage
-                                .read('msisdn'));
+                            msisdn: Get.find<StorageServices>().storage.read('msisdn'));
                       } else {
                         controller.verifyAndroid(
-                            code: controller.code.text,
-                            amount: controller.amountTextField.text,
-                            msisdn: controller.numberTextField.text);
+                            code: controller.code.text, amount: controller.amountTextField.text, msisdn: controller.numberTextField.text);
                       }
                     } else {
-                      Get.snackbar("Message", "Entrées manquantes",
-                          backgroundColor: Colors.lightBlue,
-                          colorText: Colors.white);
+                      Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                     }
                   },
                 ),
@@ -292,19 +275,13 @@ class RechargeCreditOTPBottomSheet {
                         controller.verifyAndroid(
                             code: controller.code.text,
                             amount: controller.amountTextField.text,
-                            msisdn: Get.find<StorageServices>()
-                                .storage
-                                .read('msisdn'));
+                            msisdn: Get.find<StorageServices>().storage.read('msisdn'));
                       } else {
                         controller.verifyAndroid(
-                            code: controller.code.text,
-                            amount: controller.amountTextField.text,
-                            msisdn: controller.numberTextField.text);
+                            code: controller.code.text, amount: controller.amountTextField.text, msisdn: controller.numberTextField.text);
                       }
                     } else {
-                      Get.snackbar("Message", "Entrées manquantes",
-                          backgroundColor: Colors.lightBlue,
-                          colorText: Colors.white);
+                      Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                     }
                   },
                   height: 55,
@@ -320,9 +297,7 @@ class RechargeCreditOTPBottomSheet {
                       offset: Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: M3FontSizes.bodyLarge),
+                  textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
                 ),
               ),
             ],

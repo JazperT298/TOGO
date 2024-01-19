@@ -2,6 +2,7 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ibank/generated/locales.g.dart';
 import '../../../../utils/configs.dart';
 import '../controller/profile_controller.dart';
 
@@ -23,11 +24,11 @@ class ProfileOtpView extends GetView<ProfileController> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Padding(
+                    Padding(
                       padding: UISettings.pagePadding,
                       child: Text(
-                        "Le code de vérification",
-                        style: TextStyle(
+                        LocaleKeys.strVerificationCode.tr, // "Le code de vérification",
+                        style: const TextStyle(
                           fontSize: M3FontSizes.headlineSmall,
                         ),
                       ),
@@ -36,9 +37,8 @@ class ProfileOtpView extends GetView<ProfileController> {
                       height: MediaQuery.of(context).size.height * 0.05,
                     ),
                     Container(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(Get.context!).size.width * 0.05,
-                          right: MediaQuery.of(Get.context!).size.width * 0.05),
+                      padding:
+                          EdgeInsets.only(left: MediaQuery.of(Get.context!).size.width * 0.05, right: MediaQuery.of(Get.context!).size.width * 0.05),
                       height: MediaQuery.of(Get.context!).size.height * 0.07,
                       width: MediaQuery.of(Get.context!).size.width,
                       child: TextField(
@@ -52,12 +52,9 @@ class ProfileOtpView extends GetView<ProfileController> {
                         decoration: InputDecoration(
                           fillColor: const Color.fromARGB(255, 175, 221, 243),
                           filled: true,
-                          contentPadding: EdgeInsets.only(
-                              left: MediaQuery.of(Get.context!).size.width *
-                                  0.03),
+                          contentPadding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.width * 0.03),
                           alignLabelWithHint: false,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
                           enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
@@ -80,23 +77,16 @@ class ProfileOtpView extends GetView<ProfileController> {
                         width: MediaQuery.of(context).size.width * 0.13,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color.fromARGB(255, 175, 221, 243)),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 175, 221, 243)),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                               ))),
                           onPressed: () {
                             if (controller.code.text.isNotEmpty) {
-                              controller.enterPinForInformationPersonelles(
-                                  code: controller.code.text);
+                              controller.enterPinForInformationPersonelles(code: controller.code.text);
                             } else {
-                              Get.snackbar("Message", "Entrées manquantes",
-                                  backgroundColor: Colors.lightBlue,
-                                  colorText: Colors.white);
+                              Get.snackbar("Message", LocaleKeys.strPasswordWarnings.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             }
                           },
                           child: const FluIcon(

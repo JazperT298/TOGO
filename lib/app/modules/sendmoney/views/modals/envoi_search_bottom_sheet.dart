@@ -51,7 +51,7 @@ class _EnvoiSearchBottomSheetState extends State<EnvoiSearchBottomSheet> {
     super.initState();
     favorites = widget.favorites;
 
-    // _fetchContacts();
+    _fetchContacts();
   }
 
   Future _fetchContacts() async {
