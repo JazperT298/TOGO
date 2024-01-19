@@ -109,5 +109,6 @@
     "strCodeSecretEmpty": "The secret code must not be empty",
     "strCodeSecretInvalid": "Invalid code. Please try again",
     "strSessionExpired": "The session has expired. You have been disconnected!...",
-    "strvalidate": "Validate"
+    "strvalidate": "Validate",
+    "strNewPassword": "New Password"
 }
