@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:sizer/sizer.dart';
 
 import '../modals/recharge_credit_input_amount_bottom_sheet.dart';
@@ -14,7 +15,7 @@ class RechargeMenuDialog {
       builder: (BuildContext context) {
         // return alert dialog object
         return AlertDialog(
-          title: const Text('Credit transfer'),
+          title: Text(LocaleKeys.strCreditTransfer.tr),
           content: SizedBox(
             height: 80.0,
             child: Column(
@@ -29,9 +30,9 @@ class RechargeMenuDialog {
                     //   "screens": "credit",
                     // });
                   },
-                  child: const SizedBox(
+                  child: SizedBox(
                     height: 20,
-                    child: Text('Credit'),
+                    child: Text(LocaleKeys.strCredit.tr),
                   ),
                 ),
                 const SizedBox(
@@ -44,9 +45,9 @@ class RechargeMenuDialog {
                     //   "screens": "internet",
                     // });
                   },
-                  child: const SizedBox(
+                  child: SizedBox(
                     height: 20,
-                    child: Text('Internet'),
+                    child: Text(LocaleKeys.strInternet.tr),
                   ),
                 ),
                 const SizedBox(
@@ -68,7 +69,7 @@ class RechargeMenuDialog {
       builder: (BuildContext context) {
         // return alert dialog object
         return AlertDialog(
-          title: const Text('Select Options'),
+          title: Text(LocaleKeys.strSelectOptions.tr),
           content: SizedBox(
             height: 80.0,
             child: Column(
@@ -80,16 +81,15 @@ class RechargeMenuDialog {
                     controller.amountTextField.clear();
                     controller.code.clear();
                     controller.numberTextField.clear();
-                    controller.selectedOption.value = 'For myself';
-                    RechargeCreditInputAmountBottomSheet
-                        .showBottomSheetInputAmount();
+                    controller.selectedOption.value = LocaleKeys.strForMyself.tr;
+                    RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount();
                     // Get.toNamed(AppRoutes.RECHARGE, arguments: {
                     //   "screens": "credit",
                     // });
                   },
-                  child: const SizedBox(
+                  child: SizedBox(
                     height: 20,
-                    child: Text('For Myself'),
+                    child: Text(LocaleKeys.strForMyself.tr),
                   ),
                 ),
                 const SizedBox(
@@ -101,16 +101,15 @@ class RechargeMenuDialog {
                     controller.amountTextField.clear();
                     controller.code.clear();
                     controller.numberTextField.clear();
-                    controller.selectedOption.value = 'For others';
-                    RechargeCreditInputNumberBottomSheet
-                        .showBottomSheetInputNumber();
+                    controller.selectedOption.value = LocaleKeys.strForOthers.tr;
+                    RechargeCreditInputNumberBottomSheet.showBottomSheetInputNumber();
                     // Get.toNamed(AppRoutes.RECHARGE, arguments: {
                     //   "screens": "internet",
                     // });
                   },
-                  child: const SizedBox(
+                  child: SizedBox(
                     height: 20,
-                    child: Text('For Others'),
+                    child: Text(LocaleKeys.strForOthers.tr),
                   ),
                 ),
                 const SizedBox(

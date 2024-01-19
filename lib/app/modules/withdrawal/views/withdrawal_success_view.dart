@@ -2,6 +2,7 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 
 class WithdrawalSuccessView extends GetView<WithdrawalController> {
@@ -18,21 +19,21 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Padding(
+                Padding(
                   padding: UISettings.pagePadding,
                   child: Text(
-                    "RETRAIT",
-                    style: TextStyle(color: Colors.orange),
+                    LocaleKeys.strWalletWithdrawalDesc.tr, //  "RETRAIT",
+                    style: const TextStyle(color: Colors.orange),
                   ),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                const Padding(
+                Padding(
                   padding: UISettings.pagePadding,
                   child: Text(
-                    "Vous retirez",
-                    style: TextStyle(
+                    LocaleKeys.strYouWithdraw.tr, //  "Vous retirez",
+                    style: const TextStyle(
                       fontSize: M3FontSizes.headlineLarge,
                     ),
                   ),
@@ -42,9 +43,7 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                   child: Obx(
                     () => Text(
                       controller.withdrawalAmountWithUnit.value,
-                      style: const TextStyle(
-                          fontSize: M3FontSizes.headlineLarge,
-                          color: Colors.orange),
+                      style: const TextStyle(fontSize: M3FontSizes.headlineLarge, color: Colors.orange),
                     ),
                   ),
                 ),
@@ -52,7 +51,7 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                   padding: UISettings.pagePadding,
                   child: Obx(
                     () => Text(
-                      "Chez ${controller.nickname.value}",
+                      "${LocaleKeys.strAtTheHouse.tr} ${controller.nickname.value}",
                       style: const TextStyle(
                         fontSize: M3FontSizes.headlineLarge,
                       ),
@@ -63,18 +62,17 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                     padding: UISettings.pagePadding,
                     child: Row(
                       children: [
-                        const Text(
-                          "Frais de l'operation: ",
-                          style: TextStyle(
+                        Text(
+                          LocaleKeys.strOperationCoses.tr,
+                          //"Frais de l'operation: ",
+                          style: const TextStyle(
                             fontSize: M3FontSizes.bodyLarge,
                           ),
                         ),
                         Obx(
                           () => Text(
                             controller.fees.value,
-                            style: const TextStyle(
-                                fontSize: M3FontSizes.bodyLarge,
-                                color: Colors.orange),
+                            style: const TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.orange),
                           ),
                         ),
                       ],
@@ -83,18 +81,16 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                     padding: UISettings.pagePadding,
                     child: Row(
                       children: [
-                        const Text(
-                          "TAF: ",
-                          style: TextStyle(
+                        Text(
+                          LocaleKeys.strTaf.tr,
+                          style: const TextStyle(
                             fontSize: M3FontSizes.bodyLarge,
                           ),
                         ),
                         Obx(
                           () => Text(
                             controller.taf.value,
-                            style: const TextStyle(
-                                fontSize: M3FontSizes.bodyLarge,
-                                color: Colors.orange),
+                            style: const TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.orange),
                           ),
                         ),
                       ],
@@ -103,18 +99,16 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                     padding: UISettings.pagePadding,
                     child: Row(
                       children: [
-                        const Text(
-                          "Nouveau solde Flooz: ",
-                          style: TextStyle(
+                        Text(
+                          LocaleKeys.strNewFloozBalance.tr, //   "Nouveau solde Flooz: ",
+                          style: const TextStyle(
                             fontSize: M3FontSizes.bodyLarge,
                           ),
                         ),
                         Obx(
                           () => Text(
                             controller.balance.value,
-                            style: const TextStyle(
-                                fontSize: M3FontSizes.bodyLarge,
-                                color: Colors.orange),
+                            style: const TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.orange),
                           ),
                         ),
                       ],
@@ -125,7 +119,7 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                 Padding(
                   padding: UISettings.pagePadding,
                   child: FluButton.text(
-                    'Continuer',
+                    LocaleKeys.strContinue.tr, //   'Continuer',
                     suffixIcon: FluIcons.arrowRight,
                     iconStrokeWidth: 1.8,
                     onPressed: () {
@@ -147,9 +141,7 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                         offset: const Offset(0, 5),
                       )
                     ],
-                    textStyle: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: M3FontSizes.bodyLarge),
+                    textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
                   ),
                 ),
               ],

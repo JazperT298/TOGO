@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:sizer/sizer.dart';
 
 import '../controller/home_controller.dart';
@@ -21,15 +22,15 @@ class HomeAlertDialog {
                 if (code.text.isNotEmpty) {
                   controller.enterPinForInformationPersonelles(code: code.text);
                 } else {
-                  Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                  Get.snackbar("Message", LocaleKeys.strPasswordWarnings.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                 }
               },
-              child: const Text("CONTINUER")),
+              child: Text(LocaleKeys.strContinue.tr.toUpperCase())),
           TextButton(
               onPressed: () {
                 Get.back();
               },
-              child: const Text("ANNULER")),
+              child: Text(LocaleKeys.strCancel.tr.toUpperCase())),
         ],
         content: Container(
           height: MediaQuery.of(Get.context!).size.height * 0.25,
@@ -44,9 +45,9 @@ class HomeAlertDialog {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
-                        "ENTRER LE CODE PIN",
-                        style: TextStyle(
+                      Text(
+                        LocaleKeys.strEnterPinCode.tr, //  "ENTRER LE CODE PIN",
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
@@ -128,13 +129,13 @@ class HomeAlertDialog {
                         controller.launch();
                       }
                     },
-                    child: const Text("MISE À JOUR"))
+                    child: Text(LocaleKeys.strUpdate.tr))
               ],
               content: SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "La version de l'application n'est pas à jour",
+                    LocaleKeys.strAppNoUptoDate.tr, //    "La version de l'application n'est pas à jour",
                     style: TextStyle(fontSize: 11.sp),
                   ),
                 ),

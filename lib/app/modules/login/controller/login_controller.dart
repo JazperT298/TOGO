@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/string_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml/xml.dart' as xml;
@@ -26,26 +27,19 @@ class LoginController extends GetxController {
   static var client = http.Client();
   RxList<String> existingLetters = <String>[].obs;
 
-  kycInquiryRequest(
-      {required String msisdn,
-      required String formattedMSISDN,
-      required String countryCode}) async {
+  kycInquiryRequest({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
     try {
       var client = HttpClient();
       client.badCertificateCallback = (cert, host, port) => true;
-      final request = await client.postUrl(
-          Uri.parse("https://flooznfctest.moov-africa.tg/kyctest/inquiry"));
+      final request = await client.postUrl(Uri.parse("https://flooznfctest.moov-africa.tg/kyctest/inquiry"));
 
       // request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');
       // request.headers.set("Accept", 'application/json');
       request.headers.set("command-id", 'kycinquiry');
       // request.headers.set("Authorization", 'Basic UkVVR0lFOlJFVUdJRQ==');
       // request.headers.set("Content-Type", "application/json");
-      request.write(jsonEncode({
-        "command-id": "kycinquiry",
-        "destination": msisdn,
-        "request-id": "INQ-$msisdn${DateTime.now().millisecondsSinceEpoch}"
-      }));
+      request.write(
+          jsonEncode({"command-id": "kycinquiry", "destination": msisdn, "request-id": "INQ-$msisdn${DateTime.now().millisecondsSinceEpoch}"}));
 
       final response = await request.close();
       var responsebody = await response.transform(utf8.decoder).join();
@@ -55,26 +49,17 @@ class LoginController extends GetxController {
 
       if (response.statusCode == 200) {
         var decodedData = jsonDecode(responsebody);
-        if (decodedData['extended-data']['issubscribed'] == false &&
-            decodedData['extended-data']['othernet'] == true) {
+        if (decodedData['extended-data']['issubscribed'] == false && decodedData['extended-data']['othernet'] == true) {
           // SOAP REQUEST
-          await otpRequestViaApi(
-              msisdn: msisdn,
-              formattedMSISDN: formattedMSISDN,
-              countryCode: countryCode);
+          await otpRequestViaApi(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
         }
-        if (decodedData['extended-data']['issubscribed'] == true &&
-            decodedData['extended-data']['othernet'] == false) {
+        if (decodedData['extended-data']['issubscribed'] == true && decodedData['extended-data']['othernet'] == false) {
           // VIA SMS
           // encryptionExample(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
-          await otpRequestViaApi(
-              msisdn: msisdn,
-              formattedMSISDN: formattedMSISDN,
-              countryCode: countryCode);
+          await otpRequestViaApi(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
         } else {
           Get.back();
-          Get.snackbar("Message", "Numero Invalide",
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         log("ERROR something went wrong");
@@ -84,22 +69,16 @@ class LoginController extends GetxController {
     } on SocketException catch (_) {
       log("ERROR SocketException $_");
       Get.back();
-      Get.snackbar(
-          "Message", "Une erreur s'est produite. Veuillez réessayer...",
-          backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      Get.snackbar("Message", LocaleKeys.strAnErrorOccured.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
     } catch (_) {
       log("ERROR $_");
     }
   }
 
-  otpRequestViaApi(
-      {required String msisdn,
-      required String formattedMSISDN,
-      required String countryCode}) async {
+  otpRequestViaApi({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
             <soapenv:Header/>
@@ -122,23 +101,17 @@ class LoginController extends GetxController {
         var jsonString = soapElement.innerText;
         log(jsonString);
         print('jsonString $jsonString');
-        if (jsonString
-            .contains('Votre application est en cours d’activation.')) {
+        if (jsonString.contains('Votre application est en cours d’activation.')) {
           String otp = StringUtil().extractOTP(jsonString)!;
           //Save OTP to local Storage
           Get.find<StorageServices>().saveOTP(otp: otp);
           // VERIFY OTP
           Get.back();
-          Get.toNamed(AppRoutes.OTP, arguments: {
-            "msisdn": msisdn,
-            "formatedMSISDN": formattedMSISDN,
-            "countryCode": countryCode,
-            "requestVia": "api"
-          });
+          Get.toNamed(AppRoutes.OTP,
+              arguments: {"msisdn": msisdn, "formatedMSISDN": formattedMSISDN, "countryCode": countryCode, "requestVia": "api"});
         } else {
           Get.back();
-          Get.snackbar("Message", jsonString,
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
         // print('JSON Response: $jsonResponse');
@@ -163,10 +136,7 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> encryptionExample(
-      {required String msisdn,
-      required String formattedMSISDN,
-      required String countryCode}) async {
+  Future<void> encryptionExample({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
     // String plainPrefix = 'A'; // it must be random character if possible
     // String plainData = 'Hello World';
     // String data = plainPrefix + plainData;
@@ -180,9 +150,7 @@ class LoginController extends GetxController {
       incrementedCode = 65; // Wrap around to 'A'
     }
     String incrementedLetter = String.fromCharCode(incrementedCode);
-    Get.find<StorageServices>()
-        .storage
-        .write('incrementedLetter', incrementedLetter);
+    Get.find<StorageServices>().storage.write('incrementedLetter', incrementedLetter);
     log("Random letter: $incrementedLetter");
     String data = '${incrementedLetter}EULA GETOTP ANDROID $msisdn';
     log(data);
@@ -198,12 +166,7 @@ class LoginController extends GetxController {
     log(base64);
     Get.back();
     await opensMessagingApp(encrptedText: base64);
-    Get.offAllNamed(AppRoutes.OTP, arguments: {
-      "msisdn": msisdn,
-      "formatedMSISDN": formattedMSISDN,
-      "countryCode": countryCode,
-      "requestVia": "sms"
-    });
+    Get.offAllNamed(AppRoutes.OTP, arguments: {"msisdn": msisdn, "formatedMSISDN": formattedMSISDN, "countryCode": countryCode, "requestVia": "sms"});
   }
 
   Future<Uint8List> xor(String data) async {

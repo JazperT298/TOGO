@@ -13,10 +13,8 @@ class RechargeCreditOTPBottomSheet {
     Get.bottomSheet(Container(
       height: 60.h,
       width: 100.w,
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+      decoration:
+          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +25,7 @@ class RechargeCreditOTPBottomSheet {
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Text(
-                "SUMMARY".toUpperCase(),
+                LocaleKeys.strSummary.tr.toUpperCase(), //      "SUMMARY".toUpperCase(),
                 style: TextStyle(
                   color: Colors.orange[500],
                   fontWeight: FontWeight.w600,
@@ -42,9 +40,9 @@ class RechargeCreditOTPBottomSheet {
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Obx(
-                () => controller.selectedOption.value == "For myself"
+                () => controller.selectedOption.value == LocaleKeys.strForMyself.tr
                     ? Text(
-                        "For My Self.",
+                        LocaleKeys.strForMyself.tr,
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
@@ -52,7 +50,7 @@ class RechargeCreditOTPBottomSheet {
                         ),
                       )
                     : Text(
-                        "For Others.",
+                        LocaleKeys.strForOthers.tr,
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
@@ -86,7 +84,7 @@ class RechargeCreditOTPBottomSheet {
                     ),
                   ),
                   Expanded(
-                    child: controller.selectedOption.value == "For myself"
+                    child: controller.selectedOption.value == LocaleKeys.strForMyself.tr
                         ? Text(
                             Get.find<StorageServices>().storage.read('msisdn'),
                             style: TextStyle(
@@ -126,8 +124,7 @@ class RechargeCreditOTPBottomSheet {
                   Expanded(
                     child: Text(
                       LocaleKeys.strTransferAmount.tr,
-                      style: const TextStyle(
-                          fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
+                      style: const TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
                     ),
                   ),
                   Expanded(
@@ -159,7 +156,7 @@ class RechargeCreditOTPBottomSheet {
               child: FluTextField(
                 textAlign: TextAlign.center,
                 inputController: controller.code,
-                hint: "Enter PIN code", // "Montant à envoyer",
+                hint: LocaleKeys.strEnterPinCode.tr, // "Enter PIN code", // "Montant à envoyer",
                 hintStyle: TextStyle(fontSize: 11.sp),
                 textStyle: TextStyle(fontSize: 11.sp),
                 height: 50,
@@ -169,23 +166,17 @@ class RechargeCreditOTPBottomSheet {
                 onChanged: (text) {},
                 onFieldSubmitted: (p0) {
                   if (controller.code.text.isNotEmpty) {
-                    if (controller.selectedOption.value == "For myself") {
+                    if (controller.selectedOption.value == LocaleKeys.strForMyself.tr) {
                       controller.verifyAndroid(
                           code: controller.code.text,
                           amount: controller.amountTextField.text,
-                          msisdn: Get.find<StorageServices>()
-                              .storage
-                              .read('msisdn'));
+                          msisdn: Get.find<StorageServices>().storage.read('msisdn'));
                     } else {
                       controller.verifyAndroid(
-                          code: controller.code.text,
-                          amount: controller.amountTextField.text,
-                          msisdn: controller.numberTextField.text);
+                          code: controller.code.text, amount: controller.amountTextField.text, msisdn: controller.numberTextField.text);
                     }
                   } else {
-                    Get.snackbar("Message", "Entrées manquantes",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                    Get.snackbar("Message", LocaleKeys.strPasswordWarnings.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   }
                 },
               ),
@@ -196,28 +187,22 @@ class RechargeCreditOTPBottomSheet {
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: FluButton.text(
-                'Continuer',
+                LocaleKeys.strContinue.tr, //    'Continuer',
                 suffixIcon: FluIcons.passwordCheck,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (controller.code.text.isNotEmpty) {
-                    if (controller.selectedOption.value == "For myself") {
+                    if (controller.selectedOption.value == LocaleKeys.strForMyself.tr) {
                       controller.verifyAndroid(
                           code: controller.code.text,
                           amount: controller.amountTextField.text,
-                          msisdn: Get.find<StorageServices>()
-                              .storage
-                              .read('msisdn'));
+                          msisdn: Get.find<StorageServices>().storage.read('msisdn'));
                     } else {
                       controller.verifyAndroid(
-                          code: controller.code.text,
-                          amount: controller.amountTextField.text,
-                          msisdn: controller.numberTextField.text);
+                          code: controller.code.text, amount: controller.amountTextField.text, msisdn: controller.numberTextField.text);
                     }
                   } else {
-                    Get.snackbar("Message", "Entrées manquantes",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                    Get.snackbar("Message", LocaleKeys.strPasswordWarnings.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   }
                 },
                 height: 55,
@@ -233,9 +218,7 @@ class RechargeCreditOTPBottomSheet {
                     offset: Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
               ),
             ),
           ],

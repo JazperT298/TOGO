@@ -159,7 +159,7 @@ class SendMenuDialog {
                   GestureDetector(
                     onTap: () {
                       Get.back();
-                      Get.snackbar("Message", LocaleKeys.strLoading.tr,
+                      Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
                           backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
                     },
                     child: Container(
@@ -174,6 +174,50 @@ class SendMenuDialog {
         );
       },
     );
+  }
+
+  static void showMenuModal(context) async {
+    await showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: Text(
+          LocaleKeys.strMoneyTransferTitle.tr,
+          style: TextStyle(fontSize: 18.sp, color: Colors.black),
+        ),
+        actions: <Widget>[
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context, 'Option 1');
+            },
+            child: Text(LocaleKeys.strNationalTransfer.tr),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context, 'Option 2');
+            },
+            child: Text(LocaleKeys.strInternationalTransfer.tr),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context, 'Option 3');
+            },
+            child: Text(LocaleKeys.strReversal.tr),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: () {
+            Navigator.pop(context, 'Cancel');
+          },
+          isDefaultAction: true,
+          child: Text(LocaleKeys.strCancel.tr),
+        ),
+      ),
+    ).then((value) {
+      // Handle the selected option
+      if (value != null) {
+        print('Selected: $value');
+      }
+    });
   }
 
   static void showRecapOperationDialog(context) async {

@@ -36,8 +36,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
   void onPageChange(int index) {
     if (index != 2) {
       ref.read(currentPageProvider.notifier).state = index;
-      pageController.animateToPage(index,
-          duration: 300.milliseconds, curve: Curves.decelerate);
+      pageController.animateToPage(index, duration: 300.milliseconds, curve: Curves.decelerate);
     }
   }
 

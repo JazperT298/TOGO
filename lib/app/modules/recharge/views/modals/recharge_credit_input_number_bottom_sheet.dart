@@ -2,6 +2,7 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
@@ -13,10 +14,8 @@ class RechargeCreditInputNumberBottomSheet {
     Get.bottomSheet(Container(
       height: 40.h,
       width: 100.w,
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+      decoration:
+          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +26,7 @@ class RechargeCreditInputNumberBottomSheet {
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Text(
-                "CREDIT".toUpperCase(),
+                LocaleKeys.strCredit.tr.toUpperCase(), //     "CREDIT".toUpperCase(),
                 style: TextStyle(
                   color: Colors.orange[500],
                   fontWeight: FontWeight.w600,
@@ -42,7 +41,7 @@ class RechargeCreditInputNumberBottomSheet {
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Text(
-                "For Others.",
+                LocaleKeys.strForOthers.tr, //       "For Others.",
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
@@ -53,7 +52,7 @@ class RechargeCreditInputNumberBottomSheet {
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Text(
-                "Please input number.",
+                LocaleKeys.strPleaseInputNumber.tr, //    "Please input number.",
                 style: TextStyle(
                   fontSize: 10.sp,
                 ),
@@ -75,7 +74,7 @@ class RechargeCreditInputNumberBottomSheet {
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: FluTextField(
                 inputController: controller.numberTextField,
-                hint: "Enter number",
+                hint: LocaleKeys.strEnterNumber.tr, // "Enter number",
                 hintStyle: TextStyle(fontSize: 11.sp),
                 textStyle: TextStyle(fontSize: 11.sp),
                 height: 50,
@@ -85,13 +84,10 @@ class RechargeCreditInputNumberBottomSheet {
                 onChanged: (text) {},
                 onFieldSubmitted: (p0) {
                   if (controller.numberTextField.text.isEmpty) {
-                    Get.snackbar("Message", "Montant invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   } else {
                     Get.back();
-                    RechargeCreditInputAmountBottomSheet
-                        .showBottomSheetInputAmount();
+                    RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount();
                   }
                 },
               ),
@@ -105,39 +101,28 @@ class RechargeCreditInputNumberBottomSheet {
                 right: 5.w,
               ),
               child: FluButton.text(
-                'Continuer',
+                LocaleKeys.strContinue.tr, //   'Continuer',
                 suffixIcon: FluIcons.passwordCheck,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (controller.numberTextField.text.isEmpty) {
-                    Get.snackbar("Message", "Numero invalide",
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white);
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                   } else {
-                    if (controller.numberTextField.text.length == 8 ||
-                        controller.numberTextField.text.length == 11) {
+                    if (controller.numberTextField.text.length == 8 || controller.numberTextField.text.length == 11) {
                       if (controller.numberTextField.text.length == 8) {
-                        controller.numberTextField.text =
-                            "228${controller.numberTextField.text}";
+                        controller.numberTextField.text = "228${controller.numberTextField.text}";
                         Get.back();
-                        RechargeCreditInputAmountBottomSheet
-                            .showBottomSheetInputAmount();
+                        RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount();
                       } else {
-                        if (controller.numberTextField.text.substring(0, 3) ==
-                            "228") {
+                        if (controller.numberTextField.text.substring(0, 3) == "228") {
                           Get.back();
-                          RechargeCreditInputAmountBottomSheet
-                              .showBottomSheetInputAmount();
+                          RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount();
                         } else {
-                          Get.snackbar("Message", "Numero invalide",
-                              backgroundColor: Colors.lightBlue,
-                              colorText: Colors.white);
+                          Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                         }
                       }
                     } else {
-                      Get.snackbar("Message", "Numero invalide",
-                          backgroundColor: Colors.lightBlue,
-                          colorText: Colors.white);
+                      Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                     }
                   }
                 },
@@ -154,9 +139,7 @@ class RechargeCreditInputNumberBottomSheet {
                     offset: Offset(0, 5),
                   )
                 ],
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: M3FontSizes.bodyLarge),
+                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
               ),
             ),
             SizedBox(
