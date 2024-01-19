@@ -137,7 +137,8 @@ class LoginController extends GetxController {
           });
         } else {
           Get.back();
-          Get.snackbar("Message", jsonString,
+          Get.snackbar("Message",
+              "Impossible de générer l'OTP. Veuillez réessayer plus tard",
               backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
