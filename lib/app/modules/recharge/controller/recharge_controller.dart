@@ -7,8 +7,10 @@ import 'package:http/http.dart' as http;
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/internet_products_model.dart';
-import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
+import 'package:ibank/app/modules/login/alertdialog/login_alertdialog.dart';
+import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/app/modules/recharge/views/dialog/recharge_menu_dialog.dart';
+import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:xml/xml.dart' as xml;
@@ -24,6 +26,18 @@ class RechargeController extends GetxController {
   TextEditingController code = TextEditingController();
 
   RxList<InternetProducts> productsList = <InternetProducts>[].obs;
+
+  logout() async {
+    await Get.find<StorageServices>().storage.remove('msisdn').then((value) {
+      Get.find<StorageServices>().storage.remove('isPrivacyCheck');
+      Get.find<StorageServices>().storage.remove('isLoginSuccessClick');
+      Get.offAllNamed(AppRoutes.LOGIN);
+      Future.delayed(const Duration(seconds: 2), () {
+        LoginAlertdialog.showMessageVersionNotUpToDate(
+            controller: Get.find<LoginController>());
+      });
+    });
+  }
 
   verifyAndroid({
     required String msisdn,
@@ -70,9 +84,13 @@ class RechargeController extends GetxController {
                 msisdn: msisdn, amount: amount, code: code);
           }
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
+          logout();
         } else if (decodedData['description'] == 'VERSION NOT UP TO DATE') {
+          logout();
           // HomeAlertDialog.showMessageVersionNotUpToDate(controller: Get.find<HomeController>());
-        } else {}
+        } else {
+          logout();
+        }
       } else {
         log("ERROR ${response.reasonPhrase}'");
       }
