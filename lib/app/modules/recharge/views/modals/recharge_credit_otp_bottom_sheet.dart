@@ -257,14 +257,14 @@ class RechargeCreditOTPBottomSheet {
                   onFieldSubmitted: (p0) {
                     if (controller.code.text.isNotEmpty) {
                       if (controller.selectedOption.value == "For myself") {
-                        controller.verifyAndroid(
+                        controller.verifyAndroidCredit(
                             code: controller.code.text,
                             amount: controller.amountTextField.text,
                             msisdn: Get.find<StorageServices>()
                                 .storage
                                 .read('msisdn'));
                       } else {
-                        controller.verifyAndroid(
+                        controller.verifyAndroidCredit(
                             code: controller.code.text,
                             amount: controller.amountTextField.text,
                             msisdn: controller.numberTextField.text);
@@ -284,19 +284,19 @@ class RechargeCreditOTPBottomSheet {
                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
                 child: FluButton.text(
                   'Validate',
-                  suffixIcon: FluIcons.passwordCheck,
+                  suffixIcon: FluIcons.checkCircleUnicon,
                   iconStrokeWidth: 1.8,
                   onPressed: () {
                     if (controller.code.text.isNotEmpty) {
                       if (controller.selectedOption.value == "For myself") {
-                        controller.verifyAndroid(
+                        controller.verifyAndroidCredit(
                             code: controller.code.text,
                             amount: controller.amountTextField.text,
                             msisdn: Get.find<StorageServices>()
                                 .storage
                                 .read('msisdn'));
                       } else {
-                        controller.verifyAndroid(
+                        controller.verifyAndroidCredit(
                             code: controller.code.text,
                             amount: controller.amountTextField.text,
                             msisdn: controller.numberTextField.text);

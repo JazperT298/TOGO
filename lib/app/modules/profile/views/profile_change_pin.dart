@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
+import 'package:ibank/generated/locales.g.dart';
 
 import '../../../../utils/configs.dart';
 
@@ -60,15 +61,17 @@ class ProfileChangePinView extends GetView<ProfileController> {
                             left: MediaQuery.of(context).size.width * 0.05,
                             right: MediaQuery.of(context).size.width * 0.05,
                           ),
-                          child: const Text("COMPTE")),
+                          child: Text(
+                            LocaleKeys.strAccount.tr,
+                          )),
                       Padding(
                           padding: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.05,
                             right: MediaQuery.of(context).size.width * 0.05,
                           ),
-                          child: const Text(
-                            "CHANGER DE PASS.",
-                            style: TextStyle(
+                          child: Text(
+                            LocaleKeys.strChangePassword.tr.toUpperCase(), //     "CHANGER DE PASS.",
+                            style: const TextStyle(
                               fontSize: M3FontSizes.headlineSmall,
                             ),
                           )),
@@ -80,9 +83,9 @@ class ProfileChangePinView extends GetView<ProfileController> {
                             left: MediaQuery.of(context).size.width * 0.05,
                             right: MediaQuery.of(context).size.width * 0.05,
                           ),
-                          child: const Text(
-                            "Ancien mot de passe",
-                            style: TextStyle(
+                          child: Text(
+                            LocaleKeys.strOldPassword.tr,
+                            style: const TextStyle(
                               fontSize: M3FontSizes.bodySmall,
                             ),
                           )),
@@ -125,9 +128,9 @@ class ProfileChangePinView extends GetView<ProfileController> {
                             left: MediaQuery.of(context).size.width * 0.05,
                             right: MediaQuery.of(context).size.width * 0.05,
                           ),
-                          child: const Text(
-                            "Nouveau mot de passe",
-                            style: TextStyle(
+                          child: Text(
+                            LocaleKeys.strNewPassword.tr,
+                            style: const TextStyle(
                               fontSize: M3FontSizes.bodySmall,
                             ),
                           )),
@@ -170,9 +173,9 @@ class ProfileChangePinView extends GetView<ProfileController> {
                             left: MediaQuery.of(context).size.width * 0.05,
                             right: MediaQuery.of(context).size.width * 0.05,
                           ),
-                          child: const Text(
-                            "Confirmer nouveau mot de passe",
-                            style: TextStyle(
+                          child: Text(
+                            LocaleKeys.strConfirmNewPassword.tr,
+                            style: const TextStyle(
                               fontSize: M3FontSizes.bodySmall,
                             ),
                           )),
@@ -216,14 +219,14 @@ class ProfileChangePinView extends GetView<ProfileController> {
                           right: MediaQuery.of(context).size.width * 0.05,
                         ),
                         child: FluButton.text(
-                          'Changer le code PIN',
+                          LocaleKeys.strChangePin.tr,
                           suffixIcon: FluIcons.passwordCheck,
                           iconStrokeWidth: 1.8,
                           onPressed: () {
                             if (controller.oldPIN.text.isEmpty || controller.newPIN.text.isEmpty || controller.confirmNewPIN.text.isEmpty) {
-                              Get.snackbar("Message", "Entrée manquante", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              Get.snackbar("Message", LocaleKeys.strPasswordWarning.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             } else if (controller.newPIN.text != controller.confirmNewPIN.text) {
-                              Get.snackbar("Message", "Le code PIN ne correspond pas", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              Get.snackbar("Message", LocaleKeys.strPasswordNotMatch.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             } else {
                               controller.changePin(oldPin: controller.oldPIN.text, newPin: controller.newPIN.text);
                             }

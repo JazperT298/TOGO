@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/string_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml/xml.dart' as xml;
@@ -79,7 +80,7 @@ class LoginController extends GetxController {
               countryCode: countryCode);
         } else {
           Get.back();
-          Get.snackbar("Message", "Numero Invalide",
+          Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
               backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
@@ -90,8 +91,7 @@ class LoginController extends GetxController {
     } on SocketException catch (_) {
       log("ERROR SocketException $_");
       Get.back();
-      Get.snackbar(
-          "Message", "Une erreur s'est produite. Veuillez réessayer...",
+      Get.snackbar("Message", LocaleKeys.strAnErrorOccured.tr,
           backgroundColor: Colors.lightBlue, colorText: Colors.white);
     } catch (_) {
       log("ERROR $_");

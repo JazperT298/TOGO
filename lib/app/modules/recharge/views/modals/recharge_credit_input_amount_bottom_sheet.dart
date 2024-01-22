@@ -2,6 +2,7 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
+import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
@@ -139,7 +140,7 @@ class RechargeCreditInputAmountBottomSheet {
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: FluTextField(
                 inputController: controller.amountTextField,
-                hint: "Enter amount",
+                hint: LocaleKeys.strEnterAmounts.tr, // "Enter amount",
                 hintStyle: TextStyle(fontSize: 11.sp),
                 textStyle: TextStyle(fontSize: 11.sp),
                 height: 50,
@@ -149,16 +150,16 @@ class RechargeCreditInputAmountBottomSheet {
                 onChanged: (text) {},
                 onFieldSubmitted: (p0) {
                   if (controller.amountTextField.text.isEmpty) {
-                    Get.snackbar("Message", "Montant invalide",
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
                         backgroundColor: Colors.lightBlue,
                         colorText: Colors.white);
                   } else if (controller.amountTextField.text.length > 8) {
-                    Get.snackbar("Message", "Montant invalide",
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
                         backgroundColor: Colors.lightBlue,
                         colorText: Colors.white);
                   } else if (double.parse(controller.amountTextField.text) <=
                       0) {
-                    Get.snackbar("Message", "Montant invalide",
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
                         backgroundColor: Colors.lightBlue,
                         colorText: Colors.white);
                   } else {
@@ -177,21 +178,21 @@ class RechargeCreditInputAmountBottomSheet {
                 right: 5.w,
               ),
               child: FluButton.text(
-                'Continuer',
+                LocaleKeys.strContinue.tr.toString(),
                 suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (controller.amountTextField.text.isEmpty) {
-                    Get.snackbar("Message", "Montant invalide",
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
                         backgroundColor: Colors.lightBlue,
                         colorText: Colors.white);
                   } else if (controller.amountTextField.text.length > 8) {
-                    Get.snackbar("Message", "Montant invalide",
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
                         backgroundColor: Colors.lightBlue,
                         colorText: Colors.white);
                   } else if (double.parse(controller.amountTextField.text) <=
                       0) {
-                    Get.snackbar("Message", "Montant invalide",
+                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
                         backgroundColor: Colors.lightBlue,
                         colorText: Colors.white);
                   } else {

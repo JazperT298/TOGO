@@ -6,138 +6,8 @@ import 'package:ibank/app/modules/recharge/views/modals/recharge_credit_input_am
 import 'package:ibank/app/modules/recharge/views/modals/recharge_credit_input_number_bottom_sheet.dart';
 import 'package:sizer/sizer.dart';
 
-class RechargeMainMenuBottomSheet {
-  static void showBottomSheetRechargeMainMenu() {
-    // var controller = Get.find<RechargeController>();
-    Get.bottomSheet(Container(
-      height: 40.h,
-      width: 100.w,
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8), topRight: Radius.circular(8))),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 2.h,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.w, right: 5.w),
-              child: Text(
-                "RECHARGE".toUpperCase(),
-                style: TextStyle(
-                  color: const Color(0xFFfb6708),
-                  fontWeight: FontWeight.w600,
-                  fontSize: 11.sp,
-                  letterSpacing: 1.0,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 1.h,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.w, right: 5.w),
-              child: Text(
-                "Please select an option to continue.",
-                style: TextStyle(
-                  fontSize: 10.sp,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 4.h,
-            ),
-            Row(
-              children: [
-                FluLine(
-                  width: 30.w,
-                  color: const Color(0xFFfb6708),
-                ),
-                CircleAvatar(
-                  radius: 1.w,
-                  backgroundColor: const Color(0xFFfb6708),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 4.h,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.w, right: 5.w),
-              child: GestureDetector(
-                onTap: () {
-                  Get.back();
-                  showBottomSheetRechargeCreditRechargeTo(
-                      selectedMenu: "CREDIT");
-                },
-                child: Container(
-                  height: 7.h,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: const Color(0xFFf4f5fa)),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 3.w,
-                      top: 2.h,
-                    ),
-                    child: Text(
-                      "CREDIT",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 2.h,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.w, right: 5.w),
-              child: GestureDetector(
-                onTap: () {
-                  Get.snackbar("Message", "À venir.",
-                      backgroundColor: Colors.lightBlue,
-                      colorText: Colors.white);
-                },
-                child: Container(
-                  height: 7.h,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: const Color(0xFFf4f5fa)),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 3.w,
-                      top: 2.h,
-                    ),
-                    child: Text(
-                      "INTERNET",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ));
-  }
-
-  static void showBottomSheetRechargeCreditRechargeTo(
-      {required String selectedMenu}) {
+class RechargeCreditMainMenuBottomSheet {
+  static void showBottomSheetRechargeCreditTo() {
     var controller = Get.find<RechargeController>();
     Get.bottomSheet(Container(
       height: 35.h,
@@ -171,7 +41,7 @@ class RechargeMainMenuBottomSheet {
             Padding(
                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
                 child: Text(
-                  selectedMenu,
+                  "CREDIT",
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,

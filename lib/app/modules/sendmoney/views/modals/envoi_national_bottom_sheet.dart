@@ -7,6 +7,7 @@ import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
@@ -58,7 +59,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   static final codeEditingController = TextEditingController();
   static bool isKeyboardVis = false;
   final String _selectedCountryCode = '+228'; // Default country code
-  static String? phoneContactNumer;
+  static String phoneContactNumer = '';
+  static String countryCodes = '';
   static bool isTextFieldEmpty = false;
   static bool isInvalidCode = false;
   static String invalidCodeString = '';
@@ -70,6 +72,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   static FieldType? fieldtype;
 
   static String messageType = '';
+
   // 96 04 78 78
   @override
   void initState() {
@@ -115,15 +118,13 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         .showSnackBar(SnackBar(content: Text(message)));
   }
 
-  void onUserSelected(String usersNumber) {
+  void onUserSelected(String usersNumber, String countryCode) {
     setState(() {
-      // selectedContact = usersNumber;
-      phoneContactNumer = usersNumber;
-      print('phoneContactNumer $phoneContactNumer');
-      numberEditingCobntroller.text = phoneContactNumer.toString();
-      AppGlobal.phonenumberspan = phoneContactNumer.toString().replaceAll(
-          "[^0-9]",
-          ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
+      print('phoneContactNumer $usersNumber');
+      numberEditingCobntroller.text = '${countryCode.replaceAll("+", "")} $usersNumber'; //countryCode.toString()  usersNumber.toString();
+      AppGlobal.phonenumberspan = usersNumber
+          .toString()
+          .replaceAll("[^0-9]", ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
     });
   }
 
@@ -160,11 +161,19 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             ),
           ),
         ),
-        FluLine(
-          height: 1,
-          width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+        Row(
+          children: [
+            FluLine(
+              width: 25.w,
+              color: context.colorScheme.secondary,
+              height: 1,
+              margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+            ),
+            CircleAvatar(
+              radius: 1.w,
+              backgroundColor: context.colorScheme.secondary,
+            )
+          ],
         ),
       ],
     );
@@ -213,11 +222,24 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             ],
           ),
         ),
-        FluLine(
-          height: 1,
-          width: double.infinity,
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .025),
+        // FluLine(
+        //   height: 1,
+        //   width: double.infinity,
+        //   margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+        // ),
+        Row(
+          children: [
+            FluLine(
+              width: 25.w,
+              color: context.colorScheme.secondary,
+              height: 1,
+              margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+            ),
+            CircleAvatar(
+              radius: 1.w,
+              backgroundColor: context.colorScheme.secondary,
+            )
+          ],
         ),
       ],
     );
@@ -516,26 +538,26 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    // showModalBottomSheet(
-                    //     isScrollControlled: true,
-                    //     context: context,
-                    //     builder: (context) => Container(
-                    //         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                    //         child: ModalBottomSheet(child: EnvoiModalBottomSheet(sendType: widget.sendType)))).then((value) {
-                    //   if (value != null) {
-                    //     setState(() {
-                    //       phoneContactNumer = value;
-                    //       onUserSelected(phoneContactNumer!);
-                    //       AppGlobal.isEditedTransferNational = false;
-                    //       // print('selected User ${selectedContact!.fullName}');
-                    //       // print('selected User ${selectedUser!.phoneNumber}');
-                    //     });
-                    //   }
-                    // });
-                    Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white,
-                        duration: const Duration(seconds: 3));
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => Container(
+                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                            child: ModalBottomSheet(child: EnvoiModalBottomSheet(sendType: widget.sendType)))).then((value) {
+                      if (value != null) {
+                        setState(() {
+                          print('value 2 $value');
+                          phoneContactNumer = value['formatPhone'];
+                          countryCodes = value['countryCode'];
+                          onUserSelected(phoneContactNumer, countryCodes);
+                          AppGlobal.isEditedTransferNational = false;
+                          // print('selected User ${selectedContact!.fullName}');
+                          // print('selected User ${selectedUser!.phoneNumber}');
+                        });
+                      }
+                    });
+                    // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+                    // backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
                   },
                   child: Container(
                       height: 45,

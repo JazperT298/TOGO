@@ -2,6 +2,7 @@
 
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/user.dart';
@@ -9,14 +10,13 @@ import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
 import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
-import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
+import 'package:ibank/app/modules/sendmoney/views/modals/envoi_menu_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/core/users.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../recharge/views/modals/recharge_menu_bottom_sheet.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -304,7 +304,14 @@ class _QuickActions extends StatelessWidget {
         //     context: context,
         //     builder: (context) =>
         //         const _ModalBottomSheet(child: EnvoiModalBottomSheet()));
-        SendMenuDialog.showMenuDialog(context);
+        // SendMenuDialog.showMenuDialog(context);
+        // SendMenuDialog.showMenuModal(context);
+        showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (context) => const _ModalBottomSheet(
+                  child: EnvoiMenuBottomSheet(),
+                ));
 
         break;
       case WalletActions.withdraw:
@@ -323,7 +330,7 @@ class _QuickActions extends StatelessWidget {
         //     colorText: Colors.white,
         //     duration: const Duration(seconds: 3));
         // RechargeMenuDialog.showRechargeMenuDialog();
-        RechargeMainMenuBottomSheet.showBottomSheetRechargeMainMenu();
+        // RechargeCreditMainMenuBottomSheet.showBottomSheetRechargeMainMenu();
         // showModalBottomSheet(
         // context: context,
         // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
@@ -497,11 +504,20 @@ class _ModalBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-          color: context.colorScheme.background,
-        ),
-        child: child);
+    return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+      return Padding(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Container(
+            height: isKeyboardVisible
+                ? MediaQuery.of(context).size.height * .5
+                : MediaQuery.of(context).size.height * .49,
+            decoration: BoxDecoration(
+              color: context.colorScheme.background,
+            ),
+            child: child),
+      );
+    });
   }
 }
 

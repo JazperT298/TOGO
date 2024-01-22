@@ -54,7 +54,7 @@ class SplashController extends GetxController {
         WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
       } else {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-       await   Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV));
+          await Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV));
         });
       }
     } else {
@@ -87,6 +87,7 @@ class SplashController extends GetxController {
     // add following permission here, we have location only so far
     Map<Permission, PermissionStatus> statuses = await [
       Permission.location,
+      Permission.contacts,
     ].request();
     print(statuses[Permission.location]);
 

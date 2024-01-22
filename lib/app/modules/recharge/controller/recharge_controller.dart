@@ -15,17 +15,23 @@ import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:xml/xml.dart' as xml;
 
+import '../views/modals/recharge_internet_menu_bottom_sheet.dart';
+
 class RechargeController extends GetxController {
   RxString screen = ''.obs;
   RxString selectedOption = ''.obs;
-  InternetProducts? productSelected;
   RxString internetNumberCode = ''.obs;
+  RxString internetProductType = 'All'.obs;
+  RxString internetRadioGroupValue = ''.obs;
 
   TextEditingController numberTextField = TextEditingController();
   TextEditingController amountTextField = TextEditingController();
   TextEditingController code = TextEditingController();
 
   RxList<InternetProducts> productsList = <InternetProducts>[].obs;
+  RxList<InternetProducts> productsMasterList = <InternetProducts>[].obs;
+
+  InternetProducts? selectedProduct;
 
   logout() async {
     await Get.find<StorageServices>().storage.remove('msisdn').then((value) {
@@ -39,7 +45,7 @@ class RechargeController extends GetxController {
     });
   }
 
-  verifyAndroid({
+  verifyAndroidCredit({
     required String msisdn,
     required String amount,
     required String code,
@@ -58,7 +64,7 @@ class RechargeController extends GetxController {
           <v:Header />
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">$msisdn</msisdn>
+          <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
           <message i:type="d:string">VRFY ANDROIDAPP ${Get.find<DevicePlatformServices>().deviceID} ANDROID 3.0.1.0 F</message>
           <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
           <sendsms i:type="d:string">false</sendsms>
@@ -95,7 +101,7 @@ class RechargeController extends GetxController {
         log("ERROR ${response.reasonPhrase}'");
       }
     } catch (e) {
-      log('verifyAndroid $e');
+      log('verifyAndroidCredit $e');
     }
   }
 
@@ -139,7 +145,7 @@ class RechargeController extends GetxController {
         log("ERROR ${response.reasonPhrase}'");
       }
     } catch (e) {
-      log('transactCredit $e');
+      log('transactCreditForMyself $e');
     }
   }
 
@@ -184,7 +190,7 @@ class RechargeController extends GetxController {
         log("ERROR ${response.reasonPhrase}'");
       }
     } catch (e) {
-      log('transactCredit $e');
+      log('transactCreditForOthers $e');
     }
   }
 
@@ -192,6 +198,8 @@ class RechargeController extends GetxController {
     ProgressAlertDialog.progressAlertDialog(
         Get.context!, LocaleKeys.strLoading.tr);
     try {
+      productsList.clear();
+      productsMasterList.clear();
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST',
           Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -220,19 +228,216 @@ class RechargeController extends GetxController {
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
         var decodedData = jsonDecode(jsonString);
-        // log(decodedData.toString());
         log(jsonEncode(decodedData));
+        Get.back();
         productsList
             .assignAll(internetProductsFromJson(jsonEncode(decodedData)));
-        if (productsList.isNotEmpty) {
-          productSelected = productsList[0];
-        }
-        Get.back();
+        productsMasterList
+            .assignAll(internetProductsFromJson(jsonEncode(decodedData)));
+        RechargeInternetMainMenuBottomSheet.showBottomSheetRechargeInternetTo();
       } else {
         log("ERROR ${response.reasonPhrase}'");
       }
     } catch (e) {
-      log('verifyAndroid $e');
+      Get.back();
+      RechargeMenuDialog.showMessageDialog(
+          message: "There are no available packages. Please try again later.");
+      log('internetGetProducts $e');
+    }
+  }
+
+  verifyAndroidInternet({
+    required String msisdn,
+    required String code,
+  }) async {
+    ProgressAlertDialog.progressAlertDialog(
+        Get.context!, LocaleKeys.strLoading.tr);
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+          <v:Body>
+          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
+          <message i:type="d:string">VRFY ANDROIDAPP ${Get.find<DevicePlatformServices>().deviceID} ANDROID 3.0.1.0 F</message>
+          <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
+          <sendsms i:type="d:string">false</sendsms>
+          </n0:RequestToken>
+          </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var jsonString = soapElement.innerText;
+        var decodedData = jsonDecode(jsonString);
+        log(decodedData.toString());
+        if (decodedData['description'] == 'TOKEN_FOUND') {
+          if (selectedOption.value == "For myself") {
+            await transactInternetRechargeOwn(msisdn: msisdn, code: code);
+          } else {
+            await transactInternetRechargeOthers(msisdn: msisdn, code: code);
+          }
+        } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
+          logout();
+        } else if (decodedData['description'] == 'VERSION NOT UP TO DATE') {
+          logout();
+          // HomeAlertDialog.showMessageVersionNotUpToDate(controller: Get.find<HomeController>());
+        } else {
+          logout();
+        }
+      } else {
+        log("ERROR ${response.reasonPhrase}'");
+      }
+    } catch (e) {
+      log('verifyAndroidInternet $e');
+    }
+  }
+
+  transactInternetRechargeOwn({
+    required String msisdn,
+    required String code,
+  }) async {
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+          <v:Body>
+          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
+          <message i:type="d:string">APPAIRD OWN ${selectedProduct!.productid} $code F</message>
+          <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
+          <sendsms i:type="d:string">true</sendsms>
+          </n0:RequestToken>
+          </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var jsonString = soapElement.innerText;
+        log(jsonString.toString());
+        Get.back();
+        Get.back();
+        RechargeMenuDialog.showMessageDialog(message: jsonString);
+      } else {
+        log("ERROR ${response.reasonPhrase}'");
+      }
+    } catch (e) {
+      log('transactInternetRechargeOwn $e');
+    }
+  }
+
+  transactInternetRechargeOthers({
+    required String msisdn,
+    required String code,
+  }) async {
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+          <v:Body>
+          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
+          <message i:type="d:string">APPAIRD OTHER $msisdn ${selectedProduct!.productid} $code F</message>
+          <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
+          <sendsms i:type="d:string">true</sendsms>
+          </n0:RequestToken>
+          </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var jsonString = soapElement.innerText;
+        log(jsonString.toString());
+        Get.back();
+        Get.back();
+        RechargeMenuDialog.showMessageDialog(message: jsonString);
+      } else {
+        log("ERROR ${response.reasonPhrase}'");
+      }
+    } catch (e) {
+      log('transactInternetRechargeOthers $e');
+    }
+  }
+
+  changeInternetProductType() async {
+    productsList.clear();
+    List eco = ["1", "2", "3", "4", "34", "35"];
+    List intense = ["5", "6", "7", "36", "37"];
+    List nights = ["11", "12", "13"];
+
+    if (internetProductType.value == "Eco") {
+      for (var i = 0; i < productsMasterList.length; i++) {
+        if (eco.contains(productsMasterList[i].productid.trim().toString())) {
+          productsList.add(productsMasterList[i]);
+        }
+      }
+    } else if (internetProductType.value == "Intense") {
+      for (var i = 0; i < productsMasterList.length; i++) {
+        if (intense
+            .contains(productsMasterList[i].productid.trim().toString())) {
+          productsList.add(productsMasterList[i]);
+        }
+      }
+    } else if (internetProductType.value == "Nights") {
+      for (var i = 0; i < productsMasterList.length; i++) {
+        if (nights
+            .contains(productsMasterList[i].productid.trim().toString())) {
+          productsList.add(productsMasterList[i]);
+        }
+      }
+    } else {
+      productsList.assignAll(productsMasterList);
+    }
+  }
+
+  String textSplitterPackageName({required String text}) {
+    if (text.contains("(") || text.contains(")")) {
+      var newtext = text.split("(")[0].replaceAll(")", "").trim().toString();
+      return newtext;
+    } else {
+      return text;
+    }
+  }
+
+  String textSplitterPrice({required String text}) {
+    if (text.contains("(") || text.contains(")")) {
+      var newtext = text.split("(")[1].replaceAll(")", "").trim().toString();
+      return newtext;
+    } else {
+      return text;
     }
   }
 }

@@ -2,7 +2,6 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
 import '../../../../utils/configs.dart';
 
@@ -83,17 +82,17 @@ class RechargeOtpView extends GetView<RechargeController> {
                   onPressed: () {
                     if (controller.code.text.isNotEmpty) {
                       if (controller.selectedOption.value == "For myself") {
-                        controller.verifyAndroid(
-                            code: controller.code.text,
-                            amount: controller.amountTextField.text,
-                            msisdn: Get.find<StorageServices>()
-                                .storage
-                                .read('msisdn'));
+                        // controller.verifyAndroid(
+                        //     code: controller.code.text,
+                        //     amount: controller.amountTextField.text,
+                        //     msisdn: Get.find<StorageServices>()
+                        //         .storage
+                        //         .read('msisdn'));
                       } else {
-                        controller.verifyAndroid(
-                            code: controller.code.text,
-                            amount: controller.amountTextField.text,
-                            msisdn: controller.numberTextField.text);
+                        // controller.verifyAndroid(
+                        //     code: controller.code.text,
+                        //     amount: controller.amountTextField.text,
+                        //     msisdn: controller.numberTextField.text);
                       }
                     } else {
                       Get.snackbar("Message", "Entrées manquantes",

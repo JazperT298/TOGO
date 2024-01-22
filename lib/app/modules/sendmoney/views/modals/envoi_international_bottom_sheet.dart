@@ -62,7 +62,8 @@ class _EnvoiInternationalBottomSheetState
   static bool isTextFieldEmpty = false;
   static bool isInvalidCode = false;
   static String invalidCodeString = '';
-  static String? phoneContactNumer;
+  static String phoneContactNumer = '';
+  static String countryCodes = '';
 
   static bool isLoading = false;
   static final message = StringBuffer();
@@ -158,14 +159,15 @@ class _EnvoiInternationalBottomSheetState
         .showSnackBar(SnackBar(content: Text(message)));
   }
 
-  void onUserSelected(String usersNumber) {
+  void onUserSelected(String usersNumber, String countryCode) {
     setState(() {
-      phoneContactNumer = usersNumber;
-      print('phoneContactNumer $phoneContactNumer');
-      numberEditingCobntroller.text = phoneContactNumer!;
-      AppGlobal.phonenumberspan = phoneContactNumer.toString().replaceAll(
-          "[^0-9]",
-          ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
+      print('phoneContactNumer $usersNumber');
+      // _selectedCountryCode = countryCodes[0] == '+' ? countryCodes : '+$countryCodes';
+      print('_selectedCountryCode $_selectedCountryCode');
+      numberEditingCobntroller.text = usersNumber.toString(); //countryCode.toString()  usersNumber.toString();
+      AppGlobal.phonenumberspan = usersNumber
+          .toString()
+          .replaceAll("[^0-9]", ""); //Html(data: "<a href=\"${usersNumber.phoneNumber!.replaceAll("[^0-9]", "")}\">${usersNumber.fullName}</a>");
     });
   }
 
@@ -533,30 +535,26 @@ class _EnvoiInternationalBottomSheetState
                 ),
                 GestureDetector(
                   onTap: () async {
-                    Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                        backgroundColor: Colors.lightBlue,
-                        colorText: Colors.white,
-                        duration: const Duration(seconds: 3));
-                    // showModalBottomSheet(
-                    //     isScrollControlled: true,
-                    //     context: context,
-                    //     builder: (context) => Container(
-                    //         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                    //         child: ModalBottomSheet(child: EnvoiInternationalBottomSheet(sendType: widget.sendType)))).then((value) {
-                    //   if (value != null) {
-                    //     print('value $value');
-                    //     setState(() {
-                    //       phoneContactNumer = value['formatPhone'];
-                    //       String countryCodes = value['countryCode'];
-                    //       _selectedCountryCode = '+$countryCodes';
-                    //       onUserSelected(phoneContactNumer!);
-                    //       print('selectedContact $phoneContactNumer');
-                    //       AppGlobal.isEditedTransferNational = false;
-                    //       // print('selected User ${selectedUser!.fullName}');
-                    //       // print('selected User ${selectedUser!.phoneNumber}');
-                    //     });
-                    //   }
-                    // });
+                    // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+                    //     backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => Container(
+                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                            child: ModalBottomSheet(child: EnvoiInternationalBottomSheet(sendType: widget.sendType)))).then((value) {
+                      if (value != null) {
+                        print('value $value');
+                        setState(() {
+                          phoneContactNumer = value['formatPhone'];
+                          countryCodes = value['countryCode'];
+                          onUserSelected(phoneContactNumer, countryCodes);
+                          AppGlobal.isEditedTransferNational = false;
+                          // print('selected User ${selectedUser!.fullName}');
+                          // print('selected User ${selectedUser!.phoneNumber}');
+                        });
+                      }
+                    });
                   },
                   child: Container(
                       height: 45,
@@ -1094,8 +1092,7 @@ class _EnvoiInternationalBottomSheetState
         log(decodedData.toString());
 
         if (decodedData['onNet'] == true || decodedData['offNet'] == true) {
-          Get.snackbar("Message", "Le numéro n'est pas autorisé",
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar(LocaleKeys.strInvalidNumber.tr, jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         } else {
           if (decodedData['description'] == "SUCCESS") {
             AppGlobal.internationalType = decodedData['international'];
