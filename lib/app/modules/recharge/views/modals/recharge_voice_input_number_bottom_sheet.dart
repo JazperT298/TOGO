@@ -3,21 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
 import 'package:ibank/app/modules/recharge/views/modals/recharge_internet_select_package_bottom_sheet.dart';
+import 'package:ibank/app/modules/recharge/views/modals/recharge_voice_selected_package_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
-class RechargeInternetsInputNumberBottomSheet {
+class RechargeVoiceInputNumberBottomSheet {
   static void showBottomSheetInputNumber() {
     var controller = Get.find<RechargeController>();
     Get.bottomSheet(
       Container(
         height: 40.h,
         width: 100.w,
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+        decoration:
+            const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,35 +82,23 @@ class RechargeInternetsInputNumberBottomSheet {
                   onChanged: (text) {},
                   onFieldSubmitted: (p0) {
                     if (controller.numberTextField.text.isEmpty) {
-                      Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                          backgroundColor: Colors.lightBlue,
-                          colorText: Colors.white);
+                      Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                     } else {
-                      if (controller.numberTextField.text.length == 8 ||
-                          controller.numberTextField.text.length == 11) {
+                      if (controller.numberTextField.text.length == 8 || controller.numberTextField.text.length == 11) {
                         if (controller.numberTextField.text.length == 8) {
-                          controller.numberTextField.text =
-                              "228${controller.numberTextField.text}";
+                          controller.numberTextField.text = "228${controller.numberTextField.text}";
                           Get.back();
-                          RechargeInternetSelectPackageBottomSheet
-                              .showBottomSheetSelectPackage();
+                          RechargeVoiceSelectedPackageBottomSheet.showBottomSheetSelectPackage();
                         } else {
-                          if (controller.numberTextField.text.substring(0, 3) ==
-                              "228") {
+                          if (controller.numberTextField.text.substring(0, 3) == "228") {
                             Get.back();
-                            RechargeInternetSelectPackageBottomSheet
-                                .showBottomSheetSelectPackage();
+                            RechargeVoiceSelectedPackageBottomSheet.showBottomSheetSelectPackage();
                           } else {
-                            Get.snackbar(
-                                "Message", LocaleKeys.strInvalidNumber.tr,
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                           }
                         }
                       } else {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
                     }
                   },
@@ -131,35 +118,23 @@ class RechargeInternetsInputNumberBottomSheet {
                   iconStrokeWidth: 1.8,
                   onPressed: () {
                     if (controller.numberTextField.text.isEmpty) {
-                      Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                          backgroundColor: Colors.lightBlue,
-                          colorText: Colors.white);
+                      Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                     } else {
-                      if (controller.numberTextField.text.length == 8 ||
-                          controller.numberTextField.text.length == 11) {
+                      if (controller.numberTextField.text.length == 8 || controller.numberTextField.text.length == 11) {
                         if (controller.numberTextField.text.length == 8) {
-                          controller.numberTextField.text =
-                              "228${controller.numberTextField.text}";
+                          controller.numberTextField.text = "228${controller.numberTextField.text}";
                           Get.back();
-                          RechargeInternetSelectPackageBottomSheet
-                              .showBottomSheetSelectPackage();
+                          RechargeVoiceSelectedPackageBottomSheet.showBottomSheetSelectPackage();
                         } else {
-                          if (controller.numberTextField.text.substring(0, 3) ==
-                              "228") {
+                          if (controller.numberTextField.text.substring(0, 3) == "228") {
                             Get.back();
-                            RechargeInternetSelectPackageBottomSheet
-                                .showBottomSheetSelectPackage();
+                            RechargeVoiceSelectedPackageBottomSheet.showBottomSheetSelectPackage();
                           } else {
-                            Get.snackbar(
-                                "Message", LocaleKeys.strInvalidNumber.tr,
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                           }
                         }
                       } else {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                            backgroundColor: Colors.lightBlue,
-                            colorText: Colors.white);
+                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       }
                     }
                   },
@@ -176,9 +151,7 @@ class RechargeInternetsInputNumberBottomSheet {
                       offset: Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: M3FontSizes.bodyLarge),
+                  textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
                 ),
               ),
               SizedBox(

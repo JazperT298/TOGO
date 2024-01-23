@@ -5,6 +5,9 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
+import 'package:ibank/app/modules/login/alertdialog/login_alertdialog.dart';
+import 'package:ibank/app/modules/login/controller/login_controller.dart';
+import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
@@ -13,7 +16,6 @@ import 'package:xml/xml.dart' as xml;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../alertdialog/home_alertdialog.dart';
 
 class HomeController extends GetxController {
   RxBool afficherSolde = true.obs;
@@ -164,8 +166,11 @@ class HomeController extends GetxController {
     await Get.find<StorageServices>().storage.remove('msisdn').then((value) {
       Get.find<StorageServices>().storage.remove('isPrivacyCheck');
       Get.find<StorageServices>().storage.remove('isLoginSuccessClick');
-      HomeAlertDialog.showMessageVersionNotUpToDate(
-          controller: Get.find<HomeController>());
+      Get.offAllNamed(AppRoutes.LOGIN);
+      Future.delayed(const Duration(seconds: 2), () {
+        LoginAlertdialog.showMessageVersionNotUpToDate(
+            controller: Get.find<LoginController>());
+      });
     });
   }
 

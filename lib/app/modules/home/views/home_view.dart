@@ -10,15 +10,13 @@ import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
 import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
-import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
+import 'package:ibank/app/modules/payment/view/modal/payment_main_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_menu_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/core/users.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../recharge/views/modals/recharge_menu_bottom_sheet.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -297,9 +295,10 @@ class _QuickActions extends StatelessWidget {
       case WalletActions.pay:
         // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
         //     backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
-        showModalBottomSheet(
-            context: context,
-            builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
+        PaymentMainMenuBottomSheet.showBottomSheetPaymentMenu(context);
+        // showModalBottomSheet(
+        // context: context,
+        // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
         break;
       case WalletActions.topUp:
         // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
@@ -307,7 +306,7 @@ class _QuickActions extends StatelessWidget {
         //     colorText: Colors.white,
         //     duration: const Duration(seconds: 3));
         // RechargeMenuDialog.showRechargeMenuDialog();
-        RechargeMainMenuBottomSheet.showBottomSheetRechargeMainMenu();
+        // RechargeCreditMainMenuBottomSheet.showBottomSheetRechargeMainMenu();
         // showModalBottomSheet(
         // context: context,
         // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));

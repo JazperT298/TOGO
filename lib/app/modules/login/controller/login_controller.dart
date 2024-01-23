@@ -27,6 +27,12 @@ class LoginController extends GetxController {
   static var client = http.Client();
   RxList<String> existingLetters = <String>[].obs;
 
+  Future<void> launch() async {
+    if (!await launchUrl(Uri.parse("https://play.google.com/"))) {
+      throw Exception('Could not launch url');
+    }
+  }
+
   kycInquiryRequest({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
     try {
       var client = HttpClient();

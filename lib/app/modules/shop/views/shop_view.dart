@@ -1,9 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/data/models/shop.dart';
+import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
 import 'package:ibank/app/modules/shop/controller/shop_controller.dart';
 import 'package:flukit/flukit.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../recharge/views/modals/recharge_credit_menu_bottom_sheet.dart';
+import '../../recharge/views/modals/recharge_internet_menu_bottom_sheet.dart';
 
 class ShopView extends GetView<ShopController> {
   const ShopView({super.key});
@@ -35,7 +42,7 @@ class ShopView extends GetView<ShopController> {
                             ),
                           ),
                           Text(
-                            'Pour vous, par nous.'.toUpperCase(),
+                            'OUR PRODUCTS MOOV AFRICA.'.toUpperCase(),
                             style: TextStyle(
                               fontSize: M3FontSizes.headlineMedium,
                               fontWeight: FontWeight.bold,
@@ -45,70 +52,34 @@ class ShopView extends GetView<ShopController> {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
-                    FluButton.icon(
-                      FluIcons.bag,
-                      size: UISettings.minButtonSize,
-                      cornerRadius: UISettings.minButtonCornerRadius,
-                      backgroundColor: context.colorScheme.primaryContainer,
-                    )
+                    const SizedBox(width: 50),
+                    // FluButton.icon(
+                    //   FluIcons.bag,
+                    //   size: UISettings.minButtonSize,
+                    //   cornerRadius: UISettings.minButtonCornerRadius,
+                    //   backgroundColor: context.colorScheme.primaryContainer,
+                    // )
                   ],
                 ),
               ),
               _Highlights(ShopProduct.getAll()),
-              FluLine(
-                width: double.infinity,
-                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .05, bottom: MediaQuery.of(context).size.height * .05),
+              SizedBox(
+                height: 3.h,
               ),
-              Padding(
-                padding: UISettings.pagePadding,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Nos\nproduits.'.toUpperCase(),
-                            maxLines: null,
-                            overflow: TextOverflow.visible,
-                            style: const TextStyle(
-                              fontSize: M3FontSizes.headlineMedium,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                        FluButton.icon(
-                          FluIcons.searchStatus,
-                          size: UISettings.minButtonSize,
-                          cornerRadius: UISettings.minButtonCornerRadius,
-                          backgroundColor: context.colorScheme.primaryContainer,
-                        )
-                      ],
-                    )
-                  ],
-                ),
+              Row(
+                children: [
+                  FluLine(
+                    width: 30.w,
+                    color: const Color(0xFFfb6708),
+                  ),
+                  CircleAvatar(
+                    radius: 1.w,
+                    backgroundColor: const Color(0xFFfb6708),
+                  )
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 25, bottom: 35),
-                child: Row(
-                  children: [
-                    FluLine(
-                      height: 1,
-                      width: MediaQuery.of(context).size.width * .1,
-                      color: context.colorScheme.tertiary,
-                    ),
-                    FluLine(
-                      height: 6.5,
-                      width: 6.5,
-                      radius: 99,
-                      color: context.colorScheme.tertiary,
-                    ),
-                  ],
-                ),
+              SizedBox(
+                height: 3.h,
               ),
               _Categories(ShopProductCategory.getAll())
             ],
@@ -206,55 +177,74 @@ class _Categories extends GetView<ShopController> {
           ShopProductCategory category = categories[index];
           Color color = category.color;
 
-          return Container(
-            margin: EdgeInsets.only(top: index == 0 ? 0 : spaceBetweenItems),
-            child: Row(
-              children: [
-                Container(
-                  height: itemImgSize + 5,
-                  width: itemImgSize + 5,
-                  margin: const EdgeInsets.only(right: 15),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      SizedBox(
-                        height: double.infinity,
-                        width: double.infinity,
-                        child: RotatedBox(
-                          quarterTurns: 3,
-                          child: CircularProgressIndicator(
-                            value: .2,
-                            valueColor: AlwaysStoppedAnimation<Color>(color.withOpacity(.35)),
-                            strokeWidth: 1.5,
+          return GestureDetector(
+            onTap: () {
+              if (categories[index].name == "Credit") {
+                RechargeCreditMainMenuBottomSheet.showBottomSheetRechargeCreditTo();
+              } else if (categories[index].name == "Internet package") {
+                //    controller.internetNumberCode.value = '400';
+                // controller.internetGetProducts();
+                Get.find<RechargeController>().internetNumberCode.value = '400';
+                Get.find<RechargeController>().internetGetProducts();
+              } else if (categories[index].name == "Voice package") {
+                log('asd ');
+                //    controller.internetNumberCode.value = '400';
+                // controller.internetGetProducts();
+                Get.find<RechargeController>().internetRadioGroupValue.value = '';
+                Get.find<RechargeController>().voicePackageNumberCode.value = '555';
+                Get.find<RechargeController>().voicePackageGetProducts();
+              }
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: index == 0 ? 0 : spaceBetweenItems),
+              child: Row(
+                children: [
+                  Container(
+                    height: itemImgSize + 5,
+                    width: itemImgSize + 5,
+                    margin: const EdgeInsets.only(right: 15),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox(
+                          height: double.infinity,
+                          width: double.infinity,
+                          child: RotatedBox(
+                            quarterTurns: 3,
+                            child: CircularProgressIndicator(
+                              value: .2,
+                              valueColor: AlwaysStoppedAnimation<Color>(color.withOpacity(.35)),
+                              strokeWidth: 1.5,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        height: itemImgSize - 3,
-                        width: itemImgSize - 3,
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(color: color.withOpacity(.085), shape: BoxShape.circle),
-                        child: FluIcon(category.icon, color: color),
+                        Container(
+                          height: itemImgSize - 3,
+                          width: itemImgSize - 3,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(color: color.withOpacity(.085), shape: BoxShape.circle),
+                          child: FluIcon(category.icon, color: color),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(StringUtils(category.name).capitalize!,
+                          style: const TextStyle(fontSize: M3FontSizes.bodyLarge, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 2),
+                      Text(
+                        category.description,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: context.colorScheme.onBackground.withOpacity(.75)),
                       ),
                     ],
-                  ),
-                ),
-                Expanded(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(StringUtils(category.name).capitalize!,
-                        style: const TextStyle(fontSize: M3FontSizes.bodyLarge, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 2),
-                    Text(
-                      category.description,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: context.colorScheme.onBackground.withOpacity(.75)),
-                    ),
-                  ],
-                )),
-              ],
+                  )),
+                ],
+              ),
             ),
           );
         });

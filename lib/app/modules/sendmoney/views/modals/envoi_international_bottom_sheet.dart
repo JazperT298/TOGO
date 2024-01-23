@@ -395,68 +395,68 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                         isTextFieldEmpty = false;
                       });
                     },
-                    onFieldSubmitted: (p0) {
-                      print(numberEditingCobntroller.text.trim().toString().length);
-                      if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.trim().toString().length == 11) {
-                        if (numberEditingCobntroller.text.contains(" ")) {
-                          log("wala ge input ang 228");
-                          String replacedString = numberEditingCobntroller.text.replaceAll(" ", "").trim().toString();
-                          String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
-                          log(msisdn);
-                          log(_selectedCountryCode);
-                          if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
-                            onVerifySmidnSubmit(msisdn, _selectedCountryCode);
-                          } else {
-                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                          }
-                        } else {
-                          log("ge input ang 228");
-                          log(numberEditingCobntroller.text);
-                          if (numberEditingCobntroller.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
-                            String stringRemoveCountryCode = numberEditingCobntroller.text.substring(3);
-                            String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
-                            log(numberEditingCobntroller.text);
-                            log(_selectedCountryCode);
-                            onVerifySmidnSubmit(numberEditingCobntroller.text, _selectedCountryCode);
-                          } else {
-                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                          }
-                        }
+                    //   onFieldSubmitted: (p0) {
+                    //     print(numberEditingCobntroller.text.trim().toString().length);
+                    //     if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.trim().toString().length == 11) {
+                    //       if (numberEditingCobntroller.text.contains(" ")) {
+                    //         log("wala ge input ang 228");
+                    //         String replacedString = numberEditingCobntroller.text.replaceAll(" ", "").trim().toString();
+                    //         String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
+                    //         log(msisdn);
+                    //         log(_selectedCountryCode);
+                    //         if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                    //           onVerifySmidnSubmit(msisdn, _selectedCountryCode);
+                    //         } else {
+                    //           Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                    //         }
+                    //       } else {
+                    //         log("ge input ang 228");
+                    //         log(numberEditingCobntroller.text);
+                    //         if (numberEditingCobntroller.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                    //           String stringRemoveCountryCode = numberEditingCobntroller.text.substring(3);
+                    //           String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+                    //           log(numberEditingCobntroller.text);
+                    //           log(_selectedCountryCode);
+                    //           onVerifySmidnSubmit(numberEditingCobntroller.text, _selectedCountryCode);
+                    //         } else {
+                    //           Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                    //         }
+                    //       }
 
-                        isTextFieldEmpty = false;
-                      } else if (numberEditingCobntroller.text.isEmpty) {
-                        setState(() {
-                          isTextFieldEmpty = true;
-                        });
-                      } else if (numberEditingCobntroller.text.trim().toString().length != 11) {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                      }
+                    //       isTextFieldEmpty = false;
+                    //     } else if (numberEditingCobntroller.text.isEmpty) {
+                    //       setState(() {
+                    //         isTextFieldEmpty = true;
+                    //       });
+                    //     } else if (numberEditingCobntroller.text.trim().toString().length != 11) {
+                    //       Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                    //     }
 
-                      // if (numberEditingCobntroller.text.isNotEmpty &&
-                      //     numberEditingCobntroller.text.length < 11) {
-                      //   Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                      //       backgroundColor: Colors.lightBlue,
-                      //       colorText: Colors.white);
-                      // } else if (numberEditingCobntroller.text.isNotEmpty ||
-                      //     numberEditingCobntroller.text
-                      //         .contains('99 99 02 28')) {
-                      //   // AppGlobal.isEditedTransferNational = true;
-                      //   // AppGlobal.isSubscribedTransferNational = false;
-                      //   // AppGlobal.isOtherNetTransferNational = false;
-                      //   // onVerifySmidnSubmit(numberEditingCobntroller,
-                      //   //     amountEditingController, context);
-                      //   // addNumberFromReceiver(numberEditingCobntroller.text, '${Get.find<DevicePlatformServices>().deviceID}');
-                      //   isTextFieldEmpty = false;
+                    //     // if (numberEditingCobntroller.text.isNotEmpty &&
+                    //     //     numberEditingCobntroller.text.length < 11) {
+                    //     //   Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
+                    //     //       backgroundColor: Colors.lightBlue,
+                    //     //       colorText: Colors.white);
+                    //     // } else if (numberEditingCobntroller.text.isNotEmpty ||
+                    //     //     numberEditingCobntroller.text
+                    //     //         .contains('99 99 02 28')) {
+                    //     //   // AppGlobal.isEditedTransferNational = true;
+                    //     //   // AppGlobal.isSubscribedTransferNational = false;
+                    //     //   // AppGlobal.isOtherNetTransferNational = false;
+                    //     //   // onVerifySmidnSubmit(numberEditingCobntroller,
+                    //     //   //     amountEditingController, context);
+                    //     //   // addNumberFromReceiver(numberEditingCobntroller.text, '${Get.find<DevicePlatformServices>().deviceID}');
+                    //     //   isTextFieldEmpty = false;
 
-                      //   if (phoneContactNumer == null) {
-                      //     AppGlobal.phonenumberspan = null;
-                      //   }
-                      // } else {
-                      //   setState(() {
-                      //     isTextFieldEmpty = true;
-                      //   });
-                      // }
-                    },
+                    //     //   if (phoneContactNumer == null) {
+                    //     //     AppGlobal.phonenumberspan = null;
+                    //     //   }
+                    //     // } else {
+                    //     //   setState(() {
+                    //     //     isTextFieldEmpty = true;
+                    //     //   });
+                    //     // }
+                    //   },
                   ),
                 ),
                 Padding(
@@ -987,7 +987,7 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         log(decodedData.toString());
 
         if (decodedData['onNet'] == true || decodedData['offNet'] == true) {
-          Get.snackbar("Message", "Le numéro n'est pas autorisé", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar(LocaleKeys.strInvalidNumber.tr, jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         } else {
           if (decodedData['description'] == "SUCCESS") {
             AppGlobal.internationalType = decodedData['international'];

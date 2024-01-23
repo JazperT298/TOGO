@@ -1,3 +1,4 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,14 +7,13 @@ import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
-import 'package:dotted_line/dotted_line.dart';
 
-class RechargeCreditOTPBottomSheet {
+class RechargeVoiceOTPBottomSheet {
   static showBottomSheetOTP() {
     var controller = Get.find<RechargeController>();
     Get.bottomSheet(
       Container(
-        height: 65.h,
+        height: 75.h,
         width: 100.w,
         decoration:
             const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
@@ -185,6 +185,58 @@ class RechargeCreditOTPBottomSheet {
                   children: [
                     const Expanded(
                       child: Text(
+                        "Package",
+                        style: TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        controller.textSplitterPackageName(text: controller.selectedVoice!.description),
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          // color: context.colorScheme.onSurface,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        "Validity",
+                        style: TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        controller.textSplitterPrice(text: controller.selectedVoice!.description),
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          // color: context.colorScheme.onSurface,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      child: Text(
                         "Fees",
                         style: TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
                       ),
@@ -217,7 +269,7 @@ class RechargeCreditOTPBottomSheet {
                     ),
                     Expanded(
                       child: Text(
-                        '${controller.amountTextField.text.toString()} FCFA',
+                        '${controller.selectedVoice!.price} FCFA',
                         style: TextStyle(
                           fontSize: 14.sp,
                           // color: context.colorScheme.onSurface,
@@ -246,14 +298,7 @@ class RechargeCreditOTPBottomSheet {
                   onFieldSubmitted: (p0) {
                     if (controller.code.text.isNotEmpty) {
                       if (controller.selectedOption.value == "For myself") {
-                        controller.verifyAndroidCredit(
-                            code: controller.code.text,
-                            amount: controller.amountTextField.text,
-                            msisdn: Get.find<StorageServices>().storage.read('msisdn'));
-                      } else {
-                        controller.verifyAndroidCredit(
-                            code: controller.code.text, amount: controller.amountTextField.text, msisdn: controller.numberTextField.text);
-                      }
+                      } else {}
                     } else {
                       Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                     }
@@ -272,13 +317,9 @@ class RechargeCreditOTPBottomSheet {
                   onPressed: () {
                     if (controller.code.text.isNotEmpty) {
                       if (controller.selectedOption.value == "For myself") {
-                        controller.verifyAndroidCredit(
-                            code: controller.code.text,
-                            amount: controller.amountTextField.text,
-                            msisdn: Get.find<StorageServices>().storage.read('msisdn'));
+                        controller.verifyAndroidVoice(code: controller.code.text, msisdn: Get.find<StorageServices>().storage.read('msisdn'));
                       } else {
-                        controller.verifyAndroidCredit(
-                            code: controller.code.text, amount: controller.amountTextField.text, msisdn: controller.numberTextField.text);
+                        controller.verifyAndroidVoice(code: controller.code.text, msisdn: controller.numberTextField.text);
                       }
                     } else {
                       Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);

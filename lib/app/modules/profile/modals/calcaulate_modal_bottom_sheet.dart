@@ -1,16 +1,17 @@
+import 'dart:ffi';
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
+import 'package:ibank/app/data/models/wallet.dart';
+import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
-import 'recharge_credit_input_amount_bottom_sheet.dart';
-
-class RechargeCreditInputNumberBottomSheet {
+class CalculateBottomSheet {
   static void showBottomSheetInputNumber() {
-    var controller = Get.find<RechargeController>();
+    var controller = Get.find<ProfileController>();
     Get.bottomSheet(
       Container(
         height: 40.h,
@@ -27,7 +28,7 @@ class RechargeCreditInputNumberBottomSheet {
               Padding(
                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
                 child: Text(
-                  "OTHERS".toUpperCase(),
+                  "Calculate keycost".toUpperCase(),
                   style: TextStyle(
                     color: const Color(0xFFfb6708),
                     fontWeight: FontWeight.w600,
@@ -42,7 +43,7 @@ class RechargeCreditInputNumberBottomSheet {
               Padding(
                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
                 child: Text(
-                  "Please enter the mobile number of the recipient.",
+                  "Enter the amount to calculate the fee.",
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
@@ -71,8 +72,8 @@ class RechargeCreditInputNumberBottomSheet {
               Padding(
                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
                 child: FluTextField(
-                  inputController: controller.numberTextField,
-                  hint: LocaleKeys.strEnterNumber.tr, // "Enter number",
+                  inputController: controller.amountTextField,
+                  hint: "Enter amount to calculate",
                   hintStyle: TextStyle(fontSize: 11.sp),
                   textStyle: TextStyle(fontSize: 11.sp),
                   height: 50,
@@ -81,11 +82,11 @@ class RechargeCreditInputNumberBottomSheet {
                   fillColor: const Color(0xFFf4f5fa),
                   onChanged: (text) {},
                   onFieldSubmitted: (p0) {
-                    if (controller.numberTextField.text.isEmpty) {
-                      Get.snackbar("Message", "Numero invalide", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                    if (controller.amountTextField.text.isEmpty) {
+                      Get.snackbar("Message", 'Please input an amount', backgroundColor: Colors.lightBlue, colorText: Colors.white);
                     } else {
                       Get.back();
-                      RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: "OTHERS");
+                      controller.amountToCalculate(amount: controller.amountTextField.text);
                     }
                   },
                 ),
@@ -99,29 +100,15 @@ class RechargeCreditInputNumberBottomSheet {
                   right: 5.w,
                 ),
                 child: FluButton.text(
-                  LocaleKeys.strContinue.tr, //   'Continuer',
-                  suffixIcon: FluIcons.passwordCheck,
+                  LocaleKeys.strvalidate.tr, //   'Continuer',
+                  suffixIcon: FluIcons.checkCircleUnicon,
                   iconStrokeWidth: 1.8,
                   onPressed: () {
-                    if (controller.numberTextField.text.isEmpty) {
-                      Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                    if (controller.amountTextField.text.isEmpty) {
+                      Get.snackbar("Message", 'Please input an amount', backgroundColor: Colors.lightBlue, colorText: Colors.white);
                     } else {
-                      if (controller.numberTextField.text.length == 8 || controller.numberTextField.text.length == 11) {
-                        if (controller.numberTextField.text.length == 8) {
-                          controller.numberTextField.text = "228${controller.numberTextField.text}";
-                          Get.back();
-                          RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: "OTHERS");
-                        } else {
-                          if (controller.numberTextField.text.substring(0, 3) == "228") {
-                            Get.back();
-                            RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: "OTHERS");
-                          } else {
-                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                          }
-                        }
-                      } else {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                      }
+                      Get.back();
+                      controller.amountToCalculate(amount: controller.amountTextField.text);
                     }
                   },
                   height: 55,

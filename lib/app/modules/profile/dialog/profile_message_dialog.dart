@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
-class RechargeMenuDialog {
+class ProfileMessageDialog {
   static showMessageDialog({required String message}) async {
     Get.dialog(AlertDialog(
         backgroundColor: Colors.white,

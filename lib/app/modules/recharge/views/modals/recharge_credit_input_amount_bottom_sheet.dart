@@ -122,8 +122,8 @@ class RechargeCreditInputAmountBottomSheet {
                 right: 5.w,
               ),
               child: FluButton.text(
-                LocaleKeys.strContinue.tr, // 'Continuer',
-                suffixIcon: FluIcons.passwordCheck,
+                LocaleKeys.strContinue.tr.toString(),
+                suffixIcon: FluIcons.arrowRight,
                 iconStrokeWidth: 1.8,
                 onPressed: () {
                   if (controller.amountTextField.text.isEmpty) {

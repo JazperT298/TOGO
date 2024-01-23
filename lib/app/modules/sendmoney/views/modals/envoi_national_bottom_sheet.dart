@@ -288,29 +288,29 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         //   ],
         // ),
         // const SizedBox(height: 6),
-        widget.sendType.contains(LocaleKeys.strNationalTransfer.tr)
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      LocaleKeys.strTransferFirstName.tr, //'Prénom',
-                      style: TextStyle(fontSize: 14.sp, color: Colors.grey),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Razack',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: context.colorScheme.onSurface,
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : const SizedBox.shrink(),
-        const SizedBox(height: 6),
+        // widget.sendType.contains(LocaleKeys.strNationalTransfer.tr)
+        //     ? Row(
+        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //         children: [
+        //           Expanded(
+        //             child: Text(
+        //               LocaleKeys.strTransferFirstName.tr, //'Prénom',
+        //               style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+        //             ),
+        //           ),
+        //           Expanded(
+        //             child: Text(
+        //               'Razack',
+        //               style: TextStyle(
+        //                 fontSize: 14.sp,
+        //                 color: context.colorScheme.onSurface,
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       )
+        //     : const SizedBox.shrink(),
+        // const SizedBox(height: 6),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -434,60 +434,60 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       });
                     },
 
-                    onFieldSubmitted: (p0) {
-                      print(numberEditingCobntroller.text.trim().toString().length);
-                      if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.trim().toString().length == 11) {
-                        if (numberEditingCobntroller.text.contains(" ")) {
-                          log("wala ge input ang 228");
-                          String replacedString = numberEditingCobntroller.text.replaceAll(" ", "").trim().toString();
-                          String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
-                          log(msisdn);
-                          log(_selectedCountryCode);
+                    // onFieldSubmitted: (p0) {
+                    //   print(numberEditingCobntroller.text.trim().toString().length);
+                    //   if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.trim().toString().length == 11) {
+                    //     if (numberEditingCobntroller.text.contains(" ")) {
+                    //       log("wala ge input ang 228");
+                    //       String replacedString = numberEditingCobntroller.text.replaceAll(" ", "").trim().toString();
+                    //       String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
+                    //       log(msisdn);
+                    //       log(_selectedCountryCode);
 
-                          if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
-                            onVerifySmidnSubmit(msisdn, amountEditingController, context);
-                          } else {
-                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                          }
-                        } else {
-                          log("ge input ang 228");
-                          log(numberEditingCobntroller.text);
-                          if (numberEditingCobntroller.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
-                            String stringRemoveCountryCode = numberEditingCobntroller.text.substring(3);
-                            String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
-                            onVerifySmidnSubmit(numberEditingCobntroller.text, amountEditingController, context);
-                          } else {
-                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                          }
-                        }
+                    //       if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                    //         onVerifySmidnSubmit(msisdn, amountEditingController, context);
+                    //       } else {
+                    //         Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                    //       }
+                    //     } else {
+                    //       log("ge input ang 228");
+                    //       log(numberEditingCobntroller.text);
+                    //       if (numberEditingCobntroller.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                    //         String stringRemoveCountryCode = numberEditingCobntroller.text.substring(3);
+                    //         String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+                    //         onVerifySmidnSubmit(numberEditingCobntroller.text, amountEditingController, context);
+                    //       } else {
+                    //         Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                    //       }
+                    //     }
 
-                        isTextFieldEmpty = false;
-                      } else if (numberEditingCobntroller.text.isEmpty) {
-                        setState(() {
-                          isTextFieldEmpty = true;
-                        });
-                      } else if (numberEditingCobntroller.text.trim().toString().length != 11) {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                      }
-                      // if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.length < 11) {
-                      //   Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                      // } else if (numberEditingCobntroller.text.isNotEmpty || numberEditingCobntroller.text.contains('99 99 02 28')) {
-                      //   // AppGlobal.isEditedTransferNational = true;
-                      //   // AppGlobal.isSubscribedTransferNational = false;
-                      //   // AppGlobal.isOtherNetTransferNational = false;
-                      //   onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
-                      //   // addNumberFromReceiver(numberEditingCobntroller.text, '${Get.find<DevicePlatformServices>().deviceID}');
-                      //   isTextFieldEmpty = false;
-                      //   setState(() {});
-                      //   if (phoneContactNumer == null) {
-                      //     AppGlobal.phonenumberspan = null;
-                      //   }
-                      // } else {
-                      //   setState(() {
-                      //     isTextFieldEmpty = true;
-                      //   });
-                      // }
-                    },
+                    //     isTextFieldEmpty = false;
+                    //   } else if (numberEditingCobntroller.text.isEmpty) {
+                    //     setState(() {
+                    //       isTextFieldEmpty = true;
+                    //     });
+                    //   } else if (numberEditingCobntroller.text.trim().toString().length != 11) {
+                    //     Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                    //   }
+                    //   // if (numberEditingCobntroller.text.isNotEmpty && numberEditingCobntroller.text.length < 11) {
+                    //   //   Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                    //   // } else if (numberEditingCobntroller.text.isNotEmpty || numberEditingCobntroller.text.contains('99 99 02 28')) {
+                    //   //   // AppGlobal.isEditedTransferNational = true;
+                    //   //   // AppGlobal.isSubscribedTransferNational = false;
+                    //   //   // AppGlobal.isOtherNetTransferNational = false;
+                    //   //   onVerifySmidnSubmit(numberEditingCobntroller, amountEditingController, context);
+                    //   //   // addNumberFromReceiver(numberEditingCobntroller.text, '${Get.find<DevicePlatformServices>().deviceID}');
+                    //   //   isTextFieldEmpty = false;
+                    //   //   setState(() {});
+                    //   //   if (phoneContactNumer == null) {
+                    //   //     AppGlobal.phonenumberspan = null;
+                    //   //   }
+                    //   // } else {
+                    //   //   setState(() {
+                    //   //     isTextFieldEmpty = true;
+                    //   //   });
+                    //   // }
+                    // },
                   ),
                 ),
                 Padding(
@@ -810,7 +810,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             Visibility(
               visible: isKeyboardVisible ? false : true,
               child: FluButton.text(
-                LocaleKeys.strEnterAmount.tr,
+                LocaleKeys.strvalidate.tr,
                 suffixIcon: FluIcons.checkCircleUnicon,
                 iconStrokeWidth: 1.8,
                 onPressed: () async {

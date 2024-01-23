@@ -34,10 +34,8 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
   late final PageController pageController;
 
   void onPageChange(int index) {
-    if (index != 2) {
-      ref.read(currentPageProvider.notifier).state = index;
-      pageController.animateToPage(index, duration: 300.milliseconds, curve: Curves.decelerate);
-    }
+    ref.read(currentPageProvider.notifier).state = index;
+    pageController.animateToPage(index, duration: 300.milliseconds, curve: Curves.decelerate);
   }
 
   @override
@@ -60,8 +58,8 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
         children: const [
           HomeView(),
           HistoryView(),
-          // ShopView(),
-          EmptyView(),
+          ShopView(),
+          // EmptyView(),
           ProfileView(),
         ],
       ),
