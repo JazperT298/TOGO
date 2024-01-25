@@ -17,13 +17,19 @@ class SendMoneyController extends GetxController {
   RxString fees = ''.obs;
   RxString withdrawalAmountWithUnit = ''.obs;
 
+  RxString msidn = ''.obs;
+  RxString amounts = ''.obs;
+  RxString thisDate = ''.obs;
+  RxString thisTime = ''.obs;
+  TextEditingController numberController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+
   RxBool isLoading = true.obs;
 
   addNumberFromReceiver(String msisdn, String token) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
     <v:Header />
@@ -61,8 +67,7 @@ class SendMoneyController extends GetxController {
     isLoading(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
     <v:Header />
@@ -93,8 +98,7 @@ class SendMoneyController extends GetxController {
           refID.value = decodedData['refid'];
         } else {
           Get.back();
-          Get.snackbar("Message", decodedData['message'],
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", decodedData['message'], backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
         // print('JSON Response: $jsonResponse');

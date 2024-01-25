@@ -4,7 +4,6 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/data/models/wallet.dart';
-import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_sub_menu_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
@@ -87,6 +86,7 @@ class PaymentMainMenuBottomSheet {
                       if (index != 1) {
                         Get.snackbar("Message", LocaleKeys.strComingSoon.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                       } else {
+                        Get.back();
                         PaymentSubMenuBottomSheet.showBottomSheetPaymentSubMenu(context);
                       }
                     },

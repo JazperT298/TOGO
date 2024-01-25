@@ -145,7 +145,7 @@ class WalletAction {
   }
 }
 
-enum WalletActions { send, withdraw, pay, topUp, mBanking }
+enum WalletActions { send, withdraw, pay, mBanking }
 
 extension WA on WalletActions {
   FluIcons get icon {
@@ -156,8 +156,6 @@ extension WA on WalletActions {
         return FluIcons.wallet;
       case WalletActions.withdraw:
         return FluIcons.import;
-      case WalletActions.topUp:
-        return FluIcons.addCircle;
       case WalletActions.mBanking:
         return FluIcons.bank;
     }
@@ -171,8 +169,6 @@ extension WA on WalletActions {
         return LocaleKeys.strWalletPay.tr;
       case WalletActions.withdraw:
         return LocaleKeys.strWalletWithdrawal.tr;
-      case WalletActions.topUp:
-        return LocaleKeys.strWalletRechange.tr;
       case WalletActions.mBanking:
         return "Mbanking";
     }

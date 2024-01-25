@@ -1,148 +1,109 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
-import 'package:ibank/generated/locales.g.dart';
+import 'package:ibank/app/modules/withdrawal/dialog/withdrawal_dialog.dart';
+import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_images.dart';
+import 'package:sizer/sizer.dart';
 
 class WithdrawalSuccessView extends GetView<WithdrawalController> {
   const WithdrawalSuccessView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: WillPopScope(
-        onWillPop: () => controller.getBack(),
-        child: SafeArea(
+    var trimString = Get.arguments['trimString'];
+    return FluScreen(
+      overlayStyle: context.systemUiOverlayStyle.copyWith(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+      body: SafeArea(
+        child: Center(
           child: Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Spacer(),
+
+                // Expanded(
+                //   child:
+                Image.asset(
+                  AppImages.transacSuccess,
+                  height: MediaQuery.of(context).size.height * .3,
+                  width: MediaQuery.of(context).size.height * .3,
+                ),
+                // ),
                 Padding(
-                  padding: UISettings.pagePadding,
-                  child: Text(
-                    LocaleKeys.strWalletWithdrawalDesc.tr, //  "RETRAIT",
-                    style: const TextStyle(color: Colors.orange),
+                  padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Operation completed \nsuccessfully', //    'Opération effectuer avec succèss',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'The operation was carried out successfully. You can view the details in the transaction history.', //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                    ),
                   ),
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 8,
                 ),
-                Padding(
-                  padding: UISettings.pagePadding,
-                  child: Text(
-                    LocaleKeys.strYouWithdraw.tr, //  "Vous retirez",
-                    style: const TextStyle(
-                      fontSize: M3FontSizes.headlineLarge,
+                GestureDetector(
+                  onTap: () {
+                    WithdrawalDialog.showRecapOperationDialog(context, '', '', trimString);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Text(
+                      'See the recap', // 'Voir le récap',
+                      style: GoogleFonts.montserrat(
+                          color: const Color(0xFF124DE5), decoration: TextDecoration.underline, fontWeight: FontWeight.w500, fontSize: 16),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: UISettings.pagePadding,
-                  child: Obx(
-                    () => Text(
-                      controller.withdrawalAmountWithUnit.value,
-                      style: const TextStyle(fontSize: M3FontSizes.headlineLarge, color: Colors.orange),
-                    ),
-                  ),
+                // const SizedBox(
+                //   height: 64,
+                // ),
+                const Spacer(),
+                FluButton.text(
+                  'Close', //  'Fermer',
+                  iconStrokeWidth: 1.8,
+                  onPressed: () {
+                    controller.code.clear();
+                    Get.toNamed(AppRoutes.BOTTOMNAV);
+                  },
+                  height: 5.8.h,
+                  width: MediaQuery.of(context).size.width * 16,
+                  cornerRadius: UISettings.minButtonCornerRadius,
+                  backgroundColor: context.colorScheme.primary,
+                  foregroundColor: context.colorScheme.onPrimary,
+                  boxShadow: [
+                    BoxShadow(
+                      color: context.colorScheme.primary.withOpacity(.35),
+                      blurRadius: 25,
+                      spreadRadius: 3,
+                      offset: const Offset(0, 5),
+                    )
+                  ],
+                  textStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                 ),
-                Padding(
-                  padding: UISettings.pagePadding,
-                  child: Obx(
-                    () => Text(
-                      "${LocaleKeys.strAtTheHouse.tr} ${controller.nickname.value}",
-                      style: const TextStyle(
-                        fontSize: M3FontSizes.headlineLarge,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                    padding: UISettings.pagePadding,
-                    child: Row(
-                      children: [
-                        Text(
-                          LocaleKeys.strOperationCoses.tr,
-                          //"Frais de l'operation: ",
-                          style: const TextStyle(
-                            fontSize: M3FontSizes.bodyLarge,
-                          ),
-                        ),
-                        Obx(
-                          () => Text(
-                            controller.fees.value,
-                            style: const TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.orange),
-                          ),
-                        ),
-                      ],
-                    )),
-                Padding(
-                    padding: UISettings.pagePadding,
-                    child: Row(
-                      children: [
-                        Text(
-                          LocaleKeys.strTaf.tr,
-                          style: const TextStyle(
-                            fontSize: M3FontSizes.bodyLarge,
-                          ),
-                        ),
-                        Obx(
-                          () => Text(
-                            controller.taf.value,
-                            style: const TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.orange),
-                          ),
-                        ),
-                      ],
-                    )),
-                Padding(
-                    padding: UISettings.pagePadding,
-                    child: Row(
-                      children: [
-                        Text(
-                          LocaleKeys.strNewFloozBalance.tr, //   "Nouveau solde Flooz: ",
-                          style: const TextStyle(
-                            fontSize: M3FontSizes.bodyLarge,
-                          ),
-                        ),
-                        Obx(
-                          () => Text(
-                            controller.balance.value,
-                            style: const TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.orange),
-                          ),
-                        ),
-                      ],
-                    )),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.57,
-                ),
-                Padding(
-                  padding: UISettings.pagePadding,
-                  child: FluButton.text(
-                    LocaleKeys.strContinue.tr, //   'Continuer',
-                    suffixIcon: FluIcons.arrowRight,
-                    iconStrokeWidth: 1.8,
-                    onPressed: () {
-                      Get.back();
-                      Get.back();
-                      Get.back();
-                      // Get.toNamed(AppRoutes.WITHDRAWALOTP);
-                    },
-                    height: 55,
-                    width: MediaQuery.of(context).size.width * 16,
-                    cornerRadius: UISettings.minButtonCornerRadius,
-                    backgroundColor: context.colorScheme.primary,
-                    foregroundColor: context.colorScheme.onPrimary,
-                    boxShadow: [
-                      BoxShadow(
-                        color: context.colorScheme.primary.withOpacity(.35),
-                        blurRadius: 25,
-                        spreadRadius: 3,
-                        offset: const Offset(0, 5),
-                      )
-                    ],
-                    textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
-                  ),
+                const SizedBox(
+                  height: 24,
                 ),
               ],
             ),

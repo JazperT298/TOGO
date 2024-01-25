@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors, constant_identifier_names, use_build_context_synchronously, unused_field, deprecated_member_use, unused_element
+// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors, constant_identifier_names, use_build_context_synchronously, unused_field, deprecated_member_use, unused_element, unnecessary_string_interpolations
 
 import 'dart:convert';
 import 'dart:developer';
@@ -11,17 +11,21 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:ibank/app/components/line_separator.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
+import 'package:ibank/app/data/models/transac_reponse.dart';
+import 'package:ibank/app/data/models/transaction_fee.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_search_bottom_sheet.dart';
+import 'package:ibank/app/modules/sendmoney/views/transac_success.dart';
 import 'package:ibank/app/providers/auth_provider.dart';
 import 'package:ibank/app/providers/transaction_provider.dart';
 import 'package:ibank/app/routes/app_routes.dart';
@@ -33,6 +37,7 @@ import 'package:ibank/utils/constants/app_global.dart';
 import 'package:http/http.dart' as http;
 import 'package:ibank/utils/constants/app_string_confirmation.dart';
 import 'package:ibank/utils/constants/app_string_validation.dart';
+import 'package:ibank/utils/helpers/string_helper.dart';
 import 'package:sizer/sizer.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:ibank/utils/string_utils.dart';
@@ -72,6 +77,12 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
 
   static String messageType = '';
 
+  static List<TransacResponse>? myDataList;
+
+  static TransacResponse? transacResponse;
+
+  static TransactionFee? transactionFee;
+
   // 96 04 78 78
   @override
   void initState() {
@@ -81,7 +92,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
     super.initState();
   }
 
-  final controller =
+  static final controller =
       Get.put(SendMoneyController()); // void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
   static void toNextStep() async {
     showDialog(
@@ -134,28 +145,17 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         Text(
           action.name.toUpperCase(),
           // widget.sendType,
-          style: TextStyle(
-            color: context.colorScheme.secondary,
-            fontWeight: FontWeight.w600,
-            fontSize: 11.sp,
-            letterSpacing: 1.0,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
         ),
         Text(
           LocaleKeys.strTransferHeader.tr,
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
-            color: context.colorScheme.onSurface,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             LocaleKeys.strTransferHeaderDesc.tr,
-            style: TextStyle(
-              fontSize: 10.sp,
-            ),
+            style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
           ),
         ),
         Row(
@@ -179,40 +179,23 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       children: [
         Text(
           LocaleKeys.strWalletSend.tr.toUpperCase(),
-          style: TextStyle(
-            color: context.colorScheme.secondary,
-            fontWeight: FontWeight.w600,
-            fontSize: 11.sp,
-            letterSpacing: 1.0,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
         ),
         Text.rich(
           TextSpan(
             children: [
               TextSpan(
                 text: LocaleKeys.strTransferInfo.tr, // 'Vous allez envoyer de l’argent à ',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: context.colorScheme.onSurface,
-                ),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
               ),
               numberEditingCobntroller.text.length <= 11
                   ? TextSpan(
                       text: '\n+${numberEditingCobntroller.text.toString()}',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: context.colorScheme.primary,
-                      ),
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
                     )
                   : TextSpan(
                       text: '\n+228 ${numberEditingCobntroller.text.toString()}',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: context.colorScheme.primary,
-                      ),
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Color(0xFF124DE5), fontSize: 22),
                     ),
             ],
           ),
@@ -243,51 +226,36 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       children: [
         Text(
           LocaleKeys.strTransferSummary.tr.toUpperCase(),
-          style: TextStyle(
-            color: context.colorScheme.secondary,
-            fontWeight: FontWeight.w600,
-            fontSize: 11.sp,
-            letterSpacing: 1.0,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
         ),
         Text(
           widget.sendType,
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
-            color: context.colorScheme.onSurface,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 22),
         ),
         const SizedBox(height: 24),
         Text(
           LocaleKeys.strTransferBeneficiary.tr.toUpperCase(),
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: context.colorScheme.onSurface,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
         ),
         const SizedBox(height: 18),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     const Expanded(
-        //       child: Text(
-        //         'Nom',
-        //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-        //       ),
-        //     ),
-        //     Expanded(
-        //       child: Text(
-        //         'Karim Razack',
-        //         style: TextStyle(
-        //           fontSize: M3FontSizes.headlineTiny,
-        //           color: context.colorScheme.onSurface,
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                'Name',
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                'N/A',
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
         // widget.sendType.contains(LocaleKeys.strNationalTransfer.tr)
         //     ? Row(
         //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -317,74 +285,68 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             Expanded(
               child: Text(
                 LocaleKeys.strTransferNumber.tr, //       'Numéro',
-                style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
               ),
             ),
             Expanded(
               child: Text(
                 numberEditingCobntroller.text.toString(),
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: context.colorScheme.onSurface,
-                ),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
               ),
             ),
           ],
         ),
 
         const SizedBox(height: 24),
+        const LineSeparator(color: Colors.grey),
+        const SizedBox(height: 24),
         Text(
           LocaleKeys.strTransferDetails.tr.toUpperCase(),
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: context.colorScheme.onSurface,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
         ),
         const SizedBox(height: 18),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     const Expanded(
-        //       child: Text(
-        //         'Frais',
-        //         style: TextStyle(fontSize: M3FontSizes.headlineTiny, color: Colors.grey),
-        //       ),
-        //     ),
-        //     Expanded(
-        //       child: Text(
-        //         '0 FCFA',
-        //         style: TextStyle(
-        //           fontSize: M3FontSizes.headlineTiny,
-        //           color: context.colorScheme.onSurface,
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                'Frais',
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+              ),
+            ),
+            Expanded(
+              child: Obx(
+                () => Text(
+                  controller.fees.value.isEmpty
+                      ? '0 FCFA'
+                      : '${StringHelper.formatNumberWithCommas(int.parse(controller.fees.value.replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Text(
                 LocaleKeys.strTransferAmount.tr,
-                style: TextStyle(fontSize: M3FontSizes.bodyLarge, color: Colors.grey),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
               ),
             ),
             Expanded(
               child: Text(
-                '${amountEditingController.text.toString()} FCFA',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: context.colorScheme.onSurface,
-                ),
+                amountEditingController.text.isEmpty
+                    ? '0 FCFA'
+                    : '${StringHelper.formatNumberWithCommas(int.parse(amountEditingController.text.toString()))} FCFA',
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 24),
-        const LineSeparator(color: Colors.grey),
-        const SizedBox(height: 32),
+        const SizedBox(height: 6),
       ],
     );
 
@@ -406,15 +368,16 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                   child: FluTextField(
                     hint: LocaleKeys.strTransferRecipientNumber.tr, // "Numéro du destinataire",
                     inputController: numberEditingCobntroller,
-                    hintStyle: TextStyle(fontSize: 11.sp),
-                    textStyle: TextStyle(fontSize: 11.sp),
+                    hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Color(0xFF27303F), fontSize: 14),
+                    textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                     height: 50,
                     cornerRadius: 15,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
                     ],
-                    fillColor: context.colorScheme.primaryContainer,
+                    fillColor: Color(0xFFF4F5FA),
+                    cursorColor: Color(0xFF27303F),
                     onChanged: (text) {
                       // Remove any existing spaces
                       text = text.replaceAll(" ", "");
@@ -521,9 +484,12 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       height: 45,
                       width: MediaQuery.of(context).size.width / 7.8,
                       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                      decoration:
-                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
-                      child: const FluIcon(FluIcons.userSearch, size: 20)),
+                      decoration: BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                      child: const FluIcon(
+                        FluIcons.userSearch,
+                        size: 20,
+                        color: Colors.black,
+                      )),
                 ),
               ],
             ),
@@ -557,6 +523,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       print(_selectedCountryCode);
 
                       if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                        controller.numberController = numberEditingCobntroller;
                         onVerifySmidnSubmit(msisdn, amountEditingController, context);
                       } else {
                         Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
@@ -633,12 +600,13 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
             FluTextField(
               inputController: amountEditingController,
               hint: LocaleKeys.strAmountSend.tr, // "Montant à envoyer",
-              hintStyle: TextStyle(fontSize: 11.sp),
-              textStyle: TextStyle(fontSize: 11.sp),
+              hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Color(0xFF27303F), fontSize: 14),
+              textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
               height: 50,
               cornerRadius: 15,
               keyboardType: TextInputType.number,
-              fillColor: context.colorScheme.primaryContainer,
+              fillColor: Color(0xFFF4F5FA),
+              cursorColor: Color(0xFF27303F),
               onChanged: (text) {
                 setState(() {
                   isTextFieldEmpty = false;
@@ -646,8 +614,14 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
               },
               onFieldSubmitted: (p0) {
                 if (amountEditingController.text.isNotEmpty) {
+                  var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
+                  if (messageType == 'CASHOFF') {
+                    getTransactionFee('WITHDRAW', amountEditingController.text, messageType);
+                  } else {
+                    getTransactionFee(asd, amountEditingController.text, messageType);
+                  }
+                  controller.amountController = amountEditingController;
                   AppGlobal.siOTPPage = true;
-                  toNextStep();
                   isTextFieldEmpty = false;
                 } else {
                   setState(() {
@@ -678,8 +652,14 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 onPressed: () {
                   if (amountEditingController.text.isNotEmpty) {
                     // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
+                    var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
+                    if (messageType == 'CASHOFF') {
+                      getTransactionFee('WITHDRAW', amountEditingController.text, messageType);
+                    } else {
+                      getTransactionFee(asd, amountEditingController.text, messageType);
+                    }
+                    controller.amountController = amountEditingController;
                     AppGlobal.siOTPPage = true;
-                    toNextStep();
                     isTextFieldEmpty = false;
                   } else {
                     setState(() {
@@ -727,9 +707,10 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 cornerRadius: 15,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
-                fillColor: context.colorScheme.primaryContainer,
-                hintStyle: TextStyle(fontSize: 11.sp),
-                textStyle: TextStyle(fontSize: 11.sp),
+                fillColor: Color(0xFFF4F5FA),
+                cursorColor: Color(0xFF27303F),
+                hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Color(0xFF27303F), fontSize: 14),
+                textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
                 ],
@@ -770,6 +751,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                       //   });
                     } else {
                       setState(() {
+                        AppGlobal.dateNow = DateTime.now().toString();
+                        AppGlobal.timeNow = DateTime.now().toString();
                         addNumberFromReceiver(numberEditingCobntroller.text, Get.find<DevicePlatformServices>().deviceID);
                       });
                       showDialog(
@@ -944,6 +927,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       // print(AppGlobal.MSISDN);
       // print('strToken ${strToken!.replaceAll(".", "")}');
       // var toe = strToken.replaceAll(".", "");
+      log('AppGlobal.MSISDN ${AppGlobal.MSISDN}');
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
@@ -972,9 +956,10 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         if (description.contains('TOKEN_FOUND')) {
           var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
           log(asd);
+
           sendMoneyToReceiver(
               asd, Get.find<DevicePlatformServices>().deviceID, amountEditingController.text, codeEditingController.text, messageType);
-          // } else if (description.contains('VERSION NOT UP TO DATE')) {
+          // // } else if (description.contains('VERSION NOT UP TO DATE')) {
         } else {
           isInvalidCode = true;
           if (!description.contains('TOKEN_NOT_FOUND')) {
@@ -991,15 +976,58 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         // var jsonResponse = jsonDecode(jsonString);
         print('JSON Response: $jsonString');
       } else {
-        numberEditingCobntroller.clear();
         Get.snackbar("Message", 'An Error Occured', backgroundColor: Colors.lightBlue, colorText: Colors.white);
 
         print('asda ${response.reasonPhrase}');
       }
     } catch (e) {
+      Get.back();
       Get.snackbar("Message", e.toString(), backgroundColor: Colors.lightBlue, colorText: Colors.white);
-
       print('addNumberFromReceiver $e');
+    }
+  }
+
+  static void getNameNumber() {}
+
+  static void getTransactionFee(String msisdn, String amounts, String mess) async {
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <app:getTransactionFee soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <msisdn xsi:type="xsd:string">${AppGlobal.MSISDN}</msisdn>
+         <destmsisdn xsi:type="xsd:string">$msisdn</destmsisdn>
+         <keyword xsi:type="xsd:string">$mess</keyword>
+         <value xsi:type="xsd:string">$amounts</value>
+      </app:getTransactionFee>
+   </soapenv:Body>
+</soapenv:Envelope>''';
+      log('getTransactionFee ${request.body}');
+      http.StreamedResponse response = await request.send();
+      request.headers.addAll(headers);
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        log('getTransactionFee jsonString 1 $result');
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('getTransactionFeeReturn').single;
+        var jsonString = soapElement.innerText;
+        log('getTransactionFee jsonString 2 $jsonString');
+        var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        transactionFee = TransactionFee.fromJson(jsonData);
+        controller.fees.value = transactionFee!.sender;
+
+        toNextStep();
+      }
+    } catch (e) {
+      log('getTransactionFee asd $e');
+      Get.back();
+      showMessageDialog(message: e.toString());
     }
   }
 
@@ -1012,29 +1040,41 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
       request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
-          <v:Header /><v:Body><n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
-          <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn><message i:type="d:string">$mess $msisdn $amounts $code F</message>
+          <v:Header /><v:Body>
+          <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
+          <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
+          <message i:type="d:string">$mess $msisdn $amounts $code F</message>
           <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token><sendsms i:type="d:string">true</sendsms>
-          </n0:RequestToken></v:Body></v:Envelope>''';
+          </n0:RequestTokenJson></v:Body></v:Envelope>''';
       request.headers.addAll(headers);
+
       http.StreamedResponse response = await request.send();
+      log(request.body);
 
       if (response.statusCode == 200) {
         var result = await response.stream.bytesToString();
-
+        log('result 2 $result');
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
         var documentss = xml.XmlDocument.parse(parseResult);
-        var requestTokenReturnElement = document.findAllElements('RequestTokenReturn').single;
+        var requestTokenReturnElement = document.findAllElements('RequestTokenJsonReturn').single;
 
         if (jsonString.contains('Transfert reussi')) {
           String trimString = jsonString.replaceAll('Transfert reussi', '');
-          String inputString = "'''$trimString'''";
-          var lines = inputString.trim().split('\n');
+          log('LINES $trimString');
+
+          // String inputString = "'''$trimString'''";
+          String inputString = '''$trimString''';
+          var lines = inputString.trim().split('\r\n');
           var jsonMap = {};
-          log(lines.toString());
+          log('LINES 1 ${lines.toString()}');
+
+          Map<String, dynamic> jsonData = jsonDecode(trimString);
+
+          transacResponse = TransacResponse.fromJson(jsonData);
+
           for (var line in lines) {
             var parts = line.split(':');
             if (parts.length == 2) {
@@ -1065,29 +1105,37 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           Get.back();
           Get.back();
           Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
-          showMessageDialog(message: jsonString);
 
-          // SqlHelper.setTransacHistory("-1", jsonString);
+          int msgId = jsonData["msgid"];
+          if (msgId == 0 && messageType == "APPCASH" || msgId == 3010 && messageType == "CASHOFF") {
+            Get.toNamed(AppRoutes.TRANSACCOMPLETE, arguments: {'msisdn': msisdn, 'amounts': amounts, 'trimString': trimString});
+          } else {
+            Get.toNamed(AppRoutes.TRANSACFAILED, arguments: {'jsonString': jsonString});
+          }
         } else {
           Get.back();
           Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
-          showMessageDialog(message: jsonString);
+          // showMessageDialog(message: jsonString);
+          log('response jsonString $jsonString');
+          Get.toNamed(AppRoutes.TRANSACFAILED, arguments: {'jsonString': jsonString});
 
           invalidCodeString = jsonString;
         }
       } else {
-        numberEditingCobntroller.clear();
         log('response.reasonPhrase ${response.reasonPhrase}');
       }
     } on Exception catch (_) {
+      Get.back();
+      showMessageDialog(message: 'An Error occured! Please try again later');
+
       log("ERROR $_");
     } catch (e) {
       log('asd $e');
+      Get.back();
+      Get.back();
+      showMessageDialog(message: 'An Error occured! Please try again later');
     }
     isInvalidCode = false;
-    numberEditingCobntroller.clear();
-    amountEditingController.clear();
-    codeEditingController.clear();
   }
 
   Map<String, dynamic> parseInnerStringToMap(String innerString) {
@@ -1196,6 +1244,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           toNextStep();
         }
       }
+      log('onSendMoneySubmit messageType $messageType');
     } catch (ex) {
       Get.back();
       log('onSendMoneySubmit ex $ex');

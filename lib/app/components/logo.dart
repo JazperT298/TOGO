@@ -1,5 +1,6 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/utils/configs.dart';
 
 class Logo extends StatelessWidget {
@@ -10,11 +11,17 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(Configs.appName,
-        style: TextStyle(
-          color: color ?? context.colorScheme.primary,
-          fontSize: fontSize,
-          fontFamily: "neptune",
-        ));
+    return Column(
+      children: [
+        Text(
+          'Moov Money'.toUpperCase(),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.white, fontSize: 22),
+        ),
+        Text(
+          Configs.appName.toUpperCase(),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: const Color(0xFFFB6404), fontSize: 22),
+        ),
+      ],
+    );
   }
 }

@@ -6,6 +6,8 @@ class AppRoutes {
   static const String LOGIN = '/login';
   static const String OTP = '/otp';
   static const String LOGINSUCCESS = '/loginsuccess';
+  static const String LOGINPROFILE = '/loginprofile';
+  static const String LOGINSECURITYCODE = '/loginsecuritycode';
 
   static const String BOTTOMNAV = '/bottomnav';
 
@@ -22,8 +24,7 @@ class AppRoutes {
   static const String WITHDRAWALSUCCESS = '/withdrawalsuccess';
 
   static const String PROFILE = '/profile';
-  static const String PROFILEINFORMATIONPERSONELLES =
-      '/profileinformationpersonelles';
+  static const String PROFILEINFORMATIONPERSONELLES = '/profileinformationpersonelles';
   static const String PROFILEOTP = '/profileotpview';
   static const String PROFILECHANGESPASSWORD = '/profilechangepassword';
   static const String TRANSACCOMPLETE = '/transaccomplete';

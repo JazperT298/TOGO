@@ -2,6 +2,7 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/data/ui/onboarding_screen_page.dart';
 import 'package:ibank/app/modules/onboard/controller/onboard_controller.dart';
 import 'package:ibank/app/routes/app_routes.dart';
@@ -65,15 +66,14 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
                           intensity: 7.0,
                           cornerRadius: 14,
                           child: FluButton.text(
-                           LocaleKeys.strSkip.tr,
+                            LocaleKeys.strSkip.tr,
                             onPressed: () {
                               Get.offNamed(AppRoutes.LOGIN);
                             },
                             cornerRadius: 14,
-                            backgroundColor:
-                                context.colorScheme.background.withOpacity(.25),
+                            backgroundColor: context.colorScheme.background.withOpacity(.25),
                             foregroundColor: Colors.white,
-                            height:5.8.h,
+                            height: 5.8.h,
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                           ),
                         ),
@@ -86,54 +86,67 @@ class _OnboardViewState extends ConsumerState<OnboardView> {
             Obx(
               () => controller.isLoading.value
                   ? Container()
-                  : FluButton.text(
-                      onboardingScreenPage[currentPage].buttonText,
-                      prefixIcon: onboardingScreenPage[currentPage].buttonIcon,
-                      iconSize: 15,
-                      iconStrokeWidth: 1.8,
-                      onPressed: () {
-                        controller.isLastPage.value
-                            ? Get.offNamed(AppRoutes.LOGIN)
-                            : controller.toNextPage();
-                        // print(controller.isLastPage.value);
-                      },
-                      height:5.8.h,
-                      width: MediaQuery.of(context).size.width * .42,
-                      cornerRadius: UISettings.buttonCornerRadius,
-                      margin: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * .025,
-                          bottom: MediaQuery.of(context).size.height * .03),
-                      backgroundColor: context.colorScheme.primary,
-                      foregroundColor: context.colorScheme.onPrimary,
-                      boxShadow: [
-                        BoxShadow(
-                          color: context.colorScheme.primary.withOpacity(.35),
-                          blurRadius: 25,
-                          spreadRadius: 3,
-                          offset: const Offset(0, 5),
-                        )
-                      ],
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 10.sp,
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: FluButton.text(
+                        onboardingScreenPage[currentPage].buttonText,
+                        prefixIcon: onboardingScreenPage[currentPage].buttonIcon,
+                        iconSize: 15,
+                        iconStrokeWidth: 1.8,
+                        onPressed: () {
+                          controller.isLastPage.value ? Get.offNamed(AppRoutes.LOGIN) : controller.toNextPage();
+                          // print(controller.isLastPage.value);
+                        },
+                        height: 5.8.h,
+                        width: MediaQuery.of(context).size.width,
+                        cornerRadius: UISettings.buttonCornerRadius,
+                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .025, bottom: MediaQuery.of(context).size.height * .03),
+                        backgroundColor: context.colorScheme.primary,
+                        foregroundColor: context.colorScheme.onPrimary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: context.colorScheme.primary.withOpacity(.35),
+                            blurRadius: 25,
+                            spreadRadius: 3,
+                            offset: const Offset(0, 5),
+                          )
+                        ],
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 10.sp,
+                        ),
                       ),
                     ),
             ),
+            const SizedBox(
+              height: 24,
+            ),
             Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * .010),
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * .020),
               child: SmoothPageIndicator(
-                controller: controller.pageController,
-                count: onboardingScreenPage.length,
-                effect: const WormEffect(
-                  dotHeight: 5,
-                  dotWidth: 5,
-                  spacing: 10.0,
-                  dotColor: Colors.grey,
-                  activeDotColor: Colors.black,
-                ),
-              ),
-            )
+                  controller: controller.pageController,
+                  count: onboardingScreenPage.length,
+                  // effect: const WormEffect(
+                  //   dotHeight: 5,
+                  //   dotWidth: 5,
+                  //   spacing: 10.0,
+                  //   dotColor: Colors.grey,
+                  //   activeDotColor: Colors.black,
+                  // ),
+                  effect: const ExpandingDotsEffect(
+                    strokeWidth: 3,
+                    expansionFactor: 6,
+                    dotWidth: 30,
+                    dotHeight: 8,
+                    spacing: -0.0,
+                    radius: 0,
+                    dotColor: Colors.grey,
+                    activeDotColor: Colors.black,
+                  )),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
           ],
         ),
       ),
@@ -160,21 +173,24 @@ class _Page extends GetView<OnboardController> {
           ),
         ),
         Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: UISettings.pagePaddingSize)
-                  .copyWith(top: MediaQuery.of(context).size.height * .035),
+          padding: const EdgeInsets.symmetric(horizontal: UISettings.pagePaddingSize).copyWith(top: MediaQuery.of(context).size.height * .06),
           child: Column(
             children: [
               Text(
                 StringUtils(data.title).capitalizeFirst!,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black, fontSize: 16.sp),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(
+                height: 24,
+              ),
               Text(
                 data.description,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black54, fontSize: 9.sp),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+              ),
+              const SizedBox(
+                height: 24,
               ),
             ],
           ),

@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
 
 class TransacCompleteView extends StatelessWidget {
@@ -11,6 +16,19 @@ class TransacCompleteView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(SendMoneyController());
+
+    var msisdn = Get.arguments['msisdn'];
+    var amounts = Get.arguments['amounts'];
+    var trimString = Get.arguments['trimString'];
+    // var date = Get.arguments['date'];
+    // var time = Get.arguments['time'];
+    log('msisdn $msisdn');
+    log('amounts $amounts');
+    log('trimString $trimString');
+    // log('date $date');
+    // log('time $time');
+
     return FluScreen(
       overlayStyle: context.systemUiOverlayStyle.copyWith(
         statusBarColor: Colors.transparent,
@@ -24,62 +42,64 @@ class TransacCompleteView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(
-                  height: 120,
-                  width: 120,
-                  child: FluIcon(
-                    FluIcons.checkCircleUnicon,
-                    color: Colors.green,
-                    size: 120,
-                  ),
+                const Spacer(),
+
+                // Expanded(
+                //   child:
+                Image.asset(
+                  AppImages.transacSuccess,
+                  height: MediaQuery.of(context).size.height * .3,
+                  width: MediaQuery.of(context).size.height * .3,
                 ),
-                const SizedBox(
-                  height: 32,
+                // ),
+                Padding(
+                  padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Operation completed \nsuccessfully', //    'Opération effectuer avec succèss',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Opération effectuer avec succèss',
+                      'The operation was carried out successfully. You can view the details in the transaction history.', //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 15.sp),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
-                  child: const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 18),
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 32,
+                  height: 8,
                 ),
                 GestureDetector(
                   onTap: () {
-                    SendMenuDialog.showRecapOperationDialog(context);
+                    SendMenuDialog.showRecapOperationDialog(context, msisdn, amounts, trimString);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     child: Text(
-                      'Voir le récap',
-                      style: TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.w700, fontSize: 11.sp),
+                      'See the recap', // 'Voir le récap',
+                      style: GoogleFonts.montserrat(
+                          color: const Color(0xFF124DE5), decoration: TextDecoration.underline, fontWeight: FontWeight.w500, fontSize: 16),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 64,
-                ),
+                // const SizedBox(
+                //   height: 64,
+                // ),
+                const Spacer(),
                 FluButton.text(
-                  'Fermer',
+                  'Close', //  'Fermer',
                   iconStrokeWidth: 1.8,
                   onPressed: () {
+                    controller.numberController.clear();
+                    controller.amountController.clear();
                     Get.toNamed(AppRoutes.BOTTOMNAV);
                   },
                   height: 5.8.h,
@@ -95,7 +115,10 @@ class TransacCompleteView extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                  textStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 24,
                 ),
               ],
             ),

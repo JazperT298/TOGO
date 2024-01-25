@@ -4,6 +4,7 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
@@ -12,6 +13,7 @@ import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_main_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_menu_bottom_sheet.dart';
+import 'package:ibank/app/modules/withdrawal/modals/withdraw_menu_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
@@ -23,7 +25,7 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildTitle(BuildContext context, String text, Color color) => Text(
         text.toUpperCase(),
-        style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: color, height: 1.5),
+        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
       );
 
   @override
@@ -51,25 +53,13 @@ class HomeView extends GetView<HomeController> {
                             Row(
                               children: [
                                 InkWell(
-                                  onTap: () {
-                                    // Get.find<StorageServices>()
-                                    //     .storage
-                                    //     .remove("history");
-                                    // print("clear");
-                                  },
-                                  child: FluBadge(
-                                    offset: const Offset(5, 5),
-                                    child: FluAvatar(
-                                      size: UISettings.minButtonSize - 8,
-                                      outlined: true,
-                                      outlineThickness: 1.5,
-                                      icon: FluIcons.user,
-                                      outlineGap: 3,
-                                      outlineColor: [context.colorScheme.outlineVariant],
-                                      margin: const EdgeInsets.only(right: 10),
-                                    ),
-                                  ),
-                                ),
+                                    onTap: () {
+                                      // Get.find<StorageServices>()
+                                      //     .storage
+                                      //     .remove("history");
+                                      // print("clear");
+                                    },
+                                    child: Image.asset(Get.find<StorageServices>().storage.read('image'), height: 52, width: 52)),
                                 const Spacer(),
                                 /* FluButton.icon(FluIcons.plusUnicon,
                                   size: UISettings.minButtonSize), */
@@ -82,7 +72,7 @@ class HomeView extends GetView<HomeController> {
                             SizedBox(height: MediaQuery.of(context).size.height * .035),
                             Text(
                               Flu.formatDate(DateTime.now()).toUpperCase(),
-                              style: TextStyle(fontSize: 12.sp),
+                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF687997), fontSize: 14),
                             ),
                             _buildTitle(context, LocaleKeys.strMoneyControl.tr.toUpperCase(), context.colorScheme.onSurface),
                             FluLine(
@@ -144,13 +134,8 @@ class _CardState extends State<_Card> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      LocaleKeys.strFlooz.tr,
-                      style: TextStyle(
-                        color: context.colorScheme.tertiary,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'neptune',
-                        fontSize: 11.sp,
-                      ),
+                      'My Balance',
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14),
                     ),
                     Expanded(
                       child: Row(
@@ -290,7 +275,13 @@ class _QuickActions extends StatelessWidget {
         break;
       case WalletActions.withdraw:
         // KRouter.noContextPush(Routes.withdrawal);
-        Get.toNamed(AppRoutes.WITHDRAWAL);
+        // Get.toNamed(AppRoutes.WITHDRAWAL);
+        showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (context) => const _ModalBottomSheet2(
+                  child: WithdrawMenuBottomSheet(),
+                ));
         break;
       case WalletActions.pay:
         // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
@@ -300,17 +291,17 @@ class _QuickActions extends StatelessWidget {
         // context: context,
         // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
         break;
-      case WalletActions.topUp:
-        // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-        //     backgroundColor: Colors.lightBlue,
-        //     colorText: Colors.white,
-        //     duration: const Duration(seconds: 3));
-        // RechargeMenuDialog.showRechargeMenuDialog();
-        // RechargeCreditMainMenuBottomSheet.showBottomSheetRechargeMainMenu();
-        // showModalBottomSheet(
-        // context: context,
-        // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
-        break;
+      // case WalletActions.topUp:
+      // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+      //     backgroundColor: Colors.lightBlue,
+      //     colorText: Colors.white,
+      //     duration: const Duration(seconds: 3));
+      // RechargeMenuDialog.showRechargeMenuDialog();
+      // RechargeCreditMainMenuBottomSheet.showBottomSheetRechargeMainMenu();
+      // showModalBottomSheet(
+      // context: context,
+      // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
+      // break;
       case WalletActions.mBanking:
         // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
         //     backgroundColor: Colors.lightBlue,
@@ -386,15 +377,15 @@ class _Favorites extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  LocaleKeys.strRapidCash.tr,
-                  style: TextStyle(fontSize: 12.sp),
+                  LocaleKeys.strRapidCash.tr.toUpperCase(),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
                 ),
                 const SizedBox(height: 5),
                 Hero(
                   tag: '<title>',
                   child: Text(
                     LocaleKeys.strFavoritePeople.tr.toUpperCase(),
-                    style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: context.colorScheme.onSurface, height: 1.5),
+                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
                   ),
                 ),
               ],
@@ -473,11 +464,64 @@ class _ModalBottomSheet extends StatelessWidget {
       return Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
-            height: isKeyboardVisible ? MediaQuery.of(context).size.height * .5 : MediaQuery.of(context).size.height * .49,
-            decoration: BoxDecoration(
-              color: context.colorScheme.background,
-            ),
-            child: child),
+          color: Colors.red,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Center(
+              //   child: Container(
+              //     height: 6,
+              //     width: 100,
+              //     color: Colors.white,
+              //     margin: const EdgeInsets.only(bottom: 4),
+              //   ),
+              // ),
+              Container(
+                  height: isKeyboardVisible ? MediaQuery.of(context).size.height * .5 : MediaQuery.of(context).size.height * .39,
+                  decoration: BoxDecoration(
+                    color: context.colorScheme.background,
+                  ),
+                  child: child),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+}
+
+class _ModalBottomSheet2 extends StatelessWidget {
+  const _ModalBottomSheet2({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+      return Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Container(
+          color: Colors.red,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Center(
+              //   child: Container(
+              //     height: 6,
+              //     width: 100,
+              //     color: Colors.white,
+              //     margin: const EdgeInsets.only(bottom: 4),
+              //   ),
+              // ),
+              Container(
+                  height: isKeyboardVisible ? MediaQuery.of(context).size.height * .5 : MediaQuery.of(context).size.height * .50,
+                  decoration: BoxDecoration(
+                    color: context.colorScheme.background,
+                  ),
+                  child: child),
+            ],
+          ),
+        ),
       );
     });
   }
@@ -808,20 +852,13 @@ class _PromotionsAndOffers extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  LocaleKeys.strJustForYou.tr,
-                  style: TextStyle(
-                    color: context.colorScheme.primary,
-                    fontSize: 12.sp,
-                  ),
+                  LocaleKeys.strJustForYou.tr.toUpperCase(),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   LocaleKeys.strRechargeSendWin.tr.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.bold,
-                    color: context.colorScheme.onSurface,
-                  ),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
                 ),
               ],
             ))
@@ -887,9 +924,7 @@ class _PromotionsAndOffers extends StatelessWidget {
         //     )),
         Text(
           LocaleKeys.strRechargeSendWinDesc.tr,
-          style: TextStyle(
-            fontSize: 11.sp,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
         )
       ]);
 }

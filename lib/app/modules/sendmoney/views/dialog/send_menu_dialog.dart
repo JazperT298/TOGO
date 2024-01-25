@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors, sized_box_for_whitespace, avoid_print
+// ignore_for_file: unnecessary_new, prefer_const_constructors, sized_box_for_whitespace, avoid_print, unused_import, unused_local_variable
 
 import 'dart:io';
 
@@ -7,13 +7,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/line_separator.dart';
+import 'package:ibank/app/data/models/transac_reponse.dart';
+import 'package:ibank/app/data/models/transaction_fee.dart';
+import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_international_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_national_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
+import 'package:ibank/utils/helpers/string_helper.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 class SendMenuDialog {
@@ -36,15 +42,11 @@ class SendMenuDialog {
                     onTap: () {
                       Get.back();
                       AppGlobal.siOTPPage = false;
+                      AppGlobal.dateNow = '';
+                      AppGlobal.timeNow = '';
                       showModalBottomSheet(
                           isScrollControlled: true,
                           context: context,
-                          shape: const RoundedRectangleBorder(
-                            // <-- SEE HERE
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(25.0),
-                            ),
-                          ),
                           builder: (context) => _ModalBottomSheet(
                                 sendType: LocaleKeys.strNationalTransfer.tr,
                                 siOTPPage: AppGlobal.siOTPPage,
@@ -65,6 +67,8 @@ class SendMenuDialog {
                     onTap: () {
                       Get.back();
                       AppGlobal.siOTPPage = false;
+                      AppGlobal.dateNow = '';
+                      AppGlobal.timeNow = '';
                       showModalBottomSheet(
                           isScrollControlled: true,
                           context: context,
@@ -114,6 +118,8 @@ class SendMenuDialog {
                     onTap: () {
                       Get.back();
                       AppGlobal.siOTPPage = false;
+                      AppGlobal.dateNow = '';
+                      AppGlobal.timeNow = '';
                       showModalBottomSheet(
                           isScrollControlled: true,
                           context: context,
@@ -137,6 +143,8 @@ class SendMenuDialog {
                     onTap: () {
                       Get.back();
                       AppGlobal.siOTPPage = false;
+                      AppGlobal.dateNow = '';
+                      AppGlobal.timeNow = '';
                       showModalBottomSheet(
                           isScrollControlled: true,
                           context: context,
@@ -220,15 +228,21 @@ class SendMenuDialog {
     });
   }
 
-  static void showRecapOperationDialog(context) async {
-    print('Amount: ${AppGlobal.amount}');
-    print('Beneficiary: ${AppGlobal.beneficiare}');
-    print('Date: ${AppGlobal.date}');
-    print('New Balance: ${AppGlobal.remainingBal}');
-    print('Transaction ID: ${AppGlobal.txn}');
-    print('Number ID: ${AppGlobal.numbers}');
-
+  static void showRecapOperationDialog(context, msisdn, amounts, trimString) async {
     // flutter defined function
+    final controller = Get.put(SendMoneyController());
+    print("Amount: $trimString");
+
+    Map<String, String> extractedValues = extractValues(trimString);
+
+    String amount = extractedValues['amount'] ?? '';
+    String beneficiaire = extractedValues['beneficiaire'] ?? '';
+    String date = extractedValues['date'] ?? '';
+    String nouveauSolde = extractedValues['nouveauSolde'] ?? '';
+    String txnId = extractedValues['txnId'] ?? '';
+    List<String> separatedDateTime = separateDateTime(date);
+    String dates = separatedDateTime[0];
+    String times = separatedDateTime[1];
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -236,60 +250,38 @@ class SendMenuDialog {
 
         return AlertDialog(
           insetPadding: EdgeInsets.all(12), // Outside Padding
-          contentPadding: EdgeInsets.all(12), // Content Padding
-          title: Text("Recap operation"),
+          contentPadding: EdgeInsets.all(12),
+
           content: Container(
             width: MediaQuery.of(context).size.width - 60,
-            height: 460,
+            height: 440,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                const SizedBox(height: 8),
+                Text(
+                  "Operation Recap",
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                ),
                 const SizedBox(height: 24),
                 Text(
                   'Bénéficiaire'.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: context.colorScheme.onSurface,
-                  ),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                 ),
                 const SizedBox(height: 18),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     const Expanded(
-                //       child: Text(
-                //         'Nom',
-                //         style: TextStyle(fontSize: 11.sp color: Colors.grey),
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Text(
-                //         'Karim Razack',
-                //         style: TextStyle(
-                //           fontSize: 11.sp
-                //           color: context.colorScheme.onSurface,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: Text(
-                        'Prénom',
-                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+                        'Name',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        AppGlobal.beneficiare.toString(),
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: context.colorScheme.onSurface,
-                        ),
+                        'N/A',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -300,17 +292,14 @@ class SendMenuDialog {
                   children: [
                     Expanded(
                       child: Text(
-                        'Numéro',
-                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+                        'Number',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        AppGlobal.numbers,
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: context.colorScheme.onSurface,
-                        ),
+                        msisdn,
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -320,32 +309,28 @@ class SendMenuDialog {
                 const SizedBox(height: 24),
                 Text(
                   'DETAILS'.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 11.sp,
-                    color: context.colorScheme.onSurface,
-                  ),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                 ),
-                // const SizedBox(height: 18),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     const Expanded(
-                //       child: Text(
-                //         'Frais',
-                //         style: TextStyle(fontSize: 11.sp color: Colors.grey),
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Text(
-                //         '0 FCFA',
-                //         style: TextStyle(
-                //           fontSize: 11.sp
-                //           color: context.colorScheme.onSurface,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                const SizedBox(height: 18),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Frais',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        controller.fees.value.isEmpty
+                            ? '0 FCFA'
+                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.fees.value.replaceAll(',', '')))} FCFA',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -353,16 +338,15 @@ class SendMenuDialog {
                     Expanded(
                       child: Text(
                         'Montant',
-                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        AppGlobal.amount,
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: context.colorScheme.onSurface,
-                        ),
+                        controller.amountController.text.isEmpty
+                            ? '0 FCFA'
+                            : StringHelper.formatNumberWithCommas(int.parse(controller.amountController.text)),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -371,11 +355,8 @@ class SendMenuDialog {
                 const LineSeparator(color: Colors.grey),
                 const SizedBox(height: 24),
                 Text(
-                  'Infos operation'.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 11.sp,
-                    color: context.colorScheme.onSurface,
-                  ),
+                  'Operation information'.toUpperCase(),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                 ),
                 const SizedBox(height: 18),
                 Row(
@@ -384,16 +365,13 @@ class SendMenuDialog {
                     Expanded(
                       child: Text(
                         'Date',
-                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        AppGlobal.date,
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: context.colorScheme.onSurface,
-                        ),
+                        DateFormat('dd/MM/yyyy').format(DateTime.parse(AppGlobal.dateNow)),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -404,37 +382,32 @@ class SendMenuDialog {
                   children: [
                     Expanded(
                       child: Text(
-                        'Heure',
-                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+                        'Hour',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        AppGlobal.time,
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: context.colorScheme.onSurface,
-                        ),
+                        DateFormat('hh:mm:ss').format(DateTime.parse(AppGlobal.timeNow)),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
                 ),
+                const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: Text(
                         'Txn ID',
-                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        AppGlobal.txn,
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: context.colorScheme.onSurface,
-                        ),
+                        txnId.isEmpty ? '' : txnId,
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -446,21 +419,17 @@ class SendMenuDialog {
                     Expanded(
                       child: Text(
                         'Nouveau solde',
-                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        AppGlobal.remainingBal,
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: context.colorScheme.onSurface,
-                        ),
+                        nouveauSolde.isEmpty ? '' : '$nouveauSolde FCFA',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 32),
               ],
             ),
           ),
@@ -772,6 +741,53 @@ class SendMenuDialog {
       },
     );
   }
+
+  static List<String> separateDateTime(String dateTimeString) {
+    List<String> parts = dateTimeString.split(' ');
+
+    if (parts.length == 2) {
+      String formattedDate = parts[0];
+      String formattedTime = parts[1];
+
+      return [formattedDate, formattedTime];
+    } else {
+      return [];
+    }
+  }
+
+  static Map<String, String> extractValues(String message) {
+    String amountPattern = r'Montant: (\d+ FCFA)';
+    String beneficiairePattern = r'Beneficiaire: ([^\r\n]+)';
+    String datePattern = r'Date: (\d+-[A-Za-z]+-\d+ \d+:\d+:\d+)';
+    String nouveauSoldePattern = r'Nouveau solde Flooz: ([^ \r\n]+)';
+    String txnIdPattern = r'Txn ID: (\d+)';
+
+    RegExp amountRegExp = RegExp(amountPattern);
+    RegExp beneficiaireRegExp = RegExp(beneficiairePattern);
+    RegExp dateRegExp = RegExp(datePattern);
+    RegExp nouveauSoldeRegExp = RegExp(nouveauSoldePattern);
+    RegExp txnIdRegExp = RegExp(txnIdPattern);
+
+    Match? amountMatch = amountRegExp.firstMatch(message);
+    Match? beneficiaireMatch = beneficiaireRegExp.firstMatch(message);
+    Match? dateMatch = dateRegExp.firstMatch(message);
+    Match? nouveauSoldeMatch = nouveauSoldeRegExp.firstMatch(message);
+    Match? txnIdMatch = txnIdRegExp.firstMatch(message);
+
+    String amount = amountMatch != null ? amountMatch.group(1)! : '';
+    String beneficiaire = beneficiaireMatch != null ? beneficiaireMatch.group(1)! : '';
+    String date = dateMatch != null ? dateMatch.group(1)! : '';
+    String nouveauSolde = nouveauSoldeMatch != null ? nouveauSoldeMatch.group(1)! : '';
+    String txnId = txnIdMatch != null ? txnIdMatch.group(1)! : '';
+
+    return {
+      'amount': amount,
+      'beneficiaire': beneficiaire,
+      'date': date,
+      'nouveauSolde': nouveauSolde,
+      'txnId': txnId,
+    };
+  }
 }
 
 class _ModalBottomSheet extends StatelessWidget {
@@ -789,11 +805,11 @@ class _ModalBottomSheet extends StatelessWidget {
         child: Container(
             height: isKeyboardVisible
                 ? AppGlobal.siOTPPage == true
-                    ? MediaQuery.of(context).size.height * .5
+                    ? MediaQuery.of(context).size.height * .4
                     : MediaQuery.of(context).size.height * .3
                 : AppGlobal.siOTPPage == true
-                    ? MediaQuery.of(context).size.height * .63
-                    : MediaQuery.of(context).size.height * .4,
+                    ? MediaQuery.of(context).size.height * .47
+                    : MediaQuery.of(context).size.height * .35,
             decoration: BoxDecoration(
               color: context.colorScheme.background,
             ),

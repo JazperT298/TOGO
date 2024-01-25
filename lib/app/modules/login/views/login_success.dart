@@ -3,10 +3,12 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginSuccess extends StatefulWidget {
@@ -43,19 +45,17 @@ class _LoginSuccessState extends State<LoginSuccess> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
+                const Spacer(),
                 showProgressIndicator
                     ? const CircularProgressIndicator(
                         strokeWidth: 6,
                         color: Colors.green,
                       )
-                    : FluIcon(
-                        FluIcons.checkCircleUnicon,
-                        color: Colors.green,
-                        size: 60,
+                    : Image.asset(
+                        AppImages.transacSuccess,
+                        height: MediaQuery.of(context).size.height * .3,
+                        width: MediaQuery.of(context).size.height * .3,
                       ),
-                const SizedBox(
-                  height: 32,
-                ),
                 Padding(
                   padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
                   child: Align(
@@ -63,13 +63,22 @@ class _LoginSuccessState extends State<LoginSuccess> {
                     child: Text(
                       LocaleKeys.strLoginSuccessMessage.tr,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 20.sp),
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 32,
+                Padding(
+                  padding: UISettings.pagePadding.copyWith(top: 12, left: 24, right: 24),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'The operation was carried out successfully. You can view the details in the transaction history.', //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                    ),
+                  ),
                 ),
+                const Spacer(),
                 FluButton.text(
                   LocaleKeys.strClose.tr,
                   iconStrokeWidth: 1.8,
@@ -93,6 +102,9 @@ class _LoginSuccessState extends State<LoginSuccess> {
                     )
                   ],
                   textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp),
+                ),
+                const SizedBox(
+                  height: 24,
                 ),
               ],
             ),

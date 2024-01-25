@@ -26,6 +26,10 @@ class StorageServices extends GetxService {
     storage.write('otp', otp);
   }
 
+  savePofileImage({required String image}) {
+    storage.write('image', image);
+  }
+
   saveLanguage({required String language}) {
     storage.write('language', language);
   }

@@ -10,7 +10,6 @@ import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../recharge/views/modals/recharge_credit_menu_bottom_sheet.dart';
-import '../../recharge/views/modals/recharge_internet_menu_bottom_sheet.dart';
 
 class ShopView extends GetView<ShopController> {
   const ShopView({super.key});

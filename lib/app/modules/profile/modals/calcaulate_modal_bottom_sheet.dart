@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';

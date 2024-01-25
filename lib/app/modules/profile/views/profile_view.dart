@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:developer';
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,9 +33,12 @@ class _ProfileViewState extends State<ProfileView> {
   final storage = GetStorage();
   final bool lastIsLogout = false;
   List<FluOption> profileScreenOptions = [];
+  String imageProfile = '';
   @override
   void initState() {
     getDataFromProfileOptions();
+    imageProfile = Get.find<StorageServices>().storage.read('image');
+    log('imageProfile $imageProfile');
     super.initState();
   }
 
@@ -99,6 +104,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       tag: 'user_avatar',
                                       child: GestureDetector(
                                         onTap: () async {
+                                          Get.back();
                                           await storage.remove('msisdn').then((value) {
                                             storage.remove('isPrivacyCheck');
                                             storage.remove('isLoginSuccessClick');
@@ -108,11 +114,18 @@ class _ProfileViewState extends State<ProfileView> {
                                           //   ProgressAlertDialog.showALoadingDialog(context, 'Logging out...', 3, AppRoutes.LOGIN);
                                           // });
                                         },
-                                        child: const FluAvatar(
-                                          size: 65,
-                                          cornerRadius: 999,
-                                          icon: FluIcons.user,
-                                        ),
+                                        child: Container(
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black12,
+                                                  blurRadius: 1,
+                                                ),
+                                              ],
+                                            ),
+                                            padding: const EdgeInsets.all(8),
+                                            child: Image.asset(imageProfile, height: 52, width: 52)),
                                       ),
                                     ),
                                   ],

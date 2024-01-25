@@ -9,11 +9,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:ibank/app/components/line_separator.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
+import 'package:ibank/app/data/models/transac_reponse.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
@@ -76,6 +78,8 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
   late final FlCountryCodePicker countryPicker;
 
   String internationalType = '';
+
+  static TransacResponse? transacResponse;
 
   @override
   void initState() {
@@ -161,28 +165,17 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         Text(
           action.name.toUpperCase(),
           // widget.sendType,
-          style: TextStyle(
-            color: context.colorScheme.secondary,
-            fontWeight: FontWeight.w600,
-            fontSize: 11.sp,
-            letterSpacing: 1.0,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
         ),
         Text(
           LocaleKeys.strTransferHeader.tr,
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
-            color: context.colorScheme.onSurface,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             LocaleKeys.strTransferHeaderDesc.tr,
-            style: TextStyle(
-              fontSize: 10.sp,
-            ),
+            style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
           ),
         ),
         FluLine(
@@ -196,32 +189,19 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          LocaleKeys.strWalletSend.tr.toUpperCase(),
-          style: TextStyle(
-            color: context.colorScheme.secondary,
-            fontWeight: FontWeight.w600,
-            fontSize: 11.sp,
-            letterSpacing: 1.0,
-          ),
+          '${LocaleKeys.strWalletSend.tr.toUpperCase()} INTERNATIONAL',
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
         ),
         Text.rich(
           TextSpan(
             children: [
               TextSpan(
                 text: LocaleKeys.strTransferInfo.tr, // 'Vous allez envoyer de l’argent à ',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: context.colorScheme.onSurface,
-                ),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
               ),
               TextSpan(
                 text: '\n$_selectedCountryCode ${numberEditingCobntroller.text.toString()}',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: context.colorScheme.primary,
-                ),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Color(0xFF124DE5), fontSize: 22),
               ),
             ],
           ),
@@ -238,31 +218,35 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
       children: [
         Text(
           LocaleKeys.strTransferSummary.tr.toUpperCase(),
-          style: TextStyle(
-            color: context.colorScheme.secondary,
-            fontWeight: FontWeight.w600,
-            fontSize: M3FontSizes.bodyMedium,
-            letterSpacing: 1.0,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
         ),
         Text(
           widget.sendType,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: context.colorScheme.onSurface,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 22),
         ),
         const SizedBox(height: 24),
         Text(
           LocaleKeys.strTransferBeneficiary.tr.toUpperCase(),
-          style: TextStyle(
-            fontSize: 11.sp,
-            color: context.colorScheme.onSurface,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
         ),
         const SizedBox(height: 18),
-        const SizedBox.shrink(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                'Pays',
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                'N/A',
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 6),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -270,27 +254,23 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
             Expanded(
               child: Text(
                 LocaleKeys.strTransferNumber.tr, //       'Numéro',
-                style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
               ),
             ),
             Expanded(
               child: Text(
                 numberEditingCobntroller.text.toString(),
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: context.colorScheme.onSurface,
-                ),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
               ),
             ),
           ],
         ),
         const SizedBox(height: 24),
+        const LineSeparator(color: Colors.grey),
+        const SizedBox(height: 24),
         Text(
           LocaleKeys.strTransferDetails.tr.toUpperCase(),
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: context.colorScheme.onSurface,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
         ),
         const SizedBox(height: 18),
         Row(
@@ -298,23 +278,38 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
           children: [
             Expanded(
               child: Text(
+                'Frais',
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                '0 FCFA',
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
                 LocaleKeys.strTransferAmount.tr,
-                style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
               ),
             ),
             Expanded(
               child: Text(
                 '${amountEditingController.text.toString()} FCFA',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: context.colorScheme.onSurface,
-                ),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
               ),
             ),
           ],
         ),
         const SizedBox(height: 24),
-        const LineSeparator(color: Colors.grey),
+        // const LineSeparator(color: Colors.grey),
         const SizedBox(height: 32),
       ],
     );
@@ -616,7 +611,9 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
               onFieldSubmitted: (p0) {
                 if (amountEditingController.text.isNotEmpty) {
                   AppGlobal.siOTPPage = true;
-                  toNextStep();
+                  var asd = '$_selectedCountryCode ${numberEditingCobntroller.text.replaceAll(" ", "")}';
+                  getTransactionFee(asd, amountEditingController.text, messageType);
+                  // toNextStep();
                   isTextFieldEmpty = false;
                 } else {
                   setState(() {
@@ -648,7 +645,9 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                   if (amountEditingController.text.isNotEmpty) {
                     // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
                     AppGlobal.siOTPPage = true;
-                    toNextStep();
+                    // toNextStep();
+                    var asd = '$_selectedCountryCode ${numberEditingCobntroller.text.replaceAll(" ", "")}';
+                    getTransactionFee(asd, amountEditingController.text, messageType);
                     isTextFieldEmpty = false;
                   } else {
                     setState(() {
@@ -700,8 +699,8 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
                 fillColor: context.colorScheme.primaryContainer,
-                hintStyle: TextStyle(fontSize: 11.sp),
-                textStyle: TextStyle(fontSize: 11.sp),
+                hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Color(0xFF27303F), fontSize: 14),
+                textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                 onChanged: (p0) {
                   setState(() {
                     isInvalidCode = false;
@@ -737,6 +736,8 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
                     //   });
                   } else {
                     setState(() {
+                      AppGlobal.dateNow = DateTime.now().toString();
+                      AppGlobal.timeNow = DateTime.now().toString();
                       verifyAndroid(
                           selectedCountryCode: _selectedCountryCode,
                           destinationMSISDN: numberEditingCobntroller.text,
@@ -947,6 +948,45 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
     );
   }
 
+  static void getNameNumber() {}
+
+  static void getTransactionFee(String msisdn, String amounts, String mess) async {
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <app:getTransactionFee soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <msisdn xsi:type="xsd:string">${AppGlobal.MSISDN}</msisdn>
+         <destmsisdn xsi:type="xsd:string">$msisdn</destmsisdn>
+         <keyword xsi:type="xsd:string">$mess</keyword>
+         <value xsi:type="xsd:string">$amounts</value>
+      </app:getTransactionFee>
+   </soapenv:Body>
+</soapenv:Envelope>''';
+
+      http.StreamedResponse response = await request.send();
+      request.headers.addAll(headers);
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        log('getTransactionFee jsonString 1 $result');
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('getTransactionFeeReturn').single;
+        var jsonString = soapElement.innerText;
+        log('getTransactionFee jsonString 2 $jsonString');
+        var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
+        toNextStep();
+      }
+    } catch (e) {
+      log('getTransactionFee asd $e');
+      Get.back();
+      showMessageDialog(message: e.toString());
+    }
+  }
+
 //${AppGlobal.MSISDN}
   void onVerifySmidnSubmit(String destinationMsisdn, String selectedCountryCode) async {
     try {
@@ -1129,11 +1169,17 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
 
       if (response.statusCode == 200) {
         var result = await response.stream.bytesToString();
+        log('result 2 $result');
+
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
         log(jsonString.toString());
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        transacResponse = TransacResponse.fromJson(jsonData);
+
         Get.back();
         Get.back();
         numberEditingCobntroller.clear();
@@ -1141,15 +1187,21 @@ class _EnvoiInternationalBottomSheetState extends State<EnvoiInternationalBottom
         codeEditingController.clear();
         // SqlHelper.setTransacHistory("-1", jsonString);
         Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: LocaleKeys.strInternationalTransfer);
-        showMessageDialog(message: jsonString);
+        // showMessageDialog(message: jsonString);
+        Get.toNamed(AppRoutes.TRANSACCOMPLETE, arguments: {'msisdn': finalmsisdn, 'amounts': amount, 'trimString': jsonString});
       } else {
         numberEditingCobntroller.clear();
+        Get.toNamed(AppRoutes.TRANSACFAILED);
         log('response.reasonPhrase ${response.reasonPhrase}');
       }
     } on Exception catch (_) {
       log("ERROR $_");
+      Get.back();
+      showMessageDialog(message: 'An Error occured! Please try again later');
     } catch (e) {
       log('asd $e');
+      Get.back();
+      showMessageDialog(message: 'An Error occured! Please try again later');
     }
   }
 

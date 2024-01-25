@@ -46,4 +46,8 @@ class AppGlobal {
   static String numbers = "";
 
   static String internationalType = "";
+
+  static String dateNow = '';
+  static String timeNow = '';
+  static String userAvatar = '';
 }

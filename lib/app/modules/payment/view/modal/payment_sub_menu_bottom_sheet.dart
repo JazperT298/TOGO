@@ -1,15 +1,15 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
-import 'package:ibank/generated/locales.g.dart';
+import 'package:ibank/app/modules/payment/view/modal/payment_inputs_bottom_sheet.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
 class PaymentSubMenuBottomSheet {
   static void showBottomSheetPaymentSubMenu(BuildContext context) {
-    var controller = Get.find<PaymentController>();
+    // var controller = Get.find<PaymentController>();
+    var controller = Get.put(PaymentController());
     Get.bottomSheet(Container(
       height: 75.h,
       width: 100.w,
@@ -24,7 +24,7 @@ class PaymentSubMenuBottomSheet {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Payment'.toUpperCase(),
+              'Payment '.toUpperCase(),
               style: TextStyle(
                 color: const Color(0xFFfb6708),
                 fontWeight: FontWeight.w600,
@@ -73,12 +73,28 @@ class PaymentSubMenuBottomSheet {
             ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: controller.walletChild.children.length,
+                itemCount: controller.walletChild.length,
                 itemBuilder: (context, index) {
-                  final option = controller.walletChild.children[index];
+                  final option = controller.walletChild[index];
 
                   return FluButton(
                     // onPressed: toNextStep,
+                    onPressed: () {
+                      if (index == 0) {
+                        Get.back();
+                        controller.selectedOption.value = 'CEET';
+                        controller.ceetPackageRadioGroupValue.value = '';
+                        controller.numberTextField.clear();
+                        controller.verifyGetCeetLink();
+                      } else if (index == 3) {
+                        Get.back();
+                        controller.selectedOption.value = 'SOLERGIE';
+                        controller.numberTextField.clear();
+                        PaymentInputsBottomSheet.showBottomSheetSolergieInputNumber();
+                      } else {
+                        Get.snackbar("Message", "Comming Soon", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                      }
+                    },
                     backgroundColor: Colors.transparent,
                     splashFactory: NoSplash.splashFactory,
                     margin: EdgeInsets.only(top: index == 0 ? 0 : 10),
@@ -119,7 +135,7 @@ class PaymentSubMenuBottomSheet {
                                   option.description,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: 10.sp),
+                                  style: TextStyle(fontSize: 10.sp, color: Colors.black54),
                                 ),
                               ],
                             ),

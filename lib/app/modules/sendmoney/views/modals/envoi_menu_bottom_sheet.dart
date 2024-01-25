@@ -2,6 +2,7 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_international_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_national_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
@@ -21,20 +22,11 @@ class EnvoiMenuBottomSheet extends StatelessWidget {
       children: [
         Text(
           LocaleKeys.strWalletSend.tr.toUpperCase(),
-          style: TextStyle(
-            color: context.colorScheme.secondary,
-            fontWeight: FontWeight.w600,
-            fontSize: 11.sp,
-            letterSpacing: 1.0,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
         ),
         Text(
           LocaleKeys.strMoneyTransferTitle.tr,
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
-            color: context.colorScheme.onSurface,
-          ),
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
         ),
         // Padding(
         //   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -78,6 +70,8 @@ class EnvoiMenuBottomSheet extends StatelessWidget {
               onTap: () {
                 Get.back();
                 AppGlobal.siOTPPage = false;
+                AppGlobal.dateNow = '';
+                AppGlobal.timeNow = '';
                 showModalBottomSheet(
                     isScrollControlled: true,
                     context: context,
@@ -105,7 +99,7 @@ class EnvoiMenuBottomSheet extends StatelessWidget {
                       const SizedBox(height: 12),
                       Text(
                         LocaleKeys.strNationalTransfer.tr,
-                        style: TextStyle(fontSize: 16.sp, color: Colors.black, fontWeight: FontWeight.bold),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
                       ),
                     ],
                   )),
@@ -114,6 +108,8 @@ class EnvoiMenuBottomSheet extends StatelessWidget {
               onTap: () {
                 Get.back();
                 AppGlobal.siOTPPage = false;
+                AppGlobal.dateNow = '';
+                AppGlobal.timeNow = '';
                 showModalBottomSheet(
                     isScrollControlled: true,
                     context: context,
@@ -141,37 +137,37 @@ class EnvoiMenuBottomSheet extends StatelessWidget {
                       const SizedBox(height: 12),
                       Text(
                         LocaleKeys.strInternationalTransfer.tr,
-                        style: TextStyle(fontSize: 16.sp, color: Colors.black, fontWeight: FontWeight.w600),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
                       ),
                     ],
                   )),
             ).paddingOnly(bottom: 12),
-            GestureDetector(
-              onTap: () {
-                Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                    backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
-              },
-              child: Container(
-                  height: 9.h,
-                  width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                  decoration: const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          decoration: const BoxDecoration(color: Color(0xFFDBE4FB), borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                          child: Text(LocaleKeys.strWalletSend.tr, style: const TextStyle(color: Colors.black))),
-                      const SizedBox(height: 12),
-                      Text(
-                        LocaleKeys.strReversal.tr,
-                        style: TextStyle(fontSize: 16.sp, color: Colors.black, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  )),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+            //         backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+            //   },
+            //   child: Container(
+            //       height: 9.h,
+            //       width: MediaQuery.of(context).size.width,
+            //       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+            //       decoration: const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Container(
+            //               decoration: const BoxDecoration(color: Color(0xFFDBE4FB), borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            //               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+            //               child: Text(LocaleKeys.strWalletSend.tr, style: const TextStyle(color: Colors.black))),
+            //           const SizedBox(height: 12),
+            //           Text(
+            //             LocaleKeys.strReversal.tr,
+            //             style: TextStyle(fontSize: 16.sp, color: Colors.black, fontWeight: FontWeight.bold),
+            //           ),
+            //         ],
+            //       )),
+            // ),
             const SizedBox(height: 35),
             // Visibility(
             //   visible: isKeyboardVisible ? false : true,
@@ -229,7 +225,7 @@ class _ModalBottomSheet extends StatelessWidget {
                     ? MediaQuery.of(context).size.height * .5
                     : MediaQuery.of(context).size.height * .3
                 : AppGlobal.siOTPPage == true
-                    ? MediaQuery.of(context).size.height * .63
+                    ? MediaQuery.of(context).size.height * .55
                     : MediaQuery.of(context).size.height * .4,
             decoration: BoxDecoration(
               color: context.colorScheme.background,
