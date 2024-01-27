@@ -1,11 +1,13 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_import, use_build_context_synchronously
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/line.dart';
 import 'package:ibank/app/components/map.dart';
 import 'package:ibank/app/components/options.dart';
@@ -13,7 +15,7 @@ import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/bottomnav/controller/bottomnav_controller.dart';
 import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
-import 'package:ibank/app/modules/profile/modals/calcaulate_modal_bottom_sheet.dart';
+import 'package:ibank/app/modules/profile/modals/profile_modal_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
@@ -33,14 +35,13 @@ class _ProfileViewState extends State<ProfileView> {
   final storage = GetStorage();
   final bool lastIsLogout = false;
   List<FluOption> profileScreenOptions = [];
-  String imageProfile = '';
   @override
   void initState() {
     getDataFromProfileOptions();
-    imageProfile = Get.find<StorageServices>().storage.read('image');
-    log('imageProfile $imageProfile');
     super.initState();
   }
+
+  void getImageFromStorage() {}
 
   void getDataFromProfileOptions() {
     profileScreenOptions = [
@@ -54,6 +55,7 @@ class _ProfileViewState extends State<ProfileView> {
       FluOption(icon: FluIcons.supportLikeQuestion24Support, title: LocaleKeys.strSupportHelp.tr, description: LocaleKeys.strSupportHelpDesc.tr),
       FluOption(icon: FluIcons.textalignCenter, title: LocaleKeys.strCredit.tr, description: LocaleKeys.strCreditDesc.tr),
       FluOption(icon: FluIcons.calculator, title: 'Calculate keycost', description: 'Need help? Contact us...'),
+      FluOption(icon: FluIcons.fingerScan, title: 'Secure Account', description: 'Enable facial recognition authentication'),
       FluOption(icon: FluIcons.logout, title: LocaleKeys.strLogout.tr, description: LocaleKeys.strLogoutDesc.tr),
     ];
   }
@@ -104,12 +106,12 @@ class _ProfileViewState extends State<ProfileView> {
                                       tag: 'user_avatar',
                                       child: GestureDetector(
                                         onTap: () async {
-                                          Get.back();
-                                          await storage.remove('msisdn').then((value) {
-                                            storage.remove('isPrivacyCheck');
-                                            storage.remove('isLoginSuccessClick');
-                                            ProgressAlertDialog.showALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
-                                          });
+                                          log('(AppGlobal.PROFILEIMAGE ${AppGlobal.PROFILEIMAGE}');
+                                          log('(AppGlobal.PROFILEAVATAR ${AppGlobal.PROFILEAVATAR}');
+                                          // Get.back();
+                                          // await Get.find<StorageServices>().clearUserLocalData().then((value) {
+                                          //   ProgressAlertDialog.showLogoutALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
+                                          // });
                                           // await SharedPrefService.logoutUserData(false, '').then((value) {
                                           //   ProgressAlertDialog.showALoadingDialog(context, 'Logging out...', 3, AppRoutes.LOGIN);
                                           // });
@@ -125,7 +127,18 @@ class _ProfileViewState extends State<ProfileView> {
                                               ],
                                             ),
                                             padding: const EdgeInsets.all(8),
-                                            child: Image.asset(imageProfile, height: 52, width: 52)),
+                                            child: AppGlobal.PROFILEAVATAR.isEmpty && AppGlobal.PROFILEIMAGE.isNotEmpty
+                                                ? CircleAvatar(
+                                                    backgroundColor: Colors.black,
+                                                    radius: 30.0,
+                                                    child: ClipOval(
+                                                      child: Image.file(
+                                                        File(AppGlobal.PROFILEIMAGE),
+                                                      ),
+                                                    ))
+                                                : AppGlobal.PROFILEIMAGE.isEmpty && AppGlobal.PROFILEAVATAR.isNotEmpty
+                                                    ? Image.asset(AppGlobal.PROFILEAVATAR, height: 52, width: 52)
+                                                    : Image.asset(AppImages.userIcon, height: 52, width: 52)),
                                       ),
                                     ),
                                   ],
@@ -271,8 +284,10 @@ class _ProfileViewState extends State<ProfileView> {
                                           } else if (index == 2) {
                                             showSelectLanguageDialog(context);
                                           } else if (index == 9) {
-                                            CalculateBottomSheet.showBottomSheetInputNumber();
+                                            ProfileBottomSheet.showBottomSheetInputNumber();
                                           } else if (index == 10) {
+                                            ProfileBottomSheet.showBottomSheetBiometrics();
+                                          } else if (index == 11) {
                                             showLogoutDialog(context);
                                           } else {
                                             Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
@@ -458,31 +473,41 @@ class _ProfileViewState extends State<ProfileView> {
         return AlertDialog(
           insetPadding: const EdgeInsets.all(12), // Outside Padding
           contentPadding: const EdgeInsets.all(12), // Content Padding
-          title: Text(LocaleKeys.strLogout.tr),
+          title: Text(
+            LocaleKeys.strLogout.tr,
+            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+          ),
           content: SizedBox(
             height: 20,
             width: MediaQuery.of(context).size.width - 60,
             child: Padding(
               padding: const EdgeInsets.only(left: 12.0),
-              child: Text(LocaleKeys.strLogoutWarning.tr),
+              child: Text(
+                LocaleKeys.strLogoutWarning.tr,
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+              ),
             ),
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () async {
                 await storage.remove('msisdn').then((value) {
-                  storage.remove('isPrivacyCheck');
-                  storage.remove('isLoginSuccessClick');
-                  ProgressAlertDialog.showALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
+                  Get.back();
+                  Get.find<StorageServices>().clearUserLocalData();
+                  ProgressAlertDialog.showLogoutALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
                 });
+                // Get.find<StorageServices>().clearUserLocalData();
               },
-              child: Text(LocaleKeys.strYes.tr),
+              child: Text(LocaleKeys.strYes.tr, style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14)),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text(LocaleKeys.strNo.tr),
+              child: Text(
+                LocaleKeys.strNo.tr,
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+              ),
             ),
           ],
         );

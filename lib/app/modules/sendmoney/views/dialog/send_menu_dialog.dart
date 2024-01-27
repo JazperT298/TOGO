@@ -238,11 +238,10 @@ class SendMenuDialog {
     String amount = extractedValues['amount'] ?? '';
     String beneficiaire = extractedValues['beneficiaire'] ?? '';
     String date = extractedValues['date'] ?? '';
+    String codeRetait = extractedValues['codeRetait'] ?? '';
     String nouveauSolde = extractedValues['nouveauSolde'] ?? '';
     String txnId = extractedValues['txnId'] ?? '';
-    List<String> separatedDateTime = separateDateTime(date);
-    String dates = separatedDateTime[0];
-    String times = separatedDateTime[1];
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -259,9 +258,24 @@ class SendMenuDialog {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 8),
-                Text(
-                  "Operation Recap",
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Operation Recap",
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: FluIcon(
+                        FluIcons.closeCircle,
+                        size: 30,
+                        color: Colors.red,
+                      ),
+                    )
+                  ],
                 ),
                 const SizedBox(height: 24),
                 Text(
@@ -424,7 +438,7 @@ class SendMenuDialog {
                     ),
                     Expanded(
                       child: Text(
-                        nouveauSolde.isEmpty ? '' : '$nouveauSolde FCFA',
+                        nouveauSolde.isEmpty ? '' : '${StringHelper.formatNumberWithCommas(int.parse(nouveauSolde.replaceAll(',', '')))} FCFA',
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
@@ -759,30 +773,35 @@ class SendMenuDialog {
     String amountPattern = r'Montant: (\d+ FCFA)';
     String beneficiairePattern = r'Beneficiaire: ([^\r\n]+)';
     String datePattern = r'Date: (\d+-[A-Za-z]+-\d+ \d+:\d+:\d+)';
+    String codeRetraitPattern = 'rCode de retrait ([^ \r\n]+)';
     String nouveauSoldePattern = r'Nouveau solde Flooz: ([^ \r\n]+)';
     String txnIdPattern = r'Txn ID: (\d+)';
 
     RegExp amountRegExp = RegExp(amountPattern);
     RegExp beneficiaireRegExp = RegExp(beneficiairePattern);
     RegExp dateRegExp = RegExp(datePattern);
+    RegExp codeRetraitRegExp = RegExp(codeRetraitPattern);
     RegExp nouveauSoldeRegExp = RegExp(nouveauSoldePattern);
     RegExp txnIdRegExp = RegExp(txnIdPattern);
 
     Match? amountMatch = amountRegExp.firstMatch(message);
     Match? beneficiaireMatch = beneficiaireRegExp.firstMatch(message);
     Match? dateMatch = dateRegExp.firstMatch(message);
+    Match? codeRetraitMatch = codeRetraitRegExp.firstMatch(message);
     Match? nouveauSoldeMatch = nouveauSoldeRegExp.firstMatch(message);
     Match? txnIdMatch = txnIdRegExp.firstMatch(message);
 
     String amount = amountMatch != null ? amountMatch.group(1)! : '';
     String beneficiaire = beneficiaireMatch != null ? beneficiaireMatch.group(1)! : '';
     String date = dateMatch != null ? dateMatch.group(1)! : '';
+    String codeRetait = codeRetraitMatch != null ? codeRetraitMatch.group(1)! : '';
     String nouveauSolde = nouveauSoldeMatch != null ? nouveauSoldeMatch.group(1)! : '';
     String txnId = txnIdMatch != null ? txnIdMatch.group(1)! : '';
 
     return {
       'amount': amount,
       'beneficiaire': beneficiaire,
+      'codeRetait': codeRetait,
       'date': date,
       'nouveauSolde': nouveauSolde,
       'txnId': txnId,

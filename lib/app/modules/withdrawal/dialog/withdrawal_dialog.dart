@@ -1,7 +1,8 @@
-// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, unused_local_variable, avoid_print
+// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, unused_local_variable, avoid_print, unused_import
 
 import 'dart:developer';
 
+import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,9 +43,24 @@ class WithdrawalDialog {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 8),
-                Text(
-                  "Operation Recap",
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Operation Recap",
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: FluIcon(
+                        FluIcons.closeCircle,
+                        size: 30,
+                        color: Colors.red,
+                      ),
+                    )
+                  ],
                 ),
                 const SizedBox(height: 24),
                 Text(

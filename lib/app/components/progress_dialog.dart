@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:sizer/sizer.dart';
 
@@ -22,7 +23,28 @@ class ProgressAlertDialog {
             const SizedBox(width: 16.0),
             Text(
               progressMessage,
-              style: TextStyle(fontSize: 11.sp),
+              style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static void progressAlertDialog2(BuildContext context, String progressMessage) {
+    showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => AlertDialog(
+        content: Row(
+          // mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(width: 16.0),
+            Text(
+              progressMessage,
+              style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
             ),
           ],
         ),
@@ -60,6 +82,35 @@ class ProgressAlertDialog {
     });
   }
 
+  static void showLogoutALoadingDialog(BuildContext context, String progressMessage, int seconds, String nextPage) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Row(
+            // mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(width: 16.0),
+              Text(
+                progressMessage,
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    // Delay for 3 seconds
+    await Future.delayed(Duration(seconds: seconds), () {
+      Get.back(); // Close the alert dialog
+      // Navigate to the next page
+      Get.offAllNamed(nextPage);
+    });
+  }
+
   static void showALoadingDialog(BuildContext context, String progressMessage, int seconds, String nextPage) async {
     showDialog(
       context: context,
@@ -73,7 +124,7 @@ class ProgressAlertDialog {
               const SizedBox(width: 16.0),
               Text(
                 progressMessage,
-                style: TextStyle(fontSize: 11.sp),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
               ),
             ],
           ),
@@ -103,7 +154,7 @@ class ProgressAlertDialog {
               const SizedBox(width: 16.0),
               Text(
                 progressMessage,
-                style: TextStyle(fontSize: 11.sp),
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
               ),
             ],
           ),

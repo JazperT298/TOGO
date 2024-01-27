@@ -1,3 +1,10 @@
+// ignore_for_file: unused_element
+
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:app_settings/app_settings.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +13,9 @@ import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginProfileView extends StatefulWidget {
@@ -16,8 +26,13 @@ class LoginProfileView extends StatefulWidget {
 }
 
 class _LoginProfileViewState extends State<LoginProfileView> {
+  String? _selectedImage;
+  bool isGalleryImage = false;
+  File? imageFile;
+
+  String? imageName;
+
   int selectedImageIndex = -1; // Initialize with an index that represents no selection
-  static final galleryEditingCobntroller = TextEditingController();
   String selectedImage = '';
   List<String> imageList = [
     AppImages.profileIcon1,
@@ -42,8 +57,144 @@ class _LoginProfileViewState extends State<LoginProfileView> {
     AppImages.profileIcon20,
   ];
 
+  ///[_cropImage] call cropping after picking image
+  Future<void> cropImage() async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: _selectedImage!,
+      aspectRatioPresets: Platform.isAndroid ? [CropAspectRatioPreset.square] : [CropAspectRatioPreset.square],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Crop Image',
+            toolbarColor: const Color(0xFF124DE5),
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            hideBottomControls: true,
+            lockAspectRatio: true),
+        IOSUiSettings(
+          title: 'Crop Image',
+          resetButtonHidden: true,
+          rotateButtonsHidden: true,
+          rotateClockwiseButtonHidden: true,
+          aspectRatioPickerButtonHidden: true,
+          rectX: 10000,
+          rectY: 10000,
+          rectHeight: 10000,
+          rectWidth: 10000,
+          minimumAspectRatio: 10000,
+        )
+      ],
+    );
+
+    if (croppedFile != null) {
+      if (mounted) {
+        setState(() {
+          isGalleryImage = true;
+          _selectedImage = croppedFile.path;
+          imageName = croppedFile.path.split('/').last;
+          imageFile = File(croppedFile.path);
+          log('imageFile $imageFile');
+        });
+      }
+    } else {
+      if (mounted) {
+        setState(() {
+          isGalleryImage = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    void chooseImagePickerModalBottomSheet() {
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bottomSheetContext) {
+          return SafeArea(
+            child: Wrap(
+              children: [
+                Container(
+                  color: const Color(0XFFBE002D),
+                  width: double.infinity,
+                  height: 50,
+                  child: Center(
+                    child: Text(
+                      "Please Select Option",
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.image, color: Color(0XFF777777)),
+                  title: Text(
+                    "Pick From Gallery",
+                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 18),
+                  ),
+                  onTap: () async {
+                    try {
+                      FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false, type: FileType.image);
+                      if (result!.isSinglePick) {
+                        Get.back();
+                        setState(() {
+                          _selectedImage = result.files[0].path;
+                        });
+                        cropImage();
+                      }
+                    } catch (ex) {
+                      if (Platform.isIOS) {
+                        if (await Permission.storage.isPermanentlyDenied) {
+                          AppSettings.openAppSettings();
+                        }
+                      } else {
+                        if (!await Permission.storage.shouldShowRequestRationale && await Permission.storage.status.isDenied) {
+                          AppSettings.openAppSettings();
+                        }
+                      }
+                    }
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.camera_alt,
+                    color: Color(0XFF777777),
+                  ),
+                  title: Text(
+                    "Capture Photo",
+                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0XFF777777), fontSize: 18),
+                  ),
+                  onTap: () async {
+                    try {
+                      ImagePicker imagePicker = ImagePicker();
+                      XFile? result = await imagePicker.pickImage(
+                        source: ImageSource.camera,
+                      );
+                      if (result != null) {
+                        Get.back();
+                        setState(() {
+                          _selectedImage = result.path;
+                        });
+                        cropImage();
+                      }
+                    } catch (ex) {
+                      if (Platform.isIOS) {
+                        if (await Permission.camera.status.isPermanentlyDenied) {
+                          AppSettings.openAppSettings();
+                        }
+                      } else {
+                        if (!await Permission.camera.shouldShowRequestRationale && await Permission.camera.status.isDenied) {
+                          AppSettings.openAppSettings();
+                        }
+                      }
+                    }
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    }
+
     return FluScreen(
       overlayStyle: context.systemUiOverlayStyle.copyWith(
         statusBarColor: Colors.transparent,
@@ -93,45 +244,93 @@ class _LoginProfileViewState extends State<LoginProfileView> {
                           ],
                         ),
                         const SizedBox(height: 8),
-                        FluTextField(
-                          hint: 'Choose from gallery', // "Numéro du destinataire",
-                          inputController: galleryEditingCobntroller,
-                          hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: const Color(0xFFF4F5FA), fontSize: 14),
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: const Color(0xFFF4F5FA), fontSize: 14),
-                          height: 50,
-                          cornerRadius: 15,
-                          suffixIcon: FluIcons.galleryAdd,
-                          iconColor: Colors.white,
-                          iconSize: 24,
-                          fillColor: const Color(0xFF27303F),
-                          keyboardType: TextInputType.none,
-                          cursorColor: Colors.transparent,
-                        ),
-                        // FluButton.text(
-                        //   LocaleKeys.strvalidate.tr,
-                        //   iconStrokeWidth: 1.8,
-                        //   onPressed: () {
-                        //     // Get.find<StorageServices>().isPrivacyCheck(isPrivacyCheck: true);
-                        //     // // Get.offAllNamed(AppRoutes.LOGINSUCCESS);
-                        //     // Get.offAllNamed(AppRoutes.LOGINSECURITYCODE);
-                        //   },
-                        //   height: 50,
-                        //   width: MediaQuery.of(context).size.width,
-                        //   cornerRadius: UISettings.minButtonCornerRadius,
-                        //   backgroundColor: const Color(0xFF27303F),
-                        //   iconSize: 24,
-                        //   foregroundColor: context.colorScheme.onPrimary,
-                        //   suffixIcon: FluIcons.galleryAdd,
-                        //   boxShadow: [
-                        //     BoxShadow(
-                        //       color: context.colorScheme.primary.withOpacity(.35),
-                        //       blurRadius: 25,
-                        //       spreadRadius: 3,
-                        //       offset: const Offset(0, 5),
-                        //     )
-                        //   ],
+                        // FluTextField(
+                        //   hint: 'Choose from gallery', // "Numéro du destinataire",
+                        //   inputController: galleryEditingCobntroller,
+                        //   hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: const Color(0xFFF4F5FA), fontSize: 14),
                         //   textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: const Color(0xFFF4F5FA), fontSize: 14),
+                        //   height: 50,
+                        //   cornerRadius: 15,
+                        //   suffixIcon: FluIcons.galleryAdd,
+                        //   iconColor: Colors.white,
+                        //   iconSize: 24,
+                        //   fillColor: const Color(0xFF27303F),
+                        //   keyboardType: TextInputType.none,
+                        //   cursorColor: Colors.transparent,
+                        //   onTap: () async {
+                        //     try {
+                        //       FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false, type: FileType.image);
+                        //       if (result!.isSinglePick) {
+                        //         Get.back();
+                        //         setState(() {
+                        //           _selectedImage = result.files[0].path;
+                        //         });
+                        //         cropImage();
+                        //       }
+                        //     } catch (ex) {
+                        //       if (Platform.isIOS) {
+                        //         if (await Permission.storage.isPermanentlyDenied) {
+                        //           AppSettings.openAppSettings();
+                        //         }
+                        //       } else {
+                        //         if (!await Permission.storage.shouldShowRequestRationale && await Permission.storage.status.isDenied) {
+                        //           AppSettings.openAppSettings();
+                        //         }
+                        //       }
+                        //     }
+
+                        //     // chooseImagePickerModalBottomSheet();
+                        //   },
                         // ),
+                        InkWell(
+                          onTap: () async {
+                            selectedImageIndex = -1;
+                            try {
+                              FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false, type: FileType.image);
+                              if (result!.isSinglePick) {
+                                Get.back();
+                                setState(() {
+                                  _selectedImage = result.files[0].path;
+                                });
+                                cropImage();
+                              }
+                            } catch (ex) {
+                              if (Platform.isIOS) {
+                                if (await Permission.storage.isPermanentlyDenied) {
+                                  AppSettings.openAppSettings();
+                                }
+                              } else {
+                                if (!await Permission.storage.shouldShowRequestRationale && await Permission.storage.status.isDenied) {
+                                  AppSettings.openAppSettings();
+                                }
+                              }
+                            }
+
+                            // chooseImagePickerModalBottomSheet();
+                          },
+                          child: Container(
+                            height: 50,
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: const Color(0xFF27303F),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  isGalleryImage == false ? 'Choose from gallery' : imageName!,
+                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: const Color(0xFFF4F5FA), fontSize: 14),
+                                ),
+                                const FluIcon(
+                                  FluIcons.galleryAdd,
+                                  color: Colors.white,
+                                  size: 24,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
 
                         const SizedBox(height: 20),
                         // Display image selection grid
@@ -152,6 +351,8 @@ class _LoginProfileViewState extends State<LoginProfileView> {
                                   } else {
                                     selectedImageIndex = index;
                                     selectedImage = imageList[index];
+                                    isGalleryImage = false;
+                                    _selectedImage = '';
                                   }
                                 });
                               },
@@ -209,18 +410,24 @@ class _LoginProfileViewState extends State<LoginProfileView> {
                           FluButton.text(
                             'Confirm',
                             iconStrokeWidth: 1.8,
-                            // onPressed: () {
-                            //   // Get.find<StorageServices>().isPrivacyCheck(isPrivacyCheck: true);
-                            //   // // Get.offAllNamed(AppRoutes.LOGINSUCCESS);
-                            //   AppGlobal.userAvatar = AppImages.userIcon;
-                            //   // Get.offAllNamed(AppRoutes.LOGINSECURITYCODE);
-                            // },
-                            onPressed: selectedImage.isEmpty
+
+                            onPressed: selectedImage.isEmpty && _selectedImage!.isEmpty
                                 ? null
                                 : () {
-                                    Get.find<StorageServices>().savePofileImage(image: selectedImage);
-                                    Get.offAllNamed(AppRoutes.LOGINSUCCESS);
+                                    if (selectedImage.isEmpty && _selectedImage!.isNotEmpty) {
+                                      log('_selectedImage $_selectedImage');
+                                      Get.find<StorageServices>().saveProfileImageFromGallery(imageFile: _selectedImage!);
+                                      Get.offAllNamed(AppRoutes.LOGINBIOMETRICS);
+                                    } else {
+                                      log('selectedImage $selectedImage');
+                                      Get.find<StorageServices>().saveProfileImageFromAvatar(image: selectedImage);
+                                      Get.offAllNamed(AppRoutes.LOGINBIOMETRICS);
+                                    }
                                   },
+                            // onPressed: () {
+                            //   log('selectedImage $selectedImage');
+                            //   log('_selectedImage $_selectedImage');
+                            // },
                             height: 5.8.h,
                             width: MediaQuery.of(context).size.width * .40,
                             cornerRadius: UISettings.minButtonCornerRadius,

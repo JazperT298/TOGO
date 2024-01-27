@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
+import 'dart:io';
+
 class AppGlobal {
   static bool IS_ACC_CHECKING_ENABLED = true;
   static bool IS_INACTIVITY_ENABLED = true;
@@ -24,6 +26,10 @@ class AppGlobal {
 
   static String MSISDN = "";
   static String TOKEN = "";
+  static String PROFILEAVATAR = "";
+  static String PROFILEIMAGE = "";
+  static bool BIOMETRICS = false;
+
   static bool isSendVerificationLoading = false;
   static bool isEditedTransferNational = true;
   static bool isSubscribedTransferNational = false;

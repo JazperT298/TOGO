@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import, deprecated_member_use
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
@@ -67,9 +68,8 @@ class AutoLogoutView extends StatefulWidget {
   State<AutoLogoutView> createState() => _AutoLogoutViewState();
 }
 
-class _AutoLogoutViewState extends State<AutoLogoutView>
-    with WidgetsBindingObserver {
-  // Timer? _timer;
+class _AutoLogoutViewState extends State<AutoLogoutView> with WidgetsBindingObserver {
+  Timer? _timer;
   @override
   void initState() {
     super.initState();
@@ -82,12 +82,27 @@ class _AutoLogoutViewState extends State<AutoLogoutView>
     super.dispose();
   }
 
-  late AppLifecycleState notification;
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    setState(() {
-      notification = state;
-    });
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      _timer = Timer(const Duration(minutes: 10), () {
+        log('The app is paused $_timer');
+        Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
+      });
+    } else if (state == AppLifecycleState.resumed) {
+      _timer = Timer(const Duration(minutes: 2), () {
+        log('The app is resumed ${_timer!.tick}');
+        Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
+      });
+    } else if (state == AppLifecycleState.detached) {
+      _timer = Timer(const Duration(seconds: 10), () {
+        log('The app is detached $_timer');
+        Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
+      });
+    } else if (_timer?.isActive ?? false) {
+      _timer!.cancel();
+    }
   }
 
   @override

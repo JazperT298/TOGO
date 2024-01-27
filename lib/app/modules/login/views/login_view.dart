@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
+import 'package:ibank/app/modules/login/modals/login_settings_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
@@ -91,7 +92,8 @@ class _LoginViewState extends State<LoginView> {
             children: [
               GestureDetector(
                 onTap: () {
-                  showSelectLanguageDialog(context);
+                  // showSelectLanguageDialog(context);
+                  LoginSettingsBottomSheet.shoBottomSheetLoginSettings();
                 },
                 child: const SizedBox(
                   height: 35,

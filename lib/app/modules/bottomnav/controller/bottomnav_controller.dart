@@ -50,5 +50,15 @@ class BottomNavController extends GetxController {
       AppGlobal.isSelectFrench = enLang == "FR" ? true : false;
       AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
     }
+
+    if (Get.find<StorageServices>().storage.read('imageFile') != null) {
+      AppGlobal.PROFILEIMAGE = Get.find<StorageServices>().storage.read('imageFile');
+    }
+    if (Get.find<StorageServices>().storage.read('image') != null) {
+      AppGlobal.PROFILEAVATAR = Get.find<StorageServices>().storage.read('image');
+    }
+    if (Get.find<StorageServices>().storage.read('biometrics') != null) {
+      AppGlobal.BIOMETRICS = Get.find<StorageServices>().storage.read('biometrics');
+    }
   }
 }

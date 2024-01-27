@@ -75,7 +75,7 @@ class WithdrawMenuBottomSheet extends StatelessWidget {
               ),
               child: header,
             ),
-            GestureDetector(
+            InkWell(
               onTap: () {
                 Get.back();
                 AppGlobal.siOTPPage = false;
@@ -119,7 +119,7 @@ class WithdrawMenuBottomSheet extends StatelessWidget {
                     )),
               ),
             ).paddingOnly(bottom: 12),
-            GestureDetector(
+            InkWell(
               onTap: () {
                 Get.back();
                 AppGlobal.siOTPPage = false;
@@ -171,7 +171,7 @@ class WithdrawMenuBottomSheet extends StatelessWidget {
                     )),
               ),
             ).paddingOnly(bottom: 12),
-            GestureDetector(
+            InkWell(
               onTap: () {
                 Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
                     backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));

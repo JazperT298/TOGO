@@ -264,7 +264,7 @@ class LoginController extends GetxController {
           // afficherSolde.value = false;
           log(soldeFlooz.value);
           Get.back();
-
+          Get.find<StorageServices>().saveUserPIN(pin: code);
           Get.toNamed(AppRoutes.LOGINPROFILE);
         } else {
           isResetCircle.value = true;

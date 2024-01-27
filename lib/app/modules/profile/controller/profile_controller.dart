@@ -34,6 +34,15 @@ class ProfileController extends GetxController {
   TextEditingController code = TextEditingController();
   TextEditingController amountTextField = TextEditingController();
 
+  RxBool secured = false.obs;
+  RxString secureText = ''.obs;
+
+  void getSecureTextFromStorage() async {
+    if (Get.find<StorageServices>().storage.read('biometrics') != null) {
+      secured.value = await Get.find<StorageServices>().storage.read('biometrics');
+    }
+  }
+
   getBack() {
     Get.back();
     Get.back();

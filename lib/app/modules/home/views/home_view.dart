@@ -1,5 +1,7 @@
 // ignore_for_file: unused_local_variable, unused_element
 
+import 'dart:io';
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -17,6 +19,8 @@ import 'package:ibank/app/modules/withdrawal/modals/withdraw_menu_bottom_sheet.d
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_global.dart';
+import 'package:ibank/utils/constants/app_images.dart';
 import 'package:ibank/utils/core/users.dart';
 import 'package:sizer/sizer.dart';
 
@@ -52,14 +56,18 @@ class HomeView extends GetView<HomeController> {
                           children: [
                             Row(
                               children: [
-                                InkWell(
-                                    onTap: () {
-                                      // Get.find<StorageServices>()
-                                      //     .storage
-                                      //     .remove("history");
-                                      // print("clear");
-                                    },
-                                    child: Image.asset(Get.find<StorageServices>().storage.read('image'), height: 52, width: 52)),
+                                AppGlobal.PROFILEAVATAR.isEmpty && AppGlobal.PROFILEIMAGE.isNotEmpty
+                                    ? CircleAvatar(
+                                        backgroundColor: Colors.black,
+                                        radius: 24.0,
+                                        child: ClipOval(
+                                          child: Image.file(
+                                            File(AppGlobal.PROFILEIMAGE),
+                                          ),
+                                        ))
+                                    : AppGlobal.PROFILEIMAGE.isEmpty && AppGlobal.PROFILEAVATAR.isNotEmpty
+                                        ? Image.asset(AppGlobal.PROFILEAVATAR, height: 52, width: 52)
+                                        : Image.asset(AppImages.userIcon, height: 52, width: 52),
                                 const Spacer(),
                                 /* FluButton.icon(FluIcons.plusUnicon,
                                   size: UISettings.minButtonSize), */
@@ -308,7 +316,7 @@ class _QuickActions extends StatelessWidget {
         //     colorText: Colors.white,
         //     duration: const Duration(seconds: 3));
         // RechargeMenuDialog.showRechargeMenuDialog();
-
+        // Get.toNamed(AppRoutes.LOGINBIOMETRICS);
         // showModalBottomSheet(
         // context: context,
         // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));

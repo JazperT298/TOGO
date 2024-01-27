@@ -69,6 +69,7 @@ class WithdrawInputBottomSheet {
           ),
         ),
       ),
-    );
+   
+   );
   }
 }

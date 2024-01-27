@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:ibank/app/modules/bottomnav/views/bottomnav_view.dart';
 import 'package:ibank/app/modules/history/views/history_view.dart';
+import 'package:ibank/app/modules/login/views/login_biometrics_view.dart';
+import 'package:ibank/app/modules/login/views/login_pin_biometrics_view.dart';
 import 'package:ibank/app/modules/login/views/login_profile_view.dart';
 import 'package:ibank/app/modules/login/views/login_security_code_view.dart';
 import 'package:ibank/app/modules/login/views/login_success.dart';
@@ -36,6 +38,8 @@ class AppPages {
     GetPage(name: AppRoutes.LOGIN, page: () => const LoginView()),
     GetPage(name: AppRoutes.LOGINPROFILE, page: () => const LoginProfileView()),
     GetPage(name: AppRoutes.LOGINSECURITYCODE, page: () => const LoginSecurityCodeView()),
+    GetPage(name: AppRoutes.LOGINBIOMETRICS, page: () => const LoginBiometricsView()),
+    GetPage(name: AppRoutes.LOGINPINBIOMETRICS, page: () => const LoginPinBiometricsView()),
     GetPage(name: AppRoutes.OTP, page: () => const OtpView()),
     GetPage(name: AppRoutes.PRIVACY, page: () => const PrivacyView()),
     GetPage(name: AppRoutes.LOGINSUCCESS, page: () => const LoginSuccess()),

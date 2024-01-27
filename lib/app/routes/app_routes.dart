@@ -8,6 +8,8 @@ class AppRoutes {
   static const String LOGINSUCCESS = '/loginsuccess';
   static const String LOGINPROFILE = '/loginprofile';
   static const String LOGINSECURITYCODE = '/loginsecuritycode';
+  static const String LOGINBIOMETRICS = '/loginbiometrics';
+  static const String LOGINPINBIOMETRICS = '/loginpinbiometrics';
 
   static const String BOTTOMNAV = '/bottomnav';
 

@@ -26,8 +26,20 @@ class StorageServices extends GetxService {
     storage.write('otp', otp);
   }
 
-  savePofileImage({required String image}) {
+  saveUserPIN({required String pin}) {
+    storage.write('pin', pin);
+  }
+
+  saveProfileImageFromAvatar({required String image}) {
     storage.write('image', image);
+  }
+
+  saveProfileImageFromGallery({required String imageFile}) {
+    storage.write('imageFile', imageFile);
+  }
+
+  saveBiometricsToStorage({required bool biometrics}) {
+    storage.write('biometrics', biometrics);
   }
 
   saveLanguage({required String language}) {
@@ -40,6 +52,18 @@ class StorageServices extends GetxService {
 
   isLoginSuccessClick({required bool isLoginSuccessClick}) {
     storage.write('isLoginSuccessClick', isLoginSuccessClick);
+  }
+
+  clearUserLocalData() {
+    storage.remove('msisdn');
+    storage.remove('formattedMSISDN');
+    storage.remove('otp');
+    storage.remove('pin');
+    storage.remove('image');
+    storage.remove('imageFile');
+    storage.remove('biometrics');
+    storage.remove('isPrivacyCheck');
+    storage.remove('isLoginSuccessClick');
   }
 
   //Store verify profile

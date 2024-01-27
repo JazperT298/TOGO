@@ -35,4 +35,6 @@ class AppImages {
   static const profileIcon18 = "assets/images/profileIcon18.png";
   static const profileIcon19 = "assets/images/profileIcon19.png";
   static const profileIcon20 = "assets/images/profileIcon20.png";
+  static const logoFaceId = "assets/images/face_id.png";
+  static const icOops = "assets/images/ic_oops.png";
 }

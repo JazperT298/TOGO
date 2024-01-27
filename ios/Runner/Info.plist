@@ -61,5 +61,7 @@
 		<string>We need access to the location to get the users location</string>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 		<string>We need access to the location to get the users location</string>
+		<key>NSFaceIDUsageDescription</key>
+		<string>For secure authentication</string>
 </dict>
 </plist>
