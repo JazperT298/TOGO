@@ -21,6 +21,7 @@ import 'package:ibank/app/modules/settings/views/settings_view.dart';
 import 'package:ibank/app/modules/shop/views/shop_view.dart';
 import 'package:ibank/app/modules/splash/views/splash_view.dart';
 import 'package:ibank/app/modules/transfer/views/transfer_view.dart';
+import 'package:ibank/app/modules/withdrawal/views/withdrawal_progress_view.dart';
 import 'package:ibank/app/modules/withdrawal/views/withdrawal_view.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 
@@ -64,5 +65,6 @@ class AppPages {
     GetPage(name: AppRoutes.TRANSACSUCCESS, page: () => const TransacSuccessView()),
     GetPage(name: AppRoutes.RECHARGE, page: () => const RechargeView()),
     GetPage(name: AppRoutes.RECHARGEOTP, page: () => const RechargeOtpView()),
+    GetPage(name: AppRoutes.WITHDRAWPROGRESS, page: () => const WithdrawalProgressView()),
   ];
 }

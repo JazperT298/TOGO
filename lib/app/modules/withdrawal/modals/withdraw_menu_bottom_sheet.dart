@@ -1,9 +1,14 @@
+// ignore_for_file: unused_import
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
+import 'package:ibank/app/modules/withdrawal/modals/withdraw_input_bottom_sheet.dart';
+import 'package:ibank/app/modules/withdrawal/modals/withdraw_otp_bottom_sheet.dart';
+import 'package:ibank/app/modules/withdrawal/modals/withdraw_select_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:sizer/sizer.dart';
@@ -125,6 +130,8 @@ class WithdrawMenuBottomSheet extends StatelessWidget {
                 AppGlobal.siOTPPage = false;
                 AppGlobal.dateNow = '';
                 AppGlobal.timeNow = '';
+                // WithdrawInputBottomSheet.showBottomSheetWithdrawalCollectioInputNumber();
+                WithdrawOtpBottomSheet.showBottomSheetWithdrawCollectionOTP();
                 // showModalBottomSheet(
                 //     isScrollControlled: true,
                 //     context: context,
@@ -173,8 +180,10 @@ class WithdrawMenuBottomSheet extends StatelessWidget {
             ).paddingOnly(bottom: 12),
             InkWell(
               onTap: () {
-                Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                    backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+                Get.back();
+                WithdrawSelectBottomSheet.showBottomSheetWithdrawCollectionOTP();
+                // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
+                // backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
               },
               child: Padding(
                 padding: EdgeInsets.only(left: MediaQuery.of(context).size.height * .025),

@@ -34,4 +34,5 @@ class AppRoutes {
   static const String TRANSACSUCCESS = '/transacsuccess';
   static const String RECHARGE = '/recharge';
   static const String RECHARGEOTP = '/rechargeotp';
+  static const String WITHDRAWPROGRESS = '/withdrawprogress';
 }

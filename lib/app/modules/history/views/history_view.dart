@@ -3,6 +3,7 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/data/models/transaction.dart';
 import 'package:ibank/app/modules/history/controller/history_controller.dart';
 import 'package:ibank/app/modules/history/views/dialog/history_dialog.dart';
@@ -53,14 +54,33 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    LocaleKeys.strHistory.tr,
-                    style: TextStyle(fontSize: 12.sp),
+                    LocaleKeys.strHistory.tr.toUpperCase(),
+                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF687997), fontSize: 14),
                   ),
                   Text(
-                    LocaleKeys.strHistoryTransaction.tr.toUpperCase(),
-                    style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold, color: context.colorScheme.onSurface, height: 1.5),
+                    'Monitor your operations.'.toUpperCase(),
+                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 26),
                   ),
-                  const SizedBox(height: 25),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      "Horem ipsum dolor sit amet, consectetur adipiscing elit.",
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                    ),
+                  ),
+                  SizedBox(height: 2.5.h),
+                  FluTextField(
+                    hint: "Search for a transaction",
+                    height: 50,
+                    cornerRadius: 15,
+                    keyboardType: TextInputType.name,
+                    fillColor: Color(0xFFF4F5FA),
+                    cursorColor: Color(0xFF27303F),
+                    hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Color(0xFF27303F), fontSize: 14),
+                    textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                    suffixIcon: FluIcons.refresh,
+                  ),
+                  SizedBox(height: 3.h),
                   Row(
                     children: [
                       Expanded(

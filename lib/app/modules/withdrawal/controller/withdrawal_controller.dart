@@ -28,7 +28,8 @@ class WithdrawalController extends GetxController {
   RxString balance = ''.obs;
   RxString withdrawalAmountWithUnit = ''.obs;
   String message = '';
-
+  RxString internetRadioGroupValue = ''.obs;
+  RxString selectedBank = ''.obs;
   RxBool isLoading = true.obs;
 
   static TransactionFee? transactionFee;
@@ -119,7 +120,7 @@ class WithdrawalController extends GetxController {
           getTransactionFee(decodedData['nickname'], decodedData['amount'], 'APPAGNT');
         } else {
           Get.back();
-          WithdrawInputBottomSheet.showBottomSheetInputNumber();
+          WithdrawInputBottomSheet.showBottomSheetWithdrawalNormalInputNumber();
 
           // Get.snackbar("Message", decodedData['message'], backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
@@ -249,7 +250,7 @@ class WithdrawalController extends GetxController {
         transactionFee = TransactionFee.fromJson(jsonData);
         fees.value = transactionFee!.sender;
         Get.back();
-        WithdrawOtpBottomSheet.showBottomSheetWithdrawOTP();
+        WithdrawOtpBottomSheet.showBottomSheetWithdrawNormalOTP();
       }
     } catch (e) {
       log('getTransactionFee asd $e');

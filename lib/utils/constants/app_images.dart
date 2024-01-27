@@ -37,4 +37,5 @@ class AppImages {
   static const profileIcon20 = "assets/images/profileIcon20.png";
   static const logoFaceId = "assets/images/face_id.png";
   static const icOops = "assets/images/ic_oops.png";
+  static const progressLoading = "assets/images/progressLoading.png";
 }

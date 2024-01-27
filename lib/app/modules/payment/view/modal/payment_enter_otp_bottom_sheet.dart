@@ -4,6 +4,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
@@ -22,20 +23,14 @@ class PaymentEnterOtpBottomSheet {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height: 3.h,
-              ),
+              SizedBox(height: 2.5.h),
               Padding(
                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
                 child: Text(
                   "SUMMARY".toUpperCase(),
-                  style: TextStyle(
-                    color: const Color(0xFFfb6708),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 11.sp,
-                    letterSpacing: 1.0,
-                  ),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
                 ),
               ),
               SizedBox(

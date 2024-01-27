@@ -2,13 +2,19 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+import 'package:app_settings/app_settings.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/profile/dialog/profile_message_dialog.dart';
+import 'package:ibank/app/modules/recharge/views/dialog/recharge_menu_dialog.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,6 +42,12 @@ class ProfileController extends GetxController {
 
   RxBool secured = false.obs;
   RxString secureText = ''.obs;
+
+  RxString selectedImage = ''.obs;
+
+  File? imageFile;
+
+  RxString imageName = ''.obs;
 
   void getSecureTextFromStorage() async {
     if (Get.find<StorageServices>().storage.read('biometrics') != null) {
@@ -97,7 +109,7 @@ class ProfileController extends GetxController {
   }
 
   enterPinForInformationPersonelles({required String code}) async {
-    isLoading(true);
+    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -159,17 +171,22 @@ class ProfileController extends GetxController {
               birthdate: birthdate.value,
               soldeFlooz: soldeFlooz.value,
               commission: commission.value);
+          Get.back();
           Get.toNamed(AppRoutes.PROFILEINFORMATIONPERSONELLES);
         } else {
+          Get.back();
           Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         print(response.reasonPhrase);
+        Get.back();
+        Get.snackbar("Message", 'Service unvailable. Please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
       }
     } on Exception catch (_) {
+      Get.back();
+      RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
       log("ERROR $_");
     }
-    isLoading(false);
   }
 
   changePin({required String oldPin, required String newPin}) async {
@@ -273,5 +290,69 @@ class ProfileController extends GetxController {
     AppGlobal.isSelectFrench = enLang == "FR" ? true : false;
     AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
     isLoadingProfile(false);
+  }
+
+  void changeProfilePicture() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false, type: FileType.image);
+      if (result!.isSinglePick) {
+        selectedImage.value = result.files[0].path!;
+
+        cropImage();
+      }
+    } catch (ex) {
+      if (Platform.isIOS) {
+        if (await Permission.storage.isPermanentlyDenied) {
+          AppSettings.openAppSettings();
+        }
+      } else {
+        if (!await Permission.storage.shouldShowRequestRationale && await Permission.storage.status.isDenied) {
+          AppSettings.openAppSettings();
+        }
+      }
+    }
+  }
+
+  ///[_cropImage] call cropping after picking image
+  Future<void> cropImage() async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: selectedImage.value,
+      aspectRatioPresets: Platform.isAndroid ? [CropAspectRatioPreset.square] : [CropAspectRatioPreset.square],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Crop Image',
+            toolbarColor: const Color(0xFF124DE5),
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            hideBottomControls: true,
+            lockAspectRatio: true),
+        IOSUiSettings(
+          title: 'Crop Image',
+          resetButtonHidden: true,
+          rotateButtonsHidden: true,
+          rotateClockwiseButtonHidden: true,
+          aspectRatioPickerButtonHidden: true,
+          rectX: 10000,
+          rectY: 10000,
+          rectHeight: 10000,
+          rectWidth: 10000,
+          minimumAspectRatio: 10000,
+        )
+      ],
+    );
+
+    if (croppedFile != null) {
+      selectedImage.value = croppedFile.path;
+      imageName.value = croppedFile.path.split('/').last;
+      imageFile = File(croppedFile.path);
+      log('imageFile $imageFile');
+      Get.find<StorageServices>().saveProfileImageFromGallery(imageFile: selectedImage.value);
+      if (Get.find<StorageServices>().storage.read('imageFile') != null) {
+        AppGlobal.PROFILEIMAGE = Get.find<StorageServices>().storage.read('imageFile');
+      }
+      if (Get.find<StorageServices>().storage.read('image') != null) {
+        AppGlobal.PROFILEAVATAR = Get.find<StorageServices>().storage.read('image');
+      }
+    }
   }
 }

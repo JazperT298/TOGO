@@ -1,6 +1,7 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
 import 'package:ibank/app/modules/recharge/views/modals/recharge_voice_otp_bottom_sheet.dart';
 import 'package:ibank/utils/configs.dart';
@@ -11,7 +12,7 @@ class RechargeVoiceSelectedPackageBottomSheet {
     var controller = Get.find<RechargeController>();
     Get.bottomSheet(
         Container(
-          height: 80.h,
+          height: 75.h,
           width: 100.w,
           decoration:
               const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
@@ -19,66 +20,46 @@ class RechargeVoiceSelectedPackageBottomSheet {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 2.h,
-                ),
+                SizedBox(height: 2.5.h),
                 Padding(
                   padding: EdgeInsets.only(left: 5.w, right: 5.w),
                   child: Text(
-                    "Voice".toUpperCase(),
-                    style: TextStyle(
-                      color: Colors.orange[500],
-                      fontWeight: FontWeight.w600,
-                      fontSize: 11.sp,
-                      letterSpacing: 1.0,
-                    ),
+                    "All network package".toUpperCase(),
+                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
                   ),
                 ),
-                SizedBox(
-                  height: 1.h,
-                ),
+                SizedBox(height: 1.h),
                 Padding(
                   padding: EdgeInsets.only(left: 5.w, right: 5.w),
                   child: Obx(
                     () => controller.selectedOption.value == "For myself"
                         ? Text(
                             "Please select a package.",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
+                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
                           )
                         : Text(
                             "Please select a package.",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
+                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
                           ),
                   ),
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
+                SizedBox(height: 2.h),
                 Padding(
                   padding: EdgeInsets.only(left: 5.w, right: 5.w),
                   child: FluTextField(
                     inputController: controller.amountTextField,
                     hint: "Package name", // "Enter amount",
-                    hintStyle: TextStyle(fontSize: 11.sp),
-                    textStyle: TextStyle(fontSize: 11.sp),
+                    hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
+                    textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                     height: 50,
                     cornerRadius: 15,
                     // keyboardType: TextInputType.number,
                     fillColor: const Color(0xFFf4f5fa),
+                    suffixIcon: FluIcons.refresh,
                     onChanged: (text) {},
                   ),
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
+                SizedBox(height: 3.h),
                 Row(
                   children: [
                     FluLine(
@@ -91,9 +72,7 @@ class RechargeVoiceSelectedPackageBottomSheet {
                     )
                   ],
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
+                SizedBox(height: 3.h),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
@@ -103,24 +82,27 @@ class RechargeVoiceSelectedPackageBottomSheet {
                         InkWell(
                           onTap: () {
                             controller.voicePackageProductType.value = "All";
-
                             controller.changeVoiceProductType();
                           },
                           child: Obx(
                             () => Container(
-                              height: 8.h,
-                              width: 13.w,
+                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                               decoration: BoxDecoration(
-                                color: controller.voicePackageProductType.value == "All" ? const Color(0xFFe7edfc) : Colors.white,
+                                color: controller.voicePackageProductType.value == "All" ? const Color(0xFFB6C8F7) : Colors.white,
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              child: const Center(child: Text("All")),
+                              child: Center(
+                                  child: Text(
+                                "All",
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: controller.voicePackageProductType.value == "All" ? FontWeight.w500 : FontWeight.w400,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
+                              )),
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
+                        SizedBox(width: 1.w),
                         InkWell(
                           onTap: () {
                             controller.voicePackageProductType.value = "Mixes";
@@ -129,40 +111,47 @@ class RechargeVoiceSelectedPackageBottomSheet {
                           },
                           child: Obx(
                             () => Container(
-                              height: 8.h,
-                              width: 13.w,
+                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                               decoration: BoxDecoration(
-                                color: controller.voicePackageProductType.value == "Mixes" ? const Color(0xFFe7edfc) : Colors.white,
+                                color: controller.voicePackageProductType.value == "Mixes" ? const Color(0xFFB6C8F7) : Colors.white,
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              child: const Center(child: Text("Mixes")),
+                              child: Center(
+                                  child: Text(
+                                "Mixes",
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: controller.voicePackageProductType.value == "Mixes" ? FontWeight.w500 : FontWeight.w400,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
+                              )),
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
+                        SizedBox(width: 1.w),
                         InkWell(
                           onTap: () {
                             controller.voicePackageProductType.value = "Voice";
-
                             controller.changeVoiceProductType();
                           },
                           child: Obx(
                             () => Container(
-                              height: 8.h,
-                              width: 20.w,
+                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                               decoration: BoxDecoration(
-                                color: controller.voicePackageProductType.value == "Voice" ? const Color(0xFFe7edfc) : Colors.white,
+                                color: controller.voicePackageProductType.value == "Voice" ? const Color(0xFFB6C8F7) : Colors.white,
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              child: const Center(child: Text("Voice")),
+                              child: Center(
+                                  child: Text(
+                                "Voice",
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: controller.voicePackageProductType.value == "Voice" ? FontWeight.w500 : FontWeight.w400,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
+                              )),
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
+                        SizedBox(width: 1.w),
                         InkWell(
                           onTap: () {
                             controller.voicePackageProductType.value = "Promo";
@@ -170,13 +159,19 @@ class RechargeVoiceSelectedPackageBottomSheet {
                           },
                           child: Obx(
                             () => Container(
-                              height: 8.h,
-                              width: 18.w,
+                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                               decoration: BoxDecoration(
-                                color: controller.voicePackageProductType.value == "Promo" ? const Color(0xFFe7edfc) : Colors.white,
+                                color: controller.voicePackageProductType.value == "Promo" ? const Color(0xFFB6C8F7) : Colors.white,
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              child: const Center(child: Text("Promo")),
+                              child: Center(
+                                  child: Text(
+                                "Promo",
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: controller.voicePackageProductType.value == "Promo" ? FontWeight.w500 : FontWeight.w400,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
+                              )),
                             ),
                           ),
                         ),
@@ -206,9 +201,7 @@ class RechargeVoiceSelectedPackageBottomSheet {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 3.h,
-                ),
+                SizedBox(height: 3.h),
                 SizedBox(
                   height: 35.h,
                   width: 100.w,
@@ -223,44 +216,46 @@ class RechargeVoiceSelectedPackageBottomSheet {
                               controller.voicePackageRadioGroupValue.value = controller.voiceProdList[index].productid;
                               controller.selectedVoice = controller.voiceProdList[index];
                             },
-                            child: Container(
-                              height: 8.h,
-                              width: 20.w,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFe7edfc),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 5.w, right: 1.w),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          controller.textSplitterPackageName(text: controller.voiceProdList[index].description),
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
+                            child: Obx(
+                              () => Container(
+                                height: 8.h,
+                                width: 20.w,
+                                decoration: BoxDecoration(
+                                  color: controller.voicePackageRadioGroupValue.value == controller.voiceProdList[index].productid
+                                      ? const Color(0xFFFEE8D9)
+                                      : const Color(0xFFe7edfc),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 5.w, right: 1.w),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            controller.textSplitterPackageName(text: controller.voiceProdList[index].description),
+                                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 26),
                                           ),
-                                        ),
-                                        Text(
-                                            "${controller.voiceProdList[index].price} FCFA - ${controller.textSplitterPrice(text: controller.voiceProdList[index].description)}"),
-                                      ],
-                                    ),
-                                    Obx(
-                                      () => Radio(
-                                          value: controller.voiceProdList[index].productid,
-                                          groupValue: controller.voicePackageRadioGroupValue.value,
-                                          onChanged: (value) {
-                                            controller.voicePackageRadioGroupValue.value = controller.voiceProdList[index].productid;
-                                            controller.selectedVoice = controller.voiceProdList[index];
-                                          }),
-                                    )
-                                  ],
+                                          Text(
+                                            "${controller.voiceProdList[index].price} FCFA - ${controller.textSplitterPrice(text: controller.voiceProdList[index].description)}",
+                                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 14),
+                                          ),
+                                        ],
+                                      ),
+                                      Obx(
+                                        () => Radio(
+                                            value: controller.voiceProdList[index].productid,
+                                            groupValue: controller.voicePackageRadioGroupValue.value,
+                                            onChanged: (value) {
+                                              controller.voicePackageRadioGroupValue.value = controller.voiceProdList[index].productid;
+                                              controller.selectedVoice = controller.voiceProdList[index];
+                                            }),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -270,17 +265,15 @@ class RechargeVoiceSelectedPackageBottomSheet {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
+                SizedBox(height: 2.h),
                 Padding(
                   padding: EdgeInsets.only(
                     left: 5.w,
                     right: 5.w,
                   ),
                   child: FluButton.text(
-                    'Continuer',
-                    suffixIcon: FluIcons.passwordCheck,
+                    'Continue',
+                    suffixIcon: FluIcons.arrowRight,
                     iconStrokeWidth: 1.8,
                     onPressed: () {
                       if (controller.selectedVoice != null) {
@@ -293,7 +286,7 @@ class RechargeVoiceSelectedPackageBottomSheet {
                     height: 55,
                     width: 100.w,
                     cornerRadius: UISettings.minButtonCornerRadius,
-                    backgroundColor: Colors.blue[900],
+                    backgroundColor: const Color(0xFF124DE5),
                     foregroundColor: Colors.white,
                     boxShadow: const [
                       BoxShadow(
@@ -303,11 +296,8 @@ class RechargeVoiceSelectedPackageBottomSheet {
                         offset: Offset(0, 5),
                       )
                     ],
-                    textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                    textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
                   ),
-                ),
-                SizedBox(
-                  height: 1.h,
                 ),
               ],
             ),

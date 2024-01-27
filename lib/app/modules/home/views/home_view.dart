@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, unused_element
+// ignore_for_file: unused_local_variable, unused_element, unused_import
 
 import 'dart:io';
 
@@ -12,6 +12,7 @@ import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
 import 'package:ibank/app/modules/home/controller/home_controller.dart';
+import 'package:ibank/app/modules/home/views/modals/balance_check_bottom_sheet.dart';
 import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_main_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_menu_bottom_sheet.dart';
@@ -205,7 +206,8 @@ class _CardState extends State<_Card> {
                               controller.afficherSolde.value == true ? FluIcons.eye : FluIcons.eyeSlash,
                               onPressed: () {
                                 if (controller.afficherSolde.value == true) {
-                                  HomeAlertDialog.showOTPview(controller: controller);
+                                  // HomeAlertDialog.showOTPview(controller: controller);
+                                  BalanceCheckBottomSheet.showBottomSheetInputNumber();
                                 } else {
                                   controller.afficherSolde.value = true;
                                 }

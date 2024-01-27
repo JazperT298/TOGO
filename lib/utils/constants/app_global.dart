@@ -1,7 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
-import 'dart:io';
-
 class AppGlobal {
   static bool IS_ACC_CHECKING_ENABLED = true;
   static bool IS_INACTIVITY_ENABLED = true;

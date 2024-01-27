@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/data/models/shop.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
 import 'package:ibank/app/modules/shop/controller/shop_controller.dart';
@@ -34,19 +35,13 @@ class ShopView extends GetView<ShopController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Moov store',
-                            style: TextStyle(
-                              fontFamily: 'neptune',
-                            ),
+                          Text(
+                            'Moov store'.toUpperCase(),
+                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF687997), fontSize: 14),
                           ),
                           Text(
                             'OUR PRODUCTS MOOV AFRICA.'.toUpperCase(),
-                            style: TextStyle(
-                              fontSize: M3FontSizes.headlineMedium,
-                              fontWeight: FontWeight.bold,
-                              color: context.colorScheme.onSurface,
-                            ),
+                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 26),
                           ),
                         ],
                       ),
@@ -62,9 +57,7 @@ class ShopView extends GetView<ShopController> {
                 ),
               ),
               _Highlights(ShopProduct.getAll()),
-              SizedBox(
-                height: 3.h,
-              ),
+              SizedBox(height: 3.h),
               Row(
                 children: [
                   FluLine(
@@ -124,7 +117,7 @@ class _Highlights extends GetView<ShopController> {
                     offset: const Offset(0, 0))
               ], */
             child: Container(
-              width: MediaQuery.of(context).size.width * .35,
+              width: MediaQuery.of(context).size.width * .65,
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: context.colorScheme.surface,
@@ -221,8 +214,8 @@ class _Categories extends GetView<ShopController> {
                           height: itemImgSize - 3,
                           width: itemImgSize - 3,
                           clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(color: color.withOpacity(.085), shape: BoxShape.circle),
-                          child: FluIcon(category.icon, color: color),
+                          decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
+                          child: FluIcon(category.icon, color: Colors.black),
                         ),
                       ],
                     ),
@@ -231,14 +224,16 @@ class _Categories extends GetView<ShopController> {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(StringUtils(category.name).capitalize!,
-                          style: const TextStyle(fontSize: M3FontSizes.bodyLarge, fontWeight: FontWeight.bold)),
+                      Text(
+                        StringUtils(category.name).capitalize!,
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
                       const SizedBox(height: 2),
                       Text(
                         category.description,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: context.colorScheme.onBackground.withOpacity(.75)),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 14),
                       ),
                     ],
                   )),
