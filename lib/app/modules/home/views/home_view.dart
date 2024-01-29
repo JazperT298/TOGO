@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/user.dart';
 import 'package:ibank/app/data/models/wallet.dart';
@@ -78,7 +79,11 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: MediaQuery.of(context).size.height * .035),
+                            Obx(
+                              () => controller.isLoadingHome.value == true
+                                  ? loadingHomeScreen()
+                                  : SizedBox(height: MediaQuery.of(context).size.height * .035),
+                            ),
                             Text(
                               Flu.formatDate(DateTime.now()).toUpperCase(),
                               style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF687997), fontSize: 14),
@@ -313,6 +318,7 @@ class _QuickActions extends StatelessWidget {
       // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
       // break;
       case WalletActions.mBanking:
+        loadingContainer();
         // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
         //     backgroundColor: Colors.lightBlue,
         //     colorText: Colors.white,

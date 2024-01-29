@@ -2,6 +2,7 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
@@ -61,64 +62,77 @@ class _LoginSecurityCodeViewState extends State<LoginSecurityCodeView> {
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
         ),
-        body: SafeArea(
-            child: Padding(
-          padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  Get.toNamed(AppRoutes.LOGINPROFILE);
-                },
-                child: Container(
-                  height: 80,
-                  width: 80,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 1,
-                      ),
-                    ],
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey),
+        body: Obx(() => SafeArea(
+              child: Stack(
+                children: [
+                  if (controller.isLoadingSecurity.value == true)
+                    Positioned(
+                      top: 0,
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: loadingContainer(),
                     ),
-                    child: Image.asset(AppImages.userIcon, height: 30, width: 30),
+                  Padding(
+                    padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.LOGINPROFILE);
+                          },
+                          child: Container(
+                            height: 80,
+                            width: 80,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 1,
+                                ),
+                              ],
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              child: Image.asset(AppImages.userIcon, height: 30, width: 30),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 2.h),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Please enter your security code to access your application',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                          ),
+                        ),
+                        SizedBox(height: 14.h),
+                        _buildPinCodeDisplay(),
+                        SizedBox(height: 7.h),
+                        _buildNumberPad(),
+                        SizedBox(height: 10.h),
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            'Forgot security code?',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
-              SizedBox(height: 2.h),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Please enter your security code to access your application',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
-                ),
-              ),
-              SizedBox(height: 14.h),
-              _buildPinCodeDisplay(),
-              SizedBox(height: 7.h),
-              _buildNumberPad(),
-              SizedBox(height: 10.h),
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  'Forgot security code?',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 14),
-                ),
-              ),
-            ],
-          ),
-        )));
+            )));
   }
 
   Widget _buildPinCodeDisplay() {

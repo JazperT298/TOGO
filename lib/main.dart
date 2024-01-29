@@ -91,7 +91,7 @@ class _AutoLogoutViewState extends State<AutoLogoutView> with WidgetsBindingObse
         Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
       });
     } else if (state == AppLifecycleState.resumed) {
-      _timer = Timer(const Duration(minutes: 2), () {
+      _timer = Timer(const Duration(minutes: 5), () {
         log('The app is resumed ${_timer!.tick}');
         Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
       });

@@ -14,12 +14,19 @@ import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/string_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:developer';
 
 class LoginController extends GetxController {
+  RxBool isLoadingBiometrics = false.obs;
+  RxBool isLoadingBiometric = false.obs;
+  RxBool isLoadingMsisdn = false.obs;
+  RxBool isLoadingSecurity = false.obs;
+  RxBool isLoadingProfile = false.obs;
+
   final numberController = TextEditingController().obs;
   RxString selectedCountryCode = '+228'.obs;
   RxBool isTextFieldEmpty = false.obs;
@@ -28,6 +35,7 @@ class LoginController extends GetxController {
   RxList<String> existingLetters = <String>[].obs;
   RxBool afficherSolde = true.obs;
   RxBool isLoadingDialog = false.obs;
+  RxBool secured = false.obs;
 
   RxString name = ''.obs;
   RxString firstname = ''.obs;
@@ -37,6 +45,16 @@ class LoginController extends GetxController {
 
   RxBool isResetCircle = false.obs;
 
+  void getSecureTextFromStorage() async {
+    isLoadingBiometrics(true);
+    if (Get.find<StorageServices>().storage.read('biometrics') != null) {
+      secured.value = await Get.find<StorageServices>().storage.read('biometrics');
+      AppGlobal.BIOMETRICS = Get.find<StorageServices>().storage.read('biometrics');
+      log(' AppGlobal.BIOMETRICS  ${AppGlobal.BIOMETRICS}');
+    }
+    isLoadingBiometrics(false);
+  }
+
   Future<void> launch() async {
     if (!await launchUrl(Uri.parse("https://play.google.com/"))) {
       throw Exception('Could not launch url');
@@ -44,6 +62,7 @@ class LoginController extends GetxController {
   }
 
   kycInquiryRequest({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
+    isLoadingMsisdn(true);
     try {
       var client = HttpClient();
       client.badCertificateCallback = (cert, host, port) => true;
@@ -73,7 +92,7 @@ class LoginController extends GetxController {
           // encryptionExample(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
           await otpRequestViaApi(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
         } else {
-          Get.back();
+          // Get.back();
           Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
@@ -83,11 +102,12 @@ class LoginController extends GetxController {
       log("ERROR TimeoutException $_");
     } on SocketException catch (_) {
       log("ERROR SocketException $_");
-      Get.back();
+      // Get.back();
       Get.snackbar("Message", LocaleKeys.strAnErrorOccured.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
     } catch (_) {
       log("ERROR $_");
     }
+    isLoadingMsisdn(false);
   }
 
   otpRequestViaApi({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
@@ -207,7 +227,7 @@ class LoginController extends GetxController {
   }
 
   enterPinForInformationPersonelles({required String code}) async {
-    isLoadingDialog(true);
+    isLoadingSecurity(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -263,12 +283,13 @@ class LoginController extends GetxController {
           // soldeFlooz.value = dataDecoded['Solde Flooz'].toString().replaceAll("FCFA", "").trim().toString();
           // afficherSolde.value = false;
           log(soldeFlooz.value);
-          Get.back();
+          // Get.back();
+          isResetCircle.value = true;
           Get.find<StorageServices>().saveUserPIN(pin: code);
           Get.toNamed(AppRoutes.LOGINPROFILE);
         } else {
-          isResetCircle.value = true;
           Get.snackbar("Message", jsonData["message"], backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+          isResetCircle.value = true;
         }
       } else {
         print(response.reasonPhrase);
@@ -276,9 +297,25 @@ class LoginController extends GetxController {
     } on Exception catch (_) {
       log("ERROR $_");
     }
-    isLoadingDialog(false);
+    isLoadingSecurity(false);
   }
 
   resetFilledCircles() {}
+
+  void profileContinueButtonClick() async {
+    isLoadingProfile(true);
+    await Future.delayed(const Duration(seconds: 3)).then((value) {
+      Get.offAllNamed(AppRoutes.LOGINBIOMETRICS);
+    });
+    isLoadingProfile(false);
+  }
+
+  void biometricsContinueButtonClick() async {
+    isLoadingBiometric(true);
+    await Future.delayed(const Duration(seconds: 3)).then((value) {
+      Get.offAllNamed(AppRoutes.LOGINSUCCESS);
+    });
+    isLoadingBiometric(false);
+  }
 }
 // https://flooznfctest.moov-africa.tg/kyctest/inquiry

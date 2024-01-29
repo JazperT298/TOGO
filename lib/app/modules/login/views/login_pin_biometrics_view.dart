@@ -8,13 +8,16 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
+import 'package:ibank/app/modules/login/modals/login_settings_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:ibank/utils/core/screenlock.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginPinBiometricsView extends StatefulWidget {
@@ -113,139 +116,162 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
         ),
-        body: SafeArea(
-            child: Padding(
-          padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  Get.toNamed(AppRoutes.LOGINPROFILE);
-                },
-                child: Container(
-                  height: 80,
-                  width: 80,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 1,
-                      ),
-                    ],
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: AppGlobal.PROFILEAVATAR.isEmpty && AppGlobal.PROFILEIMAGE.isNotEmpty
-                        ? CircleAvatar(
-                            backgroundColor: Colors.black,
-                            radius: 30.0,
-                            child: ClipOval(
-                              child: Image.file(
-                                File(AppGlobal.PROFILEIMAGE),
+        body: Obx(() => SafeArea(
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.LOGINPROFILE);
+                          },
+                          child: Container(
+                            height: 80,
+                            width: 80,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 1,
+                                ),
+                              ],
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.grey),
                               ),
-                            ))
-                        : AppGlobal.PROFILEIMAGE.isEmpty && AppGlobal.PROFILEAVATAR.isNotEmpty
-                            ? Image.asset(AppGlobal.PROFILEAVATAR, height: 52, width: 52)
-                            : Image.asset(AppImages.userIcon, height: 52, width: 52),
-                  ),
-                ),
-              ),
-              SizedBox(height: 2.h),
-              Text(
-                'Koffi kagni',
-                style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
-              ),
-              SizedBox(height: 2.h),
-              (Platform.isIOS)
-                  ? // InkWell(
-                  //     onTap: () {},
-                  //     child: Align(
-                  //       alignment: Alignment.center,
-                  //       child: Text(
-                  //         'Please enter your security code or use Face ID to unlock your app',
-                  //         textAlign: TextAlign.center,
-                  //         style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
-                  //       ),
-                  //     ),
-                  //   )∂
-                  Center(
-                      child: InkWell(
-                        onTap: () {
-                          if (AppGlobal.BIOMETRICS == false) {
-                          } else {
-                            ScreenLock(context: context).authenticateUser(context: context, deviceName: _deviceName, platformId: _platformId);
-                          }
-                        },
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Please enter your security code or use ',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
-                              ),
-                              TextSpan(
-                                text: 'Face ID',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: const Color(0xFF27303F), fontSize: 14),
-                              ),
-                              TextSpan(
-                                text: ' to unlock your app',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
-                              ),
-                            ],
+                              child: AppGlobal.PROFILEAVATAR.isEmpty && AppGlobal.PROFILEIMAGE.isNotEmpty
+                                  ? CircleAvatar(
+                                      backgroundColor: Colors.black,
+                                      radius: 30.0,
+                                      child: ClipOval(
+                                        child: Image.file(
+                                          File(AppGlobal.PROFILEIMAGE),
+                                        ),
+                                      ))
+                                  : AppGlobal.PROFILEIMAGE.isEmpty && AppGlobal.PROFILEAVATAR.isNotEmpty
+                                      ? Image.asset(AppGlobal.PROFILEAVATAR, height: 52, width: 52)
+                                      : Image.asset(AppImages.userIcon, height: 52, width: 52),
+                            ),
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ),
-                    )
-                  : Center(
-                      child: InkWell(
-                        onTap: () {
-                          ScreenLock(context: context).authenticateUser(context: context, deviceName: _deviceName, platformId: _platformId);
-                        },
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Please enter your security code or use your ',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
+                        SizedBox(height: 2.h),
+                        Text(
+                          'Koffi kagni',
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                        ),
+                        SizedBox(height: 2.h),
+                        (Platform.isIOS)
+                            ? // InkWell(
+                            //     onTap: () {},
+                            //     child: Align(
+                            //       alignment: Alignment.center,
+                            //       child: Text(
+                            //         'Please enter your security code or use Face ID to unlock your app',
+                            //         textAlign: TextAlign.center,
+                            //         style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                            //       ),
+                            //     ),
+                            //   )∂
+                            Center(
+                                child: Obx(
+                                  () => InkWell(
+                                    onTap: () {
+                                      if (AppGlobal.BIOMETRICS == false) {
+                                        controller.getSecureTextFromStorage();
+                                        LoginSettingsBottomSheet.showBottomSheetBiometrics();
+                                      } else {
+                                        ScreenLock(context: context)
+                                            .authenticateUser(context: context, deviceName: _deviceName, platformId: _platformId);
+                                      }
+                                    },
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: 'Please enter your security code or use ',
+                                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
+                                          ),
+                                          TextSpan(
+                                            text: 'Face ID',
+                                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: const Color(0xFF27303F), fontSize: 14),
+                                          ),
+                                          TextSpan(
+                                            text: ' to unlock your app',
+                                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
+                                          ),
+                                        ],
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Center(
+                                child: InkWell(
+                                  onTap: () {
+                                    if (AppGlobal.BIOMETRICS == false) {
+                                      LoginSettingsBottomSheet.showBottomSheetBiometrics();
+                                    } else {
+                                      ScreenLock(context: context)
+                                          .authenticateUser(context: context, deviceName: _deviceName, platformId: _platformId);
+                                    }
+                                  },
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Please enter your security code or use your ',
+                                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
+                                        ),
+                                        TextSpan(
+                                          text: 'Fingerprint',
+                                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: const Color(0xFF27303F), fontSize: 14),
+                                        ),
+                                        TextSpan(
+                                          text: ' to unlock your app ',
+                                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
                               ),
-                              TextSpan(
-                                text: 'Fingerprint',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: const Color(0xFF27303F), fontSize: 14),
-                              ),
-                              TextSpan(
-                                text: ' to unlock your app ',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
-                              ),
-                            ],
+                        SizedBox(height: 10.h),
+                        _buildPinCodeDisplay(),
+                        SizedBox(height: 7.h),
+                        _buildNumberPad(),
+                        SizedBox(height: 10.h),
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            'Forgot security code?',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 14),
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ),
+                      ],
                     ),
-              SizedBox(height: 10.h),
-              _buildPinCodeDisplay(),
-              SizedBox(height: 7.h),
-              _buildNumberPad(),
-              SizedBox(height: 10.h),
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  'Forgot security code?',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 14),
-                ),
+                  ),
+                  if (controller.isLoadingBiometrics.value == true)
+                    Positioned(
+                      top: 0,
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: loadingContainer(),
+                    ),
+                ],
               ),
-            ],
-          ),
-        )));
+            )));
   }
 
   Widget _buildPinCodeDisplay() {
@@ -340,7 +366,7 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
 
   Widget _buildSendContainer() {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         if (pinCode.length < 4) {
           setState(() {
             hasError = true;
@@ -348,13 +374,24 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
         } else {
           // CLEAR THE CIRCLE AFTER THE FAILED MESSAGE
           if (pinCode == userPin) {
-            Get.offAllNamed(AppRoutes.BOTTOMNAV);
-            if (controller.isResetCircle.value == true) {
+            // if (controller.isResetCircle.value == true) {
+            //   setState(() {
+            //     _resetFilledCircles();
+            //     pinCode = '';
+            //   });
+            // }
+
+            controller.isLoadingBiometrics.value = true;
+
+            // Simulating a delay of 3 seconds
+            await Future.delayed(const Duration(seconds: 3)).then((value) {
+              controller.isLoadingBiometrics.value = false;
               setState(() {
                 _resetFilledCircles();
                 pinCode = '';
               });
-            }
+              Get.offAllNamed(AppRoutes.BOTTOMNAV);
+            });
           } else {
             Get.snackbar("Message", 'Invalid PIN, Please try again!', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
             setState(() {

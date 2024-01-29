@@ -181,6 +181,8 @@ class WithdrawMenuBottomSheet extends StatelessWidget {
             InkWell(
               onTap: () {
                 Get.back();
+                controller.internetRadioGroupValue.value = '';
+                controller.selectedBank.value = '';
                 WithdrawSelectBottomSheet.showBottomSheetWithdrawCollectionOTP();
                 // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
                 // backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));

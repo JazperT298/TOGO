@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
@@ -85,116 +86,205 @@ class _LoginViewState extends State<LoginView> {
         statusBarIconBrightness: Brightness.dark,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+        child: Obx(
+          () => Stack(
             children: [
-              GestureDetector(
-                onTap: () {
-                  // showSelectLanguageDialog(context);
-                  LoginSettingsBottomSheet.shoBottomSheetLoginSettings();
-                },
-                child: const SizedBox(
-                  height: 35,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FluIcon(
-                        FluIcons.settingUnicon,
-                        color: Colors.black54,
-                        size: 35,
-                      )
-                    ],
-                  ),
+              if (controller.isLoadingMsisdn.value == true)
+                Positioned(
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: loadingContainer(),
                 ),
-              ),
-              Expanded(
-                child: Image.asset(
-                  AppImages.loginImage1,
-                  height: MediaQuery.of(context).size.height * .3,
-                  width: MediaQuery.of(context).size.height * .3,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                LocaleKeys.strAccessAccount.tr,
-                style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
-              ),
-              const SizedBox(height: 12),
               Padding(
-                padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
-                child: Text(
-                  LocaleKeys.strAccessAccountDesc.tr,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
-                ),
-              ),
-              const SizedBox(height: 50),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () async {
-                      final picked = await countryPicker.showPicker(context: context);
-                      // Null check
-                      if (picked != null) {
-                        setState(() {
-                          print(picked.dialCode);
-                          _selectedCountryCode = picked.dialCode;
-                        });
-                      } else {
-                        _selectedCountryCode = '+228';
-                      }
-                    },
-                    child: Container(
-                      height: 5.h,
-                      width: MediaQuery.of(context).size.width / 4.6,
-                      padding: EdgeInsets.symmetric(horizontal: _selectedCountryCode.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
-                      decoration:
-                          BoxDecoration(color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode, style: TextStyle(color: Colors.black, fontSize: 10.sp)),
-                          const FluIcon(FluIcons.arrowDown2, size: 16)
-                        ],
+                padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // showSelectLanguageDialog(context);
+                        LoginSettingsBottomSheet.shoBottomSheetLoginSettings();
+                      },
+                      child: const SizedBox(
+                        height: 35,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            FluIcon(
+                              FluIcons.settingUnicon,
+                              color: Colors.black54,
+                              size: 35,
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 1.w),
-                  Expanded(
-                    child: FluTextField(
-                      hint: LocaleKeys.strPhoneNumber.tr,
-                      inputController: numberController,
-                      height: 5.8.h,
-                      cornerRadius: 15,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
-                      ],
-                      keyboardType: TextInputType.number,
-                      fillColor: context.colorScheme.primaryContainer,
-                      onChanged: (text) {
-                        // Remove any existing spaces
-                        text = text.replaceAll(" ", "");
-                        // Add a space after every two characters
-                        if (text.length % 2 == 0) {
-                          text = text.replaceAllMapped(
-                            RegExp(r'.{2}'),
-                            (match) => '${match.group(0)} ',
-                          );
-                        }
-                        numberController.value = numberController.value.copyWith(
-                          text: text,
-                          selection: TextSelection.collapsed(offset: text.length),
-                        );
-                        setState(() {
-                          isTextFieldEmpty = false;
-                          errorMessage = '';
-                        });
-                      },
-                      textStyle: TextStyle(fontSize: 10.sp), // context.textTheme.bodyMedium,
+                    Expanded(
+                      child: Image.asset(
+                        AppImages.loginImage1,
+                        height: MediaQuery.of(context).size.height * .3,
+                        width: MediaQuery.of(context).size.height * .3,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      LocaleKeys.strAccessAccount.tr,
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
+                      child: Text(
+                        LocaleKeys.strAccessAccountDesc.tr,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                      ),
+                    ),
+                    const SizedBox(height: 50),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            final picked = await countryPicker.showPicker(context: context);
+                            // Null check
+                            if (picked != null) {
+                              setState(() {
+                                print(picked.dialCode);
+                                _selectedCountryCode = picked.dialCode;
+                              });
+                            } else {
+                              _selectedCountryCode = '+228';
+                            }
+                          },
+                          child: Container(
+                            height: 5.h,
+                            width: MediaQuery.of(context).size.width / 4.6,
+                            padding: EdgeInsets.symmetric(horizontal: _selectedCountryCode.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
+                            decoration: BoxDecoration(
+                                color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(_selectedCountryCode.isEmpty ? '+228' : _selectedCountryCode,
+                                    style: TextStyle(color: Colors.black, fontSize: 10.sp)),
+                                const FluIcon(FluIcons.arrowDown2, size: 16)
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 1.w),
+                        Expanded(
+                          child: FluTextField(
+                            hint: LocaleKeys.strPhoneNumber.tr,
+                            inputController: numberController,
+                            height: 5.8.h,
+                            cornerRadius: 15,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
+                            ],
+                            keyboardType: TextInputType.number,
+                            fillColor: context.colorScheme.primaryContainer,
+                            onChanged: (text) {
+                              // Remove any existing spaces
+                              text = text.replaceAll(" ", "");
+                              // Add a space after every two characters
+                              if (text.length % 2 == 0) {
+                                text = text.replaceAllMapped(
+                                  RegExp(r'.{2}'),
+                                  (match) => '${match.group(0)} ',
+                                );
+                              }
+                              numberController.value = numberController.value.copyWith(
+                                text: text,
+                                selection: TextSelection.collapsed(offset: text.length),
+                              );
+                              setState(() {
+                                isTextFieldEmpty = false;
+                                errorMessage = '';
+                              });
+                            },
+                            textStyle: TextStyle(fontSize: 10.sp), // context.textTheme.bodyMedium,
 
-                      onFieldSubmitted: (p0) {
+                            onFieldSubmitted: (p0) {
+                              print(numberController.text.trim().toString().length);
+                              if (numberController.text.isNotEmpty && numberController.text.trim().toString().length == 11) {
+                                if (numberController.text.contains(" ")) {
+                                  print("wala ge input ang 228");
+                                  String replacedString = numberController.text.replaceAll(" ", "").trim().toString();
+                                  String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
+                                  print(msisdn);
+                                  print(_selectedCountryCode);
+
+                                  if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                                    ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                                    controller.kycInquiryRequest(
+                                        msisdn: msisdn, formattedMSISDN: numberController.text, countryCode: _selectedCountryCode);
+                                  } else {
+                                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
+                                        backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                  }
+                                } else {
+                                  print("ge input ang 228");
+                                  print(numberController.text);
+                                  if (numberController.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
+                                    ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                                    String stringRemoveCountryCode = numberController.text.substring(3);
+                                    String formattedMSISDN =
+                                        stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+                                    controller.kycInquiryRequest(
+                                        msisdn: numberController.text, formattedMSISDN: formattedMSISDN, countryCode: _selectedCountryCode);
+                                  } else {
+                                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
+                                        backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                  }
+                                }
+
+                                isTextFieldEmpty = false;
+                              } else if (numberController.text.isEmpty) {
+                                setState(() {
+                                  isTextFieldEmpty = true;
+                                });
+                              } else if (numberController.text.trim().toString().length != 11) {
+                                Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    isTextFieldEmpty == true
+                        ? errorMessage.isNotEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  errorMessage,
+                                  style: TextStyle(
+                                    fontSize: 10.sp,
+                                    color: context.colorScheme.secondary,
+                                  ),
+                                ))
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  LocaleKeys.strPhoneNumberRequired.tr,
+                                  style: TextStyle(
+                                    fontSize: 10.sp,
+                                    color: context.colorScheme.secondary,
+                                  ),
+                                ),
+                              )
+                        : const SizedBox(height: 35),
+                    FluButton.text(
+                      LocaleKeys.strContinue.tr,
+                      suffixIcon: FluIcons.arrowRight,
+                      iconStrokeWidth: 1.8,
+                      onPressed: () async {
+                        // controller.encryptionExample(
+                        //     msisdn: "22879397111",
+                        //     formattedMSISDN: "79 39 71 11",
+                        //     countryCode: "228");
                         print(numberController.text.trim().toString().length);
                         if (numberController.text.isNotEmpty && numberController.text.trim().toString().length == 11) {
                           if (numberController.text.contains(" ")) {
@@ -205,7 +295,7 @@ class _LoginViewState extends State<LoginView> {
                             print(_selectedCountryCode);
 
                             if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
-                              ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                              // ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
                               controller.kycInquiryRequest(msisdn: msisdn, formattedMSISDN: numberController.text, countryCode: _selectedCountryCode);
                             } else {
                               Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
@@ -214,7 +304,7 @@ class _LoginViewState extends State<LoginView> {
                             print("ge input ang 228");
                             print(numberController.text);
                             if (numberController.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
-                              ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
+                              // ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
                               String stringRemoveCountryCode = numberController.text.substring(3);
                               String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
                               controller.kycInquiryRequest(
@@ -233,95 +323,25 @@ class _LoginViewState extends State<LoginView> {
                           Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                         }
                       },
-                    ),
-                  ),
-                ],
-              ),
-              isTextFieldEmpty == true
-                  ? errorMessage.isNotEmpty
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            errorMessage,
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: context.colorScheme.secondary,
-                            ),
-                          ))
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            LocaleKeys.strPhoneNumberRequired.tr,
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: context.colorScheme.secondary,
-                            ),
-                          ),
+                      height: 5.8.h,
+                      width: MediaQuery.of(context).size.width * 16,
+                      cornerRadius: UISettings.minButtonCornerRadius,
+                      backgroundColor: context.colorScheme.primary,
+                      foregroundColor: context.colorScheme.onPrimary,
+                      boxShadow: [
+                        BoxShadow(
+                          color: context.colorScheme.primary.withOpacity(.35),
+                          blurRadius: 25,
+                          spreadRadius: 3,
+                          offset: const Offset(0, 5),
                         )
-                  : const SizedBox(height: 35),
-              FluButton.text(
-                LocaleKeys.strContinue.tr,
-                suffixIcon: FluIcons.arrowRight,
-                iconStrokeWidth: 1.8,
-                onPressed: () async {
-                  // controller.encryptionExample(
-                  //     msisdn: "22879397111",
-                  //     formattedMSISDN: "79 39 71 11",
-                  //     countryCode: "228");
-                  print(numberController.text.trim().toString().length);
-                  if (numberController.text.isNotEmpty && numberController.text.trim().toString().length == 11) {
-                    if (numberController.text.contains(" ")) {
-                      print("wala ge input ang 228");
-                      String replacedString = numberController.text.replaceAll(" ", "").trim().toString();
-                      String msisdn = (_selectedCountryCode + replacedString).replaceAll("+", "").toString();
-                      print(msisdn);
-                      print(_selectedCountryCode);
-
-                      if (msisdn.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
-                        ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
-                        controller.kycInquiryRequest(msisdn: msisdn, formattedMSISDN: numberController.text, countryCode: _selectedCountryCode);
-                      } else {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                      }
-                    } else {
-                      print("ge input ang 228");
-                      print(numberController.text);
-                      if (numberController.text.substring(0, 3) == _selectedCountryCode.replaceAll("+", "")) {
-                        ProgressAlertDialog.progressAlertDialog(context, LocaleKeys.strLoading.tr);
-                        String stringRemoveCountryCode = numberController.text.substring(3);
-                        String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
-                        controller.kycInquiryRequest(
-                            msisdn: numberController.text, formattedMSISDN: formattedMSISDN, countryCode: _selectedCountryCode);
-                      } else {
-                        Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                      }
-                    }
-
-                    isTextFieldEmpty = false;
-                  } else if (numberController.text.isEmpty) {
-                    setState(() {
-                      isTextFieldEmpty = true;
-                    });
-                  } else if (numberController.text.trim().toString().length != 11) {
-                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                  }
-                },
-                height: 5.8.h,
-                width: MediaQuery.of(context).size.width * 16,
-                cornerRadius: UISettings.minButtonCornerRadius,
-                backgroundColor: context.colorScheme.primary,
-                foregroundColor: context.colorScheme.onPrimary,
-                boxShadow: [
-                  BoxShadow(
-                    color: context.colorScheme.primary.withOpacity(.35),
-                    blurRadius: 25,
-                    spreadRadius: 3,
-                    offset: const Offset(0, 5),
-                  )
-                ],
-                textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp),
+                      ],
+                      textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
               ),
-              const SizedBox(height: 30),
             ],
           ),
         ),

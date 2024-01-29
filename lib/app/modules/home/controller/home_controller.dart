@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_import
 
 import 'dart:convert';
 import 'dart:developer';
@@ -18,6 +18,8 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeController extends GetxController {
+  RxBool isLoadingHome = false.obs;
+
   RxBool afficherSolde = true.obs;
   RxBool isLoadingDialog = false.obs;
   TextEditingController code = TextEditingController();
@@ -36,7 +38,8 @@ class HomeController extends GetxController {
   }
 
   verifyAndroid({required String msisdn, required String version}) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    // ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    isLoadingHome(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -65,7 +68,7 @@ class HomeController extends GetxController {
         var jsonString = soapElement.innerText;
         var decodedData = jsonDecode(jsonString);
         log(decodedData.toString());
-        Get.back();
+        // Get.back();
         if (decodedData['description'] == 'TOKEN_FOUND') {
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
           await logout();
@@ -73,13 +76,14 @@ class HomeController extends GetxController {
           await logout();
         } else {}
       } else {
-        Get.back();
+        // Get.back();
         log("ERROR ${response.reasonPhrase}'");
       }
     } catch (e) {
-      Get.back();
+      // Get.back();
       print('verifyAndroid $e');
     }
+    isLoadingHome(false);
   }
 
   Future<void> launch() async {

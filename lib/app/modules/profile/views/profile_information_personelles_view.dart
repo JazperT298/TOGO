@@ -120,8 +120,8 @@ class ProfileInformationPersonellesView extends GetView<ProfileController> {
                                             ),
                                           ))
                                       : AppGlobal.PROFILEIMAGE.isEmpty && AppGlobal.PROFILEAVATAR.isNotEmpty
-                                          ? Image.asset(AppGlobal.PROFILEAVATAR, height: 52, width: 52)
-                                          : Image.asset(AppImages.userIcon, height: 52, width: 52))
+                                          ? Image.asset(AppGlobal.PROFILEAVATAR)
+                                          : Image.asset(AppImages.userIcon))
                               : CircleAvatar(
                                   backgroundColor: Colors.black,
                                   radius: MediaQuery.of(context).size.height * 0.075,

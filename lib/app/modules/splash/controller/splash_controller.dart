@@ -1,5 +1,7 @@
 // ignore_for_file: unused_local_variable, avoid_print, use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -49,12 +51,18 @@ class SplashController extends GetxController {
 
     if (storage.read('msisdn') != null) {
       if (storage.read('isPrivacyCheck') == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.PRIVACY)));
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(3.seconds, () => Get.offAllNamed(AppRoutes.PRIVACY)));
       } else if (storage.read('isLoginSuccessClick') == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(3.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
       } else {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-          await Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV));
+          // await Future.delayed(3.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV));
+          await Future.delayed(3.seconds, () {
+            Get.offAllNamed(AppRoutes.LOGINPINBIOMETRICS);
+            if (Get.find<StorageServices>().storage.read('biometrics') != null) {
+              AppGlobal.BIOMETRICS = Get.find<StorageServices>().storage.read('biometrics');
+            }
+          });
         });
       }
     } else {

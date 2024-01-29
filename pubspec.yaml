@@ -76,6 +76,7 @@ dependencies:
   image_cropper: ^4.0.1
   file_picker: ^5.3.1
   dotted_border: ^2.1.0
+  loading_animation_widget: ^1.2.0+4
 
   telephony: ^0.2.0
   flutter_html: ^3.0.0-beta.2

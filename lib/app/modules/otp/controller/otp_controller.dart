@@ -17,14 +17,18 @@ import 'dart:developer';
 import 'package:get/get.dart';
 
 class OtpController extends GetxController {
+  RxBool isLoadingOTP = false.obs;
+
   RxString msisdn = ''.obs;
   RxString formatedMSISDN = ''.obs;
   RxString countryCode = ''.obs;
   RxString requestVia = ''.obs;
   RxBool isResendShow = false.obs;
   RxInt tries = 0.obs;
+  RxInt timerValue = 300.obs;
 
   verifyOTP({required String otp}) async {
+    isLoadingOTP(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -60,26 +64,27 @@ class OtpController extends GetxController {
           Get.find<StorageServices>().saveMsisdn(msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
           Get.find<StorageServices>().setToken(token: Get.find<DevicePlatformServices>().deviceID);
           // SUCCESS OTP
-          Get.back();
+          // Get.back();,<--replaced with isLoadingOTP
           Get.offAllNamed(AppRoutes.PRIVACY);
         } else {
-          Get.back();
+          // Get.back();,<--replaced with isLoadingOTP
           Get.snackbar("Message", jsonData["message"], backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
         // print('JSON Response: $jsonResponse');
       } else {
-        Get.back();
+        // Get.back();,<--replaced with isLoadingOTP
         Get.snackbar("Message", 'Internal server error', backgroundColor: Colors.lightBlue, colorText: Colors.white);
         print(response.reasonPhrase);
       }
     } on Exception catch (_) {
-      Get.back();
+      // Get.back();,<--replaced with isLoadingOTP
       log("ERROR $_");
     } catch (e) {
-      Get.back();
+      // Get.back();,<--replaced with isLoadingOTP
       Get.snackbar("Message", e.toString(), backgroundColor: Colors.lightBlue, colorText: Colors.white);
     }
+    isLoadingOTP(false);
   }
 
   startTimer() async {
@@ -203,7 +208,18 @@ class OtpController extends GetxController {
     countryCode.value = await Get.arguments['countryCode'];
     requestVia.value = await Get.arguments['requestVia'];
     startTimer();
+    startTimer2();
     log(isResendShow.value.toString());
     super.onInit();
+  }
+
+  void startTimer2() {
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      if (timerValue.value == 0) {
+        timer.cancel();
+      } else {
+        timerValue.value--;
+      }
+    });
   }
 }
