@@ -15,6 +15,7 @@ import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
 import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/home/views/modals/balance_check_bottom_sheet.dart';
 import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
+import 'package:ibank/app/modules/mbanking/views/modals/mbanking_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_main_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_service_link_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_menu_bottom_sheet.dart';
@@ -315,16 +316,7 @@ class _QuickActions extends StatelessWidget {
       // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
       // break;
       case WalletActions.mBanking:
-        loadingContainer();
-        // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-        //     backgroundColor: Colors.lightBlue,
-        //     colorText: Colors.white,
-        //     duration: const Duration(seconds: 3));
-        // RechargeMenuDialog.showRechargeMenuDialog();
-        // Get.toNamed(AppRoutes.LOGINBIOMETRICS);
-        // showModalBottomSheet(
-        // context: context,
-        // builder: (context) => _ModalBottomSheet(child: (action == WalletActions.pay) ? const _ServicesModalBottomSheet() : Container()));
+        MBankingMenuBottomSheet.showMBankingMenuBottomSheet();
         break;
     }
   }

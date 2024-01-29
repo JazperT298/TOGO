@@ -14,7 +14,6 @@ import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:sizer/sizer.dart';
 
-
 class WithdrawMenuBottomSheets {
   static void showBottomSheetWithdrawMenu() {
     final controller = Get.put(WithdrawalController());
@@ -64,7 +63,6 @@ class WithdrawMenuBottomSheets {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.back();
                         AppGlobal.siOTPPage = false;
                         AppGlobal.dateNow = '';
                         AppGlobal.timeNow = '';

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/transaction_fee.dart';
@@ -90,7 +91,7 @@ class WithdrawalController extends GetxController {
   }
 
   checkPendingCashout() async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoading();
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -130,10 +131,12 @@ class WithdrawalController extends GetxController {
           log('nickname.value  ${nickname.value}');
           log('refID.value  ${refID.value}');
           Get.back();
+          Get.back();
           // WithdrawInputBottomSheet.showBottomSheetInputNumber();
           log('decodedData checkPendingCashout $decodedData');
           getTransactionFee(decodedData['nickname'], decodedData['amount'], 'APPAGNT');
         } else {
+          Get.back();
           Get.back();
           WithdrawInputBottomSheet.showBottomSheetWithdrawalNormalInputNumber();
 

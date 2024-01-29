@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, unused_local_variable
+// ignore_for_file: unnecessary_null_comparison, unused_local_variable, unused_import
 
 import 'dart:convert';
 import 'dart:developer';
@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/bill_payment_model.dart';
@@ -96,7 +97,7 @@ class PaymentController extends GetxController {
   }
 
   verifyGetCeetLink() async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoading();
     try {
       ceetProductList.clear();
       var headers = {'Content-Type': 'application/xml'};
@@ -132,6 +133,7 @@ class PaymentController extends GetxController {
         if (decodedData['description'] == 'SUCCESS') {
           if (selectedOption.value == "CEET") {
             Get.back();
+            Get.back();
             // PaymentInputsBottomSheet.showBottomSheetInputNumber();
             // CeetProducts apiResponse = CeetProducts.fromJson(json.decode(decodedData));
 
@@ -158,7 +160,7 @@ class PaymentController extends GetxController {
   }
 
   verifyCeetRefIDfromInput({required String refId}) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoading();
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -262,7 +264,7 @@ class PaymentController extends GetxController {
   }
 
   getTransactionFee(String destmsisdn, String price, String keywords) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoading();
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -312,7 +314,7 @@ class PaymentController extends GetxController {
   }
 
   sentBillPaymentRequest(String billType, String billRef, String pice, String password) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoading();
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));

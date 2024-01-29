@@ -25,7 +25,7 @@ class PaymentEnterOtpBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: isKeyboardVisible ? 54.h : 60.h,
+              height: isKeyboardVisible ? 50.h : 60.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),

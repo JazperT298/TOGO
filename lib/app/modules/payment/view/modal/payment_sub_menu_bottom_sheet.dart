@@ -77,7 +77,6 @@ class PaymentSubMenuBottomSheet {
                               // onPressed: toNextStep,
                               onPressed: () {
                                 if (index == 0) {
-                                  Get.back();
                                   controller.selectedOption.value = 'CEET';
                                   controller.ceetPackageRadioGroupValue.value = '';
                                   controller.numberTextField.clear();
