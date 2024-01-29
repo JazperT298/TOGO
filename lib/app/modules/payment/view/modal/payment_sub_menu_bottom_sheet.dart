@@ -81,6 +81,7 @@ class PaymentSubMenuBottomSheet {
                                   controller.selectedOption.value = 'CEET';
                                   controller.ceetPackageRadioGroupValue.value = '';
                                   controller.numberTextField.clear();
+                                  controller.code.clear();
                                   controller.verifyGetCeetLink();
                                 } else if (index == 3) {
                                   Get.back();
@@ -150,6 +151,7 @@ class PaymentSubMenuBottomSheet {
               ),
             ),
           ],
-        ));
+        ),
+        isScrollControlled: true);
   }
 }

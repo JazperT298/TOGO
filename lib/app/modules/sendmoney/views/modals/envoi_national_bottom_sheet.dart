@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors, constant_identifier_names, use_build_context_synchronously, unused_field, deprecated_member_use, unused_element, unnecessary_string_interpolations
+// ignore_for_file: unused_local_variable, unused_import, avoid_print, unnecessary_null_comparison, prefer_const_constructors, constant_identifier_names, use_build_context_synchronously, unused_field, deprecated_member_use, unused_element, unnecessary_string_interpolations, unrelated_type_equality_checks
 
 import 'dart:convert';
 import 'dart:developer';
@@ -18,6 +18,7 @@ import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
+import 'package:ibank/app/data/models/msisdn_details.dart';
 import 'package:ibank/app/data/models/transac_reponse.dart';
 import 'package:ibank/app/data/models/transaction_fee.dart';
 import 'package:ibank/app/data/models/user.dart';
@@ -82,7 +83,8 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
   static TransacResponse? transacResponse;
 
   static TransactionFee? transactionFee;
-
+  static MsisdnDetails? msisdnDetails;
+  static List<Widget> pagesList = [];
   // 96 04 78 78
   @override
   void initState() {
@@ -112,13 +114,14 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         );
       },
     );
-
     // Delay for 3 seconds
     await Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(Get.context!).pop(); // Close the alert dialog
-
       // Navigate to the next page
-      pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+      pageController.nextPage(duration: 300.milliseconds, curve: Curves.bounceInOut);
+      pageController.addListener(() {
+        controller.index.value = pageController.page!.toInt();
+      });
     });
   }
 
@@ -238,22 +241,26 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
         ),
         const SizedBox(height: 18),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                'Name',
-                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
-              ),
-            ),
-            Expanded(
-              child: Text(
-                'N/A',
-                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
-              ),
-            ),
-          ],
+        Obx(
+          () => controller.firstname.value.isEmpty
+              ? SizedBox.shrink()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Name',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '${controller.firstname.value} ${controller.lastname.value}',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
         ),
         const SizedBox(height: 6),
         // widget.sendType.contains(LocaleKeys.strNationalTransfer.tr)
@@ -310,16 +317,36 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           children: [
             Expanded(
               child: Text(
-                'Frais',
+                LocaleKeys.strTransferAmount.tr,
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                amountEditingController.text.isEmpty
+                    ? '0 FCFA'
+                    : '${StringHelper.formatNumberWithCommas(int.parse(amountEditingController.text.toString().replaceAll(',', '')))} FCFA',
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                'Fees',
                 style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
               ),
             ),
             Expanded(
               child: Obx(
                 () => Text(
-                  controller.fees.value.isEmpty
+                  controller.totalFess.value == 0
                       ? '0 FCFA'
-                      : '${StringHelper.formatNumberWithCommas(int.parse(controller.fees.value.replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
+                      : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
                   style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                 ),
               ),
@@ -332,16 +359,40 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
           children: [
             Expanded(
               child: Text(
-                LocaleKeys.strTransferAmount.tr,
+                'Tax',
                 style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
               ),
             ),
             Expanded(
+              child: Obx(
+                () => Text(
+                  controller.senderkeycosttva.isEmpty
+                      ? '0 FCFA'
+                      : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
               child: Text(
-                amountEditingController.text.isEmpty
-                    ? '0 FCFA'
-                    : '${StringHelper.formatNumberWithCommas(int.parse(amountEditingController.text.toString()))} FCFA',
-                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                'TTC ',
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+              ),
+            ),
+            Expanded(
+              child: Obx(
+                () => Text(
+                  controller.totalAmount.value == 0
+                      ? '0 FCFA'
+                      : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                ),
               ),
             ),
           ],
@@ -616,12 +667,12 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 if (amountEditingController.text.isNotEmpty) {
                   var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
                   if (messageType == 'CASHOFF') {
-                    getTransactionFee('WITHDRAW', amountEditingController.text, messageType);
+                    getTransactionFee('WITHDRAW', amountEditingController.text, messageType, asd);
                   } else {
-                    getTransactionFee(asd, amountEditingController.text, messageType);
+                    getTransactionFee(asd, amountEditingController.text, messageType, asd);
                   }
                   controller.amountController = amountEditingController;
-                  AppGlobal.siOTPPage = true;
+
                   isTextFieldEmpty = false;
                 } else {
                   setState(() {
@@ -654,9 +705,9 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                     // TransactionProvider.onSendMoneySubmit(numberEditingCobntroller, amountEditingController, context);
                     var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
                     if (messageType == 'CASHOFF') {
-                      getTransactionFee('WITHDRAW', amountEditingController.text, messageType);
+                      getTransactionFee('WITHDRAW', amountEditingController.text, messageType, asd);
                     } else {
-                      getTransactionFee(asd, amountEditingController.text, messageType);
+                      getTransactionFee(asd, amountEditingController.text, messageType, asd);
                     }
                     controller.amountController = amountEditingController;
                     AppGlobal.siOTPPage = true;
@@ -683,7 +734,6 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
                 textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
-            const SizedBox(height: 30),
           ],
         );
       }),
@@ -909,6 +959,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         );
       }),
     );
+
     return PageView(
       controller: pageController,
       physics: const NeverScrollableScrollPhysics(),
@@ -987,9 +1038,7 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
     }
   }
 
-  static void getNameNumber() {}
-
-  static void getTransactionFee(String msisdn, String amounts, String mess) async {
+  static void getTransactionFee(String msisdn, String amounts, String mess, String destmsisdn) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -1020,12 +1069,63 @@ class _EnvoiModalBottomSheetState extends State<EnvoiModalBottomSheet> {
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
 
         transactionFee = TransactionFee.fromJson(jsonData);
-        controller.fees.value = transactionFee!.sender;
+        controller.senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
+        controller.senderkeycosttva.value = transactionFee!.senderkeycosttva;
 
-        toNextStep();
+        controller.totalFess.value =
+            int.parse(controller.senderkeycosttotal.value.replaceAll(',', '')) - int.parse(controller.senderkeycosttva.value.replaceAll(',', ''));
+        controller.totalAmount.value = int.parse(amounts) + int.parse(controller.senderkeycosttotal.value.replaceAll(',', ''));
+        log('   controller.totalFess.value  ${controller.totalFess.value}');
+        log('   controller.totalAmount.value  ${controller.totalAmount.value}');
+        getMsisdnDetails(destmsisdn);
       }
     } catch (e) {
       log('getTransactionFee asd $e');
+      Get.back();
+      showMessageDialog(message: e.toString());
+    }
+  }
+
+  static void getMsisdnDetails(String msisdn) async {
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <app:getMsisdnDetails soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <msisdn xsi:type="xsd:string">$msisdn</msisdn>
+      </app:getMsisdnDetails>
+   </soapenv:Body>
+</soapenv:Envelope>''';
+      log('getMsisdnDetails ${request.body}');
+      http.StreamedResponse response = await request.send();
+      request.headers.addAll(headers);
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        log('getTransactionFee jsonString 1 $result');
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('getMsisdnDetailsReturn').single;
+        var jsonString = soapElement.innerText;
+        log('getTransactionFee jsonString 2 $jsonString');
+        var asd = '228${numberEditingCobntroller.text.replaceAll(" ", "")}';
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        msisdnDetails = MsisdnDetails.fromJson(jsonData);
+        controller.altnumber.value = msisdnDetails!.altnumber;
+        controller.status.value = msisdnDetails!.status;
+        controller.lastname.value = msisdnDetails!.lastname;
+        controller.gender.value = msisdnDetails!.gender;
+        controller.firstname.value = msisdnDetails!.firstname;
+        controller.email.value = msisdnDetails!.email;
+
+        toNextStep();
+        controller.isSummaryPage.value = true;
+      }
+    } catch (e) {
+      log('getMsisdnDetails asd $e');
       Get.back();
       showMessageDialog(message: e.toString());
     }

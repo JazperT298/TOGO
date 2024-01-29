@@ -1,5 +1,6 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, unused_local_variable, avoid_print, unused_import
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flukit/flukit.dart';
@@ -7,19 +8,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/line_separator.dart';
-import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
+import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/helpers/string_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-class WithdrawalDialog {
+class PaymentDialog {
   static void showRecapOperationDialog(context) async {
     // flutter defined function
-    final controller = Get.put(WithdrawalController());
+    final controller = Get.put(PaymentController());
     print("Amount: ${controller.thisDsonString.value}");
 
     Map<String, String> extractedValues = extractValues(controller.thisDsonString.value);
+    Map<String, dynamic> jsonData = jsonDecode(controller.thisDsonString.value);
 
     String amount = extractedValues['amount'] ?? '';
     String trais = extractedValues['trais'] ?? '';
@@ -79,11 +81,9 @@ class WithdrawalDialog {
                       ),
                     ),
                     Expanded(
-                      child: Obx(
-                        () => Text(
-                          controller.nickname.value,
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
-                        ),
+                      child: Text(
+                        nom.isEmpty ? 'N/A' : nom,
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -126,9 +126,9 @@ class WithdrawalDialog {
                     ),
                     Expanded(
                       child: Text(
-                        controller.amount.value.isEmpty
+                        controller.price.value.isEmpty
                             ? '0 FCFA'
-                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.amount.value.replaceAll(',', '')))} FCFA',
+                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.price.value.replaceAll(',', '')))} FCFA',
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
@@ -146,7 +146,7 @@ class WithdrawalDialog {
                     ),
                     Expanded(
                       child: Text(
-                        controller.fees.value.isEmpty
+                        controller.totalFess.value == 0
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA',
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
@@ -168,7 +168,7 @@ class WithdrawalDialog {
                       child: Text(
                         controller.senderkeycosttva.value.isEmpty
                             ? '0 FCFA'
-                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString()))} FCFA',
+                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
@@ -249,7 +249,7 @@ class WithdrawalDialog {
                     ),
                     Expanded(
                       child: Text(
-                        txnId.isEmpty ? '' : txnId,
+                        jsonData['refid'] == '' ? '' : jsonData['refid'],
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
@@ -314,7 +314,7 @@ class WithdrawalDialog {
       'amount': amount,
       'trais': frais,
       'taf': taf,
-      'nom': nom,
+      // 'nom': nom,
       'nouveauSolde': nouveauSolde,
       'txnId': txnId,
     };

@@ -14,7 +14,6 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
 
   @override
   Widget build(BuildContext context) {
-    var trimString = Get.arguments['trimString'];
     return FluScreen(
       overlayStyle: context.systemUiOverlayStyle.copyWith(
         statusBarColor: Colors.transparent,
@@ -65,7 +64,7 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    WithdrawalDialog.showRecapOperationDialog(context, '', '', trimString);
+                    WithdrawalDialog.showRecapOperationDialog(context);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(8),

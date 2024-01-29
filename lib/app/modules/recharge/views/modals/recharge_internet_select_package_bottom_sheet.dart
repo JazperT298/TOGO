@@ -239,9 +239,7 @@ class RechargeInternetSelectPackageBottomSheet {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 2.h
-                ),
+                SizedBox(height: 2.h),
                 Padding(
                   padding: EdgeInsets.only(
                     left: 5.w,

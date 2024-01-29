@@ -9,24 +9,28 @@ TransactionFee transactionFeeFromJson(String str) => TransactionFee.fromJson(jso
 String transactionFeeToJson(TransactionFee data) => json.encode(data.toJson());
 
 class TransactionFee {
-  String sender;
+  String senderkeycosttotal;
+  String senderkeycosttva;
   String destination;
   String currency;
 
   TransactionFee({
-    required this.sender,
+    required this.senderkeycosttotal,
+    required this.senderkeycosttva,
     required this.destination,
     required this.currency,
   });
 
   factory TransactionFee.fromJson(Map<String, dynamic> json) => TransactionFee(
-        sender: json["sender"],
+        senderkeycosttotal: json["senderkeycosttotal"],
+        senderkeycosttva: json['senderkeycosttva'],
         destination: json["destination"],
         currency: json["currency"],
       );
 
   Map<String, dynamic> toJson() => {
-        "sender": sender,
+        "senderkeycosttotal": senderkeycosttotal,
+        "senderkeycosttva": senderkeycosttva,
         "destination": destination,
         "currency": currency,
       };

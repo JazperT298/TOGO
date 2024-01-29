@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison, unused_local_variable
+
 import 'dart:convert';
 import 'dart:developer';
 
@@ -8,6 +10,7 @@ import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/models/bill_payment_model.dart';
 import 'package:ibank/app/data/models/ceet_products_model.dart';
+import 'package:ibank/app/data/models/transaction_fee.dart';
 import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/login/alertdialog/login_alertdialog.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
@@ -24,16 +27,30 @@ class PaymentController extends GetxController {
   TextEditingController numberTextField = TextEditingController();
   TextEditingController amountTextField = TextEditingController();
   TextEditingController code = TextEditingController();
+  RxString senderkeycosttotal = ''.obs;
+  RxString senderkeycosttva = ''.obs;
+  RxInt totalFess = 0.obs;
+  RxInt totalAmount = 0.obs;
+  DateTime? parsedDate;
+  RxString extractedDate = ''.obs;
 
   RxList<CeetProducts> ceetProductList = <CeetProducts>[].obs;
   RxList<Datum> ceetDataList = <Datum>[].obs;
 
   RxString ceetPackageRadioGroupValue = ''.obs;
+  RxString keyword = ''.obs;
 
   RxString selectedOption = ''.obs;
   Datum? selectDatum;
   BillPayment? billPayment;
   List<WalletAction> walletChild = [];
+  RxString price = ''.obs;
+  TransactionFee? transactionFee;
+  RxString billType = 'APPBILL CEET'.obs;
+  RxString billRef = ''.obs;
+
+  RxString thisDsonString = ''.obs;
+  RxString errorMessage = ''.obs;
 
   @override
   void onInit() {
@@ -99,7 +116,7 @@ class PaymentController extends GetxController {
           </v:Body>
           </v:Envelope>''';
       request.headers.addAll(headers);
-
+      log('verifyGetCeetLink 1 ${request.body}');
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
         var result = await response.stream.bytesToString();
@@ -108,7 +125,7 @@ class PaymentController extends GetxController {
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
         var decodedData = jsonDecode(jsonString);
-        log(decodedData.toString());
+        log('verifyGetCeetLink 0 ${decodedData.toString()}');
 
         log('verifyGetCeetLink 1 ${jsonEncode(decodedData)}');
         // var apiResponseMap = json.decode(decodedData);
@@ -122,12 +139,16 @@ class PaymentController extends GetxController {
             // PaymentServiceLinksBottomSheet.showBottomSheetCeetServicePackageTo();
             PaymentInputsBottomSheet.showBottomSheetCeetInputNumber();
             // await transactVoiceRechargeOwn(msisdn: msisdn, code: code);
-          } else {
-            // await transactVoieRechargeOthers(msisdn: msisdn, code: code);
           }
+        } else if (decodedData['description'] == 'DATA_NOT_FOUND') {
+          // await transactVoieRechargeOthers(msisdn: msisdn, code: code);
+          Get.back();
+          Get.snackbar("Message", decodedData['message'], backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
         }
       } else {
+        Get.back();
         log("ERROR ${response.reasonPhrase}'");
+        Get.snackbar("Message", 'An Error Occured, Please try again later', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } catch (e) {
       log('verifyGetCeetLink $e');
@@ -156,29 +177,43 @@ class PaymentController extends GetxController {
           </v:Body>
           </v:Envelope>''';
       request.headers.addAll(headers);
+      log('verifyCeetRefIDfromInput 0 ${request.body}');
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
         var result = await response.stream.bytesToString();
+        log('verifyCeetRefIDfromInput result 0 $result');
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
-        log(jsonString.toString());
+        log('verifyCeetRefIDfromInput jsonString 1 ${jsonString.toString()}');
         var decodedData = jsonDecode(jsonString);
-        // log('verifyCeetRefIDfromInput 1 ${jsonEncode(decodedData)}');
-        // print('STATUS ${decodedData['status']}');
-        if (decodedData['status'] == '99') {
-          Get.back();
-          Get.snackbar("Message", decodedData['message'], backgroundColor: Colors.lightBlue, colorText: Colors.white);
-        } else {
-          Get.back();
+        log('verifyCeetRefIDfromInput 2 decodedData ${decodedData.toString()}');
+
+        if (decodedData['status'] == "0") {
           Get.back();
           billPayment = BillPayment.fromJson(decodedData);
-          log(billPayment!.message[0].productname);
-          PaymentEnterOtpBottomSheet.showBottomSheetOTPCEET();
+          price.value = billPayment!.message[0].price;
+          RegExp regExp = RegExp(r'\b(\d{8})\b');
+          Match match = regExp.firstMatch(billPayment!.message[0].description)!;
+          if (match != null) {
+            extractedDate.value = match.group(1)!;
+            log("Extracted date: ${extractedDate.value}");
+            parsedDate = DateTime.parse(extractedDate.value);
+          }
+          getTransactionFee(selectedOption.value, price.value, 'APPBILL');
+        } else if (decodedData['status'] == "99") {
+          Get.back();
+          Get.snackbar("Message", 'Reference unavailable, please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+        } else if ((decodedData['status'] == "98")) {
+          Get.back();
+          Get.snackbar("Message", 'No pending bills. ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+        } else {
+          Get.back();
+          Get.snackbar("Message", 'Service unavailable, pelase try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        log("ERROR verifyCeetRefIDfromInput ${response.reasonPhrase}");
       }
     } catch (e) {
       Get.back();
@@ -219,10 +254,126 @@ class PaymentController extends GetxController {
         Get.back();
         RechargeMenuDialog.showMessageDialog(message: jsonString);
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        log("ERROR verifyCeetRefIDfromSaved ${response.reasonPhrase}'");
       }
     } catch (e) {
       log('transactInternetRechargeOwn $e');
+    }
+  }
+
+  getTransactionFee(String destmsisdn, String price, String keywords) async {
+    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+          <v:Body>
+          <n0:getTransactionFee xmlns:n0="http://applicationmanager.tlc.com">
+              <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
+              <destmsisdn i:type="d:string">$destmsisdn</destmsisdn>
+              <keyword i:type="d:string">$keywords</keyword>
+              <value i:type="d:string">$price</value>
+          </n0:getTransactionFee>
+          </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('getTransactionFeeReturn').single;
+        var jsonString = soapElement.innerText;
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        transactionFee = TransactionFee.fromJson(jsonData);
+        senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
+        senderkeycosttva.value = transactionFee!.senderkeycosttva;
+        totalFess.value = int.parse(senderkeycosttotal.value.replaceAll(',', '')) - int.parse(senderkeycosttva.value.replaceAll(',', ''));
+        totalAmount.value = int.parse(price) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
+
+        Get.back();
+        Get.back();
+        PaymentEnterOtpBottomSheet.showBottomSheetOTPCEET();
+      } else {
+        Get.back();
+        log("ERROR getTransactionFee ${response.reasonPhrase}");
+        RechargeMenuDialog.showMessageDialog(message: 'An Error Occured, Please try again later');
+      }
+    } catch (e) {
+      Get.back();
+      log('getTransactionFee $e');
+      RechargeMenuDialog.showMessageDialog(message: 'An Error Occured, Please try again later');
+    }
+  }
+
+  sentBillPaymentRequest(String billType, String billRef, String pice, String password) async {
+    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+          <v:Body>
+            <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
+          <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
+          <message i:type="d:string">$billType $billRef $price $password F</message>
+          <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
+          <sendsms i:type="d:string">true</sendsms>
+          </n0:RequestTokenJson>
+          </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+      log('request.body  ${request.body}');
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        log('result  $result');
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
+        var jsonString = soapElement.innerText;
+        var decodedData = jsonDecode(jsonString);
+        log('jsonString  $jsonString');
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        log('jsonData  $jsonData');
+        //60001
+        if (decodedData['msgid'] == 0) {
+          Get.back();
+          thisDsonString.value = jsonString;
+          Get.toNamed(AppRoutes.PAYMENTSUCCESS);
+        } else if (decodedData['msgid'] == 5) {
+          Get.back();
+          errorMessage.value = decodedData['message'];
+          Get.snackbar("Message", decodedData['message'], backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+        } else {
+          Get.back();
+          errorMessage.value = decodedData['message'];
+          Get.toNamed(AppRoutes.PAYMENTFAILED);
+        }
+        // transactionFee = TransactionFee.fromJson(jsonData);
+        // senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
+        // senderkeycosttva.value = transactionFee!.senderkeycosttva;
+        // totalFess.value = int.parse(senderkeycosttotal.value.replaceAll(',', '')) - int.parse(senderkeycosttva.value.replaceAll(',', ''));
+        // totalAmount.value = int.parse(price) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
+
+        // PaymentEnterOtpBottomSheet.showBottomSheetOTPCEET();
+      } else {
+        Get.back();
+        log("ERROR getTransactionFee ${response.reasonPhrase}");
+        RechargeMenuDialog.showMessageDialog(message: 'An Error Occured, Please try again later');
+      }
+    } catch (e) {
+      Get.back();
+      log('getTransactionFee $e');
+      RechargeMenuDialog.showMessageDialog(message: 'An Error Occured, Please try again later');
     }
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_international_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_national_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
@@ -15,6 +16,7 @@ class EnvoiMenuBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SendMoneyController());
     final PageController pageController = PageController();
 
     final header = Column(
@@ -72,6 +74,7 @@ class EnvoiMenuBottomSheet extends StatelessWidget {
                 AppGlobal.siOTPPage = false;
                 AppGlobal.dateNow = '';
                 AppGlobal.timeNow = '';
+                controller.isSummaryPage.value = false;
                 showModalBottomSheet(
                     isScrollControlled: true,
                     context: context,
@@ -110,6 +113,7 @@ class EnvoiMenuBottomSheet extends StatelessWidget {
                 AppGlobal.siOTPPage = false;
                 AppGlobal.dateNow = '';
                 AppGlobal.timeNow = '';
+                controller.isSummaryPage.value = false;
                 showModalBottomSheet(
                     isScrollControlled: true,
                     context: context,
@@ -216,21 +220,25 @@ class _ModalBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SendMoneyController());
     return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Container(
-            height: isKeyboardVisible
-                ? AppGlobal.siOTPPage == true
-                    ? MediaQuery.of(context).size.height * .5
-                    : MediaQuery.of(context).size.height * .3
-                : AppGlobal.siOTPPage == true
-                    ? MediaQuery.of(context).size.height * .55
-                    : MediaQuery.of(context).size.height * .4,
-            decoration: BoxDecoration(
-              color: context.colorScheme.background,
-            ),
-            child: child),
+        child: Obx(
+          () => controller.isSummaryPage.value == true && controller.index.value == 2
+              ? Container(
+                  height: isKeyboardVisible ? MediaQuery.of(context).size.height * .48 : MediaQuery.of(context).size.height * .58,
+                  decoration: BoxDecoration(
+                    color: context.colorScheme.background,
+                  ),
+                  child: child)
+              : Container(
+                  height: isKeyboardVisible ? MediaQuery.of(context).size.height * .30 : MediaQuery.of(context).size.height * .36,
+                  decoration: BoxDecoration(
+                    color: context.colorScheme.background,
+                  ),
+                  child: child),
+        ),
       );
     });
   }

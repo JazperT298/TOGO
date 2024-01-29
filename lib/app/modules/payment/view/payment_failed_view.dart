@@ -1,25 +1,18 @@
-import 'dart:convert';
-
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
-import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
 
-class TransacFailedView extends StatelessWidget {
-  const TransacFailedView({super.key});
+class PaymentFieldView extends StatelessWidget {
+  const PaymentFieldView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(SendMoneyController());
-    var jsonString = Get.arguments['jsonString'];
-    Map<String, dynamic> response = json.decode(jsonString);
-
-    String message = response["message"];
+    var controller = Get.put(PaymentController());
 
     return FluScreen(
       overlayStyle: context.systemUiOverlayStyle.copyWith(
@@ -57,10 +50,16 @@ class TransacFailedView extends StatelessWidget {
                   padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
                   child: Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      message, //   'Sorry, the operation failed. Please try again later or contact support if the problem persists', //     "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                    child: Obx(
+                      () => Text(
+                        controller.errorMessage.value.isEmpty
+                            ? 'Sorry, the operation failed. Please try again later or contact support if the problem persists'
+                            : //     "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste:
+                            controller.errorMessage
+                                .value, //   'Sorry, the operation failed. Please try again later or contact support if the problem persists', //     "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                      ),
                     ),
                   ),
                 ),
@@ -94,8 +93,8 @@ class TransacFailedView extends StatelessWidget {
 
                   iconStrokeWidth: 1.8,
                   onPressed: () {
-                    controller.numberController.clear();
-                    controller.amountController.clear();
+                    controller.amountTextField.clear();
+                    controller.numberTextField.clear();
                     // Get.toNamed(AppRoutes.BOTTOMNAV);
                     Get.back();
                     Get.back();

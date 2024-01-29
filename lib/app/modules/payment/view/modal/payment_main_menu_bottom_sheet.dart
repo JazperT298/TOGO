@@ -9,6 +9,7 @@ import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_sub_menu_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:sizer/sizer.dart';
 
 class PaymentMainMenuBottomSheet {
@@ -21,7 +22,7 @@ class PaymentMainMenuBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: 75.h,
+              height: 60.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
@@ -69,7 +70,7 @@ class PaymentMainMenuBottomSheet {
                     ),
                     SizedBox(height: 3.h),
                     Padding(
-                      padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                      padding: EdgeInsets.only(left: 5.w, right: 5.w, bottom: 3.h),
                       child: ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -83,6 +84,8 @@ class PaymentMainMenuBottomSheet {
                                 if (index != 1) {
                                   Get.snackbar("Message", LocaleKeys.strComingSoon.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                                 } else {
+                                  AppGlobal.dateNow = '';
+                                  AppGlobal.timeNow = '';
                                   Get.back();
                                   PaymentSubMenuBottomSheet.showBottomSheetPaymentSubMenu(context);
                                 }
@@ -141,6 +144,7 @@ class PaymentMainMenuBottomSheet {
               ),
             ),
           ],
-        ));
+        ),
+        isScrollControlled: true);
   }
 }

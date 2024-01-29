@@ -28,3 +28,22 @@ Widget loadingHomeScreen() {
     ),
   );
 }
+
+class FullLoadingPage extends StatelessWidget {
+  const FullLoadingPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(Get.context!).size.height,
+      width: double.infinity,
+      color: Colors.black.withOpacity(0.3), // Transparent black background
+      child: Center(
+        child: LoadingAnimationWidget.staggeredDotsWave(
+          color: const Color(0xFFFB6404), //const Color(0xFF124DE5),
+          size: 50,
+        ),
+      ),
+    );
+  }
+}

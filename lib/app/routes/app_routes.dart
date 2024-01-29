@@ -35,4 +35,7 @@ class AppRoutes {
   static const String RECHARGE = '/recharge';
   static const String RECHARGEOTP = '/rechargeotp';
   static const String WITHDRAWPROGRESS = '/withdrawprogress';
+
+  static const String PAYMENTSUCCESS = '/paymentsuccess';
+  static const String PAYMENTFAILED = '/paymentfailed';
 }

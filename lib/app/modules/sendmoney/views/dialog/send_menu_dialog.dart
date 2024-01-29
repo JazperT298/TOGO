@@ -253,7 +253,7 @@ class SendMenuDialog {
 
           content: Container(
             width: MediaQuery.of(context).size.width - 60,
-            height: 440,
+            height: 480,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -283,22 +283,26 @@ class SendMenuDialog {
                   style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                 ),
                 const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Name',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'N/A',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
-                      ),
-                    ),
-                  ],
+                Obx(
+                  () => controller.firstname.value.isEmpty
+                      ? SizedBox.shrink()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Name',
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                'N/A',
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                              ),
+                            ),
+                          ],
+                        ),
                 ),
                 const SizedBox(height: 6),
                 Row(
@@ -331,27 +335,7 @@ class SendMenuDialog {
                   children: [
                     Expanded(
                       child: Text(
-                        'Frais',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        controller.fees.value.isEmpty
-                            ? '0 FCFA'
-                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.fees.value.replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Montant',
+                        'Amount',
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
@@ -359,12 +343,71 @@ class SendMenuDialog {
                       child: Text(
                         controller.amountController.text.isEmpty
                             ? '0 FCFA'
-                            : StringHelper.formatNumberWithCommas(int.parse(controller.amountController.text)),
+                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.amountController.text.toString().replaceAll(',', '')))} FCFA',
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
                 ),
+                SizedBox(height: 1.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Fees',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        controller.totalFess.value == 0
+                            ? '0 FCFA'
+                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Tax',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        controller.senderkeycosttva.value.isEmpty
+                            ? '0 FCFA'
+                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'TTC',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        controller.totalAmount.value == 0
+                            ? '0 FCFA'
+                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
                 const SizedBox(height: 24),
                 const LineSeparator(color: Colors.grey),
                 const SizedBox(height: 24),
@@ -801,7 +844,7 @@ class SendMenuDialog {
     return {
       'amount': amount,
       'beneficiaire': beneficiaire,
-      'codeRetait': codeRetait,
+      // 'codeRetait': codeRetait,
       'date': date,
       'nouveauSolde': nouveauSolde,
       'txnId': txnId,
