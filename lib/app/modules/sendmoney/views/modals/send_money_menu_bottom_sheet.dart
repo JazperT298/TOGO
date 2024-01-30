@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/send_money_input_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
@@ -59,14 +60,18 @@ class SendMoneyMenuBottomSheet {
                     SizedBox(height: 3.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.back();
+                      child: InkWell(
+                        onTap: () async {
                           AppGlobal.siOTPPage = false;
                           AppGlobal.dateNow = '';
                           AppGlobal.timeNow = '';
                           controller.clearInputAndData();
-                          SendMoneyInputBottomSheet.showBottomSheetSendMoneyNationaInputNumber();
+                          FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
+                          await Future.delayed(const Duration(seconds: 2), () {
+                            Get.back();
+                            Get.back();
+                            SendMoneyInputBottomSheet.showBottomSheetSendMoneyNationaInputNumber();
+                          });
                         },
                         child: Container(
                             height: 9.h,
@@ -92,14 +97,18 @@ class SendMoneyMenuBottomSheet {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.back();
+                      child: InkWell(
+                        onTap: () async {
                           AppGlobal.siOTPPage = false;
                           AppGlobal.dateNow = '';
                           AppGlobal.timeNow = '';
                           controller.clearInputAndData();
-                          SendMoneyInputBottomSheet.showBottomSheetSendMoneyInterationaInputNumber();
+                          FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
+                          await Future.delayed(const Duration(seconds: 2), () {
+                            Get.back();
+                            Get.back();
+                            SendMoneyInputBottomSheet.showBottomSheetSendMoneyInterationaInputNumber();
+                          });
                         },
                         child: Container(
                             height: 9.h,

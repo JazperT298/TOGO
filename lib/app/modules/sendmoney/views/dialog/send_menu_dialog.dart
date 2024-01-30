@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors, sized_box_for_whitespace, avoid_print, unused_import, unused_local_variable
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flukit/flukit.dart';
@@ -228,12 +229,12 @@ class SendMenuDialog {
     });
   }
 
-  static void showRecapOperationDialog(context, msisdn, amounts, trimString) async {
+  static void showRecapOperationDialog(context) async {
     // flutter defined function
     final controller = Get.put(SendMoneyController());
-    print("Amount: $trimString");
 
-    Map<String, String> extractedValues = extractValues(trimString);
+    Map<String, String> extractedValues = extractValues(controller.thisDsonString.value);
+    Map<String, dynamic> jsonData = jsonDecode(controller.thisDsonString.value);
 
     String amount = extractedValues['amount'] ?? '';
     String beneficiaire = extractedValues['beneficiaire'] ?? '';
@@ -316,7 +317,7 @@ class SendMenuDialog {
                     ),
                     Expanded(
                       child: Text(
-                        msisdn,
+                        controller.numberController.value.text,
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
@@ -475,7 +476,7 @@ class SendMenuDialog {
                   children: [
                     Expanded(
                       child: Text(
-                        'Nouveau solde',
+                        'New Balance',
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),

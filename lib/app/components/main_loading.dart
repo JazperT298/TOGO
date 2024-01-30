@@ -101,4 +101,48 @@ class FullScreenLoading {
         ),
         isScrollControlled: true);
   }
+
+  static fullScreenLoadingWithText(String infoString) {
+    return Get.bottomSheet(
+        backgroundColor: Colors.transparent,
+        Container(
+          height: MediaQuery.of(Get.context!).size.height,
+          width: double.infinity,
+          color: Colors.white.withOpacity(0.1),
+          child: Center(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              LoadingAnimationWidget.staggeredDotsWave(color: const Color(0xFFFB6404), size: 70),
+              Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: Text(infoString, style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.white, fontSize: 17)))
+            ],
+          )),
+        ),
+        isScrollControlled: true);
+  }
+
+  static fullScreenLoadingWithTextAndTimer(String infoString) {
+    return Get.bottomSheet(
+        backgroundColor: Colors.transparent,
+        Container(
+          height: MediaQuery.of(Get.context!).size.height,
+          width: double.infinity,
+          color: Colors.white.withOpacity(0.1),
+          child: Center(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              LoadingAnimationWidget.staggeredDotsWave(color: const Color(0xFFFB6404), size: 70),
+              Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: Text(infoString, style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.white, fontSize: 17)))
+            ],
+          )),
+        ),
+        isScrollControlled: true);
+  }
 }

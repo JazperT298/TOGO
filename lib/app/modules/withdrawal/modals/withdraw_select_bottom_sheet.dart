@@ -6,6 +6,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
 import 'package:ibank/app/modules/withdrawal/modals/withdraw_input_bottom_sheet.dart';
 import 'package:ibank/utils/configs.dart';
@@ -131,12 +132,16 @@ class WithdrawSelectBottomSheet {
                           'Confirm',
                           suffixIcon: FluIcons.checkCircleUnicon,
                           iconStrokeWidth: 1.8,
-                          onPressed: () {
+                          onPressed: () async {
                             if (controller.internetRadioGroupValue.value.isEmpty) {
                               Get.snackbar("Message", 'Please choose a bank', backgroundColor: Colors.red, colorText: Colors.white);
                             } else {
-                              Get.back();
-                              WithdrawInputBottomSheet.showBottomSheeCountertWithdrawalInputNumber();
+                              FullScreenLoading.fullScreenLoadingWithTextAndTimer('Validating request. . .');
+                              await Future.delayed(const Duration(seconds: 2), () {
+                                Get.back();
+                                Get.back();
+                                WithdrawInputBottomSheet.showBottomSheeCountertWithdrawalInputNumber();
+                              });
                             }
 
                             // if (controller.code.text.isNotEmpty) {

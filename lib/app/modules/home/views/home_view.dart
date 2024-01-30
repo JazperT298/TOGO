@@ -275,13 +275,13 @@ class _QuickActions extends StatelessWidget {
   void onAction(BuildContext context, WalletActions action) {
     switch (action) {
       case WalletActions.send:
-        showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (context) => const _ModalBottomSheet(
-                  child: EnvoiMenuBottomSheet(),
-                ));
-        // SendMoneyMenuBottomSheet.showBottomSheetSendMoneyMenu();
+        // showModalBottomSheet(
+        //     isScrollControlled: true,
+        //     context: context,
+        //     builder: (context) => const _ModalBottomSheet(
+        //           child: EnvoiMenuBottomSheet(),
+        //         ));
+        SendMoneyMenuBottomSheet.showBottomSheetSendMoneyMenu();
 
         break;
       case WalletActions.withdraw:

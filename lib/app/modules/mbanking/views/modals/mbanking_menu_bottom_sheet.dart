@@ -91,7 +91,7 @@ class MBankingMenuBottomSheet {
                       'Link a bank',
                       iconStrokeWidth: 1.8,
                       onPressed: () {
-                        FullScreenLoading.fullScreenLoading();
+                        FullScreenLoading.fullScreenLoadingWithText('Processing. . .');
                       },
                       height: 55,
                       width: 100.w,

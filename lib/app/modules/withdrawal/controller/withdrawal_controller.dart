@@ -91,7 +91,7 @@ class WithdrawalController extends GetxController {
   }
 
   checkPendingCashout() async {
-    FullScreenLoading.fullScreenLoading();
+    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -156,7 +156,7 @@ class WithdrawalController extends GetxController {
   }
 
   enterPinToTransactWithdrawal({required String code}) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));

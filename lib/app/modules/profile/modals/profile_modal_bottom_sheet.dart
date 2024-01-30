@@ -76,8 +76,8 @@ class ProfileBottomSheet {
                       child: FluTextField(
                         inputController: controller.amountTextField,
                         hint: "Enter amount to calculate",
-                        hintStyle: TextStyle(fontSize: 11.sp),
-                        textStyle: TextStyle(fontSize: 11.sp),
+                        hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
+                        textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                         height: 50,
                         cornerRadius: 15,
                         keyboardType: TextInputType.number,
@@ -248,7 +248,7 @@ class ProfileBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: isKeyboardVisible ? 27.h : 33.h,
+              height: isKeyboardVisible ? 27.h : 34.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
@@ -257,9 +257,7 @@ class ProfileBottomSheet {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 2.h,
-                    ),
+                    SizedBox(height: 2.5.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
@@ -267,9 +265,7 @@ class ProfileBottomSheet {
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
                       ),
                     ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
+                    SizedBox(height: 1.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
@@ -277,9 +273,7 @@ class ProfileBottomSheet {
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
                       ),
                     ),
-                    SizedBox(
-                      height: 4.h,
-                    ),
+                    SizedBox(height: 3.h),
                     Row(
                       children: [
                         FluLine(
@@ -292,9 +286,7 @@ class ProfileBottomSheet {
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: 4.h,
-                    ),
+                    SizedBox(height: 3.h),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(Get.context!).size.height * .025),
                       child: FluTextField(
@@ -308,18 +300,25 @@ class ProfileBottomSheet {
                           cursorColor: const Color(0xFF27303F),
                           hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
                           textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                          onChanged: (text) {
+                            String newText = text.replaceAll(' ', '');
+                            String spacedText = newText.split('').join(' ');
+                            controller.code.value = controller.code.value.copyWith(
+                              text: spacedText,
+                              selection: TextSelection.collapsed(offset: spacedText.length),
+                            );
+                          },
                           onFieldSubmitted: (p0) async {
                             if (controller.code.text.isNotEmpty) {
-                              controller.enterPinForInformationPersonelles(code: controller.code.text);
+                              String finalPINCode = controller.code.text.replaceAll(' ', '');
+                              controller.enterPinForInformationPersonelles(code: finalPINCode);
                             } else {
                               Get.snackbar("Message", LocaleKeys.strPasswordWarnings.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             }
                             controller.code.clear();
                           }),
                     ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
+                    SizedBox(height: 3.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Visibility(
@@ -330,7 +329,8 @@ class ProfileBottomSheet {
                           iconStrokeWidth: 1.8,
                           onPressed: () {
                             if (controller.code.text.isNotEmpty) {
-                              controller.enterPinForInformationPersonelles(code: controller.code.text);
+                              String finalPINCode = controller.code.text.replaceAll(' ', '');
+                              controller.enterPinForInformationPersonelles(code: finalPINCode);
                             } else {
                               Get.snackbar("Message", LocaleKeys.strPasswordWarnings.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             }

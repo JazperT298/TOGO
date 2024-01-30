@@ -7,6 +7,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
 import 'package:ibank/app/modules/withdrawal/modals/withdraw_otp_bottom_sheet.dart';
 import 'package:ibank/utils/configs.dart';
@@ -218,7 +219,19 @@ class WithdrawInputBottomSheet {
                           FilteringTextInputFormatter.digitsOnly,
                         ],
 
-                        onFieldSubmitted: (p0) {},
+                        onFieldSubmitted: (p0) async {
+                          if (controller.counterWithdrawalAmount.value.text.isEmpty) {
+                            Get.snackbar("Message", 'Please input an amount', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                          } else {
+                            controller.amounts = controller.counterWithdrawalAmount;
+                            FullScreenLoading.fullScreenLoadingWithTextAndTimer('Verifying request. . .');
+                            await Future.delayed(const Duration(seconds: 2), () {
+                              Get.back();
+                              Get.back();
+                              WithdrawOtpBottomSheet.showBottomSheetCounterWithdrawnOTP();
+                            });
+                          }
+                        },
                       ),
                     ),
                     SizedBox(
@@ -232,10 +245,19 @@ class WithdrawInputBottomSheet {
                           'Continue',
                           suffixIcon: FluIcons.arrowRight,
                           iconStrokeWidth: 1.8,
-                          onPressed: () {
-                            Get.back();
-                            controller.amounts = controller.counterWithdrawalAmount;
-                            WithdrawOtpBottomSheet.showBottomSheetCounterWithdrawnOTP();
+                          onPressed: () async {
+                            if (controller.counterWithdrawalAmount.value.text.isEmpty) {
+                              Get.snackbar("Message", 'Please input an amount', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                            } else {
+                              controller.amounts = controller.counterWithdrawalAmount;
+                              FullScreenLoading.fullScreenLoadingWithTextAndTimer('Verifying request. . .');
+                              await Future.delayed(const Duration(seconds: 2), () {
+                                Get.back();
+                                Get.back();
+                                WithdrawOtpBottomSheet.showBottomSheetCounterWithdrawnOTP();
+                              });
+                            }
+
                             // if (controller.code.text.isNotEmpty) {
                             //   AppGlobal.dateNow = DateTime.now().toString();
                             //   AppGlobal.timeNow = DateTime.now().toString();

@@ -223,7 +223,7 @@ class SendMoneyInputBottomSheet {
           bottomSheetDivider(),
           KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
             return Container(
-              height: isKeyboardVisible ? 27.h : 32.h,
+              height: isKeyboardVisible ? 28.h : 34.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),

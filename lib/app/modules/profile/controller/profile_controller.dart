@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:app_settings/app_settings.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/profile/dialog/profile_message_dialog.dart';
@@ -109,7 +110,7 @@ class ProfileController extends GetxController {
   }
 
   enterPinForInformationPersonelles({required String code}) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoadingWithText('Validating PIN . . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));

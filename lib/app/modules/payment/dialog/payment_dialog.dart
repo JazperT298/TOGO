@@ -261,7 +261,7 @@ class PaymentDialog {
                   children: [
                     Expanded(
                       child: Text(
-                        'Nouveau solde',
+                        'New Balance',
                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),

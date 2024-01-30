@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -653,8 +655,15 @@ class WithdrawOtpBottomSheet {
                           suffixIcon: FluIcons.checkCircleUnicon,
                           iconStrokeWidth: 1.8,
                           onPressed: () {
-                            Get.back();
-                            Get.toNamed(AppRoutes.WITHDRAWPROGRESS);
+                            // Get.back();
+                            // Get.toNamed(AppRoutes.WITHDRAWPROGRESS);
+                            if (controller.code.text.isNotEmpty) {
+                              AppGlobal.dateNow = DateTime.now().toString();
+                              AppGlobal.timeNow = DateTime.now().toString();
+                              controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                            } else {
+                              Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                            }
                             // if (controller.code.text.isNotEmpty) {
                             //   AppGlobal.dateNow = DateTime.now().toString();
                             //   AppGlobal.timeNow = DateTime.now().toString();

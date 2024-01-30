@@ -6,6 +6,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
 import 'package:ibank/app/modules/withdrawal/modals/withdraw_input_bottom_sheet.dart';
 import 'package:ibank/app/modules/withdrawal/modals/withdraw_otp_bottom_sheet.dart';
@@ -106,14 +107,18 @@ class WithdrawMenuBottomSheets {
                       ),
                     ).paddingOnly(bottom: 12),
                     InkWell(
-                      onTap: () {
-                        Get.back();
+                      onTap: () async {
                         AppGlobal.siOTPPage = false;
                         AppGlobal.dateNow = '';
                         AppGlobal.timeNow = '';
                         controller.code.clear();
                         controller.amounts.clear();
-                        WithdrawOtpBottomSheet.showBottomSheetWithdrawCollectionOTP();
+                        FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
+                        await Future.delayed(const Duration(seconds: 2), () {
+                          Get.back();
+                          Get.back();
+                          WithdrawOtpBottomSheet.showBottomSheetWithdrawCollectionOTP();
+                        });
                       },
                       child: Padding(
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
@@ -151,13 +156,17 @@ class WithdrawMenuBottomSheets {
                       ),
                     ).paddingOnly(bottom: 12),
                     InkWell(
-                      onTap: () {
-                        Get.back();
+                      onTap: () async {
                         controller.internetRadioGroupValue.value = '';
                         controller.selectedBank.value = '';
                         controller.code.clear();
                         controller.amounts.clear();
-                        WithdrawSelectBottomSheet.showBottomSheetWithdrawCounterSelect();
+                        FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
+                        await Future.delayed(const Duration(seconds: 2), () {
+                          Get.back();
+                          Get.back();
+                          WithdrawSelectBottomSheet.showBottomSheetWithdrawCounterSelect();
+                        });
                       },
                       child: Padding(
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),

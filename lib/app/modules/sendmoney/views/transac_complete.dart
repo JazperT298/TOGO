@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,17 +15,6 @@ class TransacCompleteView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(SendMoneyController());
-
-    var msisdn = Get.arguments['msisdn'];
-    var amounts = Get.arguments['amounts'];
-    var trimString = Get.arguments['trimString'];
-    // var date = Get.arguments['date'];
-    // var time = Get.arguments['time'];
-    log('msisdn $msisdn');
-    log('amounts $amounts');
-    log('trimString $trimString');
-    // log('date $date');
-    // log('time $time');
 
     return FluScreen(
       overlayStyle: context.systemUiOverlayStyle.copyWith(
@@ -79,7 +66,7 @@ class TransacCompleteView extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    SendMenuDialog.showRecapOperationDialog(context, msisdn, amounts, trimString);
+                    SendMenuDialog.showRecapOperationDialog(context);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(8),
