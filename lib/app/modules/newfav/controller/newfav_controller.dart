@@ -23,7 +23,6 @@ class NewFavController extends GetxController {
   RxInt selectedByUser = 0.obs;
   @override
   void onInit() {
-    // TODO: implement onInit
     fetchContacts();
     super.onInit();
   }

@@ -17,7 +17,7 @@ import 'package:sizer/sizer.dart';
 
 class SendMoneyInputBottomSheet {
   static void showBottomSheetSendMoneyNationaInputNumber() {
-    final controller = Get.put(SendMoneyController());
+    final controller = Get.find<SendMoneyController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       Wrap(
@@ -28,7 +28,10 @@ class SendMoneyInputBottomSheet {
               height: isKeyboardVisible ? 30.h : 35.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +41,10 @@ class SendMoneyInputBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strWalletSend.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: 14),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -46,7 +52,10 @@ class SendMoneyInputBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strTransferHeader.tr,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                            fontSize: 22),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -54,7 +63,10 @@ class SendMoneyInputBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strTransferHeaderDesc.tr,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                            fontSize: 14),
                       ),
                     ),
                     // ),
@@ -79,15 +91,23 @@ class SendMoneyInputBottomSheet {
                         children: [
                           Expanded(
                             child: FluTextField(
-                                hint: LocaleKeys.strTransferRecipientNumber.tr, // "Numéro du destinataire",
+                                hint: LocaleKeys.strTransferRecipientNumber
+                                    .tr, // "Numéro du destinataire",
                                 inputController: controller.numberController,
-                                hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
-                                textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                                hintStyle: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
+                                textStyle: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontSize: 14),
                                 height: 50,
                                 cornerRadius: 15,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'[0-9\s]')),
                                 ],
                                 fillColor: const Color(0xFFF4F5FA),
                                 cursorColor: const Color(0xFF27303F),
@@ -101,9 +121,12 @@ class SendMoneyInputBottomSheet {
                                       (match) => '${match.group(0)} ',
                                     );
                                   }
-                                  controller.numberController.value = controller.numberController.value.copyWith(
+                                  controller.numberController.value = controller
+                                      .numberController.value
+                                      .copyWith(
                                     text: text,
-                                    selection: TextSelection.collapsed(offset: text.length),
+                                    selection: TextSelection.collapsed(
+                                        offset: text.length),
                                   );
 
                                   controller.isTextFieldEmpty.value = false;
@@ -111,17 +134,23 @@ class SendMoneyInputBottomSheet {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Container(width: 1.5, color: Colors.grey, height: 20),
+                            child: Container(
+                                width: 1.5, color: Colors.grey, height: 20),
                           ),
                           InkWell(
                             onTap: () async {
-                              SendMoneyContactsBottomSheet.showBottomSheetSendMoneyNationaContacts();
+                              SendMoneyContactsBottomSheet
+                                  .showBottomSheetSendMoneyNationaContacts();
                             },
                             child: Container(
                                 height: 45,
                                 width: MediaQuery.of(context).size.width / 7.8,
-                                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                                decoration: const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 4.0),
+                                decoration: const BoxDecoration(
+                                    color: Color(0xFFF4F5FA),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0))),
                                 child: const FluIcon(
                                   FluIcons.userSearch,
                                   size: 20,
@@ -134,7 +163,8 @@ class SendMoneyInputBottomSheet {
                     Obx(
                       () => controller.isTextFieldEmpty.value == true
                           ? Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 LocaleKeys.strPhoneNumberRequired.tr,
                                 style: TextStyle(
@@ -155,39 +185,82 @@ class SendMoneyInputBottomSheet {
                           suffixIcon: FluIcons.arrowRight,
                           iconStrokeWidth: 1.8,
                           onPressed: () {
-                            print(controller.numberController.value.text.trim().toString().length);
-                            if (controller.numberController.value.text.isNotEmpty &&
-                                controller.numberController.value.text.trim().toString().length == 11) {
-                              if (controller.numberController.value.text.contains(" ")) {
+                            print(controller.numberController.value.text
+                                .trim()
+                                .toString()
+                                .length);
+                            if (controller
+                                    .numberController.value.text.isNotEmpty &&
+                                controller.numberController.value.text
+                                        .trim()
+                                        .toString()
+                                        .length ==
+                                    11) {
+                              if (controller.numberController.value.text
+                                  .contains(" ")) {
                                 print("wala ge input ang 228");
-                                String replacedString = controller.numberController.value.text.replaceAll(" ", "").trim().toString();
-                                String msisdn = (controller.selectedCountryCode.value + replacedString).replaceAll("+", "").toString();
+                                String replacedString = controller
+                                    .numberController.value.text
+                                    .replaceAll(" ", "")
+                                    .trim()
+                                    .toString();
+                                String msisdn =
+                                    (controller.selectedCountryCode.value +
+                                            replacedString)
+                                        .replaceAll("+", "")
+                                        .toString();
                                 print(msisdn);
                                 print(controller.selectedCountryCode.value);
 
-                                if (msisdn.substring(0, 3) == controller.selectedCountryCode.value.replaceAll("+", "")) {
-                                  controller.onVerifySmidnSubmit(msisdn, context);
+                                if (msisdn.substring(0, 3) ==
+                                    controller.selectedCountryCode.value
+                                        .replaceAll("+", "")) {
+                                  controller.onVerifySmidnSubmit(
+                                      msisdn, context);
                                 } else {
-                                  Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                  Get.snackbar(
+                                      "Message", LocaleKeys.strInvalidNumber.tr,
+                                      backgroundColor: Colors.lightBlue,
+                                      colorText: Colors.white);
                                 }
                               } else {
                                 print("ge input ang 228");
                                 print(controller.numberController.value.text);
-                                if (controller.numberController.value.text.substring(0, 3) ==
-                                    controller.selectedCountryCode.value.replaceAll("+", "")) {
-                                  String stringRemoveCountryCode = controller.numberController.value.text.substring(3);
-                                  String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
-                                  controller.onVerifySmidnSubmit(controller.numberController.value.text, context);
+                                if (controller.numberController.value.text
+                                        .substring(0, 3) ==
+                                    controller.selectedCountryCode.value
+                                        .replaceAll("+", "")) {
+                                  String stringRemoveCountryCode = controller
+                                      .numberController.value.text
+                                      .substring(3);
+                                  String formattedMSISDN =
+                                      stringRemoveCountryCode.replaceAllMapped(
+                                          RegExp(r".{2}"),
+                                          (match) => "${match.group(0)} ");
+                                  controller.onVerifySmidnSubmit(
+                                      controller.numberController.value.text,
+                                      context);
                                 } else {
-                                  Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                  Get.snackbar(
+                                      "Message", LocaleKeys.strInvalidNumber.tr,
+                                      backgroundColor: Colors.lightBlue,
+                                      colorText: Colors.white);
                                 }
                               }
 
                               controller.isTextFieldEmpty.value = false;
-                            } else if (controller.numberController.value.text.isEmpty) {
+                            } else if (controller
+                                .numberController.value.text.isEmpty) {
                               controller.isTextFieldEmpty.value = true;
-                            } else if (controller.numberController.value.text.trim().toString().length != 11) {
-                              Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                            } else if (controller.numberController.value.text
+                                    .trim()
+                                    .toString()
+                                    .length !=
+                                11) {
+                              Get.snackbar(
+                                  "Message", LocaleKeys.strInvalidNumber.tr,
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             }
                           },
                           height: 55,
@@ -197,13 +270,17 @@ class SendMoneyInputBottomSheet {
                           foregroundColor: context.colorScheme.onPrimary,
                           boxShadow: [
                             BoxShadow(
-                              color: context.colorScheme.primary.withOpacity(.35),
+                              color:
+                                  context.colorScheme.primary.withOpacity(.35),
                               blurRadius: 25,
                               spreadRadius: 3,
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFF4F5FA),
+                              fontSize: 16),
                         ),
                       ),
                     ),
@@ -218,7 +295,7 @@ class SendMoneyInputBottomSheet {
   }
 
   static void showBottomSheetSendMoneyNationaInputAmount() {
-    final controller = Get.put(SendMoneyController());
+    final controller = Get.find<SendMoneyController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       Wrap(
@@ -229,7 +306,10 @@ class SendMoneyInputBottomSheet {
               height: isKeyboardVisible ? 28.h : 34.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,7 +319,10 @@ class SendMoneyInputBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strWalletSend.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: 14),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -249,17 +332,29 @@ class SendMoneyInputBottomSheet {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: LocaleKeys.strTransferInfo.tr, // 'Vous allez envoyer de l’argent à ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                              text: LocaleKeys.strTransferInfo
+                                  .tr, // 'Vous allez envoyer de l’argent à ',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  fontSize: 22),
                             ),
                             controller.numberController.value.text.length <= 11
                                 ? TextSpan(
-                                    text: '\n+${controller.numberController.value.text.toString()}',
-                                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                                    text:
+                                        '\n+${controller.numberController.value.text.toString()}',
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontSize: 22),
                                   )
                                 : TextSpan(
-                                    text: '\n+228 ${controller.numberController.value.text.toString()}',
-                                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 22),
+                                    text:
+                                        '\n+228 ${controller.numberController.value.text.toString()}',
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color(0xFF124DE5),
+                                        fontSize: 22),
                                   ),
                           ],
                         ),
@@ -288,26 +383,42 @@ class SendMoneyInputBottomSheet {
                         children: [
                           Expanded(
                             child: FluTextField(
-                              hint: LocaleKeys.strAmountSend.tr, // "Numéro du destinataire",
+                              hint: LocaleKeys.strAmountSend
+                                  .tr, // "Numéro du destinataire",
                               inputController: controller.amountController,
-                              hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
-                              textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                              hintStyle: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: 14),
+                              textStyle: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontSize: 14),
                               height: 50,
                               cornerRadius: 15,
                               keyboardType: TextInputType.number,
                               inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9\s]')),
                               ],
                               fillColor: const Color(0xFFF4F5FA),
                               cursorColor: const Color(0xFF27303F),
                               onFieldSubmitted: (p0) {
-                                if (controller.amountController.text.isNotEmpty) {
-                                  var asd = '228${controller.numberController.value.text.replaceAll(" ", "")}';
-                                  if (controller.messageType.value == 'CASHOFF') {
+                                if (controller
+                                    .amountController.text.isNotEmpty) {
+                                  var asd =
+                                      '228${controller.numberController.value.text.replaceAll(" ", "")}';
+                                  if (controller.messageType.value ==
+                                      'CASHOFF') {
                                     controller.getNationalTransactionFee(
-                                        'WITHDRAW', controller.amountController.value.text, controller.messageType.value);
+                                        'WITHDRAW',
+                                        controller.amountController.value.text,
+                                        controller.messageType.value);
                                   } else {
-                                    controller.getNationalTransactionFee(asd, controller.amountController.value.text, controller.messageType.value);
+                                    controller.getNationalTransactionFee(
+                                        asd,
+                                        controller.amountController.value.text,
+                                        controller.messageType.value);
                                   }
                                   controller.isTextFieldEmpty.value = false;
                                 } else {
@@ -322,7 +433,8 @@ class SendMoneyInputBottomSheet {
                     Obx(
                       () => controller.isTextFieldEmpty.value == true
                           ? Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 LocaleKeys.strPhoneNumberRequired.tr,
                                 style: TextStyle(
@@ -343,13 +455,20 @@ class SendMoneyInputBottomSheet {
                           suffixIcon: FluIcons.arrowRight,
                           iconStrokeWidth: 1.8,
                           onPressed: () {
-                            if (controller.amountController.value.text.isNotEmpty) {
-                              var asd = '228${controller.numberController.value.text.replaceAll(" ", "")}';
+                            if (controller
+                                .amountController.value.text.isNotEmpty) {
+                              var asd =
+                                  '228${controller.numberController.value.text.replaceAll(" ", "")}';
                               if (controller.messageType.value == 'CASHOFF') {
                                 controller.getNationalTransactionFee(
-                                    'WITHDRAW', controller.amountController.value.text, controller.messageType.value);
+                                    'WITHDRAW',
+                                    controller.amountController.value.text,
+                                    controller.messageType.value);
                               } else {
-                                controller.getNationalTransactionFee(asd, controller.amountController.value.text, controller.messageType.value);
+                                controller.getNationalTransactionFee(
+                                    asd,
+                                    controller.amountController.value.text,
+                                    controller.messageType.value);
                               }
                               controller.isTextFieldEmpty.value = false;
                             } else {
@@ -363,13 +482,17 @@ class SendMoneyInputBottomSheet {
                           foregroundColor: context.colorScheme.onPrimary,
                           boxShadow: [
                             BoxShadow(
-                              color: context.colorScheme.primary.withOpacity(.35),
+                              color:
+                                  context.colorScheme.primary.withOpacity(.35),
                               blurRadius: 25,
                               spreadRadius: 3,
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFF4F5FA),
+                              fontSize: 16),
                         ),
                       ),
                     ),
@@ -384,7 +507,7 @@ class SendMoneyInputBottomSheet {
   }
 
   static void showBottomSheetSendMoneyInterationaInputNumber() {
-    final controller = Get.put(SendMoneyController());
+    final controller = Get.find<SendMoneyController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       Wrap(
@@ -395,7 +518,10 @@ class SendMoneyInputBottomSheet {
               height: isKeyboardVisible ? 30.h : 35.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -405,7 +531,10 @@ class SendMoneyInputBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strWalletSend.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: 14),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -413,7 +542,10 @@ class SendMoneyInputBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strTransferHeader.tr,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                            fontSize: 22),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -421,7 +553,10 @@ class SendMoneyInputBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strTransferHeaderDesc.tr,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                            fontSize: 14),
                       ),
                     ),
                     // ),
@@ -445,40 +580,73 @@ class SendMoneyInputBottomSheet {
                         children: [
                           Expanded(
                             child: FluTextField(
-                                hint: LocaleKeys.strTransferRecipientNumber.tr, // "Numéro du destinataire",
+                                hint: LocaleKeys.strTransferRecipientNumber
+                                    .tr, // "Numéro du destinataire",
                                 inputController: controller.numberController,
-                                hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
-                                textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                                hintStyle: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
+                                textStyle: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontSize: 14),
                                 height: 50,
                                 cornerRadius: 15,
                                 keyboardType: TextInputType.number,
                                 prefix: GestureDetector(
                                   onTap: () async {
-                                    final picked = await controller.countryPicker.showPicker(context: context);
+                                    final picked = await controller
+                                        .countryPicker
+                                        .showPicker(context: context);
                                     // Null check
                                     if (picked != null) {
                                       print(picked.dialCode);
-                                      controller.selectedCountryCode.value = picked.dialCode;
+                                      controller.selectedCountryCode.value =
+                                          picked.dialCode;
                                     } else {
-                                      controller.selectedCountryCode.value = '+228';
+                                      controller.selectedCountryCode.value =
+                                          '+228';
                                     }
                                   },
                                   child: Obx(
                                     () => Container(
                                       height: 45,
-                                      width: MediaQuery.of(context).size.width / 5,
+                                      width:
+                                          MediaQuery.of(context).size.width / 5,
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: controller.selectedCountryCode.value.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
-                                      decoration:
-                                          const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                          horizontal: controller
+                                                      .selectedCountryCode
+                                                      .value
+                                                      .length <=
+                                                  3
+                                              ? 18.0
+                                              : 12.0,
+                                          vertical: 4.0),
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xFFF4F5FA),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0))),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(controller.selectedCountryCode.value.isEmpty ? '+228' : controller.selectedCountryCode.value,
-                                              style: const TextStyle(color: Colors.black)),
+                                          Text(
+                                              controller.selectedCountryCode
+                                                      .value.isEmpty
+                                                  ? '+228'
+                                                  : controller
+                                                      .selectedCountryCode
+                                                      .value,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                                            child: Container(width: 1.5, color: Colors.grey, height: 20),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8),
+                                            child: Container(
+                                                width: 1.5,
+                                                color: Colors.grey,
+                                                height: 20),
                                           ),
                                         ],
                                       ),
@@ -486,7 +654,8 @@ class SendMoneyInputBottomSheet {
                                   ),
                                 ),
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'[0-9\s]')),
                                 ],
                                 fillColor: const Color(0xFFF4F5FA),
                                 cursorColor: const Color(0xFF27303F),
@@ -500,9 +669,12 @@ class SendMoneyInputBottomSheet {
                                       (match) => '${match.group(0)} ',
                                     );
                                   }
-                                  controller.numberController.value = controller.numberController.value.copyWith(
+                                  controller.numberController.value = controller
+                                      .numberController.value
+                                      .copyWith(
                                     text: text,
-                                    selection: TextSelection.collapsed(offset: text.length),
+                                    selection: TextSelection.collapsed(
+                                        offset: text.length),
                                   );
 
                                   controller.isTextFieldEmpty.value = false;
@@ -510,17 +682,23 @@ class SendMoneyInputBottomSheet {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Container(width: 1.5, color: Colors.grey, height: 20),
+                            child: Container(
+                                width: 1.5, color: Colors.grey, height: 20),
                           ),
                           GestureDetector(
                             onTap: () async {
-                              SendMoneyContactsBottomSheet.showBottomSheetSendMoneyNationaContacts();
+                              SendMoneyContactsBottomSheet
+                                  .showBottomSheetSendMoneyNationaContacts();
                             },
                             child: Container(
                                 height: 45,
                                 width: MediaQuery.of(context).size.width / 7.8,
-                                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                                decoration: const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 4.0),
+                                decoration: const BoxDecoration(
+                                    color: Color(0xFFF4F5FA),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0))),
                                 child: const FluIcon(
                                   FluIcons.userSearch,
                                   size: 20,
@@ -533,7 +711,8 @@ class SendMoneyInputBottomSheet {
                     Obx(
                       () => controller.isTextFieldEmpty.value == true
                           ? Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 LocaleKeys.strPhoneNumberRequired.tr,
                                 style: TextStyle(
@@ -554,39 +733,79 @@ class SendMoneyInputBottomSheet {
                           suffixIcon: FluIcons.arrowRight,
                           iconStrokeWidth: 1.8,
                           onPressed: () {
-                            if (controller.numberController.value.text.isNotEmpty &&
-                                controller.numberController.value.text.trim().toString().length == 11) {
-                              if (controller.numberController.value.text.contains(" ")) {
+                            if (controller
+                                    .numberController.value.text.isNotEmpty &&
+                                controller.numberController.value.text
+                                        .trim()
+                                        .toString()
+                                        .length ==
+                                    11) {
+                              if (controller.numberController.value.text
+                                  .contains(" ")) {
                                 log("wala ge input ang 228");
-                                String replacedString = controller.numberController.value.text.replaceAll(" ", "").trim().toString();
-                                String msisdn = (controller.selectedCountryCode.value + replacedString).replaceAll("+", "").toString();
+                                String replacedString = controller
+                                    .numberController.value.text
+                                    .replaceAll(" ", "")
+                                    .trim()
+                                    .toString();
+                                String msisdn =
+                                    (controller.selectedCountryCode.value +
+                                            replacedString)
+                                        .replaceAll("+", "")
+                                        .toString();
 
-                                if (msisdn.substring(0, 3) == controller.selectedCountryCode.value.replaceAll("+", "")) {
+                                if (msisdn.substring(0, 3) ==
+                                    controller.selectedCountryCode.value
+                                        .replaceAll("+", "")) {
                                   log("MSISDN ---> 1 {$msisdn}");
                                   log(controller.selectedCountryCode.value);
-                                  controller.onVerifySmidnSubmitInt(msisdn, controller.selectedCountryCode.value);
+                                  controller.onVerifySmidnSubmitInt(msisdn,
+                                      controller.selectedCountryCode.value);
                                 } else {
-                                  Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                  Get.snackbar(
+                                      "Message", LocaleKeys.strInvalidNumber.tr,
+                                      backgroundColor: Colors.lightBlue,
+                                      colorText: Colors.white);
                                 }
                               } else {
                                 log("ge input ang 228");
-                                if (controller.numberController.value.text.substring(0, 3) ==
-                                    controller.selectedCountryCode.value.replaceAll("+", "")) {
-                                  String stringRemoveCountryCode = controller.numberController.value.text.substring(3);
-                                  String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+                                if (controller.numberController.value.text
+                                        .substring(0, 3) ==
+                                    controller.selectedCountryCode.value
+                                        .replaceAll("+", "")) {
+                                  String stringRemoveCountryCode = controller
+                                      .numberController.value.text
+                                      .substring(3);
+                                  String formattedMSISDN =
+                                      stringRemoveCountryCode.replaceAllMapped(
+                                          RegExp(r".{2}"),
+                                          (match) => "${match.group(0)} ");
                                   log("MSISDN ---> 2 ${controller.numberController.value.text}");
                                   log(controller.selectedCountryCode.value);
-                                  controller.onVerifySmidnSubmitInt(controller.numberController.value.text, controller.selectedCountryCode.value);
+                                  controller.onVerifySmidnSubmitInt(
+                                      controller.numberController.value.text,
+                                      controller.selectedCountryCode.value);
                                 } else {
-                                  Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                  Get.snackbar(
+                                      "Message", LocaleKeys.strInvalidNumber.tr,
+                                      backgroundColor: Colors.lightBlue,
+                                      colorText: Colors.white);
                                 }
                               }
 
                               controller.isTextFieldEmpty.value = false;
-                            } else if (controller.numberController.value.text.isEmpty) {
+                            } else if (controller
+                                .numberController.value.text.isEmpty) {
                               controller.isTextFieldEmpty.value = true;
-                            } else if (controller.numberController.value.text.trim().toString().length != 11) {
-                              Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                            } else if (controller.numberController.value.text
+                                    .trim()
+                                    .toString()
+                                    .length !=
+                                11) {
+                              Get.snackbar(
+                                  "Message", LocaleKeys.strInvalidNumber.tr,
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             }
                           },
                           height: 55,
@@ -596,13 +815,17 @@ class SendMoneyInputBottomSheet {
                           foregroundColor: context.colorScheme.onPrimary,
                           boxShadow: [
                             BoxShadow(
-                              color: context.colorScheme.primary.withOpacity(.35),
+                              color:
+                                  context.colorScheme.primary.withOpacity(.35),
                               blurRadius: 25,
                               spreadRadius: 3,
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFF4F5FA),
+                              fontSize: 16),
                         ),
                       ),
                     ),
@@ -616,8 +839,9 @@ class SendMoneyInputBottomSheet {
     );
   }
 
-  static void showBottomSheetSendMoneyInterationaInputAmount() {
-    final controller = Get.put(SendMoneyController());
+  static void showBottomSheetSendMoneyInterationaInputAmount(
+      {required String countryName}) {
+    final controller = Get.find<SendMoneyController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       Wrap(
@@ -625,10 +849,13 @@ class SendMoneyInputBottomSheet {
           bottomSheetDivider(),
           KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
             return Container(
-              height: isKeyboardVisible ? 30.h : 35.h,
+              height: isKeyboardVisible ? 28.h : 34.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -638,25 +865,64 @@ class SendMoneyInputBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strWalletSend.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: 14),
                       ),
                     ),
                     SizedBox(height: 1.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                      child: Text(
-                        LocaleKeys.strTransferHeader.tr,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  "You are going to transfer money to ", // 'Vous allez envoyer de l’argent à ',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  fontSize: 22),
+                            ),
+                            TextSpan(
+                              text:
+                                  countryName, // 'Vous allez envoyer de l’argent à ',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color.fromRGBO(255, 152, 0, 1),
+                                  fontSize: 22),
+                            ),
+                            TextSpan(
+                              text:
+                                  " on ", // 'Vous allez envoyer de l’argent à ',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  fontSize: 22),
+                            ),
+                            controller.numberController.value.text.length <= 11
+                                ? TextSpan(
+                                    text:
+                                        '\n+${controller.numberController.value.text.toString()}',
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontSize: 22),
+                                  )
+                                : TextSpan(
+                                    text:
+                                        '\n${controller.selectedCountryCode.value} ${controller.numberController.value.text.toString()}',
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color(0xFF124DE5),
+                                        fontSize: 22),
+                                  ),
+                          ],
+                        ),
                       ),
                     ),
-                    SizedBox(height: 1.h),
-                    Padding(
-                      padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                      child: Text(
-                        LocaleKeys.strTransferHeaderDesc.tr,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
-                      ),
-                    ),
+
                     // ),
                     SizedBox(height: 3.h),
                     Row(
@@ -675,88 +941,43 @@ class SendMoneyInputBottomSheet {
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
+                        // widget.sendType.contains('Transfert National')
                         children: [
                           Expanded(
                             child: FluTextField(
-                                hint: LocaleKeys.strTransferRecipientNumber.tr, // "Numéro du destinataire",
-                                inputController: controller.numberController,
-                                hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
-                                textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
-                                height: 50,
-                                cornerRadius: 15,
-                                keyboardType: TextInputType.number,
-                                prefix: GestureDetector(
-                                  onTap: () async {
-                                    final picked = await controller.countryPicker.showPicker(context: context);
-                                    // Null check
-                                    if (picked != null) {
-                                      print(picked.dialCode);
-                                      controller.selectedCountryCode.value = picked.dialCode;
-                                    } else {
-                                      controller.selectedCountryCode.value = '+228';
-                                    }
-                                  },
-                                  child: Obx(
-                                    () => Container(
-                                      height: 45,
-                                      width: MediaQuery.of(context).size.width / 5,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: controller.selectedCountryCode.value.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
-                                      decoration: BoxDecoration(
-                                          color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(controller.selectedCountryCode.value.isEmpty ? '+228' : controller.selectedCountryCode.value,
-                                              style: const TextStyle(color: Colors.black)),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                                            child: Container(width: 1.5, color: Colors.grey, height: 20),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
-                                ],
-                                fillColor: const Color(0xFFF4F5FA),
-                                cursorColor: const Color(0xFF27303F),
-                                onChanged: (text) {
-                                  // Remove any existing spaces
-                                  text = text.replaceAll(" ", "");
-                                  // Add a space after every two characters
-                                  if (text.length % 2 == 0) {
-                                    text = text.replaceAllMapped(
-                                      RegExp(r'.{2}'),
-                                      (match) => '${match.group(0)} ',
-                                    );
-                                  }
-                                  controller.numberController.value = controller.numberController.value.copyWith(
-                                    text: text,
-                                    selection: TextSelection.collapsed(offset: text.length),
-                                  );
-
-                                  controller.isTextFieldEmpty.value = false;
-                                }),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Container(width: 1.5, color: Colors.grey, height: 20),
-                          ),
-                          GestureDetector(
-                            onTap: () async {},
-                            child: Container(
-                                height: 45,
-                                width: MediaQuery.of(context).size.width / 7.8,
-                                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                                decoration: const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                                child: const FluIcon(
-                                  FluIcons.userSearch,
-                                  size: 20,
+                              hint: LocaleKeys.strAmountSend
+                                  .tr, // "Numéro du destinataire",
+                              inputController: controller.amountController,
+                              hintStyle: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: 14),
+                              textStyle: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
                                   color: Colors.black,
-                                )),
+                                  fontSize: 14),
+                              height: 50,
+                              cornerRadius: 15,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9\s]')),
+                              ],
+                              fillColor: const Color(0xFFF4F5FA),
+                              cursorColor: const Color(0xFF27303F),
+                              onFieldSubmitted: (p0) {
+                                if (controller
+                                    .amountController.text.isNotEmpty) {
+                                  var asd =
+                                      '228${controller.numberController.value.text.replaceAll(" ", "")}';
+                                  controller.getInternationalTransactionFee(asd,
+                                      controller.amountController.value.text);
+                                  controller.isTextFieldEmpty.value = false;
+                                } else {
+                                  controller.isTextFieldEmpty.value = true;
+                                }
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -764,7 +985,8 @@ class SendMoneyInputBottomSheet {
                     Obx(
                       () => controller.isTextFieldEmpty.value == true
                           ? Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 LocaleKeys.strPhoneNumberRequired.tr,
                                 style: TextStyle(
@@ -781,43 +1003,19 @@ class SendMoneyInputBottomSheet {
                       child: Visibility(
                         visible: isKeyboardVisible ? false : true,
                         child: FluButton.text(
-                          LocaleKeys.strContinue.tr, //   'Saisir le montant',
+                          LocaleKeys.strContinue.tr, //    'Continuer',
                           suffixIcon: FluIcons.arrowRight,
                           iconStrokeWidth: 1.8,
                           onPressed: () {
-                            if (controller.numberController.value.text.isNotEmpty &&
-                                controller.numberController.value.text.trim().toString().length == 11) {
-                              if (controller.numberController.value.text.contains(" ")) {
-                                log("wala ge input ang 228");
-                                String replacedString = controller.numberController.value.text.replaceAll(" ", "").trim().toString();
-                                String msisdn = (controller.selectedCountryCode.value + replacedString).replaceAll("+", "").toString();
-
-                                if (msisdn.substring(0, 3) == controller.selectedCountryCode.value.replaceAll("+", "")) {
-                                  log("MSISDN ---> 1 {$msisdn}");
-                                  log(controller.selectedCountryCode.value);
-                                  controller.onVerifySmidnSubmitInt(msisdn, controller.selectedCountryCode.value);
-                                } else {
-                                  Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                                }
-                              } else {
-                                log("ge input ang 228");
-                                if (controller.numberController.value.text.substring(0, 3) ==
-                                    controller.selectedCountryCode.value.replaceAll("+", "")) {
-                                  String stringRemoveCountryCode = controller.numberController.value.text.substring(3);
-                                  String formattedMSISDN = stringRemoveCountryCode.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
-                                  log("MSISDN ---> 2 ${controller.numberController.value.text}");
-                                  log(controller.selectedCountryCode.value);
-                                  controller.onVerifySmidnSubmitInt(controller.numberController.value.text, controller.selectedCountryCode.value);
-                                } else {
-                                  Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                                }
-                              }
-
+                            if (controller
+                                .amountController.value.text.isNotEmpty) {
+                              var asd =
+                                  '228${controller.numberController.value.text.replaceAll(" ", "")}';
+                              controller.getInternationalTransactionFee(
+                                  asd, controller.amountController.value.text);
                               controller.isTextFieldEmpty.value = false;
-                            } else if (controller.numberController.value.text.isEmpty) {
+                            } else {
                               controller.isTextFieldEmpty.value = true;
-                            } else if (controller.numberController.value.text.trim().toString().length != 11) {
-                              Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             }
                           },
                           height: 55,
@@ -827,13 +1025,17 @@ class SendMoneyInputBottomSheet {
                           foregroundColor: context.colorScheme.onPrimary,
                           boxShadow: [
                             BoxShadow(
-                              color: context.colorScheme.primary.withOpacity(.35),
+                              color:
+                                  context.colorScheme.primary.withOpacity(.35),
                               blurRadius: 25,
                               spreadRadius: 3,
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFF4F5FA),
+                              fontSize: 16),
                         ),
                       ),
                     ),

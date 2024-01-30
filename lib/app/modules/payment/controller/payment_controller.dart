@@ -55,7 +55,6 @@ class PaymentController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     walletChild = [
       WalletAction(
         name: 'CEET',

@@ -19,6 +19,7 @@ import 'package:ibank/utils/constants/app_global.dart';
 import '../../history/controller/history_controller.dart';
 import '../../home/controller/home_controller.dart';
 import '../../recharge/controller/recharge_controller.dart';
+import '../../sendmoney/controller/send_money_controller.dart';
 
 final currentPageProvider = StateProvider.autoDispose<int>((ref) => 0);
 
@@ -35,7 +36,8 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
 
   void onPageChange(int index) {
     ref.read(currentPageProvider.notifier).state = index;
-    pageController.animateToPage(index, duration: 300.milliseconds, curve: Curves.decelerate);
+    pageController.animateToPage(index,
+        duration: 300.milliseconds, curve: Curves.decelerate);
   }
 
   @override
@@ -45,6 +47,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
     Get.put(HistoryController());
     Get.put(ProfileController());
     Get.put(RechargeController());
+    Get.put(SendMoneyController());
     contoller.getDataFromStorage();
     super.initState();
   }

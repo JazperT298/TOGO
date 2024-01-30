@@ -16,7 +16,7 @@ class EnvoiMenuBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SendMoneyController());
+    final controller = Get.find<SendMoneyController>();
     final PageController pageController = PageController();
 
     final header = Column(
@@ -220,7 +220,7 @@ class _ModalBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SendMoneyController());
+    final controller = Get.find<SendMoneyController>();
     return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),

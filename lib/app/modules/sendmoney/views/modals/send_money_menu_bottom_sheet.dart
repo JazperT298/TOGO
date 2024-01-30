@@ -12,7 +12,7 @@ import 'package:sizer/sizer.dart';
 
 class SendMoneyMenuBottomSheet {
   static void showBottomSheetSendMoneyMenu() {
-    final controller = Get.put(SendMoneyController());
+ final controller = Get.find<SendMoneyController>();
     Get.bottomSheet(
         backgroundColor: Colors.transparent,
         Wrap(

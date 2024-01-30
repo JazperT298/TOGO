@@ -231,7 +231,7 @@ class SendMenuDialog {
 
   static void showRecapOperationDialog(context) async {
     // flutter defined function
-    final controller = Get.put(SendMoneyController());
+    final controller = Get.find<SendMoneyController>();
 
     Map<String, String> extractedValues = extractValues(controller.thisDsonString.value);
     Map<String, dynamic> jsonData = jsonDecode(controller.thisDsonString.value);
