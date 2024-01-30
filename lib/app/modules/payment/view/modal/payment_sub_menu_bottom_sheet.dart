@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_inputs_bottom_sheet.dart';
 import 'package:sizer/sizer.dart';
@@ -75,7 +76,7 @@ class PaymentSubMenuBottomSheet {
 
                             return FluButton(
                               // onPressed: toNextStep,
-                              onPressed: () {
+                              onPressed: () async {
                                 if (index == 0) {
                                   controller.selectedOption.value = 'CEET';
                                   controller.ceetPackageRadioGroupValue.value = '';
@@ -83,10 +84,14 @@ class PaymentSubMenuBottomSheet {
                                   controller.code.clear();
                                   controller.verifyGetCeetLink();
                                 } else if (index == 3) {
-                                  Get.back();
                                   controller.selectedOption.value = 'SOLERGIE';
                                   controller.numberTextField.clear();
-                                  PaymentInputsBottomSheet.showBottomSheetSolergieInputNumber();
+                                  FullScreenLoading.fullScreenLoadingWithTextAndTimer('Requesting. . .');
+                                  await Future.delayed(const Duration(seconds: 2), () {
+                                    Get.back();
+                                    Get.back();
+                                    PaymentInputsBottomSheet.showBottomSheetSolergieInputNumber();
+                                  });
                                 } else {
                                   Get.snackbar("Message", "Comming Soon", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                                 }

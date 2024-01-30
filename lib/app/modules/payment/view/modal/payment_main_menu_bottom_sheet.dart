@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/data/models/wallet.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_sub_menu_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
@@ -80,14 +81,18 @@ class PaymentMainMenuBottomSheet {
 
                             return FluButton(
                               // onPressed: toNextStep,
-                              onPressed: () {
-                                if (index != 1) {
+                              onPressed: () async {
+                                if (index != 2) {
                                   Get.snackbar("Message", LocaleKeys.strComingSoon.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                                 } else {
                                   AppGlobal.dateNow = '';
                                   AppGlobal.timeNow = '';
-                                  Get.back();
-                                  PaymentSubMenuBottomSheet.showBottomSheetPaymentSubMenu(context);
+                                  FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
+                                  await Future.delayed(const Duration(seconds: 2), () {
+                                    Get.back();
+                                    Get.back();
+                                    PaymentSubMenuBottomSheet.showBottomSheetPaymentSubMenu(context);
+                                  });
                                 }
                               },
                               backgroundColor: Colors.transparent,

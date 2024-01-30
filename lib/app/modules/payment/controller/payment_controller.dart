@@ -97,7 +97,7 @@ class PaymentController extends GetxController {
   }
 
   verifyGetCeetLink() async {
-    FullScreenLoading.fullScreenLoading();
+    FullScreenLoading.fullScreenLoadingWithTextAndTimer('Requesting. . .');
     try {
       ceetProductList.clear();
       var headers = {'Content-Type': 'application/xml'};
@@ -160,7 +160,7 @@ class PaymentController extends GetxController {
   }
 
   verifyCeetRefIDfromInput({required String refId}) async {
-    FullScreenLoading.fullScreenLoading();
+    FullScreenLoading.fullScreenLoadingWithTextAndTimer('Validating Reference ID. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));

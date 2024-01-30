@@ -27,8 +27,7 @@ class ScreenLock {
             if (availableBiometrics.contains(BiometricType.strong)) {
               //FACE ID
               bool didAuthenticate = await localAuthentication.authenticate(
-                localizedReason: 'Please authenticate to access the app',
-              );
+                  localizedReason: 'Please authenticate to access the app', options: const AuthenticationOptions(biometricOnly: true));
               if (didAuthenticate == true) {
                 Get.offAllNamed(AppRoutes.BOTTOMNAV);
                 // context!.read<LoginBloc>().add(LoginWithPinSubmitted(deviceName!, platformId!));
@@ -39,8 +38,7 @@ class ScreenLock {
           } else {
             if (availableBiometrics.contains(BiometricType.face)) {
               bool didAuthenticate = await localAuthentication.authenticate(
-                localizedReason: 'Please authenticate to access the app',
-              );
+                  localizedReason: 'Please authenticate to access the app', options: const AuthenticationOptions(biometricOnly: true));
               if (didAuthenticate == true) {
                 Get.offAllNamed(AppRoutes.BOTTOMNAV);
                 // context!.read<LoginBloc>().add(LoginWithPinSubmitted(deviceName!, platformId!));

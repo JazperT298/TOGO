@@ -97,6 +97,11 @@ class WalletAction {
       /// this concern only merchant that are partners & saved in api database.
       WalletAction(name: LocaleKeys.strWalletPay.tr, description: LocaleKeys.strWalletPayDesc.tr, icon: FluIcons.barcode, children: [
         WalletAction(
+          icon: FluIcons.money,
+          name: 'Merchant payment',
+          description: 'Chosee your payment method...',
+        ),
+        WalletAction(
           icon: FluIcons.monitorMobbile,
           name: 'TV Channels',
           description: 'Renew your TV subscriptions...',
