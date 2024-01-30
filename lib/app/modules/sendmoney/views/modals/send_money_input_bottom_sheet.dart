@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
 import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
+import 'package:ibank/app/modules/sendmoney/views/modals/send_money_contacts_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
@@ -112,8 +113,10 @@ class SendMoneyInputBottomSheet {
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Container(width: 1.5, color: Colors.grey, height: 20),
                           ),
-                          GestureDetector(
-                            onTap: () async {},
+                          InkWell(
+                            onTap: () async {
+                              SendMoneyContactsBottomSheet.showBottomSheetSendMoneyNationaContacts();
+                            },
                             child: Container(
                                 height: 45,
                                 width: MediaQuery.of(context).size.width / 7.8,
@@ -200,7 +203,7 @@ class SendMoneyInputBottomSheet {
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
                         ),
                       ),
                     ),
@@ -366,7 +369,7 @@ class SendMoneyInputBottomSheet {
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
                         ),
                       ),
                     ),
@@ -466,8 +469,8 @@ class SendMoneyInputBottomSheet {
                                       width: MediaQuery.of(context).size.width / 5,
                                       padding: EdgeInsets.symmetric(
                                           horizontal: controller.selectedCountryCode.value.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
-                                      decoration: BoxDecoration(
-                                          color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                                      decoration:
+                                          const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
@@ -510,7 +513,9 @@ class SendMoneyInputBottomSheet {
                             child: Container(width: 1.5, color: Colors.grey, height: 20),
                           ),
                           GestureDetector(
-                            onTap: () async {},
+                            onTap: () async {
+                              SendMoneyContactsBottomSheet.showBottomSheetSendMoneyNationaContacts();
+                            },
                             child: Container(
                                 height: 45,
                                 width: MediaQuery.of(context).size.width / 7.8,
@@ -597,7 +602,7 @@ class SendMoneyInputBottomSheet {
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
                         ),
                       ),
                     ),
@@ -828,7 +833,7 @@ class SendMoneyInputBottomSheet {
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
                         ),
                       ),
                     ),

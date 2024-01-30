@@ -28,9 +28,7 @@ class LoginPinBiometricsView extends StatefulWidget {
 }
 
 class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
-  String userPin = '';
-
-  List<bool>? filledCircles;
+  List<bool>? filledCircles = List.filled(8, false);
   String pinCode = '';
   bool hasError = false;
   final controller = Get.put(LoginController());
@@ -42,7 +40,6 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
   void initState() {
     super.initState();
     initPlatformState();
-    getPinFromStorage();
   }
 
   ///[initPlatformState] used to get device name and platform id
@@ -69,11 +66,6 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
       _deviceName = deviceName;
       _platformId = platformId;
     });
-  }
-
-  void getPinFromStorage() {
-    userPin = Get.find<StorageServices>().storage.read('pin');
-    filledCircles = List.filled(userPin.length, false);
   }
 
   void _handleKeyPress(String key) {
@@ -105,7 +97,7 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
 
   void _resetFilledCircles() {
     setState(() {
-      filledCircles = List.filled(userPin.length, false);
+      filledCircles = List.filled(8, false);
     });
   }
 
@@ -372,25 +364,11 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
             hasError = true;
           });
         } else {
-          // CLEAR THE CIRCLE AFTER THE FAILED MESSAGE
-          if (pinCode == userPin) {
-            // if (controller.isResetCircle.value == true) {
-            //   setState(() {
-            //     _resetFilledCircles();
-            //     pinCode = '';
-            //   });
-            // }
-
-            controller.isLoadingBiometrics.value = true;
-
-            // Simulating a delay of 3 seconds
-            await Future.delayed(const Duration(seconds: 3)).then((value) {
-              controller.isLoadingBiometrics.value = false;
-              setState(() {
-                _resetFilledCircles();
-                pinCode = '';
-              });
-              Get.offAllNamed(AppRoutes.BOTTOMNAV);
+          if (pinCode.isNotEmpty) {
+            controller.enterPINFromBiometrics(code: pinCode);
+            setState(() {
+              _resetFilledCircles();
+              pinCode = '';
             });
           } else {
             Get.snackbar("Message", 'Invalid PIN, Please try again!', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);

@@ -7,6 +7,7 @@ import 'package:fast_rsa/fast_rsa.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
@@ -25,10 +26,10 @@ class OtpController extends GetxController {
   RxString requestVia = ''.obs;
   RxBool isResendShow = false.obs;
   RxInt tries = 0.obs;
-  RxInt timerValue = 300.obs;
+  RxInt timerValue = 20.obs;
 
   verifyOTP({required String otp}) async {
-    isLoadingOTP(true);
+    FullScreenLoading.fullScreenLoadingWithText('Verifying PIN code...');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -64,27 +65,27 @@ class OtpController extends GetxController {
           Get.find<StorageServices>().saveMsisdn(msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
           Get.find<StorageServices>().setToken(token: Get.find<DevicePlatformServices>().deviceID);
           // SUCCESS OTP
-          // Get.back();,<--replaced with isLoadingOTP
+          Get.back();
           Get.offAllNamed(AppRoutes.PRIVACY);
         } else {
-          // Get.back();,<--replaced with isLoadingOTP
+          Get.back();
           Get.snackbar("Message", jsonData["message"], backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
         // print('JSON Response: $jsonResponse');
       } else {
-        // Get.back();,<--replaced with isLoadingOTP
+        Get.back();
         Get.snackbar("Message", 'Internal server error', backgroundColor: Colors.lightBlue, colorText: Colors.white);
         print(response.reasonPhrase);
       }
     } on Exception catch (_) {
-      // Get.back();,<--replaced with isLoadingOTP
+      Get.back();
       log("ERROR $_");
+      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     } catch (e) {
-      // Get.back();,<--replaced with isLoadingOTP
-      Get.snackbar("Message", e.toString(), backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      Get.back();
+      Get.snackbar("Message", 'An error occured, please try again', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
-    isLoadingOTP(false);
   }
 
   startTimer() async {

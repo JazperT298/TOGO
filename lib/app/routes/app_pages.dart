@@ -10,6 +10,7 @@ import 'package:ibank/app/modules/login/views/login_view.dart';
 import 'package:ibank/app/modules/map/views/map_view.dart';
 import 'package:ibank/app/modules/newfav/views/newfav_view.dart';
 import 'package:ibank/app/modules/onboard/views/onboard_view.dart';
+import 'package:ibank/app/modules/otp/views/otp_recovery_view.dart';
 import 'package:ibank/app/modules/otp/views/otp_view.dart';
 import 'package:ibank/app/modules/payment/view/payment_failed_view.dart';
 import 'package:ibank/app/modules/payment/view/payment_success_view.dart';
@@ -70,5 +71,6 @@ class AppPages {
     GetPage(name: AppRoutes.WITHDRAWPROGRESS, page: () => const WithdrawalProgressView()),
     GetPage(name: AppRoutes.PAYMENTSUCCESS, page: () => const PaymentSuccessView()),
     GetPage(name: AppRoutes.PAYMENTFAILED, page: () => const PaymentFieldView()),
+    GetPage(name: AppRoutes.OTPRECOVERY, page: () => const OtpRecoveryView()),
   ];
 }

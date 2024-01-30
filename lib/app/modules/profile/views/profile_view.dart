@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/line.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/components/map.dart';
 import 'package:ibank/app/components/options.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
@@ -529,10 +530,14 @@ class _ProfileViewState extends State<ProfileView> {
           actions: <Widget>[
             TextButton(
               onPressed: () async {
-                await storage.remove('msisdn').then((value) {
-                  Get.back();
-                  Get.find<StorageServices>().clearUserLocalData();
-                  ProgressAlertDialog.showLogoutALoadingDialog(context, LocaleKeys.strLogoutMessage.tr, 3, AppRoutes.LOGIN);
+                Get.back();
+                FullScreenLoading.fullScreenLoadingWithText('Logging out. . .');
+                await storage.remove('msisdn').then((value) async {
+                  await Future.delayed(const Duration(seconds: 3), () {
+                    Get.back();
+                    Get.find<StorageServices>().clearUserLocalData();
+                    Get.offAllNamed(AppRoutes.LOGIN);
+                  });
                 });
                 // Get.find<StorageServices>().clearUserLocalData();
               },

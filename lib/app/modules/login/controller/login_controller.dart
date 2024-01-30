@@ -10,6 +10,7 @@ import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
@@ -62,7 +63,7 @@ class LoginController extends GetxController {
   }
 
   kycInquiryRequest({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
-    isLoadingMsisdn(true);
+    FullScreenLoading.fullScreenLoadingWithText('Authenticating MSISDN...');
     try {
       var client = HttpClient();
       client.badCertificateCallback = (cert, host, port) => true;
@@ -86,13 +87,15 @@ class LoginController extends GetxController {
         var decodedData = jsonDecode(responsebody);
         if (decodedData['extended-data']['issubscribed'] == false && decodedData['extended-data']['othernet'] == true) {
           // SOAP REQUEST
+          Get.back();
           await otpRequestViaApi(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
         } else if (decodedData['extended-data']['issubscribed'] == true && decodedData['extended-data']['othernet'] == false) {
           // VIA SMS
           // encryptionExample(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
+          Get.back();
           await otpRequestViaApi(msisdn: msisdn, formattedMSISDN: formattedMSISDN, countryCode: countryCode);
         } else {
-          // Get.back();
+          Get.back();
           Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
@@ -107,10 +110,10 @@ class LoginController extends GetxController {
     } catch (_) {
       log("ERROR $_");
     }
-    isLoadingMsisdn(false);
   }
 
   otpRequestViaApi({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
+    FullScreenLoading.fullScreenLoadingWithText('Verifying MSISDN...');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -227,7 +230,7 @@ class LoginController extends GetxController {
   }
 
   enterPinForInformationPersonelles({required String code}) async {
-    isLoadingSecurity(true);
+    FullScreenLoading.fullScreenLoadingWithText('Authenticating PIN...');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -283,39 +286,113 @@ class LoginController extends GetxController {
           // soldeFlooz.value = dataDecoded['Solde Flooz'].toString().replaceAll("FCFA", "").trim().toString();
           // afficherSolde.value = false;
           log(soldeFlooz.value);
-          // Get.back();
+          Get.back();
           isResetCircle.value = true;
           Get.find<StorageServices>().saveUserPIN(pin: code);
           Get.toNamed(AppRoutes.LOGINPROFILE);
         } else {
+          Get.back();
           Get.snackbar("Message", jsonData["message"], backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
           isResetCircle.value = true;
         }
       } else {
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+      }
+    } on Exception catch (_) {
+      Get.back();
+      log("ERROR $_");
+      Get.snackbar("Message", 'An error occured, please try again', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+    }
+  }
+
+  enterPINFromBiometrics({required String code}) async {
+    FullScreenLoading.fullScreenLoadingWithText('Authenticating...');
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+          <v:Body>
+          <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
+          <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
+          <message i:type="d:string">BALN $code F</message>
+          <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
+          <sendsms i:type="d:string">false</sendsms>
+          </n0:RequestTokenJson>
+          </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
+        var jsonString = soapElement.innerText;
+        // var decodedData = jsonDecode(jsonString);
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        int msgId = jsonData["msgid"];
+
+        // if (jsonString.contains('Compte:')) {
+        if (msgId == 0) {
+          String inputString = jsonString;
+          var lines = inputString.trim().split('\n');
+          var jsonMap = {};
+          for (var line in lines) {
+            var parts = line.split(':');
+            if (parts.length == 2) {
+              var key = parts[0].trim();
+              var value = parts[1].trim();
+              jsonMap[key] = value;
+            }
+          }
+          var dataEncoded = jsonEncode(jsonMap);
+          var dataDecoded = jsonDecode(dataEncoded);
+          log(dataDecoded.toString());
+          log(soldeFlooz.value);
+          Get.back();
+          isResetCircle.value = true;
+          Get.find<StorageServices>().saveUserPIN(pin: code);
+          Get.offAllNamed(AppRoutes.BOTTOMNAV);
+        } else {
+          Get.back();
+          Get.snackbar("Message", jsonData["message"], backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+          isResetCircle.value = true;
+        }
+      } else {
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+
         print(response.reasonPhrase);
       }
     } on Exception catch (_) {
+      Get.back();
       log("ERROR $_");
+      Get.snackbar("Message", 'An error occured, please try again', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
-    isLoadingSecurity(false);
   }
 
   resetFilledCircles() {}
 
   void profileContinueButtonClick() async {
-    isLoadingProfile(true);
+    FullScreenLoading.fullScreenLoadingWithText('Saving profile...');
     await Future.delayed(const Duration(seconds: 3)).then((value) {
       Get.offAllNamed(AppRoutes.LOGINBIOMETRICS);
     });
-    isLoadingProfile(false);
   }
 
   void biometricsContinueButtonClick() async {
-    isLoadingBiometric(true);
+    FullScreenLoading.fullScreenLoadingWithText('Validating request...');
     await Future.delayed(const Duration(seconds: 3)).then((value) {
       Get.offAllNamed(AppRoutes.LOGINSUCCESS);
     });
-    isLoadingBiometric(false);
   }
 }
 // https://flooznfctest.moov-africa.tg/kyctest/inquiry

@@ -47,9 +47,17 @@ class _LoginSuccessState extends State<LoginSuccess> {
               children: [
                 const Spacer(),
                 showProgressIndicator
-                    ? const CircularProgressIndicator(
-                        strokeWidth: 6,
-                        color: Colors.green,
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height * .3,
+                        width: MediaQuery.of(context).size.height * .3,
+                        child: SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: const CircularProgressIndicator(
+                            strokeWidth: 6,
+                            color: Colors.green,
+                          ),
+                        ),
                       )
                     : Image.asset(
                         AppImages.transacSuccess,

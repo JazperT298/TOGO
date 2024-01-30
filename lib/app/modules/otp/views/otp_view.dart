@@ -9,6 +9,7 @@ import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/modules/otp/controller/otp_controller.dart';
 import 'package:flukit/flukit.dart';
+import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
@@ -239,42 +240,62 @@ class _OtpViewState extends State<OtpView> {
                                 ),
                               ),
                             )
-                          : InkWell(
-                              onTap: () {
-                                controller.tries.value++;
+                          : controller.tries.value == 3
+                              ? InkWell(
+                                  onTap: () async {
+                                    FullScreenLoading.fullScreenLoadingWithTextAndTimer('Redirecting. . .');
+                                    await Future.delayed(const Duration(seconds: 2), () {
+                                      Get.back();
+                                      Get.toNamed(AppRoutes.OTPRECOVERY);
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                    child: Center(
+                                      child: Text(
+                                        'Try another method',
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 14),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : InkWell(
+                                  onTap: () {
+                                    controller.tries.value++;
 
-                                if (controller.tries.value < 4) {
-                                  if (controller.requestVia.value == "sms") {
-                                    controller.resendencryptionExample(
-                                        msisdn: controller.msisdn.value,
-                                        formattedMSISDN: controller.formatedMSISDN.value,
-                                        countryCode: controller.countryCode.value);
-                                  } else {
-                                    controller.otpRequestViaApi(
-                                        msisdn: controller.msisdn.value,
-                                        formattedMSISDN: controller.formatedMSISDN.value,
-                                        countryCode: controller.countryCode.value);
-                                  }
-                                  // controller.isResendShow.value = false;
-                                  controller.timerValue.value = 300;
-                                  controller.startTimer2();
-                                } else {
-                                  // controller.isResendShow.value = false;
-                                  Get.snackbar("Message", LocaleKeys.strPinCodeWarning.tr,
-                                      backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                                }
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                child: Center(
-                                  child: Text(
-                                    LocaleKeys.strResentCode.tr,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 14),
+                                    if (controller.tries.value < 4) {
+                                      if (controller.requestVia.value == "sms") {
+                                        controller.resendencryptionExample(
+                                            msisdn: controller.msisdn.value,
+                                            formattedMSISDN: controller.formatedMSISDN.value,
+                                            countryCode: controller.countryCode.value);
+                                      } else {
+                                        controller.otpRequestViaApi(
+                                            msisdn: controller.msisdn.value,
+                                            formattedMSISDN: controller.formatedMSISDN.value,
+                                            countryCode: controller.countryCode.value);
+                                      }
+                                      // controller.isResendShow.value = false;
+                                      controller.timerValue.value = 20;
+                                      controller.startTimer2();
+                                    } else {
+                                      // controller.isResendShow.value = false;
+                                      Get.snackbar("Message", LocaleKeys.strPinCodeWarning.tr,
+                                          backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                    }
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                    child: Center(
+                                      child: Text(
+                                        LocaleKeys.strResentCode.tr,
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 14),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
                     ),
                     const SizedBox(height: 8),
                     FluButton.text(

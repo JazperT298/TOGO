@@ -27,9 +27,7 @@ class SendMoneyMenuBottomSheet {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 2.5.h,
-                    ),
+                    SizedBox(height: 2.5.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(

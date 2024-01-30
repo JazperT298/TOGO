@@ -162,8 +162,7 @@ class _LoginViewState extends State<LoginView> {
                             height: 5.h,
                             width: MediaQuery.of(context).size.width / 4.6,
                             padding: EdgeInsets.symmetric(horizontal: _selectedCountryCode.length <= 3 ? 18.0 : 12.0, vertical: 4.0),
-                            decoration: BoxDecoration(
-                                color: context.colorScheme.primaryContainer, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                            decoration: const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -185,7 +184,7 @@ class _LoginViewState extends State<LoginView> {
                               FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
                             ],
                             keyboardType: TextInputType.number,
-                            fillColor: context.colorScheme.primaryContainer,
+                            fillColor: const Color(0xFFF4F5FA),
                             onChanged: (text) {
                               // Remove any existing spaces
                               text = text.replaceAll(" ", "");

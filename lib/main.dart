@@ -87,18 +87,30 @@ class _AutoLogoutViewState extends State<AutoLogoutView> with WidgetsBindingObse
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.paused) {
       _timer = Timer(const Duration(minutes: 10), () {
-        log('The app is paused $_timer');
-        Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
+        log('The app is state $state 0 $_timer');
+        if (AppGlobal.MSISDN.isNotEmpty) {
+          Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
+        } else {
+          log('The app is state $state 1 $_timer');
+        }
       });
     } else if (state == AppLifecycleState.resumed) {
-      _timer = Timer(const Duration(minutes: 5), () {
-        log('The app is resumed ${_timer!.tick}');
-        Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
+      _timer = Timer(const Duration(minutes: 10), () {
+        log('The app is state $state 0 ${_timer!.tick}');
+        if (AppGlobal.MSISDN.isNotEmpty) {
+          Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
+        } else {
+          log('The app is state $state 1 $_timer');
+        }
       });
     } else if (state == AppLifecycleState.detached) {
       _timer = Timer(const Duration(seconds: 10), () {
-        log('The app is detached $_timer');
-        Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
+        log('The app is state $state 0 $_timer');
+        if (AppGlobal.MSISDN.isNotEmpty) {
+          Get.offAndToNamed(AppRoutes.LOGINPINBIOMETRICS);
+        } else {
+          log('The app is state $state 1 $_timer');
+        }
       });
     } else if (_timer?.isActive ?? false) {
       _timer!.cancel();

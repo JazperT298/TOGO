@@ -10,6 +10,7 @@ class AppRoutes {
   static const String LOGINSECURITYCODE = '/loginsecuritycode';
   static const String LOGINBIOMETRICS = '/loginbiometrics';
   static const String LOGINPINBIOMETRICS = '/loginpinbiometrics';
+  static const String OTPRECOVERY = '/otprecovery';
 
   static const String BOTTOMNAV = '/bottomnav';
 

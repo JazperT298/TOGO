@@ -105,6 +105,7 @@ class _LoginProfileViewState extends State<LoginProfileView> {
         });
       }
     }
+    // Get.back();
   }
 
   @override
@@ -300,7 +301,6 @@ class _LoginProfileViewState extends State<LoginProfileView> {
                               try {
                                 FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false, type: FileType.image);
                                 if (result!.isSinglePick) {
-                                  Get.back();
                                   setState(() {
                                     _selectedImage = result.files[0].path.toString();
                                   });

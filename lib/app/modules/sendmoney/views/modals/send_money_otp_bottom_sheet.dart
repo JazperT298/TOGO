@@ -291,7 +291,7 @@ class SendMoneyOtpsBottomSheet {
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
                         ),
                       ),
                     ),
