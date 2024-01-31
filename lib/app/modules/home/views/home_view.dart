@@ -16,6 +16,7 @@ import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/home/views/modals/balance_check_bottom_sheet.dart';
 import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
 import 'package:ibank/app/modules/mbanking/views/modals/mbanking_menu_bottom_sheet.dart';
+import 'package:ibank/app/modules/mbanking/views/modals/mbanking_select_bank_bottom_sheet.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_main_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_service_link_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_menu_bottom_sheet.dart';
@@ -34,7 +35,8 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildTitle(BuildContext context, String text, Color color) => Text(
         text.toUpperCase(),
-        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+        style: GoogleFonts.montserrat(
+            fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
       );
 
   @override
@@ -48,7 +50,8 @@ class HomeView extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.only(top: 10, bottom: MediaQuery.of(context).size.height * .025),
+                padding: EdgeInsets.only(
+                    top: 10, bottom: MediaQuery.of(context).size.height * .025),
                 color: context.colorScheme.primary.withOpacity(.1),
                 child: SafeArea(
                   child: Column(
@@ -61,7 +64,8 @@ class HomeView extends GetView<HomeController> {
                           children: [
                             Row(
                               children: [
-                                AppGlobal.PROFILEAVATAR.isEmpty && AppGlobal.PROFILEIMAGE.isNotEmpty
+                                AppGlobal.PROFILEAVATAR.isEmpty &&
+                                        AppGlobal.PROFILEIMAGE.isNotEmpty
                                     ? CircleAvatar(
                                         backgroundColor: Colors.black,
                                         radius: 24.0,
@@ -70,9 +74,12 @@ class HomeView extends GetView<HomeController> {
                                             File(AppGlobal.PROFILEIMAGE),
                                           ),
                                         ))
-                                    : AppGlobal.PROFILEIMAGE.isEmpty && AppGlobal.PROFILEAVATAR.isNotEmpty
-                                        ? Image.asset(AppGlobal.PROFILEAVATAR, height: 52, width: 52)
-                                        : Image.asset(AppImages.userIcon, height: 52, width: 52),
+                                    : AppGlobal.PROFILEIMAGE.isEmpty &&
+                                            AppGlobal.PROFILEAVATAR.isNotEmpty
+                                        ? Image.asset(AppGlobal.PROFILEAVATAR,
+                                            height: 52, width: 52)
+                                        : Image.asset(AppImages.userIcon,
+                                            height: 52, width: 52),
                                 const Spacer(),
                                 /* FluButton.icon(FluIcons.plusUnicon,
                                   size: UISettings.minButtonSize), */
@@ -85,20 +92,34 @@ class HomeView extends GetView<HomeController> {
                             Obx(
                               () => controller.isLoadingHome.value == true
                                   ? loadingHomeScreen()
-                                  : SizedBox(height: MediaQuery.of(context).size.height * .035),
+                                  : SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              .035),
                             ),
                             Text(
                               Flu.formatDate(DateTime.now()).toUpperCase(),
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF687997), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF687997),
+                                  fontSize: 14),
                             ),
-                            _buildTitle(context, LocaleKeys.strMoneyControl.tr.toUpperCase(), context.colorScheme.onSurface),
+                            _buildTitle(
+                                context,
+                                LocaleKeys.strMoneyControl.tr.toUpperCase(),
+                                context.colorScheme.onSurface),
                             FluLine(
                               height: 1,
                               width: double.infinity,
                               color: context.colorScheme.surface,
-                              margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025).copyWith(
+                              margin: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              .025)
+                                  .copyWith(
                                 left: MediaQuery.of(context).size.height * .1,
-                                right: MediaQuery.of(context).size.height * .015,
+                                right:
+                                    MediaQuery.of(context).size.height * .015,
                               ),
                             ),
                             const _Card(),
@@ -112,7 +133,8 @@ class HomeView extends GetView<HomeController> {
               ),
               _Favorites(users..shuffle()),
               const Padding(
-                padding: EdgeInsets.only(right: 20, top: 50, left: 20, bottom: 15),
+                padding:
+                    EdgeInsets.only(right: 20, top: 50, left: 20, bottom: 15),
                 child: _PromotionsAndOffers(),
               ),
             ],
@@ -140,7 +162,9 @@ class _CardState extends State<_Card> {
     return Container(
         height: MediaQuery.of(context).size.height * .25,
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(color: context.colorScheme.primary, borderRadius: BorderRadius.circular(25)),
+        decoration: BoxDecoration(
+            color: context.colorScheme.primary,
+            borderRadius: BorderRadius.circular(25)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -152,7 +176,10 @@ class _CardState extends State<_Card> {
                   children: [
                     Text(
                       'My Balance',
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                          fontSize: 14),
                     ),
                     Expanded(
                       child: Row(
@@ -180,7 +207,9 @@ class _CardState extends State<_Card> {
                                       ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
+                                padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height *
+                                        0.02),
                                 child: Text(
                                   " FCFA",
                                   style: TextStyle(
@@ -211,11 +240,14 @@ class _CardState extends State<_Card> {
                           ),
                           Obx(
                             () => FluButton.icon(
-                              controller.afficherSolde.value == true ? FluIcons.eye : FluIcons.eyeSlash,
+                              controller.afficherSolde.value == true
+                                  ? FluIcons.eye
+                                  : FluIcons.eyeSlash,
                               onPressed: () {
                                 if (controller.afficherSolde.value == true) {
                                   // HomeAlertDialog.showOTPview(controller: controller);
-                                  BalanceCheckBottomSheet.showBottomSheetInputNumber();
+                                  BalanceCheckBottomSheet
+                                      .showBottomSheetInputNumber();
                                 } else {
                                   controller.afficherSolde.value = true;
                                 }
@@ -224,7 +256,8 @@ class _CardState extends State<_Card> {
                               },
                               alignment: Alignment.centerRight,
                               backgroundColor: Colors.transparent,
-                              foregroundColor: context.colorScheme.onPrimary.withOpacity(.5),
+                              foregroundColor:
+                                  context.colorScheme.onPrimary.withOpacity(.5),
                               // margin: EdgeInsets.only(bottom: 5),
                             ),
                           ),
@@ -347,7 +380,8 @@ class _QuickActions extends StatelessWidget {
               width: 1.5,
               color: context.colorScheme.primary.withOpacity(.1),
             ),
-            margin: EdgeInsets.only(left: WalletActions.values.indexOf(action) == 0 ? 0 : 10),
+            margin: EdgeInsets.only(
+                left: WalletActions.values.indexOf(action) == 0 ? 0 : 10),
             onPressed: () => onAction(context, action),
           );
         },
@@ -364,7 +398,10 @@ class _Favorites extends StatelessWidget {
   void onItemTap([int? index]) {
     // KRouter.noContextPush(index == null ? Routes.newFavorite : Routes.transfer);
     // Get.toNamed(index == null ? AppRoutes.NEWFAV : AppRoutes.TRANSFER);
-    Get.snackbar("Message", "À venir", backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+    Get.snackbar("Message", "À venir",
+        backgroundColor: Colors.lightBlue,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3));
   }
 
   @override
@@ -375,7 +412,9 @@ class _Favorites extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: UISettings.pagePadding.copyWith(top: MediaQuery.of(context).size.height * .035, bottom: MediaQuery.of(context).size.height * .035),
+          padding: UISettings.pagePadding.copyWith(
+              top: MediaQuery.of(context).size.height * .035,
+              bottom: MediaQuery.of(context).size.height * .035),
           child: Row(children: [
             Expanded(
                 child: Column(
@@ -383,14 +422,20 @@ class _Favorites extends StatelessWidget {
               children: [
                 Text(
                   LocaleKeys.strRapidCash.tr.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFFFB6404),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 5),
                 Hero(
                   tag: '<title>',
                   child: Text(
                     LocaleKeys.strFavoritePeople.tr.toUpperCase(),
-                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        fontSize: 22),
                   ),
                 ),
               ],
@@ -431,7 +476,8 @@ class _Favorites extends StatelessWidget {
                         width: itemSize,
                         margin: EdgeInsets.only(left: index == 0 ? 0 : 10),
                         child: Container(
-                          decoration: const BoxDecoration(shape: BoxShape.circle),
+                          decoration:
+                              const BoxDecoration(shape: BoxShape.circle),
                           // child: Center(
                           //   child: Text(
                           //     user.firstName.substring(0, 1),
@@ -467,7 +513,8 @@ class _ModalBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
           color: Colors.red,
           child: Column(
@@ -482,7 +529,9 @@ class _ModalBottomSheet extends StatelessWidget {
               //   ),
               // ),
               Container(
-                  height: isKeyboardVisible ? MediaQuery.of(context).size.height * .5 : MediaQuery.of(context).size.height * .39,
+                  height: isKeyboardVisible
+                      ? MediaQuery.of(context).size.height * .5
+                      : MediaQuery.of(context).size.height * .39,
                   decoration: BoxDecoration(
                     color: context.colorScheme.background,
                   ),
@@ -504,7 +553,8 @@ class _ModalBottomSheet2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
           color: Colors.red,
           child: Column(
@@ -519,7 +569,9 @@ class _ModalBottomSheet2 extends StatelessWidget {
               //   ),
               // ),
               Container(
-                  height: isKeyboardVisible ? MediaQuery.of(context).size.height * .5 : MediaQuery.of(context).size.height * .50,
+                  height: isKeyboardVisible
+                      ? MediaQuery.of(context).size.height * .5
+                      : MediaQuery.of(context).size.height * .50,
                   decoration: BoxDecoration(
                     color: context.colorScheme.background,
                   ),
@@ -536,13 +588,15 @@ class _ServicesModalBottomSheet extends StatefulWidget {
   const _ServicesModalBottomSheet();
 
   @override
-  State<_ServicesModalBottomSheet> createState() => _ServicesModalBottomSheetState();
+  State<_ServicesModalBottomSheet> createState() =>
+      _ServicesModalBottomSheetState();
 }
 
 class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
   final PageController pageController = PageController();
 
-  void toNextStep() => pageController.nextPage(duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
+  void toNextStep() => pageController.nextPage(
+      duration: 300.milliseconds, curve: Curves.fastOutSlowIn);
 
   @override
   Widget build(BuildContext context) {
@@ -569,7 +623,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -594,7 +649,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -618,7 +674,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
         FluLine(
           height: 1,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+          margin: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * .025),
         ),
       ],
     );
@@ -711,8 +768,12 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                   backgroundColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   margin: EdgeInsets.only(top: index == 0 ? 0 : 25),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  border: BorderSide(width: 1.5, color: context.colorScheme.outlineVariant.withOpacity(.5)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  border: BorderSide(
+                      width: 1.5,
+                      color:
+                          context.colorScheme.outlineVariant.withOpacity(.5)),
                   cornerRadius: 25,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -726,7 +787,9 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                             Text.rich(
                               TextSpan(children: [
                                 const TextSpan(text: '15000'),
-                                TextSpan(text: ' ${LocaleKeys.strFmonth.tr}', style: TextStyle(fontSize: 11.sp))
+                                TextSpan(
+                                    text: ' ${LocaleKeys.strFmonth.tr}',
+                                    style: TextStyle(fontSize: 11.sp))
                               ]),
                               style: TextStyle(
                                 fontSize: 11.sp,
@@ -765,13 +828,18 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
                 final option = action.children[index];
 
                 return FluButton(
-                  onPressed: () => Get.toNamed(AppRoutes.BOTTOMNAV), //KRouter.to(context, Routes.subscriptionTransferConfirmation),
+                  onPressed: () => Get.toNamed(AppRoutes
+                      .BOTTOMNAV), //KRouter.to(context, Routes.subscriptionTransferConfirmation),
                   width: double.infinity,
                   backgroundColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   margin: EdgeInsets.only(top: index == 0 ? 0 : 10),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  border: BorderSide(width: 1.5, color: context.colorScheme.outlineVariant.withOpacity(.5)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  border: BorderSide(
+                      width: 1.5,
+                      color:
+                          context.colorScheme.outlineVariant.withOpacity(.5)),
                   cornerRadius: 25,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -804,7 +872,8 @@ class _ServicesModalBottomSheetState extends State<_ServicesModalBottomSheet> {
           FluButton.text(
             LocaleKeys.strAddABox.tr,
             prefixIcon: FluIcons.add,
-            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .015),
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * .015),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           ),
         ],
@@ -829,7 +898,8 @@ class _PromotionsAndOffers extends StatelessWidget {
   const _PromotionsAndOffers({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  Widget build(BuildContext context) =>
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -858,12 +928,18 @@ class _PromotionsAndOffers extends StatelessWidget {
               children: [
                 Text(
                   LocaleKeys.strJustForYou.tr.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFFFB6404),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   LocaleKeys.strRechargeSendWin.tr.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 22),
                 ),
               ],
             ))
@@ -929,7 +1005,8 @@ class _PromotionsAndOffers extends StatelessWidget {
         //     )),
         Text(
           LocaleKeys.strRechargeSendWinDesc.tr,
-          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
+          style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.w600, color: Colors.black, fontSize: 14),
         )
       ]);
 }
@@ -948,7 +1025,8 @@ class _StoryIndicator extends StatelessWidget {
       child: LinearProgressIndicator(
         value: progress,
         backgroundColor: context.colorScheme.onPrimary.withOpacity(.5),
-        valueColor: AlwaysStoppedAnimation<Color>(context.colorScheme.onPrimary),
+        valueColor:
+            AlwaysStoppedAnimation<Color>(context.colorScheme.onPrimary),
       ),
     );
   }

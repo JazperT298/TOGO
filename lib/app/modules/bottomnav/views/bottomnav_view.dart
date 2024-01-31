@@ -18,6 +18,7 @@ import 'package:ibank/utils/constants/app_global.dart';
 
 import '../../history/controller/history_controller.dart';
 import '../../home/controller/home_controller.dart';
+import '../../mbanking/controller/mbanking_controller.dart';
 import '../../recharge/controller/recharge_controller.dart';
 import '../../sendmoney/controller/send_money_controller.dart';
 
@@ -48,6 +49,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
     Get.put(ProfileController());
     Get.put(RechargeController());
     Get.put(SendMoneyController());
+    Get.put(MBankingController());
     contoller.getDataFromStorage();
     super.initState();
   }

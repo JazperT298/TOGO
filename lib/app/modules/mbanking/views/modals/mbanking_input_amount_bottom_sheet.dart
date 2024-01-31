@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
-import 'package:ibank/generated/locales.g.dart';
-import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
+import '../../../../../generated/locales.g.dart';
+import '../../../../../utils/configs.dart';
+import '../../controller/mbanking_controller.dart';
 
-class RechargeCreditInputAmountBottomSheet {
+class MBankingInputAmountBottomSheet {
   static void showBottomSheetInputAmount({required String selectedMenu}) {
-    var controller = Get.find<RechargeController>();
+    var controller = Get.find<MBankingController>();
     Get.bottomSheet(
       KeyboardVisibilityBuilder(
         builder: (context, isKeyboardVisible) {
@@ -97,8 +97,8 @@ class RechargeCreditInputAmountBottomSheet {
                               backgroundColor: Colors.lightBlue,
                               colorText: Colors.white);
                         } else {
-                          controller.getCreditTransactionFee(
-                              amounts: controller.amountTextField.text);
+                          // controller.getCreditTransactionFee(
+                          //     amounts: controller.amountTextField.text);
                         }
                       },
                     ),
@@ -132,8 +132,8 @@ class RechargeCreditInputAmountBottomSheet {
                                 backgroundColor: Colors.lightBlue,
                                 colorText: Colors.white);
                           } else {
-                            controller.getCreditTransactionFee(
-                                amounts: controller.amountTextField.text);
+                            // controller.getCreditTransactionFee(
+                            //     amounts: controller.amountTextField.text);
                           }
                         },
                         height: 7.h,

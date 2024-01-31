@@ -48,7 +48,8 @@ class OtpController extends GetxController {
     FullScreenLoading.fullScreenLoadingWithText('Verifying PIN code...');
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
             <soapenv:Header/>
@@ -69,7 +70,8 @@ class OtpController extends GetxController {
         var result = await response.stream.bytesToString();
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
+        var soapElement =
+            document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
         log(jsonString);
         // if (jsonString.contains("Connexion à l'application Flooz réussie. Merci!")) {
@@ -78,29 +80,35 @@ class OtpController extends GetxController {
         int msgId = jsonData["msgid"];
         if (msgId == 0 && jsonString.contains("REGIS:1014")) {
           //Save the msisdn and token to storage if success
-          Get.find<StorageServices>().saveMsisdn(msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
-          Get.find<StorageServices>().setToken(token: Get.find<DevicePlatformServices>().deviceID);
+          Get.find<StorageServices>().saveMsisdn(
+              msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
+          Get.find<StorageServices>()
+              .setToken(token: Get.find<DevicePlatformServices>().deviceID);
           // SUCCESS OTP
           Get.back();
           Get.offAllNamed(AppRoutes.PRIVACY);
         } else {
           Get.back();
-          Get.snackbar("Message", jsonData["message"], backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonData["message"],
+              backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
         // print('JSON Response: $jsonResponse');
       } else {
         Get.back();
-        Get.snackbar("Message", 'Internal server error', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+        Get.snackbar("Message", 'Internal server error',
+            backgroundColor: Colors.lightBlue, colorText: Colors.white);
         print(response.reasonPhrase);
       }
     } on Exception catch (_) {
       Get.back();
       log("ERROR $_");
-      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+      Get.snackbar("Message", 'Service unavailable, please try again later.',
+          backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     } catch (e) {
       Get.back();
-      Get.snackbar("Message", 'An error occured, please try again', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+      Get.snackbar("Message", 'An error occured, please try again',
+          backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 
@@ -123,7 +131,10 @@ class OtpController extends GetxController {
     }
   }
 
-  Future<void> resendencryptionExample({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
+  Future<void> resendencryptionExample(
+      {required String msisdn,
+      required String formattedMSISDN,
+      required String countryCode}) async {
     // String plainPrefix = 'A'; // it must be random character if possible
     // String plainData = 'Hello World';
     // String data = plainPrefix + plainData;
@@ -137,7 +148,9 @@ class OtpController extends GetxController {
       incrementedCode = 65;
     }
     String incrementedLetter = String.fromCharCode(incrementedCode);
-    Get.find<StorageServices>().storage.write('incrementedLetter', incrementedLetter);
+    Get.find<StorageServices>()
+        .storage
+        .write('incrementedLetter', incrementedLetter);
     log("Random letter: $incrementedLetter");
     String data = '${incrementedLetter}EULA GETOTP ANDROID $msisdn';
     log(data);
@@ -173,10 +186,14 @@ class OtpController extends GetxController {
     return encrypted;
   }
 
-  otpRequestViaApi({required String msisdn, required String formattedMSISDN, required String countryCode}) async {
+  otpRequestViaApi(
+      {required String msisdn,
+      required String formattedMSISDN,
+      required String countryCode}) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
             <soapenv:Header/>
@@ -199,13 +216,15 @@ class OtpController extends GetxController {
         var jsonString = soapElement.innerText;
         log(jsonString);
         print('jsonString $jsonString');
-        if (jsonString.contains('Votre application est en cours d’activation.')) {
+        if (jsonString
+            .contains('Votre application est en cours d’activation.')) {
           String otp = StringUtil().extractOTP(jsonString)!;
           //Save OTP to local Storage
           Get.find<StorageServices>().saveOTP(otp: otp);
           // VERIFY OTP
         } else {
-          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString,
+              backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
         // var jsonResponse = jsonDecode(jsonString);
         // print('JSON Response: $jsonResponse');
@@ -241,11 +260,16 @@ class OtpController extends GetxController {
     });
   }
 
-  recoverUsersInfo({required String firstname, required String lastname, required String birthdate, required String lastbalance}) async {
+  recoverUsersInfo(
+      {required String firstname,
+      required String lastname,
+      required String birthdate,
+      required String lastbalance}) async {
     FullScreenLoading.fullScreenLoadingWithText('Verifying information...');
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
    <soapenv:Header/>
@@ -268,7 +292,8 @@ class OtpController extends GetxController {
 
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
+        var soapElement =
+            document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
 
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
@@ -290,29 +315,33 @@ class OtpController extends GetxController {
           var dataEncoded = jsonEncode(jsonMap);
           var dataDecoded = jsonDecode(dataEncoded);
           log('recoverUsersInfo dataDecoded ${dataDecoded.toString()}');
-          Get.find<StorageServices>().saveMsisdn(msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
+          Get.find<StorageServices>().saveMsisdn(
+              msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
           Get.back();
           Get.offAllNamed(AppRoutes.PRIVACY);
         } else {
           Get.back();
-          Get.snackbar("Message", "Sorry, the information doesn't match. Please try again",
-              backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+          Get.snackbar("Message",
+              "Sorry, the information doesn't match. Please try again",
+              backgroundColor: const Color(0xFFE60000),
+              colorText: Colors.white);
         }
       } else {
         Get.back();
-        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+        Get.snackbar("Message", 'Service unavailable, please try again later.',
+            backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } on Exception catch (_) {
       log("ERROR $_");
       Get.back();
-      Get.snackbar("Message", 'An error occured, please try again', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+      Get.snackbar("Message", 'An error occured, please try again',
+          backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
   //MMDDYYYY
 
   @override
   void dispose() {
-    // TODO: implement dispose
     focusNodeFirstname.dispose();
     focusNodeLastname.dispose();
     // focusNodeBirthday.dispose();

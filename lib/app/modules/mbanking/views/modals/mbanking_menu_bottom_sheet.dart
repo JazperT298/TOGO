@@ -14,10 +14,12 @@ class MBankingMenuBottomSheet {
         children: [
           bottomSheetDivider(),
           Container(
-            height: 48.h,
+            height: 60.h,
             width: 100.w,
-            decoration:
-                const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8), topRight: Radius.circular(8))),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +32,10 @@ class MBankingMenuBottomSheet {
                     padding: EdgeInsets.only(left: 5.w, right: 5.w),
                     child: Text(
                       "MBANKING".toUpperCase(),
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFFFB6404),
+                          fontSize: 14),
                     ),
                   ),
                   SizedBox(height: 1.h),
@@ -38,7 +43,10 @@ class MBankingMenuBottomSheet {
                     padding: EdgeInsets.only(left: 5.w, right: 5.w),
                     child: Text(
                       "My online bank",
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                          fontSize: 22),
                     ),
                   ),
                   SizedBox(height: 1.h),
@@ -46,7 +54,10 @@ class MBankingMenuBottomSheet {
                     padding: EdgeInsets.only(left: 5.w, right: 5.w),
                     child: Text(
                       "Securely transact between Moov Money and your affiliated bank accounts.",
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          fontSize: 14),
                     ),
                   ),
                   SizedBox(height: 3.h),
@@ -63,27 +74,33 @@ class MBankingMenuBottomSheet {
                     ],
                   ),
                   SizedBox(height: 5.h),
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 10.w, right: 10.w),
-                      child: Text(
-                        "You don't have an account linked yet",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 2.h),
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 10.w, right: 10.w),
-                      child: Text(
-                        "Porem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero.",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
-                      ),
-                    ),
-                  ),
+                  // Center(
+                  //   child: Padding(
+                  //     padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                  //     child: Text(
+                  //       "You don't have an account linked yet",
+                  //       textAlign: TextAlign.center,
+                  //       style: GoogleFonts.montserrat(
+                  //           fontWeight: FontWeight.w700,
+                  //           color: Colors.black,
+                  //           fontSize: 24),
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 2.h),
+                  // Center(
+                  //   child: Padding(
+                  //     padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                  //     child: Text(
+                  //       "Porem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero.",
+                  //       textAlign: TextAlign.center,
+                  //       style: GoogleFonts.montserrat(
+                  //           fontWeight: FontWeight.w400,
+                  //           color: Colors.black,
+                  //           fontSize: 14),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(height: 5.5.h),
                   Padding(
                     padding: EdgeInsets.only(left: 5.w, right: 5.w),
@@ -91,7 +108,8 @@ class MBankingMenuBottomSheet {
                       'Link a bank',
                       iconStrokeWidth: 1.8,
                       onPressed: () {
-                        FullScreenLoading.fullScreenLoadingWithText('Processing. . .');
+                        FullScreenLoading.fullScreenLoadingWithText(
+                            'Processing. . .');
                       },
                       height: 55,
                       width: 100.w,
@@ -106,7 +124,10 @@ class MBankingMenuBottomSheet {
                           offset: Offset(0, 5),
                         )
                       ],
-                      textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
+                      textStyle: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFFF4F5FA),
+                          fontSize: 16),
                     ),
                   ),
                 ],
