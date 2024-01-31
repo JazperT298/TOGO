@@ -35,4 +35,17 @@ class StringHelper {
       return number;
     }
   }
+
+  static String formatMSISDN(String msisdn) {
+    List<int> groupLengths = [3, 2, 2, 2, 2];
+    int startIndex = 0;
+    List<String> groups = [];
+
+    for (int length in groupLengths) {
+      String group = msisdn.substring(startIndex, startIndex + length);
+      groups.add(group);
+      startIndex += length;
+    }
+    return groups.join(' ');
+  }
 }

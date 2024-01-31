@@ -240,7 +240,7 @@ class _OtpViewState extends State<OtpView> {
                                 ),
                               ),
                             )
-                          : controller.tries.value == 3
+                          : controller.tries.value == 1
                               ? InkWell(
                                   onTap: () async {
                                     FullScreenLoading.fullScreenLoadingWithTextAndTimer('Redirecting. . .');
@@ -264,7 +264,7 @@ class _OtpViewState extends State<OtpView> {
                                   onTap: () {
                                     controller.tries.value++;
 
-                                    if (controller.tries.value < 4) {
+                                    if (controller.tries.value < 2) {
                                       if (controller.requestVia.value == "sms") {
                                         controller.resendencryptionExample(
                                             msisdn: controller.msisdn.value,

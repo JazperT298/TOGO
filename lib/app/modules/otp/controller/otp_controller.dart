@@ -12,6 +12,7 @@ import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/utils/string_utils.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:developer';
@@ -27,6 +28,21 @@ class OtpController extends GetxController {
   RxBool isResendShow = false.obs;
   RxInt tries = 0.obs;
   RxInt timerValue = 20.obs;
+  TextEditingController firstname = TextEditingController();
+  TextEditingController lastname = TextEditingController();
+  TextEditingController dateofbirth = TextEditingController();
+  TextEditingController lastbalance = TextEditingController();
+  DateTime selectedDate = DateTime.now();
+
+  FocusNode focusNodeFirstname = FocusNode();
+  FocusNode focusNodeLastname = FocusNode();
+  // FocusNode focusNodeBirthday = FocusNode();
+  FocusNode focusNodeLastbalance = FocusNode();
+  String version = '';
+  checkVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version = "${packageInfo.version}.0";
+  }
 
   verifyOTP({required String otp}) async {
     FullScreenLoading.fullScreenLoadingWithText('Verifying PIN code...');
@@ -210,6 +226,7 @@ class OtpController extends GetxController {
     requestVia.value = await Get.arguments['requestVia'];
     startTimer();
     startTimer2();
+    checkVersion();
     log(isResendShow.value.toString());
     super.onInit();
   }
@@ -222,5 +239,84 @@ class OtpController extends GetxController {
         timerValue.value--;
       }
     });
+  }
+
+  recoverUsersInfo({required String firstname, required String lastname, required String birthdate, required String lastbalance}) async {
+    FullScreenLoading.fullScreenLoadingWithText('Verifying information...');
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <app:RequestTokenJson soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <msisdn xsi:type="xsd:string">${msisdn.value}</msisdn>
+         <message xsi:type="xsd:string">VRFYS ACCINFO $firstname $lastname $birthdate $lastbalance ${Get.find<DevicePlatformServices>().deviceID} $version F</message>
+         <token xsi:type="xsd:string">${Get.find<DevicePlatformServices>().deviceID}</token>
+         <sendsms xsi:type="xsd:string">false</sendsms>
+      </app:RequestTokenJson>
+   </soapenv:Body>
+</soapenv:Envelope>''';
+
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      log('recoverUsersInfo request.bod ${request.body}');
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        log('recoverUsersInfo result $result');
+
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
+        var jsonString = soapElement.innerText;
+
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        int msgId = jsonData["msgid"];
+
+        if (msgId == 0) {
+          String inputString = jsonString;
+          var lines = inputString.trim().split('\n');
+          var jsonMap = {};
+          for (var line in lines) {
+            var parts = line.split(':');
+            if (parts.length == 2) {
+              var key = parts[0].trim();
+              var value = parts[1].trim();
+              jsonMap[key] = value;
+            }
+          }
+          var dataEncoded = jsonEncode(jsonMap);
+          var dataDecoded = jsonDecode(dataEncoded);
+          log('recoverUsersInfo dataDecoded ${dataDecoded.toString()}');
+          Get.find<StorageServices>().saveMsisdn(msisdn: msisdn.value, formattedMSISDN: formatedMSISDN.value);
+          Get.back();
+          Get.offAllNamed(AppRoutes.PRIVACY);
+        } else {
+          Get.back();
+          Get.snackbar("Message", "Sorry, the information doesn't match. Please try again",
+              backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+        }
+      } else {
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+      }
+    } on Exception catch (_) {
+      log("ERROR $_");
+      Get.back();
+      Get.snackbar("Message", 'An error occured, please try again', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+    }
+  }
+  //MMDDYYYY
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    focusNodeFirstname.dispose();
+    focusNodeLastname.dispose();
+    // focusNodeBirthday.dispose();
+    focusNodeLastbalance.dispose();
+    super.dispose();
   }
 }

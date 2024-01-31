@@ -47,12 +47,11 @@ class _LoginSuccessState extends State<LoginSuccess> {
               children: [
                 const Spacer(),
                 showProgressIndicator
-                    ? SizedBox(
-                        height: MediaQuery.of(context).size.height * .3,
-                        width: MediaQuery.of(context).size.height * .3,
+                    ? Padding(
+                        padding: EdgeInsets.only(bottom: 120),
                         child: SizedBox(
-                          height: 100,
-                          width: 100,
+                          height: 60,
+                          width: 60,
                           child: const CircularProgressIndicator(
                             strokeWidth: 6,
                             color: Colors.green,

@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/data/models/user.dart';
@@ -12,6 +13,8 @@ class NewFavController extends GetxController {
   RxList<String> userNumbers = <String>[].obs;
 
   RxList<Contact> contacts = <Contact>[].obs;
+  RxList<Contact> displayedContacts = <Contact>[].obs;
+
   RxBool permissionDenied = false.obs;
 
   RxString formatPhone = ''.obs;
@@ -21,6 +24,8 @@ class NewFavController extends GetxController {
   // Contact? selectedContacts;
   final selectedContacts = Contact().obs;
   RxInt selectedByUser = 0.obs;
+
+  var nameController = TextEditingController().obs;
   @override
   void onInit() {
     fetchContacts();
@@ -36,7 +41,12 @@ class NewFavController extends GetxController {
       var myContacts = await FlutterContacts.getContacts();
       myContacts = await FlutterContacts.getContacts(withProperties: true, withPhoto: true);
       contacts.value = myContacts;
+      displayedContacts.value = myContacts;
       log('_contacts ${contacts.value}');
     }
+  }
+
+  void filterContacts(String query) {
+    displayedContacts.value = contacts.value.where((contact) => contact.displayName.toLowerCase().contains(query.toLowerCase()) == true).toList();
   }
 }

@@ -22,6 +22,7 @@ import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/constants/app_images.dart';
+import 'package:ibank/utils/helpers/string_helper.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileView extends StatefulWidget {
@@ -193,7 +194,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       ),
                                       Text(
                                         // AppGlobal.currentAddress.isEmpty ? '' : AppGlobal.currentAddress,
-                                        '99 00 00 00 ',
+                                        AppGlobal.MSISDN.isEmpty ? '99 00 00 00 ' : StringHelper.formatMSISDN(AppGlobal.MSISDN),
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF687997), fontSize: 14),
                                       ),
@@ -536,6 +537,8 @@ class _ProfileViewState extends State<ProfileView> {
                   await Future.delayed(const Duration(seconds: 3), () {
                     Get.back();
                     Get.find<StorageServices>().clearUserLocalData();
+                    AppGlobal.PROFILEAVATAR = '';
+                    AppGlobal.PROFILEAVATAR = '';
                     Get.offAllNamed(AppRoutes.LOGIN);
                   });
                 });
