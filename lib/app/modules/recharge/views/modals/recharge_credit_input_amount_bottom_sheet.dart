@@ -92,7 +92,7 @@ class RechargeCreditInputAmountBottomSheet {
                           backgroundColor: Colors.lightBlue,
                           colorText: Colors.white);
                     } else {
-                      controller.getTransactionFee(
+                      controller.getCreditTransactionFee(
                           amounts: controller.amountTextField.text);
                     }
                   },
@@ -123,7 +123,7 @@ class RechargeCreditInputAmountBottomSheet {
                             backgroundColor: Colors.lightBlue,
                             colorText: Colors.white);
                       } else {
-                        controller.getTransactionFee(
+                        controller.getCreditTransactionFee(
                             amounts: controller.amountTextField.text);
                       }
                     },

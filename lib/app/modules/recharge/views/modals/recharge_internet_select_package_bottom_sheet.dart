@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
-import 'recharge_internet_otp_bottom_sheet.dart';
 
 class RechargeInternetSelectPackageBottomSheet {
   static void showBottomSheetSelectPackage() {
@@ -348,8 +347,9 @@ class RechargeInternetSelectPackageBottomSheet {
                     iconStrokeWidth: 1.8,
                     onPressed: () {
                       if (controller.selectedProduct != null) {
-                        Get.back();
-                        RechargeInternetOTPBottomSheet.showBottomSheetOTP();
+                        controller.getInternetAndVoiceTransactionFee(
+                          from: "internet",
+                            amounts: controller.selectedProduct!.price);
                       } else {
                         Get.snackbar("Message", "Please select a product",
                             backgroundColor: Colors.lightBlue,

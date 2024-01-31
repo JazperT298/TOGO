@@ -11,6 +11,8 @@ import 'package:ibank/app/data/models/voice_products_model.dart';
 import 'package:ibank/app/modules/login/alertdialog/login_alertdialog.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/app/modules/recharge/views/dialog/recharge_menu_dialog.dart';
+import 'package:ibank/app/modules/recharge/views/modals/recharge_internet_otp_bottom_sheet.dart';
+import 'package:ibank/app/modules/recharge/views/modals/recharge_voice_otp_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
@@ -123,7 +125,7 @@ class RechargeController extends GetxController {
     }
   }
 
-  getTransactionFee({required String amounts}) async {
+  getCreditTransactionFee({required String amounts}) async {
     FullScreenLoading.fullScreenLoadingWithText('Validating request. . .');
     // await getMsisdnDetails(); // GET MSISDN DETAILS
     try {
@@ -170,7 +172,65 @@ class RechargeController extends GetxController {
         RechargeCreditOTPBottomSheet.showBottomSheetOTP();
       }
     } catch (e) {
-      log('getTransactionFee asd $e');
+      log('getCreditTransactionFee asd $e');
+      Get.back();
+      // showMessageDialog(message: e.toString());
+    }
+  }
+
+  getInternetAndVoiceTransactionFee(
+      {required String amounts, required String from}) async {
+    FullScreenLoading.fullScreenLoadingWithText('Validating request. . .');
+    // await getMsisdnDetails(); // GET MSISDN DETAILS
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <app:getTransactionFee soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+                  <msisdn xsi:type="xsd:string">${AppGlobal.MSISDN}</msisdn>
+                  <destmsisdn xsi:type="xsd:string">FORFAIT_FLOOZ</destmsisdn>
+                  <keyword xsi:type="xsd:string">APPAIRD</keyword>
+                  <value xsi:type="xsd:string">$amounts</value>
+                </app:getTransactionFee>
+            </soapenv:Body>
+          </soapenv:Envelope>''';
+      log('getTransactionFee ${request.body}');
+      http.StreamedResponse response = await request.send();
+      request.headers.addAll(headers);
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement =
+            document.findAllElements('getTransactionFeeReturn').single;
+        var jsonString = soapElement.innerText;
+        log('getTransactionFee jsonString 2 $jsonString');
+
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        TransactionFee transactionFee = TransactionFee.fromJson(jsonData);
+        senderkeycosttotal.value = transactionFee.senderkeycosttotal;
+        senderkeycosttva.value = transactionFee.senderkeycosttva;
+        totalFess.value =
+            int.parse(senderkeycosttotal.value.replaceAll(',', '')) -
+                int.parse(senderkeycosttva.value.replaceAll(',', ''));
+        totalAmount.value = int.parse(amounts) +
+            int.parse(senderkeycosttotal.value.replaceAll(',', ''));
+
+        Get.back();
+        Get.back();
+        if (from == "internet") {
+          RechargeInternetOTPBottomSheet.showBottomSheetOTP();
+        } else {
+          RechargeVoiceOTPBottomSheet.showBottomSheetOTP();
+        }
+      }
+    } catch (e) {
+      log('getInternetAndVoiceTransactionFee asd $e');
       Get.back();
       // showMessageDialog(message: e.toString());
     }

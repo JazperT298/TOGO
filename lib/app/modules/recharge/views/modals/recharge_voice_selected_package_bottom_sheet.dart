@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
-import 'package:ibank/app/modules/recharge/views/modals/recharge_voice_otp_bottom_sheet.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
@@ -364,8 +363,9 @@ class RechargeVoiceSelectedPackageBottomSheet {
                     iconStrokeWidth: 1.8,
                     onPressed: () {
                       if (controller.selectedVoice != null) {
-                        Get.back();
-                        RechargeVoiceOTPBottomSheet.showBottomSheetOTP();
+                        controller.getInternetAndVoiceTransactionFee(
+                            from: "voice",
+                            amounts: controller.selectedVoice!.price);
                       } else {
                         Get.snackbar("Message", "Please select a product",
                             backgroundColor: Colors.lightBlue,

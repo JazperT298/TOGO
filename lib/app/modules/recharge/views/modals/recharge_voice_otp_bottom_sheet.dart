@@ -10,13 +10,15 @@ import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/helpers/string_helper.dart';
+
 class RechargeVoiceOTPBottomSheet {
   static showBottomSheetOTP() {
     var controller = Get.find<RechargeController>();
     Get.bottomSheet(
       KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
         return Container(
-          height: 80.h,
+          height: 86.h,
           width: 100.w,
           decoration: const BoxDecoration(
               color: Colors.white,
@@ -245,20 +247,20 @@ class RechargeVoiceOTPBottomSheet {
                     children: [
                       Expanded(
                         child: Text(
-                          "Fees",
+                          LocaleKeys.strTransferAmount.tr,
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w500,
                               color: const Color(0xFF27303F),
-                              fontSize: 13.sp),
+                              fontSize: 12.sp),
                         ),
                       ),
                       Expanded(
                         child: Text(
-                          '0 FCFA',
+                          '${controller.selectedVoice!.price} FCFA',
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w600,
                               color: const Color(0xFF27303F),
-                              fontSize: 13.sp),
+                              fontSize: 12.sp),
                         ),
                       ),
                     ],
@@ -272,20 +274,86 @@ class RechargeVoiceOTPBottomSheet {
                     children: [
                       Expanded(
                         child: Text(
-                          LocaleKeys.strTransferAmount.tr,
+                          'Fees',
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w500,
                               color: const Color(0xFF27303F),
-                              fontSize: 13.sp),
+                              fontSize: 12.sp),
                         ),
                       ),
                       Expanded(
+                        child: Obx(
+                          () => Text(
+                            controller.totalFess.value == 0
+                                ? '0 FCFA'
+                                : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 12.sp),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                Padding(
+                  padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
                         child: Text(
-                          '${controller.selectedVoice!.price} FCFA',
+                          'Tax',
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               color: const Color(0xFF27303F),
-                              fontSize: 13.sp),
+                              fontSize: 12.sp),
+                        ),
+                      ),
+                      Expanded(
+                        child: Obx(
+                          () => Text(
+                            controller.senderkeycosttva.isEmpty
+                                ? '0 FCFA'
+                                : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 12.sp),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                Padding(
+                  padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'TTC ',
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF27303F),
+                              fontSize: 12.sp),
+                        ),
+                      ),
+                      Expanded(
+                        child: Obx(
+                          () => Text(
+                            controller.totalAmount.value == 0
+                                ? '0 FCFA'
+                                : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 12.sp),
+                          ),
                         ),
                       ),
                     ],
