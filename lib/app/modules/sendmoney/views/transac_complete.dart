@@ -6,6 +6,7 @@ import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dar
 import 'package:ibank/app/modules/sendmoney/views/dialog/send_menu_dialog.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
 
@@ -33,41 +34,87 @@ class TransacCompleteView extends StatelessWidget {
 
                 // Expanded(
                 //   child:
-                Image.asset(
-                  AppImages.transacSuccess,
-                  height: MediaQuery.of(context).size.height * .3,
-                  width: MediaQuery.of(context).size.height * .3,
-                ),
-                // ),
-                Padding(
-                  padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Operation completed \nsuccessfully', //    'Opération effectuer avec succèss',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          fontSize: 24),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: UISettings.pagePadding
-                      .copyWith(top: 16, left: 24, right: 24),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'The operation was carried out successfully. You can view the details in the transaction history.', //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                          fontSize: 14),
-                    ),
-                  ),
-                ),
+                AppGlobal.internationalType == "xmcash"
+                    ? Column(
+                        children: [
+                          Image.asset(
+                            AppImages.transacSuccess,
+                            height: MediaQuery.of(context).size.height * .3,
+                            width: MediaQuery.of(context).size.height * .3,
+                          ),
+                          // ),
+                          Padding(
+                            padding: UISettings.pagePadding
+                                .copyWith(left: 24, right: 24),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Operation completed \nsuccessfully', //    'Opération effectuer avec succèss',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black,
+                                    fontSize: 24),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: UISettings.pagePadding
+                                .copyWith(top: 16, left: 24, right: 24),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'The operation was carried out successfully. You can view the details in the transaction history.', //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontSize: 14),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          Image.asset(
+                            AppImages.progressLoading,
+                            height: MediaQuery.of(context).size.height * .3,
+                            width: MediaQuery.of(context).size.height * .3,
+                          ),
+                          // ),
+                          Padding(
+                            padding: UISettings.pagePadding
+                                .copyWith(left: 24, right: 24),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Transaction in progress', //    'Opération effectuer avec succèss',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black,
+                                    fontSize: 24),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: UISettings.pagePadding
+                                .copyWith(top: 16, left: 24, right: 24),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'The transaction is in progress. Please wait for a confirmation message.', //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontSize: 14),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                 const SizedBox(
                   height: 8,
                 ),

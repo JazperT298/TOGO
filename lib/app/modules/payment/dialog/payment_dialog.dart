@@ -17,10 +17,11 @@ import 'package:sizer/sizer.dart';
 class PaymentDialog {
   static void showRecapOperationDialog(context) async {
     // flutter defined function
-    final controller = Get.put(PaymentController());
+    var controller = Get.find<PaymentController>();
     print("Amount: ${controller.thisDsonString.value}");
 
-    Map<String, String> extractedValues = extractValues(controller.thisDsonString.value);
+    Map<String, String> extractedValues =
+        extractValues(controller.thisDsonString.value);
     Map<String, dynamic> jsonData = jsonDecode(controller.thisDsonString.value);
 
     String amount = extractedValues['amount'] ?? '';
@@ -51,7 +52,10 @@ class PaymentDialog {
                   children: [
                     Text(
                       "Operation Recap",
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          fontSize: 24),
                     ),
                     InkWell(
                       onTap: () {
@@ -67,8 +71,11 @@ class PaymentDialog {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  'Point of sale'.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                  'Equiptment'.toUpperCase(),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF27303F),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 18),
                 Row(
@@ -76,14 +83,20 @@ class PaymentDialog {
                   children: [
                     Expanded(
                       child: Text(
-                        'Name',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        'Number',
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        nom.isEmpty ? 'N/A' : nom,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        controller.billPayment!.message[0].productname,
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -111,7 +124,10 @@ class PaymentDialog {
                 const SizedBox(height: 24),
                 Text(
                   'DETAILS'.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF27303F),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 18),
 
@@ -121,7 +137,10 @@ class PaymentDialog {
                     Expanded(
                       child: Text(
                         'Amount',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -129,7 +148,10 @@ class PaymentDialog {
                         controller.price.value.isEmpty
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.price.value.replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -141,7 +163,10 @@ class PaymentDialog {
                     Expanded(
                       child: Text(
                         'Fees',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -149,7 +174,10 @@ class PaymentDialog {
                         controller.totalFess.value == 0
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -161,7 +189,10 @@ class PaymentDialog {
                     Expanded(
                       child: Text(
                         'Tax',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -169,7 +200,10 @@ class PaymentDialog {
                         controller.senderkeycosttva.value.isEmpty
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -181,7 +215,10 @@ class PaymentDialog {
                     Expanded(
                       child: Text(
                         'TTC',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -189,7 +226,10 @@ class PaymentDialog {
                         controller.totalAmount.value == 0
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -199,7 +239,10 @@ class PaymentDialog {
                 const SizedBox(height: 24),
                 Text(
                   'Operation information'.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF27303F),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 18),
                 Row(
@@ -208,13 +251,20 @@ class PaymentDialog {
                     Expanded(
                       child: Text(
                         'Date',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        DateFormat('dd/MM/yyyy').format(DateTime.parse(AppGlobal.dateNow)),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        DateFormat('dd/MM/yyyy')
+                            .format(DateTime.parse(AppGlobal.dateNow)),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -226,13 +276,20 @@ class PaymentDialog {
                     Expanded(
                       child: Text(
                         'Hour',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        DateFormat('hh:mm:ss').format(DateTime.parse(AppGlobal.timeNow)),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        DateFormat('hh:mm:ss')
+                            .format(DateTime.parse(AppGlobal.timeNow)),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -244,13 +301,19 @@ class PaymentDialog {
                     Expanded(
                       child: Text(
                         'Txn ID',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         jsonData['refid'] == '' ? '' : jsonData['refid'],
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -262,13 +325,21 @@ class PaymentDialog {
                     Expanded(
                       child: Text(
                         'New Balance',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        nouveauSolde.isEmpty ? '' : '${StringHelper.formatNumberWithCommas(int.parse(nouveauSolde.replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        nouveauSolde.isEmpty
+                            ? ''
+                            : '${StringHelper.formatNumberWithCommas(int.parse(nouveauSolde.replaceAll(',', '')))} FCFA',
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -307,7 +378,8 @@ class PaymentDialog {
     String frais = fraisMatch != null ? fraisMatch.group(1)! : '';
     String taf = tafMatch != null ? tafMatch.group(1)! : '';
     String nom = nomMatch != null ? nomMatch.group(1)! : '';
-    String nouveauSolde = nouveauSoldeMatch != null ? nouveauSoldeMatch.group(1)! : '';
+    String nouveauSolde =
+        nouveauSoldeMatch != null ? nouveauSoldeMatch.group(1)! : '';
     String txnId = trxIdMatch != null ? trxIdMatch.group(1)! : '';
 
     return {

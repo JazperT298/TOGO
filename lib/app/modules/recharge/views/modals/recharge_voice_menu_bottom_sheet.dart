@@ -12,8 +12,10 @@ class RechargeVoiceMainMenuBottomSheet {
     Get.bottomSheet(Container(
       height: 35.h,
       width: 100.w,
-      decoration:
-          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8), topRight: Radius.circular(8))),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +88,8 @@ class RechargeVoiceMainMenuBottomSheet {
                   controller.voicePackageProductType.value = 'All';
                   controller.voicePackageRadioGroupValue.value = '';
 
-                  RechargeInternetSelectPackageBottomSheet.showBottomSheetSelectPackage();
+                  RechargeInternetSelectPackageBottomSheet
+                      .showBottomSheetSelectPackage();
                 },
                 child: SizedBox(
                   child: Row(
@@ -94,8 +97,10 @@ class RechargeVoiceMainMenuBottomSheet {
                       Container(
                         height: 7.h,
                         width: 12.w,
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue[50]),
-                        child: const FluIcon(FluIcons.moneySend, size: 24, strokeWidth: 1.6, color: Colors.black),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.blue[50]),
+                        child: const FluIcon(FluIcons.moneySend,
+                            size: 24, strokeWidth: 1.6, color: Colors.black),
                       ),
                       SizedBox(
                         width: 4.w,
@@ -147,8 +152,10 @@ class RechargeVoiceMainMenuBottomSheet {
                     Container(
                       height: 7.h,
                       width: 12.w,
-                      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue[50]),
-                      child: const FluIcon(FluIcons.moneySend, size: 24, strokeWidth: 1.6, color: Colors.black),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.blue[50]),
+                      child: const FluIcon(FluIcons.moneySend,
+                          size: 24, strokeWidth: 1.6, color: Colors.black),
                     ),
                     SizedBox(
                       width: 4.w,
@@ -187,8 +194,10 @@ class RechargeVoiceMainMenuBottomSheet {
     Get.bottomSheet(Container(
       height: 35.h,
       width: 100.w,
-      decoration:
-          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8), topRight: Radius.circular(8))),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,8 +277,10 @@ class RechargeVoiceMainMenuBottomSheet {
                       Container(
                         height: 7.h,
                         width: 12.w,
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue[50]),
-                        child: const FluIcon(FluIcons.moneySend, size: 24, strokeWidth: 1.6, color: Colors.black),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.blue[50]),
+                        child: const FluIcon(FluIcons.moneySend,
+                            size: 24, strokeWidth: 1.6, color: Colors.black),
                       ),
                       SizedBox(
                         width: 4.w,
@@ -321,8 +332,10 @@ class RechargeVoiceMainMenuBottomSheet {
                     Container(
                       height: 7.h,
                       width: 12.w,
-                      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue[50]),
-                      child: const FluIcon(FluIcons.moneySend, size: 24, strokeWidth: 1.6, color: Colors.black),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.blue[50]),
+                      child: const FluIcon(FluIcons.moneySend,
+                          size: 24, strokeWidth: 1.6, color: Colors.black),
                     ),
                     SizedBox(
                       width: 4.w,

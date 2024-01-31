@@ -21,7 +21,10 @@ class PaymentSubMenuBottomSheet {
               height: 75.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +35,10 @@ class PaymentSubMenuBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         'Payment'.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: 14),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -40,7 +46,10 @@ class PaymentSubMenuBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         'Energy and water',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                            fontSize: 22),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -48,7 +57,10 @@ class PaymentSubMenuBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         'Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                            fontSize: 14),
                       ),
                     ),
                     SizedBox(height: 3.h),
@@ -79,21 +91,28 @@ class PaymentSubMenuBottomSheet {
                               onPressed: () async {
                                 if (index == 0) {
                                   controller.selectedOption.value = 'CEET';
-                                  controller.ceetPackageRadioGroupValue.value = '';
+                                  controller.ceetPackageRadioGroupValue.value =
+                                      '';
                                   controller.numberTextField.clear();
                                   controller.code.clear();
                                   controller.verifyGetCeetLink();
                                 } else if (index == 3) {
                                   controller.selectedOption.value = 'SOLERGIE';
                                   controller.numberTextField.clear();
-                                  FullScreenLoading.fullScreenLoadingWithTextAndTimer('Requesting. . .');
-                                  await Future.delayed(const Duration(seconds: 2), () {
+                                  FullScreenLoading
+                                      .fullScreenLoadingWithTextAndTimer(
+                                          'Requesting. . .');
+                                  await Future.delayed(
+                                      const Duration(seconds: 2), () {
                                     Get.back();
                                     Get.back();
-                                    PaymentInputsBottomSheet.showBottomSheetSolergieInputNumber();
+                                    PaymentInputsBottomSheet
+                                        .showBottomSheetSolergieInputNumber();
                                   });
                                 } else {
-                                  Get.snackbar("Message", "Comming Soon", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                  Get.snackbar("Message", "Comming Soon",
+                                      backgroundColor: Colors.lightBlue,
+                                      colorText: Colors.white);
                                 }
                               },
                               backgroundColor: Colors.transparent,
@@ -110,7 +129,9 @@ class PaymentSubMenuBottomSheet {
                                         height: 62,
                                         width: 62,
                                         clipBehavior: Clip.hardEdge,
-                                        decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
+                                        decoration: const BoxDecoration(
+                                            color: Color(0xFFDBE4FB),
+                                            shape: BoxShape.circle),
                                         child: FluIcon(
                                           option.icon,
                                           color: Colors.black,
@@ -118,23 +139,32 @@ class PaymentSubMenuBottomSheet {
                                   ),
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.only(bottom: 4.0),
+                                            padding: const EdgeInsets.only(
+                                                bottom: 4.0),
                                             child: Text(
                                               option.name,
-                                              style:
-                                                  GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                              style: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.w600,
+                                                  color:
+                                                      const Color(0xFF27303F),
+                                                  fontSize: 14),
                                             ),
                                           ),
                                           Text(
                                             option.description,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 14),
+                                            style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w400,
+                                                color: const Color(0xFF687997),
+                                                fontSize: 14),
                                           ),
                                         ],
                                       ),

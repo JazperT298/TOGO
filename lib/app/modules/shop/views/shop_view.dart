@@ -19,15 +19,18 @@ class ShopView extends GetView<ShopController> {
   Widget build(BuildContext context) {
     Get.put(ShopController());
     return FluScreen(
-      overlayStyle: context.systemUiOverlayStyle.copyWith(statusBarIconBrightness: Brightness.dark),
+      overlayStyle: context.systemUiOverlayStyle
+          .copyWith(statusBarIconBrightness: Brightness.dark),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * .05),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).size.height * .05),
           child: Column(
             children: [
               Padding(
-                padding: UISettings.pagePadding.copyWith(top: 20, bottom: MediaQuery.of(context).size.height * .025),
+                padding: UISettings.pagePadding.copyWith(
+                    top: 20, bottom: MediaQuery.of(context).size.height * .025),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -37,11 +40,17 @@ class ShopView extends GetView<ShopController> {
                         children: [
                           Text(
                             'Moov store'.toUpperCase(),
-                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF687997), fontSize: 14),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF687997),
+                                fontSize: 14),
                           ),
                           Text(
                             'OUR PRODUCTS MOOV AFRICA.'.toUpperCase(),
-                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 26),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 26),
                           ),
                         ],
                       ),
@@ -88,7 +97,8 @@ class _Highlights extends GetView<ShopController> {
 
   const _Highlights(this.products, {Key? key}) : super(key: key);
 
-  int get itemCount => products.where((x) => x.images.isNotEmpty).toList().length;
+  int get itemCount =>
+      products.where((x) => x.images.isNotEmpty).toList().length;
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +144,8 @@ class _Highlights extends GetView<ShopController> {
                   Positioned(
                     bottom: 0,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 25),
                       child: Text(
                         '${product.name}.',
                         style: const TextStyle(color: Colors.white),
@@ -172,7 +183,8 @@ class _Categories extends GetView<ShopController> {
           return GestureDetector(
             onTap: () {
               if (categories[index].name == "Credit") {
-                RechargeCreditMainMenuBottomSheet.showBottomSheetRechargeCreditTo();
+                RechargeCreditMainMenuBottomSheet
+                    .showBottomSheetRechargeCreditTo();
               } else if (categories[index].name == "Internet package") {
                 //    controller.internetNumberCode.value = '400';
                 // controller.internetGetProducts();
@@ -182,8 +194,10 @@ class _Categories extends GetView<ShopController> {
                 log('asd ');
                 //    controller.internetNumberCode.value = '400';
                 // controller.internetGetProducts();
-                Get.find<RechargeController>().internetRadioGroupValue.value = '';
-                Get.find<RechargeController>().voicePackageNumberCode.value = '555';
+                Get.find<RechargeController>().internetRadioGroupValue.value =
+                    '';
+                Get.find<RechargeController>().voicePackageNumberCode.value =
+                    '555';
                 Get.find<RechargeController>().voicePackageGetProducts();
               }
             },
@@ -205,7 +219,8 @@ class _Categories extends GetView<ShopController> {
                             quarterTurns: 3,
                             child: CircularProgressIndicator(
                               value: .2,
-                              valueColor: AlwaysStoppedAnimation<Color>(color.withOpacity(.35)),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  color.withOpacity(.35)),
                               strokeWidth: 1.5,
                             ),
                           ),
@@ -214,7 +229,8 @@ class _Categories extends GetView<ShopController> {
                           height: itemImgSize - 3,
                           width: itemImgSize - 3,
                           clipBehavior: Clip.hardEdge,
-                          decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
+                          decoration: const BoxDecoration(
+                              color: Color(0xFFDBE4FB), shape: BoxShape.circle),
                           child: FluIcon(category.icon, color: Colors.black),
                         ),
                       ],
@@ -226,14 +242,20 @@ class _Categories extends GetView<ShopController> {
                     children: [
                       Text(
                         StringUtils(category.name).capitalize!,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         category.description,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xFF687997),
+                            fontSize: 14),
                       ),
                     ],
                   )),

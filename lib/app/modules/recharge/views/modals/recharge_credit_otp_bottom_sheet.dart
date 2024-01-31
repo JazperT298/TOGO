@@ -10,16 +10,20 @@ import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dotted_line/dotted_line.dart';
 
+import '../../../../../utils/helpers/string_helper.dart';
+
 class RechargeCreditOTPBottomSheet {
   static showBottomSheetOTP() {
     var controller = Get.find<RechargeController>();
     Get.bottomSheet(
       KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
         return Container(
-          height: 70.h,
+          height: 79.h,
           width: 100.w,
-          decoration:
-              const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8), topRight: Radius.circular(8))),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +33,10 @@ class RechargeCreditOTPBottomSheet {
                   padding: EdgeInsets.only(left: 5.w, right: 5.w),
                   child: Text(
                     "SUMMARY".toUpperCase(),
-                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFFFB6404),
+                        fontSize: 13.sp),
                   ),
                 ),
                 SizedBox(
@@ -37,54 +44,82 @@ class RechargeCreditOTPBottomSheet {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                  child: Obx(() => controller.selectedOption.value == "For myself"
-                      ? RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Recharge your ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 24),
-                            ),
-                            TextSpan(
-                              text: 'Moov ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF124DE5), fontSize: 24),
-                            ),
-                            TextSpan(
-                              text: 'account using ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 24),
-                            ),
-                            TextSpan(
-                              text: 'Flooz.',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFfb6708), fontSize: 24),
+                  child:
+                      Obx(() => controller.selectedOption.value == "For myself"
+                          ? RichText(
+                              text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Recharge your ',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xFF27303F),
+                                      fontSize: 19.sp),
+                                ),
+                                TextSpan(
+                                  text: 'Moov ',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xFF124DE5),
+                                      fontSize: 19.sp),
+                                ),
+                                TextSpan(
+                                  text: 'account using ',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xFF27303F),
+                                      fontSize: 19.sp),
+                                ),
+                                TextSpan(
+                                  text: 'Flooz.',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xFFfb6708),
+                                      fontSize: 19.sp),
+                                )
+                              ]),
                             )
-                          ]),
-                        )
-                      : RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Recharge your ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 24),
-                            ),
-                            TextSpan(
-                              text: 'Moov ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF124DE5), fontSize: 24),
-                            ),
-                            TextSpan(
-                              text: 'account using ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 24),
-                            ),
-                            TextSpan(
-                              text: 'Flooz.',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFfb6708), fontSize: 24),
-                            )
-                          ]),
-                        )),
+                          : RichText(
+                              text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Recharge your ',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xFF27303F),
+                                      fontSize: 19.sp),
+                                ),
+                                TextSpan(
+                                  text: 'Moov ',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xFF124DE5),
+                                      fontSize: 19.sp),
+                                ),
+                                TextSpan(
+                                  text: 'account using ',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xFF27303F),
+                                      fontSize: 19.sp),
+                                ),
+                                TextSpan(
+                                  text: 'Flooz.',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xFFfb6708),
+                                      fontSize: 19.sp),
+                                )
+                              ]),
+                            )),
                 ),
                 SizedBox(height: 2.h),
                 Padding(
                   padding: EdgeInsets.only(left: 5.w, right: 5.w),
                   child: Text(
                     LocaleKeys.strTransferBeneficiary.tr.toUpperCase(),
-                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF27303F),
+                        fontSize: 13.sp),
                   ),
                 ),
                 SizedBox(height: 2.h),
@@ -94,22 +129,32 @@ class RechargeCreditOTPBottomSheet {
                       ? Container(
                           height: 7.h,
                           width: 100.w,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Colors.white),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Colors.white),
                           child: Center(
                             child: Text(
                               "Moi meme",
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontSize: 13.sp),
                             ),
                           ),
                         )
                       : Container(
                           height: 7.h,
                           width: 100.w,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Colors.white),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Colors.white),
                           child: Center(
                             child: Text(
                               controller.numberTextField.text,
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontSize: 13.sp),
                             ),
                           ),
                         ),
@@ -126,7 +171,10 @@ class RechargeCreditOTPBottomSheet {
                   padding: EdgeInsets.only(left: 5.w, right: 5.w),
                   child: Text(
                     LocaleKeys.strTransferDetails.tr.toUpperCase(),
-                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF27303F),
+                        fontSize: 13.sp),
                   ),
                 ),
                 SizedBox(height: 2.h),
@@ -137,14 +185,22 @@ class RechargeCreditOTPBottomSheet {
                     children: [
                       Expanded(
                         child: Text(
-                          "Fees",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
+                          LocaleKeys.strTransferAmount.tr,
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF27303F),
+                              fontSize: 12.sp),
                         ),
                       ),
                       Expanded(
                         child: Text(
-                          '0 FCFA',
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                          controller.amountTextField.text.toString().isEmpty
+                              ? '0 FCFA'
+                              : '${StringHelper.formatNumberWithCommas(int.parse(controller.amountTextField.text.toString().replaceAll(',', '')))} FCFA',
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF27303F),
+                              fontSize: 12.sp),
                         ),
                       ),
                     ],
@@ -158,14 +214,86 @@ class RechargeCreditOTPBottomSheet {
                     children: [
                       Expanded(
                         child: Text(
-                          LocaleKeys.strTransferAmount.tr,
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
+                          'Fees',
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF27303F),
+                              fontSize: 12.sp),
                         ),
                       ),
                       Expanded(
+                        child: Obx(
+                          () => Text(
+                            controller.totalFess.value == 0
+                                ? '0 FCFA'
+                                : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 12.sp),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                Padding(
+                  padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
                         child: Text(
-                          '${controller.amountTextField.text.toString()} FCFA',
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                          'Tax',
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF27303F),
+                              fontSize: 12.sp),
+                        ),
+                      ),
+                      Expanded(
+                        child: Obx(
+                          () => Text(
+                            controller.senderkeycosttva.isEmpty
+                                ? '0 FCFA'
+                                : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 12.sp),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                Padding(
+                  padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'TTC ',
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF27303F),
+                              fontSize: 12.sp),
+                        ),
+                      ),
+                      Expanded(
+                        child: Obx(
+                          () => Text(
+                            controller.totalAmount.value == 0
+                                ? '0 FCFA'
+                                : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 12.sp),
+                          ),
                         ),
                       ),
                     ],
@@ -178,9 +306,15 @@ class RechargeCreditOTPBottomSheet {
                     textAlign: TextAlign.center,
                     inputController: controller.code,
                     hint: "Enter PIN code", // "Montant à envoyer",
-                    hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
-                    textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
-                    height: 50,
+                    hintStyle: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xFF27303F),
+                        fontSize: 13.sp),
+                    textStyle: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                        fontSize: 13.sp),
+                    height: 6.5.h,
                     cornerRadius: 15,
                     keyboardType: TextInputType.number,
                     fillColor: const Color(0xFFf4f5fa),
@@ -191,13 +325,19 @@ class RechargeCreditOTPBottomSheet {
                           controller.verifyAndroidCredit(
                               code: controller.code.text,
                               amount: controller.amountTextField.text,
-                              msisdn: Get.find<StorageServices>().storage.read('msisdn'));
+                              msisdn: Get.find<StorageServices>()
+                                  .storage
+                                  .read('msisdn'));
                         } else {
                           controller.verifyAndroidCredit(
-                              code: controller.code.text, amount: controller.amountTextField.text, msisdn: controller.numberTextField.text);
+                              code: controller.code.text,
+                              amount: controller.amountTextField.text,
+                              msisdn: controller.numberTextField.text);
                         }
                       } else {
-                        Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                        Get.snackbar("Message", "Entrées manquantes",
+                            backgroundColor: Colors.lightBlue,
+                            colorText: Colors.white);
                       }
                     },
                   ),
@@ -217,16 +357,22 @@ class RechargeCreditOTPBottomSheet {
                             controller.verifyAndroidCredit(
                                 code: controller.code.text,
                                 amount: controller.amountTextField.text,
-                                msisdn: Get.find<StorageServices>().storage.read('msisdn'));
+                                msisdn: Get.find<StorageServices>()
+                                    .storage
+                                    .read('msisdn'));
                           } else {
                             controller.verifyAndroidCredit(
-                                code: controller.code.text, amount: controller.amountTextField.text, msisdn: controller.numberTextField.text);
+                                code: controller.code.text,
+                                amount: controller.amountTextField.text,
+                                msisdn: controller.numberTextField.text);
                           }
                         } else {
-                          Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                          Get.snackbar("Message", "Entrées manquantes",
+                              backgroundColor: Colors.lightBlue,
+                              colorText: Colors.white);
                         }
                       },
-                      height: 55,
+                      height: 7.h,
                       width: 100.w,
                       cornerRadius: UISettings.minButtonCornerRadius,
                       backgroundColor: const Color(0xFF124DE5),
@@ -239,7 +385,10 @@ class RechargeCreditOTPBottomSheet {
                           offset: Offset(0, 5),
                         )
                       ],
-                      textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
+                      textStyle: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFFF4F5FA),
+                          fontSize: 14.sp),
                     ),
                   ),
                 ),

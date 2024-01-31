@@ -235,7 +235,8 @@ class SendMoneyContactsBottomSheet {
                                                       ],
                                                     ),
                                                     Obx(() => favController
-                                                                .selectedContacts ==
+                                                                .selectedContacts
+                                                                .value ==
                                                             favController
                                                                 .contacts[index]
                                                         ? const FluIcon(

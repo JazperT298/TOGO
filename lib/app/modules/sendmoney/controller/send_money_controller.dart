@@ -31,6 +31,8 @@ class SendMoneyController extends GetxController {
   RxInt totalFess = 0.obs;
   RxInt totalAmount = 0.obs;
   RxString withdrawalAmountWithUnit = ''.obs;
+  RxString transactionID = ''.obs;
+  RxString senderBalance = ''.obs;
 
   RxBool isSummaryPage = false.obs;
   RxInt pageLast = 0.obs;
@@ -59,6 +61,8 @@ class SendMoneyController extends GetxController {
 
   RxBool isTextFieldEmpty = false.obs;
   RxString selectedCountryCode = '+228'.obs;
+  RxString selectedCountryName = ''.obs;
+
   FieldType? fieldtype;
   RxString messageType = ''.obs;
 
@@ -103,6 +107,47 @@ class SendMoneyController extends GetxController {
   RxString thisDsonString = ''.obs;
   RxString errorMessage = ''.obs;
   RxString responsemessage = ''.obs;
+
+  getMsisdnDetails() async {
+    try {
+      // String usermsisdn = AppGlobal.MSISDN.replaceAll("from", replace)
+      String usermsisdn = AppGlobal.MSISDN.substring(3);
+      log(usermsisdn);
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+
+      request.body =
+          '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
+              <soapenv:Header/>
+              <soapenv:Body>
+                  <app:getMsisdnDetails soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+                    <msisdn xsi:type="xsd:string">$usermsisdn</msisdn>
+                  </app:getMsisdnDetails>
+              </soapenv:Body>
+            </soapenv:Envelope>''';
+      log('getMsisdnDetails ${request.body}');
+      http.StreamedResponse response = await request.send();
+      request.headers.addAll(headers);
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        // log('getTransactionFee jsonString 1 $result');
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement =
+            document.findAllElements('getMsisdnDetailsReturn').single;
+        var jsonString = soapElement.innerText;
+        log('getMsisdnDetails jsonString 2 $jsonString');
+        var jsonDecodedData = jsonDecode(jsonString);
+        firstname.value = jsonDecodedData['FIRSTNAME'];
+        lastname.value = jsonDecodedData['LASTNAME'];
+      }
+    } catch (e) {
+      log('getTransactionFee asd $e');
+      Get.back();
+      // showMessageDialog(message: e.toString());
+    }
+  }
 
   addNumberFromReceiver(String msisdn, String token) async {
     try {
@@ -348,6 +393,7 @@ class SendMoneyController extends GetxController {
   void onVerifySmidnSubmitInt(
       String destinationMsisdn, String selectedCountryCode) async {
     try {
+      FullScreenLoading.fullScreenLoadingWithText('Validating request. . .');
       print(" --- $destinationMsisdn");
       print(" --- $selectedCountryCode");
       String removeFirstThreeCharacter = destinationMsisdn.substring(3);
@@ -386,16 +432,18 @@ class SendMoneyController extends GetxController {
         log(decodedData.toString());
 
         if (decodedData['onNet'] == true || decodedData['offNet'] == true) {
-          Get.snackbar(LocaleKeys.strInvalidNumber.tr, jsonString,
+          Get.back();
+          Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
               backgroundColor: Colors.lightBlue, colorText: Colors.white);
         } else {
           if (decodedData['description'] == "SUCCESS" &&
-              decodedData['international'] == 'xmcash') {
+              (decodedData['international'] == 'xmcash' ||
+                  decodedData['international'] == 'xcash')) {
             AppGlobal.internationalType = decodedData['international'];
             //toNextStep();
             Get.back();
+            Get.back();
             String countryName = '';
-
             // ['BJ', 'CI', 'NE', 'BF', 'ML', 'GW', 'SN']
             if (selectedCountryCode == "+229") {
               countryName = 'Benin';
@@ -422,6 +470,7 @@ class SendMoneyController extends GetxController {
                 .showBottomSheetSendMoneyInterationaInputAmount(
                     countryName: countryName);
           } else {
+            Get.back();
             Get.snackbar("Message", "Le numéro n'est pas autorisé",
                 backgroundColor: Colors.lightBlue, colorText: Colors.white);
           }
@@ -436,6 +485,7 @@ class SendMoneyController extends GetxController {
 
   getNationalTransactionFee(String msisdn, String amounts, String mess) async {
     FullScreenLoading.fullScreenLoadingWithText('Validating request. . .');
+    await getMsisdnDetails(); // GET MSISDN DETAILS
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST',
@@ -524,9 +574,15 @@ class SendMoneyController extends GetxController {
         alphacodetwo = 'SN';
         countryName = "Senegal";
       }
+      selectedCountryName.value = countryName;
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST',
           Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+
+      log("INTERNATIONAL TYPE: ${AppGlobal.internationalType}");
+      log("ALPHA CODE TWO TYPE: $alphacodetwo");
+      log("AMOUNT: $amount");
+
       if (AppGlobal.internationalType == "xmcash") {
         request.body =
             '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
@@ -536,7 +592,7 @@ class SendMoneyController extends GetxController {
                   <msisdn xsi:type="xsd:string">${AppGlobal.MSISDN}</msisdn>
                   <destmsisdn xsi:type="xsd:string">MFS_AFRICA_SEND</destmsisdn>
                   <keyword xsi:type="xsd:string">XMCASH</keyword>
-                  <value xsi:type="xsd:string">500</value>
+                  <value xsi:type="xsd:string">$amounts</value>
                 </app:getTransactionFee>
             </soapenv:Body>
           </soapenv:Envelope>''';
@@ -549,7 +605,7 @@ class SendMoneyController extends GetxController {
                   <msisdn xsi:type="xsd:string">${AppGlobal.MSISDN}</msisdn>
                   <destmsisdn xsi:type="xsd:string">XBORDER_SEND_$alphacodetwo</destmsisdn>
                   <keyword xsi:type="xsd:string">XCASH</keyword>
-                  <value xsi:type="xsd:string">$amount</value>
+                  <value xsi:type="xsd:string">$amounts</value>
                 </app:getTransactionFee>
             </soapenv:Body>
           </soapenv:Envelope>''';
@@ -670,12 +726,14 @@ class SendMoneyController extends GetxController {
             document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
         thisDsonString.value = jsonString;
-        log(jsonString.toString());
+        log("MAO NI RESPONSE NIYA: ${jsonString.toString()}");
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
-        if (jsonData['msgid'] == "0") {
+        if (jsonData['msgid'] == 0) {
+          transactionID.value = jsonData['refid'];
+          senderBalance.value = jsonData['senderbalance'];
           Get.back();
           responsemessage.value = jsonData['message'];
-          Get.toNamed(AppRoutes.TRANSACFAILED);
+          Get.toNamed(AppRoutes.TRANSACCOMPLETE);
           Get.find<StorageServices>().saveHistoryTransaction(
               message: responsemessage.value,
               service: LocaleKeys.strInternationalTransfer.tr);

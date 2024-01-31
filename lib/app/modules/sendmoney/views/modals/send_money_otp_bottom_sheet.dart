@@ -24,7 +24,7 @@ class SendMoneyOtpsBottomSheet {
           bottomSheetDivider(),
           KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
             return Container(
-              height: isKeyboardVisible ? 47.h : 56.h,
+              height: isKeyboardVisible ? 77.h : 80.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white,
@@ -43,7 +43,7 @@ class SendMoneyOtpsBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFFFB6404),
-                            fontSize: 14),
+                            fontSize: 13.sp),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -54,10 +54,10 @@ class SendMoneyOtpsBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: 22),
+                            fontSize: 19.sp),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
@@ -65,12 +65,13 @@ class SendMoneyOtpsBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 14),
+                            fontSize: 12.sp),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 4.h),
                     Obx(
-                      () => controller.firstname.value.isEmpty
+                      () => controller.firstname.value.isEmpty &&
+                              controller.lastname.value.isEmpty
                           ? const SizedBox.shrink()
                           : Padding(
                               padding: EdgeInsets.only(left: 5.w, right: 5.w),
@@ -84,7 +85,7 @@ class SendMoneyOtpsBottomSheet {
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w500,
                                           color: const Color(0xFF27303F),
-                                          fontSize: 14),
+                                          fontSize: 12.sp),
                                     ),
                                   ),
                                   Expanded(
@@ -93,14 +94,14 @@ class SendMoneyOtpsBottomSheet {
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w600,
                                           color: const Color(0xFF27303F),
-                                          fontSize: 14),
+                                          fontSize: 12.sp),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -113,7 +114,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -122,15 +123,15 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     const LineSeparator(color: Colors.grey),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
@@ -138,10 +139,10 @@ class SendMoneyOtpsBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 14),
+                            fontSize: 12.sp),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 4.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -153,7 +154,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -164,13 +165,13 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -182,7 +183,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -194,14 +195,14 @@ class SendMoneyOtpsBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: 12.sp),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -213,7 +214,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -225,14 +226,14 @@ class SendMoneyOtpsBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: 12.sp),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -244,7 +245,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -256,22 +257,28 @@ class SendMoneyOtpsBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: 12.sp),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    Obx(() => controller.firstname.value.isEmpty &&
+                            controller.lastname.value.isEmpty
+                        ? SizedBox(height: 6.h)
+                        : SizedBox(height: 3.h)),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: FluTextField(
                           inputController: controller.otpController,
                           hint: LocaleKeys
                               .strCodeSecret.tr, // "Votre code secret",
-                          height: 50,
+                          height: 6.5.h,
                           cornerRadius: 15,
+                          onTap: () {
+                            controller.isInvalidCode.value = false;
+                          },
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           fillColor: const Color(0xFFF4F5FA),
@@ -279,11 +286,11 @@ class SendMoneyOtpsBottomSheet {
                           hintStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w400,
                               color: const Color(0xFF27303F),
-                              fontSize: 14),
+                              fontSize: 12.sp),
                           textStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w400,
                               color: Colors.black,
-                              fontSize: 14),
+                              fontSize: 12.sp),
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'[0-9\s]')),
@@ -314,8 +321,8 @@ class SendMoneyOtpsBottomSheet {
                       () => controller.isInvalidCode.value == true
                           ? Center(
                               child: Container(
-                                height: 35,
-                                padding: const EdgeInsets.only(top: 4),
+                                height: 5.h,
+                                padding: EdgeInsets.only(top: 1.h),
                                 child: Text(
                                   controller.invalidCodeString.value,
                                   style: TextStyle(
@@ -325,7 +332,7 @@ class SendMoneyOtpsBottomSheet {
                                 ),
                               ),
                             )
-                          : const SizedBox(height: 35),
+                          : SizedBox(height: 5.h),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
@@ -349,7 +356,7 @@ class SendMoneyOtpsBottomSheet {
                                   LocaleKeys.strCodeSecretEmpty.tr;
                             }
                           },
-                          height: 55,
+                          height: 7.h,
                           width: MediaQuery.of(context).size.width * 16,
                           cornerRadius: UISettings.minButtonCornerRadius,
                           backgroundColor: context.colorScheme.primary,
@@ -366,7 +373,7 @@ class SendMoneyOtpsBottomSheet {
                           textStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFFF4F5FA),
-                              fontSize: 16),
+                              fontSize: 13.sp),
                         ),
                       ),
                     ),
@@ -391,7 +398,7 @@ class SendMoneyOtpsBottomSheet {
           bottomSheetDivider(),
           KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
             return Container(
-              height: isKeyboardVisible ? 47.h : 56.h,
+              height: isKeyboardVisible ? 77.h : 80.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white,
@@ -402,7 +409,7 @@ class SendMoneyOtpsBottomSheet {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 2.5.h),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
@@ -410,21 +417,21 @@ class SendMoneyOtpsBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFFFB6404),
-                            fontSize: 14),
+                            fontSize: 13.sp),
                       ),
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
-                        'Inernational transfer',
+                        'International transfer',
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: 22),
+                            fontSize: 19.sp),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
@@ -432,10 +439,10 @@ class SendMoneyOtpsBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 14),
+                            fontSize: 12.sp),
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 4.h),
                     Obx(
                       () => controller.firstname.value.isEmpty
                           ? const SizedBox.shrink()
@@ -451,7 +458,7 @@ class SendMoneyOtpsBottomSheet {
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w500,
                                           color: const Color(0xFF27303F),
-                                          fontSize: 14),
+                                          fontSize: 12.sp),
                                     ),
                                   ),
                                   Expanded(
@@ -460,14 +467,14 @@ class SendMoneyOtpsBottomSheet {
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w600,
                                           color: const Color(0xFF27303F),
-                                          fontSize: 14),
+                                          fontSize: 12.sp),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -479,7 +486,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -488,13 +495,13 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -507,7 +514,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -516,15 +523,15 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     const LineSeparator(color: Colors.grey),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
@@ -532,10 +539,10 @@ class SendMoneyOtpsBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 14),
+                            fontSize: 12.sp),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -547,7 +554,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -558,13 +565,13 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -576,7 +583,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -588,14 +595,14 @@ class SendMoneyOtpsBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: 12.sp),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -607,7 +614,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -619,14 +626,14 @@ class SendMoneyOtpsBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: 12.sp),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
@@ -638,7 +645,7 @@ class SendMoneyOtpsBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: 12.sp),
                             ),
                           ),
                           Expanded(
@@ -650,34 +657,37 @@ class SendMoneyOtpsBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: 12.sp),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: FluTextField(
                           inputController: controller.otpController,
                           hint: LocaleKeys
                               .strCodeSecret.tr, // "Votre code secret",
-                          height: 50,
+                          height: 6.5.h,
                           cornerRadius: 15,
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
+                          onTap: () {
+                            controller.isInvalidCode.value = false;
+                          },
                           fillColor: const Color(0xFFF4F5FA),
                           cursorColor: const Color(0xFF27303F),
                           hintStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w400,
                               color: const Color(0xFF27303F),
-                              fontSize: 14),
+                              fontSize: 12.sp),
                           textStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w400,
                               color: Colors.black,
-                              fontSize: 14),
+                              fontSize: 12.sp),
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'[0-9\s]')),
@@ -715,8 +725,8 @@ class SendMoneyOtpsBottomSheet {
                       () => controller.isInvalidCode.value == true
                           ? Center(
                               child: Container(
-                                height: 35,
-                                padding: const EdgeInsets.only(top: 4),
+                                height: 5.h,
+                                padding: EdgeInsets.only(top: 1.h),
                                 child: Text(
                                   controller.invalidCodeString.value,
                                   style: TextStyle(
@@ -726,8 +736,13 @@ class SendMoneyOtpsBottomSheet {
                                 ),
                               ),
                             )
-                          : const SizedBox(height: 35),
+                          : SizedBox(height: 5.h),
                     ),
+                    // Obx(() => controller.isInvalidCode.value
+                    //     ? SizedBox(
+                    //         height: 3.h,
+                    //       )
+                    //     : const SizedBox()),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Visibility(
@@ -742,7 +757,6 @@ class SendMoneyOtpsBottomSheet {
                               // controller.addNumberFromReceiver(
                               //     controller.amountController.value.text,
                               //     Get.find<DevicePlatformServices>().deviceID);
-                  
 
                               controller.sendMoneyInternationFinalHit(
                                   destinationMSISDN:
@@ -759,7 +773,7 @@ class SendMoneyOtpsBottomSheet {
                                   LocaleKeys.strCodeSecretEmpty.tr;
                             }
                           },
-                          height: 55,
+                          height: 7.h,
                           width: MediaQuery.of(context).size.width * 16,
                           cornerRadius: UISettings.minButtonCornerRadius,
                           backgroundColor: context.colorScheme.primary,
@@ -776,7 +790,7 @@ class SendMoneyOtpsBottomSheet {
                           textStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFFF4F5FA),
-                              fontSize: 16),
+                              fontSize: 13.sp),
                         ),
                       ),
                     ),

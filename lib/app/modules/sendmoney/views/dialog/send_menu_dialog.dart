@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors, sized_box_for_whitespace, avoid_print, unused_import, unused_local_variable
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flukit/flukit.dart';
@@ -74,10 +75,12 @@ class SendMenuDialog {
                           isScrollControlled: true,
                           context: context,
                           builder: (context) => _ModalBottomSheet(
-                                sendType: LocaleKeys.strInternationalTransfer.tr,
+                                sendType:
+                                    LocaleKeys.strInternationalTransfer.tr,
                                 siOTPPage: AppGlobal.siOTPPage,
                                 child: EnvoiInternationalBottomSheet(
-                                  sendType: LocaleKeys.strInternationalTransfer.tr,
+                                  sendType:
+                                      LocaleKeys.strInternationalTransfer.tr,
                                 ),
                               ));
                     },
@@ -93,7 +96,9 @@ class SendMenuDialog {
                     onTap: () {
                       Get.back();
                       Get.snackbar("Message", LocaleKeys.strLoading.tr,
-                          backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+                          backgroundColor: Colors.lightBlue,
+                          colorText: Colors.white,
+                          duration: const Duration(seconds: 3));
                     },
                     child: Container(
                       height: 20,
@@ -150,10 +155,12 @@ class SendMenuDialog {
                           isScrollControlled: true,
                           context: context,
                           builder: (context) => _ModalBottomSheet(
-                                sendType: LocaleKeys.strInternationalTransfer.tr,
+                                sendType:
+                                    LocaleKeys.strInternationalTransfer.tr,
                                 siOTPPage: AppGlobal.siOTPPage,
                                 child: EnvoiInternationalBottomSheet(
-                                  sendType: LocaleKeys.strInternationalTransfer.tr,
+                                  sendType:
+                                      LocaleKeys.strInternationalTransfer.tr,
                                 ),
                               ));
                     },
@@ -169,7 +176,9 @@ class SendMenuDialog {
                     onTap: () {
                       Get.back();
                       Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                          backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
+                          backgroundColor: Colors.lightBlue,
+                          colorText: Colors.white,
+                          duration: const Duration(seconds: 3));
                     },
                     child: Container(
                       height: 20,
@@ -233,7 +242,8 @@ class SendMenuDialog {
     // flutter defined function
     final controller = Get.find<SendMoneyController>();
 
-    Map<String, String> extractedValues = extractValues(controller.thisDsonString.value);
+    Map<String, String> extractedValues =
+        extractValues(controller.thisDsonString.value);
     Map<String, dynamic> jsonData = jsonDecode(controller.thisDsonString.value);
 
     String amount = extractedValues['amount'] ?? '';
@@ -254,7 +264,7 @@ class SendMenuDialog {
 
           content: Container(
             width: MediaQuery.of(context).size.width - 60,
-            height: 480,
+            height: 520,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -264,7 +274,10 @@ class SendMenuDialog {
                   children: [
                     Text(
                       "Operation Recap",
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          fontSize: 24),
                     ),
                     InkWell(
                       onTap: () {
@@ -281,7 +294,10 @@ class SendMenuDialog {
                 const SizedBox(height: 24),
                 Text(
                   'Bénéficiaire'.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF27303F),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 18),
                 Obx(
@@ -293,13 +309,19 @@ class SendMenuDialog {
                             Expanded(
                               child: Text(
                                 'Name',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w500,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 'N/A',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
                               ),
                             ),
                           ],
@@ -311,14 +333,44 @@ class SendMenuDialog {
                   children: [
                     Expanded(
                       child: Text(
-                        'Number',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        'Country',
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        controller.numberController.value.text,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        controller.selectedCountryName.value,
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Number',
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        "${controller.selectedCountryCode.value} ${controller.numberController.value.text}",
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -328,7 +380,10 @@ class SendMenuDialog {
                 const SizedBox(height: 24),
                 Text(
                   'DETAILS'.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF27303F),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 18),
                 Row(
@@ -337,7 +392,10 @@ class SendMenuDialog {
                     Expanded(
                       child: Text(
                         'Amount',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -345,7 +403,10 @@ class SendMenuDialog {
                         controller.amountController.text.isEmpty
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.amountController.text.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -357,7 +418,10 @@ class SendMenuDialog {
                     Expanded(
                       child: Text(
                         'Fees',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -365,18 +429,25 @@ class SendMenuDialog {
                         controller.totalFess.value == 0
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
                 ),
+                SizedBox(height: 1.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: Text(
                         'Tax',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -384,18 +455,25 @@ class SendMenuDialog {
                         controller.senderkeycosttva.value.isEmpty
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
                 ),
+                SizedBox(height: 1.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: Text(
                         'TTC',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -403,18 +481,23 @@ class SendMenuDialog {
                         controller.totalAmount.value == 0
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
                 const SizedBox(height: 24),
                 const LineSeparator(color: Colors.grey),
                 const SizedBox(height: 24),
                 Text(
                   'Operation information'.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF27303F),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 18),
                 Row(
@@ -423,13 +506,19 @@ class SendMenuDialog {
                     Expanded(
                       child: Text(
                         'Date',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        DateFormat('dd/MM/yyyy').format(DateTime.parse(AppGlobal.dateNow)),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        DateFormat.yMMMd().format(DateTime.now()),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -441,13 +530,19 @@ class SendMenuDialog {
                     Expanded(
                       child: Text(
                         'Hour',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        DateFormat('hh:mm:ss').format(DateTime.parse(AppGlobal.timeNow)),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        DateFormat.jm().format(DateTime.now()),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -459,13 +554,19 @@ class SendMenuDialog {
                     Expanded(
                       child: Text(
                         'Txn ID',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        txnId.isEmpty ? '' : txnId,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        controller.transactionID.value,
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -477,13 +578,19 @@ class SendMenuDialog {
                     Expanded(
                       child: Text(
                         'New Balance',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        nouveauSolde.isEmpty ? '' : '${StringHelper.formatNumberWithCommas(int.parse(nouveauSolde.replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        "${controller.senderBalance.value} FCFA",
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -521,8 +628,11 @@ class SendMenuDialog {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Votre opération a été e\nffectué avec succès.'.toUpperCase(),
-                        style: TextStyle(color: context.colorScheme.onSurface, fontSize: 11.sp),
+                        'Votre opération a été e\nffectué avec succès.'
+                            .toUpperCase(),
+                        style: TextStyle(
+                            color: context.colorScheme.onSurface,
+                            fontSize: 11.sp),
                       ),
                       FluIcon(
                         FluIcons.checkCircleUnicon,
@@ -787,7 +897,8 @@ class SendMenuDialog {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
+                  textStyle:
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 11.sp),
                 ),
                 const SizedBox(
                   height: 12,
@@ -836,10 +947,13 @@ class SendMenuDialog {
     Match? txnIdMatch = txnIdRegExp.firstMatch(message);
 
     String amount = amountMatch != null ? amountMatch.group(1)! : '';
-    String beneficiaire = beneficiaireMatch != null ? beneficiaireMatch.group(1)! : '';
+    String beneficiaire =
+        beneficiaireMatch != null ? beneficiaireMatch.group(1)! : '';
     String date = dateMatch != null ? dateMatch.group(1)! : '';
-    String codeRetait = codeRetraitMatch != null ? codeRetraitMatch.group(1)! : '';
-    String nouveauSolde = nouveauSoldeMatch != null ? nouveauSoldeMatch.group(1)! : '';
+    String codeRetait =
+        codeRetraitMatch != null ? codeRetraitMatch.group(1)! : '';
+    String nouveauSolde =
+        nouveauSoldeMatch != null ? nouveauSoldeMatch.group(1)! : '';
     String txnId = txnIdMatch != null ? txnIdMatch.group(1)! : '';
 
     return {
@@ -854,7 +968,8 @@ class SendMenuDialog {
 }
 
 class _ModalBottomSheet extends StatelessWidget {
-  const _ModalBottomSheet({required this.child, required this.sendType, required this.siOTPPage});
+  const _ModalBottomSheet(
+      {required this.child, required this.sendType, required this.siOTPPage});
 
   final Widget child;
   final String sendType;
@@ -864,7 +979,8 @@ class _ModalBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
             height: isKeyboardVisible
                 ? AppGlobal.siOTPPage == true

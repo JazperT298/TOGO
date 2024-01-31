@@ -14,8 +14,12 @@ import 'package:ibank/app/modules/recharge/views/dialog/recharge_menu_dialog.dar
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
+import 'package:ibank/utils/constants/app_global.dart';
 import 'package:xml/xml.dart' as xml;
 
+import '../../../components/main_loading.dart';
+import '../../../data/models/transaction_fee.dart';
+import '../views/modals/recharge_credit_otp_bottom_sheet.dart';
 import '../views/modals/recharge_internet_menu_bottom_sheet.dart';
 
 class RechargeController extends GetxController {
@@ -24,6 +28,10 @@ class RechargeController extends GetxController {
   RxString internetNumberCode = ''.obs;
   RxString internetProductType = 'All'.obs;
   RxString internetRadioGroupValue = ''.obs;
+  RxString senderkeycosttotal = ''.obs;
+  RxString senderkeycosttva = ''.obs;
+  RxInt totalFess = 0.obs;
+  RxInt totalAmount = 0.obs;
 
   RxString voicePackageNumberCode = ''.obs;
   RxString voicePackageHVCNumberCode = ''.obs;
@@ -49,7 +57,8 @@ class RechargeController extends GetxController {
       Get.find<StorageServices>().storage.remove('isLoginSuccessClick');
       Get.offAllNamed(AppRoutes.LOGIN);
       Future.delayed(const Duration(seconds: 2), () {
-        LoginAlertdialog.showMessageVersionNotUpToDate(controller: Get.find<LoginController>());
+        LoginAlertdialog.showMessageVersionNotUpToDate(
+            controller: Get.find<LoginController>());
       });
     });
   }
@@ -59,11 +68,14 @@ class RechargeController extends GetxController {
     required String amount,
     required String code,
   }) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    ProgressAlertDialog.progressAlertDialog(
+        Get.context!, LocaleKeys.strLoading.tr);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -92,7 +104,8 @@ class RechargeController extends GetxController {
           if (selectedOption.value == "For myself") {
             await transactCreditForMyself(amount: amount, code: code);
           } else {
-            await transactCreditForOthers(msisdn: msisdn, amount: amount, code: code);
+            await transactCreditForOthers(
+                msisdn: msisdn, amount: amount, code: code);
           }
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
           logout();
@@ -110,14 +123,69 @@ class RechargeController extends GetxController {
     }
   }
 
+  getTransactionFee({required String amounts}) async {
+    FullScreenLoading.fullScreenLoadingWithText('Validating request. . .');
+    // await getMsisdnDetails(); // GET MSISDN DETAILS
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <app:getTransactionFee soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+                  <msisdn xsi:type="xsd:string">${AppGlobal.MSISDN}</msisdn>
+                  <destmsisdn xsi:type="xsd:string">AIRT</destmsisdn>
+                  <keyword xsi:type="xsd:string">APPAIRT</keyword>
+                  <value xsi:type="xsd:string">$amounts</value>
+                </app:getTransactionFee>
+            </soapenv:Body>
+          </soapenv:Envelope>''';
+      log('getTransactionFee ${request.body}');
+      http.StreamedResponse response = await request.send();
+      request.headers.addAll(headers);
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement =
+            document.findAllElements('getTransactionFeeReturn').single;
+        var jsonString = soapElement.innerText;
+        log('getTransactionFee jsonString 2 $jsonString');
+
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        TransactionFee transactionFee = TransactionFee.fromJson(jsonData);
+        senderkeycosttotal.value = transactionFee.senderkeycosttotal;
+        senderkeycosttva.value = transactionFee.senderkeycosttva;
+        totalFess.value =
+            int.parse(senderkeycosttotal.value.replaceAll(',', '')) -
+                int.parse(senderkeycosttva.value.replaceAll(',', ''));
+        totalAmount.value = int.parse(amounts) +
+            int.parse(senderkeycosttotal.value.replaceAll(',', ''));
+
+        Get.back();
+        Get.back();
+        RechargeCreditOTPBottomSheet.showBottomSheetOTP();
+      }
+    } catch (e) {
+      log('getTransactionFee asd $e');
+      Get.back();
+      // showMessageDialog(message: e.toString());
+    }
+  }
+
   transactCreditForMyself({
     required String amount,
     required String code,
   }) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -159,8 +227,10 @@ class RechargeController extends GetxController {
   }) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -196,13 +266,16 @@ class RechargeController extends GetxController {
   }
 
   internetGetProducts() async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    ProgressAlertDialog.progressAlertDialog(
+        Get.context!, LocaleKeys.strLoading.tr);
     try {
       productsList.clear();
       productsMasterList.clear();
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -228,27 +301,33 @@ class RechargeController extends GetxController {
         var decodedData = jsonDecode(jsonString);
         log(jsonEncode(decodedData));
         Get.back();
-        productsList.assignAll(internetProductsFromJson(jsonEncode(decodedData)));
-        productsMasterList.assignAll(internetProductsFromJson(jsonEncode(decodedData)));
+        productsList
+            .assignAll(internetProductsFromJson(jsonEncode(decodedData)));
+        productsMasterList
+            .assignAll(internetProductsFromJson(jsonEncode(decodedData)));
         RechargeInternetMainMenuBottomSheet.showBottomSheetRechargeInternetTo();
       } else {
         log("ERROR ${response.reasonPhrase}'");
       }
     } catch (e) {
       Get.back();
-      RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
+      RechargeMenuDialog.showMessageDialog(
+          message: "There are no available packages. Please try again later.");
       log('internetGetProducts $e');
     }
   }
 
   voicePackageGetProducts() async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    ProgressAlertDialog.progressAlertDialog(
+        Get.context!, LocaleKeys.strLoading.tr);
     try {
       voiceProdList.clear();
       voiceProdMasterList.clear();
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -277,17 +356,22 @@ class RechargeController extends GetxController {
 
         Get.back();
         voiceProdList.assignAll(VoiceProductsFromJson(jsonEncode(decodedData)));
-        voiceProdList.sort((a, b) => int.parse(a.price).compareTo(int.parse(b.price)));
-        voiceProdMasterList.assignAll(VoiceProductsFromJson(jsonEncode(decodedData)));
-        voiceProdMasterList.sort((a, b) => int.parse(a.price).compareTo(int.parse(b.price)));
+        voiceProdList
+            .sort((a, b) => int.parse(a.price).compareTo(int.parse(b.price)));
+        voiceProdMasterList
+            .assignAll(VoiceProductsFromJson(jsonEncode(decodedData)));
+        voiceProdMasterList
+            .sort((a, b) => int.parse(a.price).compareTo(int.parse(b.price)));
 
-        RechargeInternetMainMenuBottomSheet.showBottomSheetRechargeVoicePackageTo();
+        RechargeInternetMainMenuBottomSheet
+            .showBottomSheetRechargeVoicePackageTo();
       } else {
         log("ERROR ${response.reasonPhrase}'");
       }
     } catch (e) {
       Get.back();
-      RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
+      RechargeMenuDialog.showMessageDialog(
+          message: "There are no available packages. Please try again later.");
       log('voicePackageGetProducts $e');
     }
   }
@@ -298,8 +382,10 @@ class RechargeController extends GetxController {
       voiceProdList.clear();
       voiceProdMasterList.clear();
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -332,14 +418,17 @@ class RechargeController extends GetxController {
 
         String sortedJsonResponse = jsonEncode(responseList);
 
-        voiceProdList.assignAll(VoiceProductsFromJson(jsonEncode(sortedJsonResponse)));
-        voiceProdMasterList.assignAll(VoiceProductsFromJson(jsonEncode(sortedJsonResponse)));
+        voiceProdList
+            .assignAll(VoiceProductsFromJson(jsonEncode(sortedJsonResponse)));
+        voiceProdMasterList
+            .assignAll(VoiceProductsFromJson(jsonEncode(sortedJsonResponse)));
       } else {
         log("ERROR ${response.reasonPhrase}'");
       }
     } catch (e) {
       // Get.back();
-      RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
+      RechargeMenuDialog.showMessageDialog(
+          message: "There are no available packages. Please try again later.");
       log('voicePackageGetProducts $e');
     }
   }
@@ -348,11 +437,14 @@ class RechargeController extends GetxController {
     required String msisdn,
     required String code,
   }) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    ProgressAlertDialog.progressAlertDialog(
+        Get.context!, LocaleKeys.strLoading.tr);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -403,11 +495,14 @@ class RechargeController extends GetxController {
     required String msisdn,
     required String code,
   }) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    ProgressAlertDialog.progressAlertDialog(
+        Get.context!, LocaleKeys.strLoading.tr);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -460,8 +555,10 @@ class RechargeController extends GetxController {
   }) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -502,8 +599,10 @@ class RechargeController extends GetxController {
   }) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -544,8 +643,10 @@ class RechargeController extends GetxController {
   }) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -586,8 +687,10 @@ class RechargeController extends GetxController {
   }) async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -636,13 +739,15 @@ class RechargeController extends GetxController {
       }
     } else if (internetProductType.value == "Intense") {
       for (var i = 0; i < productsMasterList.length; i++) {
-        if (intense.contains(productsMasterList[i].productid.trim().toString())) {
+        if (intense
+            .contains(productsMasterList[i].productid.trim().toString())) {
           productsList.add(productsMasterList[i]);
         }
       }
     } else if (internetProductType.value == "Nights") {
       for (var i = 0; i < productsMasterList.length; i++) {
-        if (nights.contains(productsMasterList[i].productid.trim().toString())) {
+        if (nights
+            .contains(productsMasterList[i].productid.trim().toString())) {
           productsList.add(productsMasterList[i]);
         }
       }
@@ -660,19 +765,22 @@ class RechargeController extends GetxController {
 
     if (voicePackageProductType.value == "Mixes") {
       for (var i = 0; i < voiceProdMasterList.length; i++) {
-        if (mixes.contains(voiceProdMasterList[i].productid.trim().toString())) {
+        if (mixes
+            .contains(voiceProdMasterList[i].productid.trim().toString())) {
           voiceProdList.add(voiceProdMasterList[i]);
         }
       }
     } else if (voicePackageProductType.value == "Voice") {
       for (var i = 0; i < voiceProdMasterList.length; i++) {
-        if (voice.contains(voiceProdMasterList[i].productid.trim().toString())) {
+        if (voice
+            .contains(voiceProdMasterList[i].productid.trim().toString())) {
           voiceProdList.add(voiceProdMasterList[i]);
         }
       }
     } else if (voicePackageProductType.value == "Promo") {
       for (var i = 0; i < voiceProdMasterList.length; i++) {
-        if (promo.contains(voiceProdMasterList[i].productid.trim().toString())) {
+        if (promo
+            .contains(voiceProdMasterList[i].productid.trim().toString())) {
           voiceProdList.add(voiceProdMasterList[i]);
         }
       }
