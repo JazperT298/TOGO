@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/login/alertdialog/login_alertdialog.dart';
@@ -94,7 +95,7 @@ class HomeController extends GetxController {
   }
 
   enterPinForInformationPersonelles({required String code}) async {
-    isLoadingDialog(true);
+    FullScreenLoading.fullScreenLoadingWithText('Validating PIN...');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -146,16 +147,73 @@ class HomeController extends GetxController {
           afficherSolde.value = false;
           log(soldeFlooz.value);
           Get.back();
+          Get.back();
         } else {
+          Get.back();
           Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
+        Get.back();
         print(response.reasonPhrase);
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } on Exception catch (_) {
       log("ERROR $_");
+      Get.back();
+      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
-    isLoadingDialog(false);
+  }
+
+  checUserBalance({required String code}) async {
+    FullScreenLoading.fullScreenLoadingWithText('Validating PIN...');
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+          <v:Body>
+          <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
+          <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
+          <message i:type="d:string">BALN $code F</message>
+          <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
+          <sendsms i:type="d:string">false</sendsms>
+          </n0:RequestTokenJson>
+          </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
+        var jsonString = soapElement.innerText;
+        // var decodedData = jsonDecode(jsonString);
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        int msgId = jsonData["msgid"];
+        if (msgId == 0) {
+          Get.back();
+          Get.back();
+        } else {
+          Get.back();
+          Get.snackbar("Message", jsonData["message"], backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+        }
+      } else {
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+
+        print(response.reasonPhrase);
+      }
+    } on Exception catch (_) {
+      Get.back();
+      log("ERROR $_");
+      Get.snackbar("Message", 'An error occured, please try again', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+    }
   }
 
   logout({required String response}) async {

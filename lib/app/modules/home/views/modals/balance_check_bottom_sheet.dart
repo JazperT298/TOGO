@@ -8,14 +8,14 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
-import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
+import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
 class BalanceCheckBottomSheet {
   static void showBottomSheetInputNumber() {
-    var controller = Get.find<ProfileController>();
+    var controller = Get.find<HomeController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       BackdropFilter(
@@ -81,9 +81,18 @@ class BalanceCheckBottomSheet {
                             cursorColor: const Color(0xFF27303F),
                             hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
                             textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                            onChanged: (text) {
+                              String newText = text.replaceAll(' ', '');
+                              String spacedText = newText.split('').join(' ');
+                              controller.code.value = controller.code.value.copyWith(
+                                text: spacedText,
+                                selection: TextSelection.collapsed(offset: spacedText.length),
+                              );
+                            },
                             onFieldSubmitted: (p0) async {
                               if (controller.code.text.isNotEmpty) {
-                                controller.enterPinForInformationPersonelles(code: controller.code.text);
+                                String finalPINCode = controller.code.text.replaceAll(' ', '');
+                                controller.enterPinForInformationPersonelles(code: finalPINCode);
                               } else {
                                 Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                               }
@@ -102,9 +111,9 @@ class BalanceCheckBottomSheet {
                             iconStrokeWidth: 1.8,
                             onPressed: () {
                               if (controller.code.text.isNotEmpty) {
+                                String finalPINCode = controller.code.text.replaceAll(' ', '');
                                 // AppGlobal.dateNow = DateTime.now().toString();
-                                // AppGlobal.timeNow = DateTime.now().toString();
-                                // controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                                controller.enterPinForInformationPersonelles(code: finalPINCode);
                               } else {
                                 Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                               }
