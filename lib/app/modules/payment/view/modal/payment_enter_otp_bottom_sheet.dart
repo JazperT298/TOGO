@@ -28,10 +28,7 @@ class PaymentEnterOtpBottomSheet {
               height: isKeyboardVisible ? 67.h : 74.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8))),
+                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,10 +39,7 @@ class PaymentEnterOtpBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         "SUMMARY".toUpperCase(),
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFFFB6404),
-                            fontSize: 13.sp),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 13.sp),
                       ),
                     ),
                     SizedBox(height: 2.h),
@@ -56,33 +50,19 @@ class PaymentEnterOtpBottomSheet {
                               text: TextSpan(children: [
                                 TextSpan(
                                   text: 'Bill payment ',
-                                  style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                      fontSize: 22),
+                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
                                 ),
                                 TextSpan(
                                   text: '\n${controller.selectedOption.value} ',
-                                  style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      color: const Color(0xFF295fe7),
-                                      fontSize: 19.sp),
+                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF295fe7), fontSize: 19.sp),
                                 ),
                                 TextSpan(
                                   text: 'of ',
-                                  style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                      fontSize: 19.sp),
+                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
                                 ),
                                 TextSpan(
-                                  text: Flu.formatDate(
-                                          controller.parsedDate!, 'MM/yyyy')
-                                      .toUpperCase(),
-                                  style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      color: const Color(0xFFFB6404),
-                                      fontSize: 19.sp),
+                                  text: Flu.formatDate(controller.parsedDate!, 'MM/yyyy').toUpperCase(),
+                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFFFB6404), fontSize: 19.sp),
                                 )
                               ]),
                             )
@@ -128,10 +108,7 @@ class PaymentEnterOtpBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         'Equipment'.toUpperCase(),
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 13.sp),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 13.sp),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -143,10 +120,7 @@ class PaymentEnterOtpBottomSheet {
                           Expanded(
                             child: Text(
                               "Number",
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xFF27303F),
-                                  fontSize: 13.sp),
+                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 13.sp),
                             ),
                           ),
                           Expanded(
@@ -154,10 +128,7 @@ class PaymentEnterOtpBottomSheet {
                               // controller.textSplitterPackageName(text: controller.selectedProduct!.description),
                               // controller.selectDatum!.reference,
                               controller.billPayment!.message[0].productname,
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF27303F),
-                                  fontSize: 13.sp),
+                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 13.sp),
                             ),
                           ),
                         ],
@@ -170,10 +141,7 @@ class PaymentEnterOtpBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strTransferDetails.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 13.sp),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 13.sp),
                       ),
                     ),
                     SizedBox(
@@ -187,10 +155,7 @@ class PaymentEnterOtpBottomSheet {
                           Expanded(
                             child: Text(
                               "Amount",
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xFF27303F),
-                                  fontSize: 13.sp),
+                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 13.sp),
                             ),
                           ),
                           Expanded(
@@ -199,10 +164,7 @@ class PaymentEnterOtpBottomSheet {
                                 controller.price.value.isEmpty
                                     ? '0 FCFA'
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.price.value.replaceAll(',', '')))} FCFA',
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: 13.sp),
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 13.sp),
                               ),
                             ),
                           ),
@@ -218,10 +180,7 @@ class PaymentEnterOtpBottomSheet {
                           Expanded(
                             child: Text(
                               "Fees",
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xFF27303F),
-                                  fontSize: 13.sp),
+                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 13.sp),
                             ),
                           ),
                           Expanded(
@@ -230,10 +189,7 @@ class PaymentEnterOtpBottomSheet {
                                 controller.totalFess.value == 0
                                     ? '0 FCFA'
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: 13.sp),
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 13.sp),
                               ),
                             ),
                           ),
@@ -249,10 +205,7 @@ class PaymentEnterOtpBottomSheet {
                           Expanded(
                             child: Text(
                               'Tax',
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xFF27303F),
-                                  fontSize: 13.sp),
+                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 13.sp),
                             ),
                           ),
                           Expanded(
@@ -261,10 +214,7 @@ class PaymentEnterOtpBottomSheet {
                                 controller.senderkeycosttva.isEmpty
                                     ? '0 FCFA'
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: 13.sp),
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 13.sp),
                               ),
                             ),
                           ),
@@ -280,10 +230,7 @@ class PaymentEnterOtpBottomSheet {
                           Expanded(
                             child: Text(
                               'TTC ',
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xFF27303F),
-                                  fontSize: 13.sp),
+                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 13.sp),
                             ),
                           ),
                           Expanded(
@@ -292,10 +239,7 @@ class PaymentEnterOtpBottomSheet {
                                 controller.totalAmount.value == 0
                                     ? '0 FCFA'
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: 13.sp),
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 13.sp),
                               ),
                             ),
                           ),
@@ -311,14 +255,8 @@ class PaymentEnterOtpBottomSheet {
                         textAlign: TextAlign.center,
                         inputController: controller.code,
                         hint: "Enter PIN code", // "Montant à envoyer",
-                        hintStyle: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w400,
-                            color: const Color(0xFF27303F),
-                            fontSize: 12.sp),
-                        textStyle: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                            fontSize: 12.sp),
+                        hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 12.sp),
+                        textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 12.sp),
                         height: 6.5.h,
                         cornerRadius: 15,
                         keyboardType: TextInputType.number,
@@ -329,17 +267,11 @@ class PaymentEnterOtpBottomSheet {
                             if (controller.selectedOption.value == "CEET") {
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
-                              controller.sentBillPaymentRequest(
-                                  controller.billType.value,
-                                  controller
-                                      .billPayment!.message[0].productname,
-                                  controller.price.value,
-                                  controller.code.text);
+                              controller.sentBillPaymentRequest(controller.billType.value, controller.billPayment!.message[0].productname,
+                                  controller.price.value, controller.code.text);
                             } else {}
                           } else {
-                            Get.snackbar("Message", "Entrées manquantes",
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
+                            Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                           }
                         },
                       ),
@@ -358,17 +290,11 @@ class PaymentEnterOtpBottomSheet {
                               if (controller.selectedOption.value == "CEET") {
                                 AppGlobal.dateNow = DateTime.now().toString();
                                 AppGlobal.timeNow = DateTime.now().toString();
-                                controller.sentBillPaymentRequest(
-                                    controller.billType.value,
-                                    controller
-                                        .billPayment!.message[0].productname,
-                                    controller.price.value,
-                                    controller.code.text);
+                                controller.sentBillPaymentRequest(controller.billType.value, controller.billPayment!.message[0].productname,
+                                    controller.price.value, controller.code.text);
                               } else {}
                             } else {
-                              Get.snackbar("Message", "Entrées manquantes",
-                                  backgroundColor: Colors.lightBlue,
-                                  colorText: Colors.white);
+                              Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             }
                           },
                           height: 7.h,
@@ -384,8 +310,7 @@ class PaymentEnterOtpBottomSheet {
                               offset: Offset(0, 5),
                             )
                           ],
-                          textStyle: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 14.sp),
+                          textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
                         ),
                       ),
                     ),

@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import
 
+import 'dart:developer';
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +21,7 @@ import 'package:ibank/utils/constants/app_global.dart';
 import '../../history/controller/history_controller.dart';
 import '../../home/controller/home_controller.dart';
 import '../../mbanking/controller/mbanking_controller.dart';
+import '../../payment/controller/payment_controller.dart';
 import '../../recharge/controller/recharge_controller.dart';
 import '../../sendmoney/controller/send_money_controller.dart';
 
@@ -43,6 +46,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
 
   @override
   void initState() {
+    log("init some controllers");
     pageController = PageController();
     Get.put(HomeController());
     Get.put(HistoryController());
@@ -50,6 +54,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
     Get.put(RechargeController());
     Get.put(SendMoneyController());
     Get.put(MBankingController());
+    Get.put(PaymentController());
     contoller.getDataFromStorage();
     super.initState();
   }

@@ -8,14 +8,14 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
-import 'package:ibank/app/modules/home/controller/home_controller.dart';
+import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
 class BalanceCheckBottomSheet {
   static void showBottomSheetInputNumber() {
-    var controller = Get.put(HomeController());
+    var controller = Get.find<ProfileController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       BackdropFilter(
@@ -83,9 +83,7 @@ class BalanceCheckBottomSheet {
                             textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                             onFieldSubmitted: (p0) async {
                               if (controller.code.text.isNotEmpty) {
-                                // AppGlobal.dateNow = DateTime.now().toString();
-                                // AppGlobal.timeNow = DateTime.now().toString();
-                                // controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                                controller.enterPinForInformationPersonelles(code: controller.code.text);
                               } else {
                                 Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                               }

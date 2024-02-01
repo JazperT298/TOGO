@@ -39,4 +39,7 @@ class AppRoutes {
 
   static const String PAYMENTSUCCESS = '/paymentsuccess';
   static const String PAYMENTFAILED = '/paymentfailed';
+
+  static const String MBANKFAILED = '/mbankfailed';
+  static const String MBANKSUCCESS = '/mbanksuccess';
 }

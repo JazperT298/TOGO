@@ -10,7 +10,7 @@ import 'package:sizer/sizer.dart';
 
 class PaymentServiceLinksBottomSheet {
   static void showBottomSheetCeetServicePackageTo() {
-    final controller = Get.put(PaymentController());
+    var controller = Get.find<PaymentController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {

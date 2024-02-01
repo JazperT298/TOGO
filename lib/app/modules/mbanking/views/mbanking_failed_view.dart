@@ -2,17 +2,17 @@ import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
+import 'package:ibank/app/modules/mbanking/controller/mbanking_controller.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
 
-class PaymentFieldView extends StatelessWidget {
-  const PaymentFieldView({super.key});
+class MBangkingFailedView extends StatelessWidget {
+  const MBangkingFailedView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<PaymentController>();
+    final controller = Get.find<MBankingController>();
     return FluScreen(
       overlayStyle: context.systemUiOverlayStyle.copyWith(
         statusBarColor: Colors.transparent,
@@ -21,8 +21,7 @@ class PaymentFieldView extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding:
-                UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
+            padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -42,31 +41,19 @@ class PaymentFieldView extends StatelessWidget {
                     child: Text(
                       'Operation Failed', //    "Échec de l'Opération",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          fontSize: 24),
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: UISettings.pagePadding
-                      .copyWith(top: 16, left: 24, right: 24),
+                  padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
                   child: Align(
                     alignment: Alignment.center,
-                    child: Obx(
-                      () => Text(
-                        controller.errorMessage.value.isEmpty
-                            ? 'Sorry, the operation failed. Please try again later or contact support if the problem persists'
-                            : //     "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste:
-                            controller.errorMessage
-                                .value, //   'Sorry, the operation failed. Please try again later or contact support if the problem persists', //     "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                            fontSize: 14),
-                      ),
+                    child: Text(
+                      controller.responsemessage
+                          .value, //   'Sorry, the operation failed. Please try again later or contact support if the problem persists', //     "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                     ),
                   ),
                 ),
@@ -90,8 +77,7 @@ class PaymentFieldView extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w400, fontSize: 16),
+                  textStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                 ),
                 const SizedBox(
                   height: 16,
@@ -102,7 +88,7 @@ class PaymentFieldView extends StatelessWidget {
                   iconStrokeWidth: 1.8,
                   onPressed: () {
                     controller.amountTextField.clear();
-                    controller.numberTextField.clear();
+                    controller.codeTextField.clear();
                     // Get.toNamed(AppRoutes.BOTTOMNAV);
                     Get.back();
                     Get.back();
@@ -122,10 +108,7 @@ class PaymentFieldView extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: context.colorScheme.primary),
+                  textStyle: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: context.colorScheme.primary),
                 ),
                 const SizedBox(
                   height: 24,

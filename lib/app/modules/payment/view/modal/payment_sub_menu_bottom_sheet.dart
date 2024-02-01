@@ -10,8 +10,7 @@ import 'package:sizer/sizer.dart';
 
 class PaymentSubMenuBottomSheet {
   static void showBottomSheetPaymentSubMenu(BuildContext context) {
-    // var controller = Get.find<PaymentController>();
-    var controller = Get.put(PaymentController());
+    var controller = Get.find<PaymentController>();
     Get.bottomSheet(
         backgroundColor: Colors.transparent,
         Wrap(

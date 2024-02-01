@@ -8,6 +8,8 @@ import 'package:ibank/app/modules/recharge/views/modals/recharge_credit_input_am
 import 'package:ibank/app/modules/recharge/views/modals/recharge_credit_input_number_bottom_sheet.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
+
 class RechargeCreditMainMenuBottomSheet {
   static void showBottomSheetRechargeCreditTo() {
     var controller = Get.find<RechargeController>();
@@ -37,7 +39,7 @@ class RechargeCreditMainMenuBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFFFB6404),
-                            fontSize: 13.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -48,7 +50,7 @@ class RechargeCreditMainMenuBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w600,
                               color: Colors.black,
-                              fontSize: 19.sp),
+                              fontSize: FontSizes.headerLargeText),
                         )),
                     // Padding(
                     //   padding: EdgeInsets.only(left: 5.w, right: 5.w),
@@ -118,7 +120,7 @@ class RechargeCreditMainMenuBottomSheet {
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w600,
                                       color: const Color(0xFF27303F),
-                                      fontSize: 12.sp),
+                                      fontSize: FontSizes.headerSmallText),
                                 ),
                                 Text(
                                   "Recharge your Moov account.",
@@ -127,7 +129,7 @@ class RechargeCreditMainMenuBottomSheet {
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w400,
                                       color: const Color(0xFF687997),
-                                      fontSize: 12.sp),
+                                      fontSize: FontSizes.headerSmallText),
                                 ),
                               ],
                             ),
@@ -181,7 +183,7 @@ class RechargeCreditMainMenuBottomSheet {
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w600,
                                         color: const Color(0xFF27303F),
-                                        fontSize: 12.sp),
+                                        fontSize: FontSizes.headerSmallText),
                                   ),
                                   Text(
                                     "Enter the number and recharge for others.",
@@ -190,7 +192,7 @@ class RechargeCreditMainMenuBottomSheet {
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w400,
                                         color: const Color(0xFF687997),
-                                        fontSize: 12.sp),
+                                        fontSize: FontSizes.headerSmallText),
                                   ),
                                 ],
                               ),

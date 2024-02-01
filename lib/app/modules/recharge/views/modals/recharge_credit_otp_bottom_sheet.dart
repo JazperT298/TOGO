@@ -10,6 +10,7 @@ import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dotted_line/dotted_line.dart';
 
+import '../../../../../utils/fontsize_config.dart';
 import '../../../../../utils/helpers/string_helper.dart';
 
 class RechargeCreditOTPBottomSheet {
@@ -36,7 +37,7 @@ class RechargeCreditOTPBottomSheet {
                     style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFFFB6404),
-                        fontSize: 13.sp),
+                        fontSize: FontSizes.headerMediumText),
                   ),
                 ),
                 SizedBox(
@@ -53,28 +54,28 @@ class RechargeCreditOTPBottomSheet {
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xFF27303F),
-                                      fontSize: 19.sp),
+                                      fontSize: FontSizes.headerLargeText),
                                 ),
                                 TextSpan(
                                   text: 'Moov ',
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xFF124DE5),
-                                      fontSize: 19.sp),
+                                      fontSize: FontSizes.headerLargeText),
                                 ),
                                 TextSpan(
                                   text: 'account using ',
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xFF27303F),
-                                      fontSize: 19.sp),
+                                      fontSize: FontSizes.headerLargeText),
                                 ),
                                 TextSpan(
                                   text: 'Flooz.',
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xFFfb6708),
-                                      fontSize: 19.sp),
+                                      fontSize: FontSizes.headerLargeText),
                                 )
                               ]),
                             )
@@ -85,28 +86,28 @@ class RechargeCreditOTPBottomSheet {
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xFF27303F),
-                                      fontSize: 19.sp),
+                                      fontSize: FontSizes.headerLargeText),
                                 ),
                                 TextSpan(
                                   text: 'Moov ',
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xFF124DE5),
-                                      fontSize: 19.sp),
+                                      fontSize: FontSizes.headerLargeText),
                                 ),
                                 TextSpan(
                                   text: 'account using ',
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xFF27303F),
-                                      fontSize: 19.sp),
+                                      fontSize: FontSizes.headerLargeText),
                                 ),
                                 TextSpan(
                                   text: 'Flooz.',
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xFFfb6708),
-                                      fontSize: 19.sp),
+                                      fontSize: FontSizes.headerLargeText),
                                 )
                               ]),
                             )),
@@ -119,7 +120,7 @@ class RechargeCreditOTPBottomSheet {
                     style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF27303F),
-                        fontSize: 13.sp),
+                        fontSize: FontSizes.headerMediumText),
                   ),
                 ),
                 SizedBox(height: 2.h),
@@ -138,7 +139,7 @@ class RechargeCreditOTPBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
-                                  fontSize: 13.sp),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                         )
@@ -154,7 +155,7 @@ class RechargeCreditOTPBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
-                                  fontSize: 13.sp),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                         ),
@@ -174,7 +175,7 @@ class RechargeCreditOTPBottomSheet {
                     style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF27303F),
-                        fontSize: 13.sp),
+                        fontSize: FontSizes.headerMediumText),
                   ),
                 ),
                 SizedBox(height: 2.h),
@@ -189,7 +190,7 @@ class RechargeCreditOTPBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFF27303F),
-                              fontSize: 12.sp),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       Expanded(
@@ -200,7 +201,7 @@ class RechargeCreditOTPBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w600,
                               color: const Color(0xFF27303F),
-                              fontSize: 12.sp),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                     ],
@@ -218,7 +219,7 @@ class RechargeCreditOTPBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFF27303F),
-                              fontSize: 12.sp),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       Expanded(
@@ -230,7 +231,7 @@ class RechargeCreditOTPBottomSheet {
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: const Color(0xFF27303F),
-                                fontSize: 12.sp),
+                                fontSize: FontSizes.headerMediumText),
                           ),
                         ),
                       ),
@@ -249,7 +250,7 @@ class RechargeCreditOTPBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFF27303F),
-                              fontSize: 12.sp),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       Expanded(
@@ -261,7 +262,7 @@ class RechargeCreditOTPBottomSheet {
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: const Color(0xFF27303F),
-                                fontSize: 12.sp),
+                                fontSize: FontSizes.headerMediumText),
                           ),
                         ),
                       ),
@@ -280,7 +281,7 @@ class RechargeCreditOTPBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFF27303F),
-                              fontSize: 12.sp),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       Expanded(
@@ -292,7 +293,7 @@ class RechargeCreditOTPBottomSheet {
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: const Color(0xFF27303F),
-                                fontSize: 12.sp),
+                                fontSize: FontSizes.headerMediumText),
                           ),
                         ),
                       ),
@@ -309,11 +310,11 @@ class RechargeCreditOTPBottomSheet {
                     hintStyle: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w400,
                         color: const Color(0xFF27303F),
-                        fontSize: 13.sp),
+                        fontSize: FontSizes.textFieldText),
                     textStyle: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
-                        fontSize: 13.sp),
+                        fontSize: FontSizes.textFieldText),
                     height: 6.5.h,
                     cornerRadius: 15,
                     keyboardType: TextInputType.number,
@@ -388,7 +389,7 @@ class RechargeCreditOTPBottomSheet {
                       textStyle: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w500,
                           color: const Color(0xFFF4F5FA),
-                          fontSize: 14.sp),
+                          fontSize: FontSizes.buttonText),
                     ),
                   ),
                 ),

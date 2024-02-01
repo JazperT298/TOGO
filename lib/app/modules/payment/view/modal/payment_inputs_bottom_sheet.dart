@@ -14,7 +14,7 @@ import 'package:sizer/sizer.dart';
 
 class PaymentInputsBottomSheet {
   static void showBottomSheetCeetInputNumber() {
-    var controller = Get.put(PaymentController());
+    var controller = Get.find<PaymentController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
@@ -223,7 +223,7 @@ class PaymentInputsBottomSheet {
   }
 
   static void showBottomSheetSolergieInputNumber() {
-    var controller = Get.put(PaymentController());
+    var controller = Get.find<PaymentController>();
     Get.bottomSheet(backgroundColor: Colors.transparent,
         KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return Wrap(

@@ -17,6 +17,7 @@ import 'package:ibank/app/modules/home/views/modals/balance_check_bottom_sheet.d
 import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
 import 'package:ibank/app/modules/mbanking/views/modals/mbanking_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/mbanking/views/modals/mbanking_select_bank_bottom_sheet.dart';
+import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_main_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_service_link_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_menu_bottom_sheet.dart';
@@ -329,6 +330,7 @@ class _QuickActions extends StatelessWidget {
         WithdrawMenuBottomSheets.showBottomSheetWithdrawMenu();
         break;
       case WalletActions.pay:
+        Get.find<PaymentController>().resetVariables();
         // Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
         //     backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
         PaymentMainMenuBottomSheet.showBottomSheetPaymentMenu(context);

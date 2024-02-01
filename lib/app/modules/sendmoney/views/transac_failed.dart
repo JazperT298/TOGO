@@ -29,8 +29,7 @@ class TransacFailedView extends GetView<SendMoneyController> {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding:
-                UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
+            padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -50,26 +49,19 @@ class TransacFailedView extends GetView<SendMoneyController> {
                     child: Text(
                       'Operation Failed', //    "Échec de l'Opération",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          fontSize: 24),
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: UISettings.pagePadding
-                      .copyWith(top: 16, left: 24, right: 24),
+                  padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
                       controller.responsemessage
                           .value, //   'Sorry, the operation failed. Please try again later or contact support if the problem persists', //     "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                          fontSize: 14),
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                     ),
                   ),
                 ),
@@ -93,8 +85,7 @@ class TransacFailedView extends GetView<SendMoneyController> {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w400, fontSize: 16),
+                  textStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                 ),
                 const SizedBox(
                   height: 16,
@@ -125,10 +116,7 @@ class TransacFailedView extends GetView<SendMoneyController> {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: context.colorScheme.primary),
+                  textStyle: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: context.colorScheme.primary),
                 ),
                 const SizedBox(
                   height: 24,
