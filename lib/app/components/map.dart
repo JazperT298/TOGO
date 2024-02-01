@@ -1,13 +1,14 @@
-// ignore_for_file: avoid_print, unused_field, unnecessary_null_comparison
+// ignore_for_file: avoid_print, unused_field, unnecessary_null_comparison, unused_import
 
 import 'dart:async';
 
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ibank/app/services/location_service.dart';
 import 'package:ibank/utils/constants/app_global.dart';
-import 'package:location/location.dart';
 
 /// Map
 /// This a map showing nearby agences.
@@ -17,29 +18,32 @@ class AgenciesMap extends StatefulWidget {
   final bool fullScreen;
   final void Function(LatLng)? onTap;
 
-  const AgenciesMap(
-      {Key? key, this.height, this.radius, this.onTap, this.fullScreen = false})
-      : super(key: key);
+  const AgenciesMap({Key? key, this.height, this.radius, this.onTap, this.fullScreen = false}) : super(key: key);
 
   @override
   State<AgenciesMap> createState() => AgenciesMapState();
 }
 
 class AgenciesMapState extends State<AgenciesMap> {
-  late LocationData currentLocation;
-
   // late String _mapStyle;
 
-  double radius(BuildContext context) => context.height * .055;
+  // double radius(BuildContext context) => context.height * .055;
   final Completer<GoogleMapController> _controller = Completer();
   // final FluLocationService locationService = Flu.geoService;
 
   final Set<Marker> _markers = {};
-  final CameraPosition _initialPosition = const CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+  final CameraPosition _initialPosition = CameraPosition(
+    target: Get.find<LocationService>().latlng.value,
     zoom: 15,
   );
 
+  animateMap() {
+    final CameraPosition cameraPosition = CameraPosition(target: Get.find<LocationService>().latlng.value, zoom: widget.fullScreen ? 14 : 10);
+
+    _controller.future.then((GoogleMapController controller) {
+      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    });
+  }
   /* void getLocation() async {
     await Flu.geoService.determinePosition().then((Position position) {
       final CameraPosition position1 = CameraPosition(
@@ -54,40 +58,38 @@ class AgenciesMapState extends State<AgenciesMap> {
     });
   } */
 
-  void getLocation() async {
-    Flu.geoService.determinePosition().then((FluPosition fluPosition) async {
-      final Position position = fluPosition.position;
+  // void getLocation() async {
+  //   Flu.geoService.determinePosition().then((FluPosition fluPosition) async {
+  //     final Position position = fluPosition.position;
 
-      final CameraPosition cameraPosition = CameraPosition(
-        target: LatLng(position.latitude, position.longitude),
-        zoom: widget.fullScreen ? 14 : 10,
-      );
-      _controller.future.then((GoogleMapController controller) {
-        controller
-            .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-      });
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-        position.latitude,
-        position.longitude,
-      );
-      if (placemarks != null && placemarks.isNotEmpty) {
-        setState(() {
-          AppGlobal.currentAddress =
-              '${placemarks.first.street}, ${placemarks.first.locality}, ${placemarks.first.administrativeArea}';
-          print('current location ${AppGlobal.currentAddress}');
-        });
-        setState(() {});
-      }
-    }).catchError((error) {
-    
-      print('Erreur lors de la récupération de la position : $error');
-    });
-  }
+  //     final CameraPosition cameraPosition = CameraPosition(
+  //       target: LatLng(position.latitude, position.longitude),
+  //       zoom: widget.fullScreen ? 14 : 10,
+  //     );
+  //     _controller.future.then((GoogleMapController controller) {
+  //       controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  //     });
+  //     List<Placemark> placemarks = await placemarkFromCoordinates(
+  //       position.latitude,
+  //       position.longitude,
+  //     );
+  //     if (placemarks != null && placemarks.isNotEmpty) {
+  //       setState(() {
+  //         AppGlobal.currentAddress = '${placemarks.first.street}, ${placemarks.first.locality}, ${placemarks.first.administrativeArea}';
+  //         print('current location ${AppGlobal.currentAddress}');
+  //       });
+  //       setState(() {});
+  //     }
+  //   }).catchError((error) {
+  //     print('Erreur lors de la récupération de la position : $error');
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
-    getLocation();
+    // getLocation();
+    animateMap();
     /* rootBundle.loadString('assets/mapStyles/default.txt').then((string) {
       _mapStyle = string;
     }); */
@@ -98,9 +100,9 @@ class AgenciesMapState extends State<AgenciesMap> {
         height: widget.height ?? double.infinity,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-            color: context.colorScheme.background,
-            borderRadius:
-                BorderRadius.circular(widget.radius ?? radius(context))),
+          color: context.colorScheme.background,
+          borderRadius: BorderRadius.circular(30),
+        ),
         child: GoogleMap(
           mapType: MapType.normal,
           zoomControlsEnabled: false,

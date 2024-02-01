@@ -164,14 +164,14 @@ class ProfileController extends GetxController {
           } else {
             commission.value = "N/A";
           }
-          //Save lang nko sa storage just in case
-          Get.find<StorageServices>().saveUserData(
-              name: name.value,
-              firstname: firstname.value,
-              msisdn: msisdn.value,
-              birthdate: birthdate.value,
-              soldeFlooz: soldeFlooz.value,
-              commission: commission.value);
+          // //Save lang nko sa storage just in case
+          // Get.find<StorageServices>().saveUsersInformation(
+          //     name: name.value,
+          //     firstname: firstname.value,
+          //     msisdn: msisdn.value,
+          //     birthdate: birthdate.value,
+          //     soldeFlooz: soldeFlooz.value,
+          //     commission: commission.value);
           Get.back();
           Get.toNamed(AppRoutes.PROFILEINFORMATIONPERSONELLES);
         } else {

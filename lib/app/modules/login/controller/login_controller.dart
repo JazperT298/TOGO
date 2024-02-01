@@ -16,6 +16,7 @@ import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
+import 'package:ibank/utils/helpers/string_helper.dart';
 import 'package:ibank/utils/string_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml/xml.dart' as xml;
@@ -38,13 +39,22 @@ class LoginController extends GetxController {
   RxBool isLoadingDialog = false.obs;
   RxBool secured = false.obs;
 
+  RxString msisdn = ''.obs;
+
+  RxBool isResetCircle = false.obs;
+
+  RxString account = ''.obs;
   RxString name = ''.obs;
   RxString firstname = ''.obs;
   RxString birthdate = ''.obs;
-  RxString msisdn = ''.obs;
   RxString soldeFlooz = ''.obs;
-
-  RxBool isResetCircle = false.obs;
+  RxString balance = ''.obs;
+  RxString commission = ''.obs;
+  RxString collecte = ''.obs;
+  RxString date = ''.obs;
+  RxString message = ''.obs;
+  RxString selectedImageFile = ''.obs;
+  RxString selectedAvatar = ''.obs;
 
   void getSecureTextFromStorage() async {
     isLoadingBiometrics(true);
@@ -258,33 +268,24 @@ class LoginController extends GetxController {
         var document = xml.XmlDocument.parse(parseResult);
         var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
-        // var decodedData = jsonDecode(jsonString);
-        Map<String, dynamic> jsonData = jsonDecode(jsonString);
 
+        Map<String, String> values = extractValuesFromJson(jsonString);
+
+        account.value = values['compte'].toString();
+        name.value = values['nom'].toString();
+        firstname.value = values['prenoms'].toString();
+        birthdate.value = values['dob'].toString();
+        balance.value = values['soldeFlooz'].toString();
+        commission.value = values['commission'].toString();
+        collecte.value = values['collecte'].toString();
+        date.value = values['date'].toString();
+        message.value = values['jusquau'].toString();
+
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
         int msgId = jsonData["msgid"];
 
         // if (jsonString.contains('Compte:')) {
         if (msgId == 0) {
-          String inputString = jsonString;
-          var lines = inputString.trim().split('\n');
-          var jsonMap = {};
-          for (var line in lines) {
-            var parts = line.split(':');
-            if (parts.length == 2) {
-              var key = parts[0].trim();
-              var value = parts[1].trim();
-              jsonMap[key] = value;
-            }
-          }
-          var dataEncoded = jsonEncode(jsonMap);
-          var dataDecoded = jsonDecode(dataEncoded);
-          log(dataDecoded.toString());
-          // name.value = dataDecoded['Nom'];
-          // firstname.value = dataDecoded['Prenoms'];
-          // msisdn.value = dataDecoded['Compte'];
-          // birthdate.value = dataDecoded['Date de naissance'];
-          // soldeFlooz.value = dataDecoded['Solde Flooz'].toString().replaceAll("FCFA", "").trim().toString();
-          // afficherSolde.value = false;
           log(soldeFlooz.value);
           Get.back();
           isResetCircle.value = true;
@@ -384,6 +385,16 @@ class LoginController extends GetxController {
   void profileContinueButtonClick() async {
     FullScreenLoading.fullScreenLoadingWithText('Saving profile...');
     await Future.delayed(const Duration(seconds: 3)).then((value) {
+      Get.find<StorageServices>().saveUsersInformation(
+          account: account.value.toString(),
+          name: name.value.toString(),
+          firstname: firstname.value.toString(),
+          birthdate: birthdate.value.toString(),
+          balance: balance.value.toString(),
+          commission: commission.value.toString(),
+          collecte: collecte.value.toString(),
+          date: date.value.toString(),
+          jusquau: message.value.toString());
       Get.offAllNamed(AppRoutes.LOGINBIOMETRICS);
     });
   }

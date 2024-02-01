@@ -11,8 +11,8 @@ import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileBottomSheet {
+  static var controller = Get.find<ProfileController>();
   static void showBottomSheetInputNumber() {
-    var controller = Get.find<ProfileController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
@@ -146,7 +146,6 @@ class ProfileBottomSheet {
   }
 
   static void showBottomSheetBiometrics() {
-    final controller = Get.put(ProfileController());
     controller.getSecureTextFromStorage();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
@@ -239,7 +238,6 @@ class ProfileBottomSheet {
   }
 
   static void showBottomSheetInputPIN() {
-    var controller = Get.put(ProfileController());
     controller.code.clear();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,

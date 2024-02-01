@@ -53,9 +53,11 @@ class BottomNavController extends GetxController {
 
     if (Get.find<StorageServices>().storage.read('imageFile') != null) {
       AppGlobal.PROFILEIMAGE = Get.find<StorageServices>().storage.read('imageFile');
+      AppGlobal.PROFILEAVATAR = '';
     }
     if (Get.find<StorageServices>().storage.read('image') != null) {
       AppGlobal.PROFILEAVATAR = Get.find<StorageServices>().storage.read('image');
+      AppGlobal.PROFILEIMAGE = '';
     }
     if (Get.find<StorageServices>().storage.read('biometrics') != null) {
       AppGlobal.BIOMETRICS = Get.find<StorageServices>().storage.read('biometrics');

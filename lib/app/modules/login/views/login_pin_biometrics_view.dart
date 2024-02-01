@@ -156,7 +156,7 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
                         ),
                         SizedBox(height: 2.h),
                         Text(
-                          'Koffi kagni',
+                          '${Get.find<StorageServices>().userFirstname().toString()} ${Get.find<StorageServices>().userName().toString()}',
                           style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
                         ),
                         SizedBox(height: 2.h),

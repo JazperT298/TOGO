@@ -188,7 +188,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       // ),
                                       Text(
                                         // AppGlobal.currentAddress.isEmpty ? '' : AppGlobal.currentAddress,
-                                        'Koffi Kagni',
+                                        '${Get.find<StorageServices>().userFirstname().toString()} ${Get.find<StorageServices>().userName().toString()}',
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 16),
                                       ),
@@ -535,10 +535,11 @@ class _ProfileViewState extends State<ProfileView> {
                 FullScreenLoading.fullScreenLoadingWithText('Logging out. . .');
                 await storage.remove('msisdn').then((value) async {
                   await Future.delayed(const Duration(seconds: 3), () {
-                    Get.back();
+                    Get.find<StorageServices>().storage.remove('isPrivacyCheck');
+                    Get.find<StorageServices>().storage.remove('isLoginSuccessClick');
                     Get.find<StorageServices>().clearUserLocalData();
-                    AppGlobal.PROFILEAVATAR = '';
-                    AppGlobal.PROFILEAVATAR = '';
+                    Get.find<StorageServices>().clearUsersInformation();
+                    Get.back();
                     Get.offAllNamed(AppRoutes.LOGIN);
                   });
                 });

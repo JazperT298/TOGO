@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:convert';
 import 'dart:developer';
 
@@ -34,6 +36,9 @@ class RechargeController extends GetxController {
   RxString senderkeycosttva = ''.obs;
   RxInt totalFess = 0.obs;
   RxInt totalAmount = 0.obs;
+  RxString transactionID = ''.obs;
+  RxString senderBalance = ''.obs;
+  RxString responsemessage = ''.obs;
 
   RxString voicePackageNumberCode = ''.obs;
   RxString voicePackageHVCNumberCode = ''.obs;
@@ -53,10 +58,14 @@ class RechargeController extends GetxController {
   InternetProducts? selectedProduct;
   VoiceProducts? selectedVoice;
 
+  RxString thisHsonString = ''.obs;
+
   logout() async {
     await Get.find<StorageServices>().storage.remove('msisdn').then((value) {
       Get.find<StorageServices>().storage.remove('isPrivacyCheck');
       Get.find<StorageServices>().storage.remove('isLoginSuccessClick');
+      Get.find<StorageServices>().clearUserLocalData();
+      Get.find<StorageServices>().clearUsersInformation();
       Get.offAllNamed(AppRoutes.LOGIN);
       Future.delayed(const Duration(seconds: 2), () {
         LoginAlertdialog.showMessageVersionNotUpToDate(controller: Get.find<LoginController>());
@@ -69,7 +78,7 @@ class RechargeController extends GetxController {
     required String amount,
     required String code,
   }) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -150,7 +159,6 @@ class RechargeController extends GetxController {
         log('getTransactionFee jsonString 2 $jsonString');
 
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
-
         TransactionFee transactionFee = TransactionFee.fromJson(jsonData);
         senderkeycosttotal.value = transactionFee.senderkeycosttotal;
         senderkeycosttva.value = transactionFee.senderkeycosttva;
@@ -164,6 +172,8 @@ class RechargeController extends GetxController {
     } catch (e) {
       log('getCreditTransactionFee asd $e');
       Get.back();
+      Get.snackbar("Message", 'An Error Occured, Please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+
       // showMessageDialog(message: e.toString());
     }
   }
@@ -216,6 +226,8 @@ class RechargeController extends GetxController {
     } catch (e) {
       log('getInternetAndVoiceTransactionFee asd $e');
       Get.back();
+      Get.snackbar("Message", 'An Error Occured, Please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+
       // showMessageDialog(message: e.toString());
     }
   }
@@ -233,12 +245,12 @@ class RechargeController extends GetxController {
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header />
           <v:Body>
-          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
           <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
           <message i:type="d:string">APPAIRT OWN $amount $code F</message>
           <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
           <sendsms i:type="d:string">true</sendsms>
-          </n0:RequestToken>
+          </n0:RequestTokenJson>
           </v:Body>
           </v:Envelope>''';
       request.headers.addAll(headers);
@@ -248,17 +260,33 @@ class RechargeController extends GetxController {
         var result = await response.stream.bytesToString();
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
         log(jsonString.toString());
+        thisHsonString.value = jsonString;
+
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        responsemessage.value = jsonData['message'];
         Get.back();
         Get.back();
-        RechargeMenuDialog.showMessageDialog(message: jsonString);
+        int msgId = jsonData["msgid"];
+        if (msgId == 0) {
+          transactionID.value = jsonData['refid'];
+          senderBalance.value = jsonData['senderbalance'];
+          // RechargeMenuDialog.showMessageDialog(message: jsonString);
+          Get.toNamed(AppRoutes.RECHARGESUCCESS);
+        } else {
+          log("ERROR transactCreditForMyself ${response.reasonPhrase}'");
+          Get.toNamed(AppRoutes.RECHARGEFAILED);
+        }
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } catch (e) {
-      log('transactCreditForMyself $e');
+      Get.back();
+      log('transactInternetRechargeOwn $e');
+      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 
@@ -276,12 +304,12 @@ class RechargeController extends GetxController {
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header />
           <v:Body>
-          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
           <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
           <message i:type="d:string">APPAIRT $msisdn $amount $code F</message>
           <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
           <sendsms i:type="d:string">true</sendsms>
-          </n0:RequestToken>
+          </n0:RequestTokenJson>
           </v:Body>
           </v:Envelope>''';
       request.headers.addAll(headers);
@@ -291,22 +319,35 @@ class RechargeController extends GetxController {
         var result = await response.stream.bytesToString();
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
-        log(jsonString.toString());
+        log('transactCreditForOthers JSON ${jsonString.toString()}');
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        responsemessage.value = jsonData['message'];
         Get.back();
         Get.back();
-        RechargeMenuDialog.showMessageDialog(message: jsonString);
+        int msgId = jsonData["msgid"];
+        if (msgId == 0) {
+          transactionID.value = jsonData['refid'];
+          senderBalance.value = jsonData['senderbalance'];
+          Get.toNamed(AppRoutes.RECHARGESUCCESS);
+        } else {
+          log("ERROR transactCreditForOthers ${response.reasonPhrase}'");
+          Get.toNamed(AppRoutes.RECHARGEFAILED);
+        }
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } catch (e) {
-      log('transactCreditForOthers $e');
+      Get.back();
+      log('transactInternetRechargeOwn $e');
+      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 
   internetGetProducts() async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoadingWithText('Processing. Please wait. . .');
     try {
       productsList.clear();
       productsMasterList.clear();
@@ -342,17 +383,21 @@ class RechargeController extends GetxController {
         productsMasterList.assignAll(internetProductsFromJson(jsonEncode(decodedData)));
         RechargeInternetMainMenuBottomSheet.showBottomSheetRechargeInternetTo();
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        log("ERROR internetGetProducts ${response.reasonPhrase}'");
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
       }
     } catch (e) {
       Get.back();
-      RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
+      // RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
+      Get.snackbar("Message", 'An Error Occured, Please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+
       log('internetGetProducts $e');
     }
   }
 
   voicePackageGetProducts() async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoadingWithText('Processing. Please wait. . .');
     try {
       voiceProdList.clear();
       voiceProdMasterList.clear();
@@ -393,11 +438,15 @@ class RechargeController extends GetxController {
 
         RechargeInternetMainMenuBottomSheet.showBottomSheetRechargeVoicePackageTo();
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        log("ERROR  voicePackageGetProducts ${response.reasonPhrase}'");
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
       }
     } catch (e) {
       Get.back();
-      RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
+      // RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
+      Get.snackbar("Message", 'An Error Occured, Please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+
       log('voicePackageGetProducts $e');
     }
   }
@@ -446,10 +495,13 @@ class RechargeController extends GetxController {
         voiceProdMasterList.assignAll(VoiceProductsFromJson(jsonEncode(sortedJsonResponse)));
       } else {
         log("ERROR ${response.reasonPhrase}'");
+        Get.snackbar("Message", 'Service unavailable, please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
       }
     } catch (e) {
       // Get.back();
-      RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
+      // RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
+      Get.snackbar("Message", 'An Error Occured, Please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+
       log('voicePackageGetProducts $e');
     }
   }
@@ -458,7 +510,7 @@ class RechargeController extends GetxController {
     required String msisdn,
     required String code,
   }) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -513,7 +565,7 @@ class RechargeController extends GetxController {
     required String msisdn,
     required String code,
   }) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -557,10 +609,14 @@ class RechargeController extends GetxController {
           logout();
         }
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        Get.back();
+        log("ERROR verifyAndroidVoice ${response.reasonPhrase}'");
+        Get.snackbar("Message", 'Service unavailable, please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
       }
     } catch (e) {
+      Get.back();
       log('verifyAndroidInternet $e');
+      Get.snackbar("Message", 'An Error Occured, Please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
     }
   }
 
@@ -577,12 +633,12 @@ class RechargeController extends GetxController {
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header />
           <v:Body>
-          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
           <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
           <message i:type="d:string">APPAIRD OWN ${selectedProduct!.productid} $code F</message>
           <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
           <sendsms i:type="d:string">true</sendsms>
-          </n0:RequestToken>
+          </n0:RequestTokenJson>
           </v:Body>
           </v:Envelope>''';
       request.headers.addAll(headers);
@@ -592,17 +648,32 @@ class RechargeController extends GetxController {
         var result = await response.stream.bytesToString();
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
         log(jsonString.toString());
+        thisHsonString.value = jsonString;
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        responsemessage.value = jsonData['message'];
         Get.back();
         Get.back();
-        RechargeMenuDialog.showMessageDialog(message: jsonString);
+        int msgId = jsonData["msgid"];
+        if (msgId == 0) {
+          transactionID.value = jsonData['refid'];
+          senderBalance.value = jsonData['senderbalance'];
+          Get.toNamed(AppRoutes.RECHARGESUCCESS);
+        } else {
+          Get.back();
+          log("ERROR ${response.reasonPhrase}'");
+          Get.toNamed(AppRoutes.RECHARGEFAILED);
+        }
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } catch (e) {
       log('transactInternetRechargeOwn $e');
+      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 
@@ -619,12 +690,12 @@ class RechargeController extends GetxController {
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header />
           <v:Body>
-          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
           <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
           <message i:type="d:string">APPAIRD OWN ${selectedVoice!.productid} $code F</message>
           <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
           <sendsms i:type="d:string">true</sendsms>
-          </n0:RequestToken>
+          </n0:RequestTokenJson>
           </v:Body>
           </v:Envelope>''';
       request.headers.addAll(headers);
@@ -634,17 +705,33 @@ class RechargeController extends GetxController {
         var result = await response.stream.bytesToString();
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
         log(jsonString.toString());
+        thisHsonString.value = jsonString;
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        responsemessage.value = jsonData['message'];
         Get.back();
         Get.back();
-        RechargeMenuDialog.showMessageDialog(message: jsonString);
+        int msgId = jsonData["msgid"];
+        if (msgId == 0) {
+          transactionID.value = jsonData['refid'];
+          senderBalance.value = jsonData['senderbalance'];
+          Get.toNamed(AppRoutes.RECHARGESUCCESS);
+        } else {
+          Get.back();
+          log("ERROR ${response.reasonPhrase}'");
+          Get.toNamed(AppRoutes.RECHARGEFAILED);
+        }
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } catch (e) {
+      Get.back();
       log('transactInternetRechargeOwn $e');
+      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 
@@ -661,12 +748,12 @@ class RechargeController extends GetxController {
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header />
           <v:Body>
-          <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
+          <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
           <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
           <message i:type="d:string">APPAIRD OTHER $msisdn ${selectedProduct!.productid} $code F</message>
           <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
           <sendsms i:type="d:string">true</sendsms>
-          </n0:RequestToken>
+          </n0:RequestTokenJson>
           </v:Body>
           </v:Envelope>''';
       request.headers.addAll(headers);
@@ -676,17 +763,33 @@ class RechargeController extends GetxController {
         var result = await response.stream.bytesToString();
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenReturn').single;
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
-        log(jsonString.toString());
+        log('transactInternetRechargeOthers ${jsonString.toString()}');
+        thisHsonString.value = jsonString;
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+        responsemessage.value = jsonData['message'];
         Get.back();
         Get.back();
-        RechargeMenuDialog.showMessageDialog(message: jsonString);
+        int msgId = jsonData["msgid"];
+        if (msgId == 0) {
+          transactionID.value = jsonData['refid'];
+          senderBalance.value = jsonData['senderbalance'];
+          Get.toNamed(AppRoutes.RECHARGESUCCESS);
+        } else {
+          Get.back();
+          log("ERROR ${response.reasonPhrase}'");
+          Get.toNamed(AppRoutes.RECHARGEFAILED);
+        }
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } catch (e) {
+      Get.back();
       log('transactInternetRechargeOthers $e');
+      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 
@@ -712,7 +815,7 @@ class RechargeController extends GetxController {
           </v:Body>
           </v:Envelope>''';
       request.headers.addAll(headers);
-      log('selectedVoice!.productid transactVoieRechargeOthers ${selectedVoice!.productid}');
+      log('transactVoieRechargeOthers ${selectedVoice!.productid}');
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
         var result = await response.stream.bytesToString();
@@ -721,14 +824,29 @@ class RechargeController extends GetxController {
         var soapElement = document.findAllElements('RequestTokenReturn').single;
         var jsonString = soapElement.innerText;
         log(jsonString.toString());
+        thisHsonString.value = jsonString;
+        log('transactInternetRechargeOthers ${jsonString.toString()}');
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        responsemessage.value = jsonData['message'];
         Get.back();
         Get.back();
-        RechargeMenuDialog.showMessageDialog(message: jsonString);
+        int msgId = jsonData["msgid"];
+        if (msgId == 0) {
+          transactionID.value = jsonData['refid'];
+          senderBalance.value = jsonData['senderbalance'];
+          Get.toNamed(AppRoutes.RECHARGESUCCESS);
+        } else {
+          Get.back();
+          log("ERROR ${response.reasonPhrase}'");
+          Get.toNamed(AppRoutes.RECHARGEFAILED);
+        }
       } else {
-        log("ERROR ${response.reasonPhrase}'");
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } catch (e) {
-      log('transactInternetRechargeOthers $e');
+      log('transactVoieRechargeOthers $e');
+      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 

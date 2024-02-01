@@ -427,11 +427,13 @@ class _LoginProfileViewState extends State<LoginProfileView> {
                                   ? null
                                   : () {
                                       if (selectedImage.isEmpty && _selectedImage.isNotEmpty) {
+                                        controller.selectedImageFile.value = _selectedImage;
                                         log('_selectedImage $_selectedImage');
                                         Get.find<StorageServices>().saveProfileImageFromGallery(imageFile: _selectedImage);
                                         controller.profileContinueButtonClick();
                                       } else {
                                         log('selectedImage $selectedImage');
+                                        controller.selectedAvatar.value = selectedImage;
                                         Get.find<StorageServices>().saveProfileImageFromAvatar(image: selectedImage);
                                         controller.profileContinueButtonClick();
                                       }

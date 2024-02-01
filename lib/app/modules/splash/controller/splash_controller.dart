@@ -10,6 +10,7 @@ import 'package:ibank/app/data/local/getstorage_services.dart';
 // import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/app/services/location_service.dart';
 import 'package:ibank/main.dart';
 import 'package:ibank/utils/common/eula.dart';
 import 'package:ibank/utils/constants/app_config.dart';
@@ -28,52 +29,12 @@ class SplashController extends GetxController {
   final verifyUser = VerifyUser;
   final storage = GetStorage();
   @override
-  void onInit() {
+  void onInit() async {
     // initPlatformState();
-    isUserLogin();
-    requestAllPermissionOnStart();
+    await requestAllPermissionOnStart();
     // validateSim();
     // WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(5.seconds, () => Get.toNamed(AppRoutes.ONBOARD)));
     super.onInit();
-  }
-
-  void isUserLogin() async {
-    // bool isLoginIn = await SharedPrefService.isLoggedIn();
-    // if (isLoginIn == true) {
-    //   Get.toNamed(AppRoutes.BOTTOMNAV);
-    // } else {
-    //   Get.toNamed(AppRoutes.ONBOARD);
-    // }
-
-    // String? msisdn = Get.find<StorageServices>().storage.read('msisdn');
-    // bool? isPrivacyCheck = Get.find<StorageServices>().storage.read('isPrivacyCheck');
-    // bool? isLoginSuccessClick = Get.find<StorageServices>().storage.read('isLoginSuccessClick');
-
-    if (storage.read('msisdn') != null) {
-      if (storage.read('isPrivacyCheck') == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(3.seconds, () => Get.offAllNamed(AppRoutes.PRIVACY)));
-      } else if (storage.read('isLoginSuccessClick') == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(3.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
-      } else {
-        WidgetsBinding.instance.addPostFrameCallback((_) async {
-          // await Future.delayed(3.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV));
-          await Future.delayed(3.seconds, () {
-            Get.offAllNamed(AppRoutes.LOGINPINBIOMETRICS);
-            if (Get.find<StorageServices>().storage.read('biometrics') != null) {
-              AppGlobal.BIOMETRICS = Get.find<StorageServices>().storage.read('biometrics');
-            }
-          });
-        });
-      }
-    } else {
-      WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.ONBOARD)).then((value) {
-            Get.find<StorageServices>().saveLanguage(language: 'EN');
-            String enLang = Get.find<StorageServices>().storage.read('language');
-            Get.updateLocale(Locale(enLang.toLowerCase()));
-            AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
-            AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
-          }));
-    }
   }
 
   onMessage(SmsMessage message) async {
@@ -100,12 +61,46 @@ class SplashController extends GetxController {
     print(statuses[Permission.location]);
 
     // Check the status of each permission
-    statuses.forEach((permission, status) {
+    statuses.forEach((permission, status) async {
       if (!status.isGranted) {
-        // Handle denied permissions
         showPermissionDeniedDialog(context, permission);
       }
+      await _initLocationService();
+      await isUserLogin();
     });
+  }
+
+  //Inject location service
+  Future<void> _initLocationService() async {
+    await Get.putAsync(LocationService().init);
+  }
+
+  Future<void> isUserLogin() async {
+    if (storage.read('msisdn') != null) {
+      if (storage.read('isPrivacyCheck') == null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(3.seconds, () => Get.offAllNamed(AppRoutes.PRIVACY)));
+      } else if (storage.read('isLoginSuccessClick') == null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(3.seconds, () => Get.offAllNamed(AppRoutes.LOGINSUCCESS)));
+      } else {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          // await Future.delayed(3.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV));
+          await Future.delayed(3.seconds, () {
+            Get.offAllNamed(AppRoutes.LOGINPINBIOMETRICS);
+            if (Get.find<StorageServices>().storage.read('biometrics') != null) {
+              AppGlobal.BIOMETRICS = Get.find<StorageServices>().storage.read('biometrics');
+            }
+          });
+        });
+      }
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.ONBOARD)).then((value) {
+            Get.find<StorageServices>().saveLanguage(language: 'EN');
+            String enLang = Get.find<StorageServices>().storage.read('language');
+            Get.updateLocale(Locale(enLang.toLowerCase()));
+            AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
+            AppGlobal.isSelectEnglish = enLang == "EN" ? true : false;
+          }));
+    }
   }
 
   // Future<bool> checkUser() async {

@@ -66,6 +66,18 @@ class StorageServices extends GetxService {
     storage.remove('isLoginSuccessClick');
   }
 
+  clearUsersInformation() {
+    storage.remove('account');
+    storage.remove('name');
+    storage.remove('firstname');
+    storage.remove('birthdate');
+    storage.remove('soldeFlooz');
+    storage.remove('commission');
+    storage.remove('collecte');
+    storage.remove('date');
+    storage.remove('jusquau');
+  }
+
   //Store verify profile
   saveVerifyProfile({required String profile, required String description, required String message, required String status}) {
     storage.write('profile', profile);
@@ -74,20 +86,38 @@ class StorageServices extends GetxService {
     storage.write('status', status);
   }
 
-  saveUserData(
-      {required String name,
+  saveUsersInformation(
+      {required String account,
+      required String name,
       required String firstname,
-      required String msisdn,
       required String birthdate,
-      required String soldeFlooz,
-      required String commission}) {
+      required String balance,
+      required String commission,
+      required String collecte,
+      required String date,
+      required String jusquau}) {
+    storage.write('account', account);
     storage.write('name', name);
     storage.write('firstname', firstname);
-    storage.write('msisdn', msisdn);
     storage.write('birthdate', birthdate);
-    storage.write('soldeFlooz', soldeFlooz);
+    storage.write('balance', balance);
     storage.write('commission', commission);
+    storage.write('collecte', collecte);
+    storage.write('date', date);
+    storage.write('jusquau', jusquau);
   }
+
+  String userAccount() => storage.read('account').toString();
+  String userName() => storage.read('name').toString();
+  String userFirstname() => storage.read('firstname').toString();
+  String userBIrthdate() => storage.read('birthdate').toString();
+  String userBalance() => storage.read('balance').toString();
+  String userCommission() => storage.read('commission').toString();
+  String userCollection() => storage.read('collecte').toString();
+  String userDateLogin() => storage.read('date').toString();
+  String userMessage() => storage.read('jusquau').toString();
+  String userImage() => storage.read('imageFile').toString();
+  String userAvatar() => storage.read('image').toString();
 
   setProperty({required int key, required String value}) {
     storage.write('key', key);

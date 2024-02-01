@@ -449,6 +449,8 @@ class PaymentController extends GetxController {
     await Get.find<StorageServices>().storage.remove('msisdn').then((value) {
       Get.find<StorageServices>().storage.remove('isPrivacyCheck');
       Get.find<StorageServices>().storage.remove('isLoginSuccessClick');
+      Get.find<StorageServices>().clearUserLocalData();
+      Get.find<StorageServices>().clearUsersInformation();
       Get.offAllNamed(AppRoutes.LOGIN);
       Future.delayed(const Duration(seconds: 2), () {
         LoginAlertdialog.showMessageVersionNotUpToDate(controller: Get.find<LoginController>());

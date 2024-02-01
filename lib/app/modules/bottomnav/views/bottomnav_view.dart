@@ -12,6 +12,7 @@ import 'package:ibank/app/modules/home/views/home_view.dart';
 import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
 import 'package:ibank/app/modules/profile/views/profile_view.dart';
 import 'package:ibank/app/modules/shop/views/shop_view.dart';
+import 'package:ibank/app/services/location_service.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
@@ -37,8 +38,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
 
   void onPageChange(int index) {
     ref.read(currentPageProvider.notifier).state = index;
-    pageController.animateToPage(index,
-        duration: 300.milliseconds, curve: Curves.decelerate);
+    pageController.animateToPage(index, duration: 300.milliseconds, curve: Curves.decelerate);
   }
 
   @override
@@ -50,6 +50,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
     Get.put(RechargeController());
     Get.put(SendMoneyController());
     Get.put(MBankingController());
+    Get.put(LocationService());
     contoller.getDataFromStorage();
     super.initState();
   }

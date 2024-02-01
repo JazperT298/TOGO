@@ -17,7 +17,9 @@ import 'package:ibank/app/modules/otp/views/otp_view.dart';
 import 'package:ibank/app/modules/payment/view/payment_failed_view.dart';
 import 'package:ibank/app/modules/payment/view/payment_success_view.dart';
 import 'package:ibank/app/modules/privacy/views/privacy_view.dart';
+import 'package:ibank/app/modules/recharge/views/recharge_failed_view.dart';
 import 'package:ibank/app/modules/recharge/views/recharge_otp_view.dart';
+import 'package:ibank/app/modules/recharge/views/recharge_success_view.dart';
 import 'package:ibank/app/modules/recharge/views/recharge_view.dart';
 import 'package:ibank/app/modules/sendmoney/views/transac_complete.dart';
 import 'package:ibank/app/modules/sendmoney/views/transac_failed.dart';
@@ -76,5 +78,7 @@ class AppPages {
     GetPage(name: AppRoutes.OTPRECOVERY, page: () => const OtpRecoveryView()),
     GetPage(name: AppRoutes.MBANKFAILED, page: () => const MBangkingFailedView()),
     GetPage(name: AppRoutes.MBANKSUCCESS, page: () => const MBangkingSuccessView()),
+    GetPage(name: AppRoutes.RECHARGEFAILED, page: () => const RechargeFailedView()),
+    GetPage(name: AppRoutes.RECHARGESUCCESS, page: () => const RechargeSuccessView()),
   ];
 }
