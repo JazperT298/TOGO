@@ -8,6 +8,7 @@ import 'package:ibank/app/modules/recharge/views/modals/recharge_voice_input_num
 import 'package:ibank/app/modules/recharge/views/modals/recharge_voice_selected_package_bottom_sheet.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
 import 'recharge_internet_input_number_bottom_sheet.dart';
 import 'recharge_internet_select_package_bottom_sheet.dart';
 
@@ -35,7 +36,7 @@ class RechargeInternetMainMenuBottomSheet {
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFFFB6404),
-                      fontSize: 13.sp),
+                      fontSize: FontSizes.headerMediumText),
                 ),
               ),
               SizedBox(height: 1.h),
@@ -46,7 +47,7 @@ class RechargeInternetMainMenuBottomSheet {
                     style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
-                        fontSize: 19.sp),
+                        fontSize: FontSizes.headerLargeText),
                   )),
               SizedBox(
                 height: 3.h,
@@ -113,7 +114,7 @@ class RechargeInternetMainMenuBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 12.sp),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                               Text(
                                 "Recharge your Moov account.",
@@ -122,7 +123,7 @@ class RechargeInternetMainMenuBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w400,
                                     color: const Color(0xFF687997),
-                                    fontSize: 12.sp),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                             ],
                           ),
@@ -182,7 +183,7 @@ class RechargeInternetMainMenuBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 12.sp),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                             Text(
                               "Enter the number and recharge for others.",
@@ -191,7 +192,7 @@ class RechargeInternetMainMenuBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w400,
                                   color: const Color(0xFF687997),
-                                  fontSize: 12.sp),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ],
                         ),
@@ -228,7 +229,7 @@ class RechargeInternetMainMenuBottomSheet {
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
                     color: const Color(0xFFFB6404),
-                    fontSize: 13.sp),
+                    fontSize: FontSizes.headerMediumText),
               ),
             ),
             SizedBox(height: 1.h),
@@ -239,7 +240,7 @@ class RechargeInternetMainMenuBottomSheet {
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
-                      fontSize: 19.sp),
+                      fontSize: FontSizes.headerLargeText),
                 )),
             SizedBox(
               height: 3.h,
@@ -305,7 +306,7 @@ class RechargeInternetMainMenuBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 12.sp),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                             Text(
                               "Recharge your Moov account.",
@@ -314,7 +315,7 @@ class RechargeInternetMainMenuBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w400,
                                   color: const Color(0xFF687997),
-                                  fontSize: 12.sp),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ],
                         ),
@@ -374,7 +375,7 @@ class RechargeInternetMainMenuBottomSheet {
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: const Color(0xFF27303F),
-                                fontSize: 12.sp),
+                                fontSize: FontSizes.headerMediumText),
                           ),
                           Text(
                             "Enter the number and recharge for others.",
@@ -383,7 +384,7 @@ class RechargeInternetMainMenuBottomSheet {
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w400,
                                 color: const Color(0xFF687997),
-                                fontSize: 12.sp),
+                                fontSize: FontSizes.headerMediumText),
                           ),
                         ],
                       ),

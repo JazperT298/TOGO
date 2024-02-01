@@ -24,6 +24,7 @@ import '../../mbanking/controller/mbanking_controller.dart';
 import '../../payment/controller/payment_controller.dart';
 import '../../recharge/controller/recharge_controller.dart';
 import '../../sendmoney/controller/send_money_controller.dart';
+import '../../withdrawal/controller/withdrawal_controller.dart';
 
 final currentPageProvider = StateProvider.autoDispose<int>((ref) => 0);
 
@@ -55,6 +56,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
     Get.put(SendMoneyController());
     Get.put(MBankingController());
     Get.put(PaymentController());
+    Get.put(WithdrawalController());
     contoller.getDataFromStorage();
     super.initState();
   }

@@ -16,9 +16,11 @@ import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/helpers/string_helper.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../utils/fontsize_config.dart';
+
 class WithdrawOtpBottomSheet {
   static showBottomSheetWithdrawNormalOTP() {
-    var controller = Get.put(WithdrawalController());
+    final controller = Get.find<WithdrawalController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
@@ -29,32 +31,47 @@ class WithdrawOtpBottomSheet {
               height: isKeyboardVisible ? 45.h : 55.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 2.5.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text(
                         LocaleKeys.strTransferSummary.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: 14),
                       ),
                     ),
                     SizedBox(height: 1.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Withdraw ', // 'Vous allez envoyer de l’argent à ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 24),
+                              text:
+                                  'Withdraw ', // 'Vous allez envoyer de l’argent à ',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize: 24),
                             ),
                             TextSpan(
                               text: 'Normal',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF124DE5), fontSize: 24),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF124DE5),
+                                  fontSize: 24),
                             ),
                           ],
                         ),
@@ -62,29 +79,40 @@ class WithdrawOtpBottomSheet {
                     ),
                     const SizedBox(height: 24),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text(
                         'Point of sale'.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     const SizedBox(height: 18),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               'Name',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: 14),
                             ),
                           ),
                           Expanded(
                             child: Obx(
                               () => Text(
                                 controller.nickname.value,
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
                               ),
                             ),
                           ),
@@ -93,27 +121,37 @@ class WithdrawOtpBottomSheet {
                     ),
                     const SizedBox(height: 24),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                              MediaQuery.of(Get.context!).size.height * .025),
                       child: const LineSeparator(color: Colors.grey),
                     ),
                     const SizedBox(height: 24),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text(
                         LocaleKeys.strTransferDetails.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     const SizedBox(height: 18),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               LocaleKeys.strTransferAmount.tr,
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: 14),
                             ),
                           ),
                           Expanded(
@@ -122,7 +160,10 @@ class WithdrawOtpBottomSheet {
                                 controller.amount.isEmpty
                                     ? '0 FCFA'
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.amount.toString()))} FCFA',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
                               ),
                             ),
                           ),
@@ -131,14 +172,18 @@ class WithdrawOtpBottomSheet {
                     ),
                     const SizedBox(height: 6),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               'Fees',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: 14),
                             ),
                           ),
                           Expanded(
@@ -147,7 +192,10 @@ class WithdrawOtpBottomSheet {
                                 controller.totalFess.value == 0
                                     ? '0 FCFA'
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
                               ),
                             ),
                           ),
@@ -155,14 +203,18 @@ class WithdrawOtpBottomSheet {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               'Tax',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: 14),
                             ),
                           ),
                           Expanded(
@@ -171,7 +223,10 @@ class WithdrawOtpBottomSheet {
                                 controller.senderkeycosttva.isEmpty
                                     ? '0 FCFA'
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
                               ),
                             ),
                           ),
@@ -180,14 +235,18 @@ class WithdrawOtpBottomSheet {
                     ),
                     const SizedBox(height: 6),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               'TTC ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: 14),
                             ),
                           ),
                           Expanded(
@@ -196,7 +255,10 @@ class WithdrawOtpBottomSheet {
                                 controller.totalAmount.value == 0
                                     ? '0 FCFA'
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: 14),
                               ),
                             ),
                           ),
@@ -205,25 +267,37 @@ class WithdrawOtpBottomSheet {
                     ),
                     const SizedBox(height: 24),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                              MediaQuery.of(Get.context!).size.height * .025),
                       child: FluTextField(
                           inputController: controller.code,
-                          hint: LocaleKeys.strCodeSecret.tr, // "Votre code secret",
+                          hint: LocaleKeys
+                              .strCodeSecret.tr, // "Votre code secret",
                           height: 50,
                           cornerRadius: 15,
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           fillColor: const Color(0xFFF4F5FA),
                           cursorColor: const Color(0xFF27303F),
-                          hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                          hintStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xFF27303F),
+                              fontSize: 14),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: 14),
                           onFieldSubmitted: (p0) async {
                             if (controller.code.text.isNotEmpty) {
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
-                              controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                              controller.enterPinToTransactWithdrawal(
+                                  code: controller.code.text);
                             } else {
-                              Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              Get.snackbar("Message", "Entrées manquantes",
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             }
                           }),
                     ),
@@ -242,9 +316,12 @@ class WithdrawOtpBottomSheet {
                             if (controller.code.text.isNotEmpty) {
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
-                              controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                              controller.enterPinToTransactWithdrawal(
+                                  code: controller.code.text);
                             } else {
-                              Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              Get.snackbar("Message", "Entrées manquantes",
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             }
                           },
                           height: 55,
@@ -260,7 +337,9 @@ class WithdrawOtpBottomSheet {
                               offset: Offset(0, 5),
                             )
                           ],
-                          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                          textStyle: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: M3FontSizes.bodyLarge),
                         ),
                       ),
                     ),
@@ -276,7 +355,7 @@ class WithdrawOtpBottomSheet {
   }
 
   static showBottomSheetWithdrawCollectionOTP() {
-    var controller = Get.put(WithdrawalController());
+    final controller = Get.find<WithdrawalController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
@@ -284,94 +363,130 @@ class WithdrawOtpBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: isKeyboardVisible ? 42.h : 50.h,
+              height: isKeyboardVisible ? 55.h : 65.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 2.5.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text(
                         LocaleKeys.strTransferSummary.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 1.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Withdraw ', // 'Vous allez envoyer de l’argent à ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 24),
+                              text:
+                                  'Withdraw ', // 'Vous allez envoyer de l’argent à ',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize: FontSizes.headerLargeText),
                             ),
                             TextSpan(
                               text: 'Collection',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF124DE5), fontSize: 24),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF124DE5),
+                                  fontSize: FontSizes.headerLargeText),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text(
                         'Point of sale'.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               'Name',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
                             child: Obx(
                               () => Text(
                                 controller.nickname.value,
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                              MediaQuery.of(Get.context!).size.height * .025),
                       child: const LineSeparator(color: Colors.grey),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text(
                         LocaleKeys.strTransferDetails.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               'Fees',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
@@ -380,23 +495,30 @@ class WithdrawOtpBottomSheet {
                                 controller.fees.value.isEmpty
                                     ? '0 FCFA'
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.fees.value.replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               LocaleKeys.strTransferAmount.tr,
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
@@ -404,33 +526,48 @@ class WithdrawOtpBottomSheet {
                               controller.amounts.value.text.isEmpty
                                   ? '0 FCFA'
                                   : '${StringHelper.formatNumberWithCommas(int.parse(controller.amounts.value.text.toString().replaceAll(',', '')))} FCFA',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 7.h),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                              MediaQuery.of(Get.context!).size.height * .025),
                       child: FluTextField(
                           inputController: controller.code,
-                          hint: LocaleKeys.strCodeSecret.tr, // "Votre code secret",
-                          height: 50,
+                          hint: LocaleKeys
+                              .strCodeSecret.tr, // "Votre code secret",
+                          height: 6.5.h,
                           cornerRadius: 15,
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           fillColor: const Color(0xFFF4F5FA),
                           cursorColor: const Color(0xFF27303F),
-                          hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                          hintStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xFF27303F),
+                              fontSize: FontSizes.textFieldText),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.textFieldText),
                           onFieldSubmitted: (p0) async {
                             if (controller.code.text.isNotEmpty) {
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
-                              controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                              controller.enterPinToTransactWithdrawal(
+                                  code: controller.code.text);
                             } else {
-                              Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              Get.snackbar("Message", "Entrées manquantes",
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             }
                           }),
                     ),
@@ -449,12 +586,15 @@ class WithdrawOtpBottomSheet {
                             if (controller.code.text.isNotEmpty) {
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
-                              controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                              controller.enterPinToTransactWithdrawal(
+                                  code: controller.code.text);
                             } else {
-                              Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              Get.snackbar("Message", "Entrées manquantes",
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             }
                           },
-                          height: 55,
+                          height: 7.h,
                           width: 100.w,
                           cornerRadius: UISettings.minButtonCornerRadius,
                           backgroundColor: Colors.blue[900],
@@ -467,7 +607,9 @@ class WithdrawOtpBottomSheet {
                               offset: Offset(0, 5),
                             )
                           ],
-                          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSizes.buttonText),
                         ),
                       ),
                     ),
@@ -483,7 +625,7 @@ class WithdrawOtpBottomSheet {
   }
 
   static showBottomSheetCounterWithdrawnOTP() {
-    var controller = Get.put(WithdrawalController());
+    final controller = Get.find<WithdrawalController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
@@ -491,96 +633,132 @@ class WithdrawOtpBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: isKeyboardVisible ? 42.h : 50.h,
+              height: isKeyboardVisible ? 51.h : 61.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 2.5.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text(
                         LocaleKeys.strTransferSummary.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: .3.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Withdrawal ', // 'Vous allez envoyer de l’argent à ',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 24),
+                              text:
+                                  'Withdrawal ', // 'Vous allez envoyer de l’argent à ',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize: FontSizes.headerLargeText),
                             ),
                             TextSpan(
                               text: 'Counter',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF124DE5), fontSize: 24),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF124DE5),
+                                  fontSize: FontSizes.headerLargeText),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Obx(
                         () => Text(
                           controller.selectedBank.value.toUpperCase(),
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF27303F),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               'Name',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
                             child: Obx(
                               () => Text(
                                 controller.nickname.value,
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                              MediaQuery.of(Get.context!).size.height * .025),
                       child: const LineSeparator(color: Colors.grey),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Text(
                         LocaleKeys.strTransferDetails.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               LocaleKeys.strTransferAmount.tr,
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
@@ -588,22 +766,29 @@ class WithdrawOtpBottomSheet {
                               controller.amounts.value.text.isEmpty
                                   ? '0 FCFA'
                                   : '${StringHelper.formatNumberWithCommas(int.parse(controller.amounts.value.text.toString().replaceAll(',', '')))} FCFA',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(Get.context!).size.height * .025),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               'Fees',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF27303F),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
@@ -612,34 +797,49 @@ class WithdrawOtpBottomSheet {
                                 controller.totalFess.value == 0
                                     ? '0 FCFA'
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                              MediaQuery.of(Get.context!).size.height * .025),
                       child: FluTextField(
                           inputController: controller.code,
-                          hint: LocaleKeys.strCodeSecret.tr, // "Votre code secret",
-                          height: 50,
+                          hint: LocaleKeys
+                              .strCodeSecret.tr, // "Votre code secret",
+                          height: 6.5.h,
                           cornerRadius: 15,
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           fillColor: const Color(0xFFF4F5FA),
                           cursorColor: const Color(0xFF27303F),
-                          hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                          hintStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xFF27303F),
+                              fontSize: FontSizes.textFieldText),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.textFieldText),
                           onFieldSubmitted: (p0) async {
                             if (controller.code.text.isNotEmpty) {
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
-                              controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                              controller.enterPinToTransactWithdrawal(
+                                  code: controller.code.text);
                             } else {
-                              Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              Get.snackbar("Message", "Entrées manquantes",
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             }
                           }),
                     ),
@@ -660,9 +860,12 @@ class WithdrawOtpBottomSheet {
                             if (controller.code.text.isNotEmpty) {
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
-                              controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                              controller.enterPinToTransactWithdrawal(
+                                  code: controller.code.text);
                             } else {
-                              Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              Get.snackbar("Message", "Entrées manquantes",
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             }
                             // if (controller.code.text.isNotEmpty) {
                             //   AppGlobal.dateNow = DateTime.now().toString();
@@ -672,7 +875,7 @@ class WithdrawOtpBottomSheet {
                             //   Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             // }
                           },
-                          height: 55,
+                          height: 7.h,
                           width: 100.w,
                           cornerRadius: UISettings.minButtonCornerRadius,
                           backgroundColor: Colors.blue[900],
@@ -685,7 +888,9 @@ class WithdrawOtpBottomSheet {
                               offset: Offset(0, 5),
                             )
                           ],
-                          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSizes.buttonText),
                         ),
                       ),
                     ),

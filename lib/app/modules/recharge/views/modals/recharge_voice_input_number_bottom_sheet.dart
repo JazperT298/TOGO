@@ -9,6 +9,8 @@ import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
+
 class RechargeVoiceInputNumberBottomSheet {
   static void showBottomSheetInputNumber() {
     var controller = Get.find<RechargeController>();
@@ -33,7 +35,7 @@ class RechargeVoiceInputNumberBottomSheet {
                     style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFFFB6404),
-                        fontSize: 13.sp),
+                        fontSize: FontSizes.headerMediumText),
                   ),
                 ),
                 SizedBox(height: 1.h),
@@ -44,7 +46,7 @@ class RechargeVoiceInputNumberBottomSheet {
                       style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
-                          fontSize: 19.sp),
+                          fontSize: FontSizes.headerLargeText),
                     )),
                 SizedBox(
                   height: 3.h,
@@ -72,11 +74,11 @@ class RechargeVoiceInputNumberBottomSheet {
                     hintStyle: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w400,
                         color: const Color(0xFF27303F),
-                        fontSize: 12.sp),
+                        fontSize: FontSizes.textFieldText),
                     textStyle: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
-                        fontSize: 12.sp),
+                        fontSize: FontSizes.textFieldText),
                     height: 6.5.h,
                     cornerRadius: 15,
                     keyboardType: TextInputType.number,
@@ -182,7 +184,7 @@ class RechargeVoiceInputNumberBottomSheet {
                       textStyle: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w500,
                           color: const Color(0xFFF4F5FA),
-                          fontSize: 14.sp),
+                          fontSize: FontSizes.buttonText),
                     ),
                   ),
                 ),

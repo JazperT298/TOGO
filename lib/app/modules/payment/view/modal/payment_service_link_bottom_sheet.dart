@@ -8,6 +8,8 @@ import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
+
 class PaymentServiceLinksBottomSheet {
   static void showBottomSheetCeetServicePackageTo() {
     var controller = Get.find<PaymentController>();
@@ -39,7 +41,7 @@ class PaymentServiceLinksBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFFFB6404),
-                              fontSize: 13.sp),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                     ),
@@ -53,7 +55,7 @@ class PaymentServiceLinksBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
-                            fontSize: 19.sp),
+                            fontSize: FontSizes.headerLargeText),
                       ),
                     ),
                     SizedBox(
@@ -66,7 +68,7 @@ class PaymentServiceLinksBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
-                            fontSize: 13.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(
@@ -83,11 +85,11 @@ class PaymentServiceLinksBottomSheet {
                         hintStyle: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w400,
                             color: const Color(0xFF27303F),
-                            fontSize: 12.sp),
+                            fontSize: FontSizes.textFieldText),
                         textStyle: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
-                            fontSize: 12.sp),
+                            fontSize: FontSizes.textFieldText),
                         suffixIcon: FluIcons.refresh,
                       ),
                     ),
@@ -156,7 +158,8 @@ class PaymentServiceLinksBottomSheet {
                                                     fontWeight: FontWeight.w600,
                                                     color:
                                                         const Color(0xFF27303F),
-                                                    fontSize: 13.sp),
+                                                    fontSize: FontSizes
+                                                        .headerMediumText),
                                               ),
                                               Text(
                                                 controller.ceetDataList[index]
@@ -165,7 +168,8 @@ class PaymentServiceLinksBottomSheet {
                                                     fontWeight: FontWeight.w400,
                                                     color:
                                                         const Color(0xFF687997),
-                                                    fontSize: 13.sp),
+                                                    fontSize: FontSizes
+                                                        .headerMediumText),
                                               ),
                                             ],
                                           ),
@@ -237,7 +241,8 @@ class PaymentServiceLinksBottomSheet {
                             )
                           ],
                           textStyle: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 14.sp),
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSizes.headerLargeText),
                         ),
                       ),
                     ),

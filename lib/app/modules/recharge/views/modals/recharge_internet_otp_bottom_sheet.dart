@@ -8,6 +8,7 @@ import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
 import '../../../../../utils/helpers/string_helper.dart';
 import '../../../../data/local/getstorage_services.dart';
 
@@ -36,7 +37,7 @@ class RechargeInternetOTPBottomSheet {
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFFFB6404),
-                      fontSize: 13.sp),
+                      fontSize: FontSizes.headerMediumText),
                 ),
               ),
               SizedBox(
@@ -52,28 +53,28 @@ class RechargeInternetOTPBottomSheet {
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
-                                fontSize: 19.sp),
+                                fontSize: FontSizes.headerLargeText),
                           ),
                           TextSpan(
                             text: 'Moov ',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: const Color(0xFF295fe7),
-                                fontSize: 19.sp),
+                                fontSize: FontSizes.headerLargeText),
                           ),
                           TextSpan(
                             text: 'account using ',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
-                                fontSize: 19.sp),
+                                fontSize: FontSizes.headerLargeText),
                           ),
                           TextSpan(
                             text: 'Flooz.',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: const Color(0xFFfb6708),
-                                fontSize: 19.sp),
+                                fontSize: FontSizes.headerLargeText),
                           )
                         ]),
                       )
@@ -84,28 +85,28 @@ class RechargeInternetOTPBottomSheet {
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
-                                fontSize: 19.sp),
+                                fontSize: FontSizes.headerLargeText),
                           ),
                           TextSpan(
                             text: 'Moov ',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: const Color(0xFF295fe7),
-                                fontSize: 19.sp),
+                                fontSize: FontSizes.headerLargeText),
                           ),
                           TextSpan(
                             text: 'account using ',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
-                                fontSize: 19.sp),
+                                fontSize: FontSizes.headerLargeText),
                           ),
                           TextSpan(
                             text: 'Flooz.',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 color: const Color(0xFFfb6708),
-                                fontSize: 19.sp),
+                                fontSize: FontSizes.headerLargeText),
                           )
                         ]),
                       )),
@@ -120,7 +121,7 @@ class RechargeInternetOTPBottomSheet {
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFF27303F),
-                      fontSize: 13.sp),
+                      fontSize: FontSizes.headerMediumText),
                 ),
               ),
               SizedBox(
@@ -141,7 +142,7 @@ class RechargeInternetOTPBottomSheet {
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
-                                fontSize: 13.sp),
+                                fontSize: FontSizes.headerMediumText),
                           ),
                         ),
                       )
@@ -157,7 +158,7 @@ class RechargeInternetOTPBottomSheet {
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
-                                fontSize: 13.sp),
+                                fontSize: FontSizes.headerMediumText),
                           ),
                         ),
                       ),
@@ -181,7 +182,7 @@ class RechargeInternetOTPBottomSheet {
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFF27303F),
-                      fontSize: 13.sp),
+                      fontSize: FontSizes.headerMediumText),
                 ),
               ),
               SizedBox(
@@ -198,7 +199,7 @@ class RechargeInternetOTPBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 12.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     Expanded(
@@ -208,7 +209,7 @@ class RechargeInternetOTPBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w600,
                             color: const Color(0xFF27303F),
-                            fontSize: 13.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                   ],
@@ -228,7 +229,7 @@ class RechargeInternetOTPBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 12.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     Expanded(
@@ -238,7 +239,7 @@ class RechargeInternetOTPBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w600,
                             color: const Color(0xFF27303F),
-                            fontSize: 13.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                   ],
@@ -258,7 +259,7 @@ class RechargeInternetOTPBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 12.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     Expanded(
@@ -267,7 +268,7 @@ class RechargeInternetOTPBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w600,
                             color: const Color(0xFF27303F),
-                            fontSize: 12.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                   ],
@@ -285,7 +286,7 @@ class RechargeInternetOTPBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 12.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     Expanded(
@@ -297,7 +298,7 @@ class RechargeInternetOTPBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w600,
                               color: const Color(0xFF27303F),
-                              fontSize: 12.sp),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                     ),
@@ -316,7 +317,7 @@ class RechargeInternetOTPBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 12.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     Expanded(
@@ -328,7 +329,7 @@ class RechargeInternetOTPBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w600,
                               color: const Color(0xFF27303F),
-                              fontSize: 12.sp),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                     ),
@@ -347,7 +348,7 @@ class RechargeInternetOTPBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 12.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     Expanded(
@@ -359,7 +360,7 @@ class RechargeInternetOTPBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w600,
                               color: const Color(0xFF27303F),
-                              fontSize: 12.sp),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                     ),
@@ -379,11 +380,11 @@ class RechargeInternetOTPBottomSheet {
                   hintStyle: GoogleFonts.montserrat(
                       fontWeight: FontWeight.normal,
                       color: const Color(0xFF27303F),
-                      fontSize: 11.sp),
+                      fontSize: FontSizes.textFieldText),
                   textStyle: GoogleFonts.montserrat(
                       fontWeight: FontWeight.normal,
                       color: Colors.black,
-                      fontSize: 11.sp),
+                      fontSize: FontSizes.textFieldText),
                   height: 6.5.h,
                   cornerRadius: 15,
                   keyboardType: TextInputType.number,
@@ -445,7 +446,7 @@ class RechargeInternetOTPBottomSheet {
                   textStyle: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFFF4F5FA),
-                      fontSize: 14.sp),
+                      fontSize: FontSizes.buttonText),
                 ),
               ),
             ],

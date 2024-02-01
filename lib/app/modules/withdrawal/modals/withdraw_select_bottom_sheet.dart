@@ -12,9 +12,11 @@ import 'package:ibank/app/modules/withdrawal/modals/withdraw_input_bottom_sheet.
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../utils/fontsize_config.dart';
+
 class WithdrawSelectBottomSheet {
   static showBottomSheetWithdrawCounterSelect() {
-    var controller = Get.put(WithdrawalController());
+    final controller = Get.find<WithdrawalController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
@@ -22,10 +24,13 @@ class WithdrawSelectBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: isKeyboardVisible ? 45.h : 40.h,
+              height: 44.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +41,10 @@ class WithdrawSelectBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         "Counter withdrawal".toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -44,14 +52,21 @@ class WithdrawSelectBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         'Select a bank',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                            fontSize: FontSizes.headerLargeText),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 8),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 8),
                       child: Text(
                         "Morem ipsum dolor sit amet, consectetur adipiscing elit.",
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(
@@ -89,18 +104,22 @@ class WithdrawSelectBottomSheet {
                             height: 8.h,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: controller.internetRadioGroupValue.value == '1' ? const Color(0xFFFEE8D9) : const Color(0xFFe7edfc),
+                              color: controller.internetRadioGroupValue.value ==
+                                      '1'
+                                  ? const Color(0xFFFEE8D9)
+                                  : const Color(0xFFe7edfc),
                               borderRadius: BorderRadius.circular(16),
                             ),
                             child: Padding(
                               padding: EdgeInsets.only(left: 5.w, right: 1.w),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Ecobank',
                                     style: TextStyle(
-                                      fontSize: 14.sp,
+                                      fontSize: FontSizes.headerMediumText,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.black,
                                     ),
@@ -108,10 +127,13 @@ class WithdrawSelectBottomSheet {
                                   Obx(
                                     () => Radio(
                                         value: '1',
-                                        groupValue: controller.internetRadioGroupValue.value,
+                                        groupValue: controller
+                                            .internetRadioGroupValue.value,
                                         onChanged: (value) {
-                                          controller.internetRadioGroupValue.value = '1';
-                                          controller.selectedBank.value = 'Ecobank';
+                                          controller.internetRadioGroupValue
+                                              .value = '1';
+                                          controller.selectedBank.value =
+                                              'Ecobank';
                                         }),
                                   )
                                 ],
@@ -133,14 +155,21 @@ class WithdrawSelectBottomSheet {
                           suffixIcon: FluIcons.checkCircleUnicon,
                           iconStrokeWidth: 1.8,
                           onPressed: () async {
-                            if (controller.internetRadioGroupValue.value.isEmpty) {
-                              Get.snackbar("Message", 'Please choose a bank', backgroundColor: Colors.red, colorText: Colors.white);
+                            if (controller
+                                .internetRadioGroupValue.value.isEmpty) {
+                              Get.snackbar("Message", 'Please choose a bank',
+                                  backgroundColor: Colors.red,
+                                  colorText: Colors.white);
                             } else {
-                              FullScreenLoading.fullScreenLoadingWithTextAndTimer('Validating request. . .');
-                              await Future.delayed(const Duration(seconds: 2), () {
+                              FullScreenLoading
+                                  .fullScreenLoadingWithTextAndTimer(
+                                      'Validating request. . .');
+                              await Future.delayed(const Duration(seconds: 2),
+                                  () {
                                 Get.back();
                                 Get.back();
-                                WithdrawInputBottomSheet.showBottomSheeCountertWithdrawalInputNumber();
+                                WithdrawInputBottomSheet
+                                    .showBottomSheeCountertWithdrawalInputNumber();
                               });
                             }
 
@@ -152,7 +181,7 @@ class WithdrawSelectBottomSheet {
                             //   Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             // }
                           },
-                          height: 55,
+                          height: 7.h,
                           width: 100.w,
                           cornerRadius: UISettings.minButtonCornerRadius,
                           backgroundColor: Colors.blue[900],
@@ -165,7 +194,9 @@ class WithdrawSelectBottomSheet {
                               offset: Offset(0, 5),
                             )
                           ],
-                          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSizes.buttonText),
                         ),
                       ),
                     ),

@@ -1,6 +1,7 @@
 import 'package:sizer/sizer.dart';
 
 class FontSizes {
+  static double largeText = 21.sp;
   static double headerMediumText = 13.0.sp;
   static double headerLargeText = 19.0.sp;
   static double headerSmallText = 12.0.sp;

@@ -30,7 +30,7 @@ class MBankingOTpBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: isKeyboardVisible ? 64.h : 70.h,
+                height: isKeyboardVisible ? 64.h : 73.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                     color: Colors.white,
@@ -410,7 +410,7 @@ class MBankingOTpBottomSheet {
                                     colorText: Colors.white);
                               }
                             },
-                            height: 5.8.h,
+                            height: 7.h,
                             width: 100.w,
                             cornerRadius: UISettings.minButtonCornerRadius,
                             backgroundColor: const Color(0xFF124DE5),

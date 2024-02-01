@@ -12,6 +12,8 @@ import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
+
 class PaymentInputsBottomSheet {
   static void showBottomSheetCeetInputNumber() {
     var controller = Get.find<PaymentController>();
@@ -43,7 +45,7 @@ class PaymentInputsBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFFFB6404),
-                              fontSize: 13.sp),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                     ),
@@ -55,7 +57,7 @@ class PaymentInputsBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
-                            fontSize: 19.sp),
+                            fontSize: FontSizes.headerLargeText),
                       ),
                     ),
                     SizedBox(
@@ -87,11 +89,11 @@ class PaymentInputsBottomSheet {
                               hintStyle: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w400,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 12.sp),
+                                  fontSize: FontSizes.textFieldText),
                               textStyle: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
-                                  fontSize: 12.sp),
+                                  fontSize: FontSizes.textFieldText),
                               height: 6.5.h,
                               cornerRadius: 15,
                               keyboardType: TextInputType.number,
@@ -190,7 +192,7 @@ class PaymentInputsBottomSheet {
                               }
                             }
                           },
-                          height: 55,
+                          height: 7.h,
                           width: 100.w,
                           cornerRadius: UISettings.minButtonCornerRadius,
                           backgroundColor: Colors.blue[900],
@@ -203,9 +205,9 @@ class PaymentInputsBottomSheet {
                               offset: Offset(0, 5),
                             )
                           ],
-                          textStyle: const TextStyle(
+                          textStyle: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: M3FontSizes.bodyLarge),
+                              fontSize: FontSizes.buttonText),
                         ),
                       ),
                     ),

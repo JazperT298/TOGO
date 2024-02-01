@@ -22,6 +22,7 @@ import 'package:ibank/app/modules/payment/view/modal/payment_main_menu_bottom_sh
 import 'package:ibank/app/modules/payment/view/modal/payment_service_link_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/envoi_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/send_money_menu_bottom_sheet.dart';
+import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
 import 'package:ibank/app/modules/withdrawal/modals/withdraw_menu_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
@@ -327,6 +328,7 @@ class _QuickActions extends StatelessWidget {
         //     builder: (context) => const _ModalBottomSheet2(
         //           child: WithdrawMenuBottomSheet(),
         //         ));
+        // Get.find<WithdrawalController>().addPendingCashout();
         WithdrawMenuBottomSheets.showBottomSheetWithdrawMenu();
         break;
       case WalletActions.pay:

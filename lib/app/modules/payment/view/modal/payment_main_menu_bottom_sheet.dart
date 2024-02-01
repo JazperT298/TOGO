@@ -126,8 +126,8 @@ class PaymentMainMenuBottomSheet {
                                     strokeWidth: 1,
                                     color: context.colorScheme.primaryContainer,
                                     child: Container(
-                                        height: 62,
-                                        width: 62,
+                                        height: 9.h,
+                                        width: 20.w,
                                         clipBehavior: Clip.hardEdge,
                                         decoration: const BoxDecoration(
                                             color: Color(0xFFDBE4FB),
@@ -139,8 +139,8 @@ class PaymentMainMenuBottomSheet {
                                   ),
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 2.w),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,

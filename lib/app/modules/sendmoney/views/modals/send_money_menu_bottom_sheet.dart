@@ -9,6 +9,8 @@ import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
+
 class SendMoneyMenuBottomSheet {
   static void showBottomSheetSendMoneyMenu() {
     final controller = Get.find<SendMoneyController>();
@@ -37,7 +39,7 @@ class SendMoneyMenuBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFFFB6404),
-                            fontSize: 13.sp),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -48,7 +50,7 @@ class SendMoneyMenuBottomSheet {
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w600,
                               color: Colors.black,
-                              fontSize: 22),
+                              fontSize: FontSizes.headerLargeText),
                         )),
                     SizedBox(height: 3.h),
                     Row(
@@ -103,7 +105,7 @@ class SendMoneyMenuBottomSheet {
                                         horizontal: 10, vertical: 2),
                                     child: Text('Send money',
                                         style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: FontSizes.headerSmallText,
                                             color: Colors.black))),
                                 SizedBox(height: 1.h),
                                 Text(
@@ -111,7 +113,7 @@ class SendMoneyMenuBottomSheet {
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.black,
-                                      fontSize: 19.sp),
+                                      fontSize: FontSizes.headerLargeText),
                                 ),
                               ],
                             )),
@@ -157,7 +159,7 @@ class SendMoneyMenuBottomSheet {
                                         horizontal: 10, vertical: 2),
                                     child: Text('Send money',
                                         style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: FontSizes.headerSmallText,
                                             color: Colors.black))),
                                 SizedBox(height: 1.h),
                                 Text(
@@ -165,7 +167,7 @@ class SendMoneyMenuBottomSheet {
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.black,
-                                      fontSize: 19.sp),
+                                      fontSize: FontSizes.headerLargeText),
                                 ),
                               ],
                             )),
