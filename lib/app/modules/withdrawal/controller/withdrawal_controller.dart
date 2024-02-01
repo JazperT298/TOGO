@@ -59,8 +59,7 @@ class WithdrawalController extends GetxController {
 
   addPendingCashout() async {
     var headers = {'Content-Type': 'application/xml'};
-    var request = http.Request('POST',
-        Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+    var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
     request.body =
         '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
    <soapenv:Header/>
@@ -92,14 +91,11 @@ class WithdrawalController extends GetxController {
   }
 
   checkPendingCashout() async {
-    FullScreenLoading.fullScreenLoadingWithText(
-        'Sending request. Please wait. . .');
+    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
       xmlns:d="http://www.w3.org/2001/XMLSchema" 
       xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
       xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -138,8 +134,7 @@ class WithdrawalController extends GetxController {
           Get.back();
           // WithdrawInputBottomSheet.showBottomSheetInputNumber();
           log('decodedData checkPendingCashout $decodedData');
-          getTransactionFee(
-              decodedData['nickname'], decodedData['amount'], 'APPAGNT');
+          getTransactionFee(decodedData['nickname'], decodedData['amount'], 'APPAGNT');
         } else {
           Get.back();
           Get.back();
@@ -156,20 +151,16 @@ class WithdrawalController extends GetxController {
     } on Exception catch (_) {
       log("ERROR $_");
       Get.back();
-      RechargeMenuDialog.showMessageDialog(
-          message: "There are no available packages. Please try again later.");
+      RechargeMenuDialog.showMessageDialog(message: "There are no available packages. Please try again later.");
     }
   }
 
   enterPinToTransactWithdrawal({required String code}) async {
-    FullScreenLoading.fullScreenLoadingWithText(
-        'Sending request. Please wait. . .');
+    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -177,7 +168,7 @@ class WithdrawalController extends GetxController {
           <v:Body>
           <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
           <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
-          <message i:type="d:string">APPAGNT ${refID.value} $code F</message>
+          <message i:type="d:string">APPAGNT ${AppGlobal.REFID} $code F</message>
           <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
           <sendsms i:type="d:string">true</sendsms>
           </n0:RequestTokenJson>
@@ -186,19 +177,22 @@ class WithdrawalController extends GetxController {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      log('enterPinToTransactWithdrawal 1 ${request.body}');
 
       if (response.statusCode == 200) {
         var result = await response.stream.bytesToString();
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement =
-            document.findAllElements('RequestTokenJsonReturn').single;
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
+
+        var decodedData = jsonDecode(jsonString);
+
+        log('enterPinToTransactWithdrawal 2 ${jsonString.toString()}');
         // var decodedData = jsonDecode(jsonString);
         if (jsonString.contains('Retrait validé')) {
           // SqlHelper.setTransacHistory("-1", jsonString);
-          Get.find<StorageServices>()
-              .saveHistoryTransaction(message: jsonString, service: "Retrait");
+          Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: "Retrait");
           String trimString = jsonString.replaceAll('Retrait validé', '');
           String inputString = "'''$trimString'''";
           var lines = inputString.trim().split('\n');
@@ -230,36 +224,28 @@ class WithdrawalController extends GetxController {
           // message = dataDecoded['message'];
           Get.back();
           // Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
-          Get.toNamed(AppRoutes.WITHDRAWALSUCCESS, arguments: {
-            'msisdn': '',
-            'amounts': '',
-            'trimString': jsonString
-          });
+          Get.toNamed(AppRoutes.WITHDRAWALSUCCESS, arguments: {'msisdn': '', 'amounts': '', 'trimString': jsonString});
         } else {
           Get.back();
-          Get.snackbar("Message", jsonString,
-              backgroundColor: const Color(0xFFE60000),
-              colorText: Colors.white);
+          Get.snackbar("Message", jsonString, backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
         }
       } else {
         Get.back();
         print(response.reasonPhrase);
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } on Exception catch (_) {
       log("ERROR $_");
       Get.back();
-      RechargeMenuDialog.showMessageDialog(
-          message: "There are no available packages. Please try again later.");
+      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 
   void getTransactionFee(String msisdn, String amounts, String mess) async {
-    ProgressAlertDialog.progressAlertDialog(
-        Get.context!, LocaleKeys.strLoading.tr);
+    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
    <soapenv:Header/>
@@ -280,8 +266,7 @@ class WithdrawalController extends GetxController {
         log('getTransactionFee jsonString 1 $result');
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement =
-            document.findAllElements('getTransactionFeeReturn').single;
+        var soapElement = document.findAllElements('getTransactionFeeReturn').single;
         var jsonString = soapElement.innerText;
         log('getTransactionFee jsonString 2 $jsonString');
 
@@ -289,11 +274,8 @@ class WithdrawalController extends GetxController {
         transactionFee = TransactionFee.fromJson(jsonData);
         senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
         senderkeycosttva.value = transactionFee!.senderkeycosttva;
-        totalFess.value =
-            int.parse(senderkeycosttotal.value.replaceAll(',', '')) -
-                int.parse(senderkeycosttva.value.replaceAll(',', ''));
-        totalAmount.value = int.parse(amounts) +
-            int.parse(senderkeycosttotal.value.replaceAll(',', ''));
+        totalFess.value = int.parse(senderkeycosttotal.value.replaceAll(',', '')) - int.parse(senderkeycosttva.value.replaceAll(',', ''));
+        totalAmount.value = int.parse(amounts) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
 
         Get.back();
         WithdrawOtpBottomSheet.showBottomSheetWithdrawNormalOTP();
@@ -301,19 +283,17 @@ class WithdrawalController extends GetxController {
     } catch (e) {
       log('getTransactionFee asd $e');
       Get.back();
-      Get.snackbar("Message", 'An error occured! Please try again later',
-          backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      Get.snackbar("Message", 'An error occured! Please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
     }
   }
 
-  void sendCounterWithdrawalTransactions(
-      String trasacType, String amounts, String messageTpe) async {
-    ProgressAlertDialog.progressAlertDialog(
-        Get.context!, LocaleKeys.strLoading.tr);
+  
+
+  void sendCounterWithdrawalTransactions(String trasacType, String amounts, String messageTpe) async {
+    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
    <soapenv:Header/>
@@ -334,8 +314,7 @@ class WithdrawalController extends GetxController {
         log('sendCounterWithdrawalTransactions jsonString 1 $result');
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement =
-            document.findAllElements('getTransactionFeeReturn').single;
+        var soapElement = document.findAllElements('getTransactionFeeReturn').single;
         var jsonString = soapElement.innerText;
         log('sendCounterWithdrawalTransactions jsonString 2 $jsonString');
 
@@ -343,11 +322,8 @@ class WithdrawalController extends GetxController {
         transactionFee = TransactionFee.fromJson(jsonData);
         senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
         senderkeycosttva.value = transactionFee!.senderkeycosttva;
-        totalFess.value =
-            int.parse(senderkeycosttotal.value.replaceAll(',', '')) -
-                int.parse(senderkeycosttva.value.replaceAll(',', ''));
-        totalAmount.value = int.parse(amounts) +
-            int.parse(senderkeycosttotal.value.replaceAll(',', ''));
+        totalFess.value = int.parse(senderkeycosttotal.value.replaceAll(',', '')) - int.parse(senderkeycosttva.value.replaceAll(',', ''));
+        totalAmount.value = int.parse(amounts) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
 
         Get.back();
         // Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
@@ -357,8 +333,7 @@ class WithdrawalController extends GetxController {
     } catch (e) {
       log('sendCounterWithdrawalTransactions asd $e');
       Get.back();
-      Get.snackbar("Message", 'An error occured! Please try again later',
-          backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      Get.snackbar("Message", 'An error occured! Please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
     }
   }
 

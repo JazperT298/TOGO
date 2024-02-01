@@ -26,6 +26,8 @@ class AppGlobal {
   static String TOKEN = "";
   static String PROFILEAVATAR = "";
   static String PROFILEIMAGE = "";
+  static String REFID = "";
+
   static bool BIOMETRICS = false;
 
   static bool isSendVerificationLoading = false;

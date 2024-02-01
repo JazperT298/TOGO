@@ -24,8 +24,7 @@ class TransacCompleteView extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding:
-                UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
+            padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -44,32 +43,29 @@ class TransacCompleteView extends StatelessWidget {
                           ),
                           // ),
                           Padding(
-                            padding: UISettings.pagePadding
-                                .copyWith(left: 24, right: 24),
+                            padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
                                 'Operation completed \nsuccessfully', //    'Opération effectuer avec succèss',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                    fontSize: 24),
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
                               ),
                             ),
                           ),
                           Padding(
-                            padding: UISettings.pagePadding
-                                .copyWith(top: 16, left: 24, right: 24),
+                            padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
                             child: Align(
                               alignment: Alignment.center,
-                              child: Text(
-                                'The operation was carried out successfully. You can view the details in the transaction history.', //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                    fontSize: 14),
+                              child: Obx(
+                                () => Text(
+                                  controller.responsemessage.value.isEmpty
+                                      ? 'The operation was carried out successfully. You can view the details in the transaction history.'
+                                      : controller.responsemessage
+                                          .value, //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                                ),
                               ),
                             ),
                           ),
@@ -84,32 +80,24 @@ class TransacCompleteView extends StatelessWidget {
                           ),
                           // ),
                           Padding(
-                            padding: UISettings.pagePadding
-                                .copyWith(left: 24, right: 24),
+                            padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
                                 'Transaction in progress', //    'Opération effectuer avec succèss',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                    fontSize: 24),
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
                               ),
                             ),
                           ),
                           Padding(
-                            padding: UISettings.pagePadding
-                                .copyWith(top: 16, left: 24, right: 24),
+                            padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
                                 'The transaction is in progress. Please wait for a confirmation message.', //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                    fontSize: 14),
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                               ),
                             ),
                           ),
@@ -127,10 +115,7 @@ class TransacCompleteView extends StatelessWidget {
                     child: Text(
                       'See the recap', // 'Voir le récap',
                       style: GoogleFonts.montserrat(
-                          color: const Color(0xFF124DE5),
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16),
+                          color: const Color(0xFF124DE5), decoration: TextDecoration.underline, fontWeight: FontWeight.w500, fontSize: 16),
                     ),
                   ),
                 ),
@@ -159,8 +144,7 @@ class TransacCompleteView extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w400, fontSize: 16),
+                  textStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                 ),
                 const SizedBox(
                   height: 24,
