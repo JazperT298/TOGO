@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
-import 'package:ibank/app/components/main_loading.dart';
-import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
 class MBankingMenuBottomSheet {
@@ -74,6 +72,7 @@ class MBankingMenuBottomSheet {
                     ],
                   ),
                   SizedBox(height: 5.h),
+
                   // Center(
                   //   child: Padding(
                   //     padding: EdgeInsets.only(left: 10.w, right: 10.w),
@@ -101,35 +100,35 @@ class MBankingMenuBottomSheet {
                   //     ),
                   //   ),
                   // ),
-                  SizedBox(height: 5.5.h),
-                  Padding(
-                    padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                    child: FluButton.text(
-                      'Link a bank',
-                      iconStrokeWidth: 1.8,
-                      onPressed: () {
-                        FullScreenLoading.fullScreenLoadingWithText(
-                            'Processing. . .');
-                      },
-                      height: 55,
-                      width: 100.w,
-                      cornerRadius: UISettings.minButtonCornerRadius,
-                      backgroundColor: const Color(0xFF124DE5),
-                      foregroundColor: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 25,
-                          spreadRadius: 3,
-                          offset: Offset(0, 5),
-                        )
-                      ],
-                      textStyle: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFFF4F5FA),
-                          fontSize: 16),
-                    ),
-                  ),
+                  // SizedBox(height: 5.5.h),
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                  //   child: FluButton.text(
+                  //     'Link a bank',
+                  //     iconStrokeWidth: 1.8,
+                  //     onPressed: () {
+                  //       FullScreenLoading.fullScreenLoadingWithText(
+                  //           'Processing. . .');
+                  //     },
+                  //     height: 55,
+                  //     width: 100.w,
+                  //     cornerRadius: UISettings.minButtonCornerRadius,
+                  //     backgroundColor: const Color(0xFF124DE5),
+                  //     foregroundColor: Colors.white,
+                  //     boxShadow: const [
+                  //       BoxShadow(
+                  //         color: Colors.grey,
+                  //         blurRadius: 25,
+                  //         spreadRadius: 3,
+                  //         offset: Offset(0, 5),
+                  //       )
+                  //     ],
+                  //     textStyle: GoogleFonts.montserrat(
+                  //         fontWeight: FontWeight.w500,
+                  //         color: const Color(0xFFF4F5FA),
+                  //         fontSize: 16),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
