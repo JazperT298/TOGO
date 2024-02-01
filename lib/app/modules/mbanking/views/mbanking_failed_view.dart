@@ -1,26 +1,18 @@
-// ignore_for_file: unused_import
-
-import 'dart:convert';
-
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
-import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/app/modules/mbanking/controller/mbanking_controller.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
 
-class TransacFailedView extends GetView<SendMoneyController> {
-  const TransacFailedView({super.key});
+class MBangkingFailedView extends StatelessWidget {
+  const MBangkingFailedView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // var jsonString = Get.arguments['jsonString'];
-    // Map<String, dynamic> response = json.decode(jsonString);
-    // String message = response["message"];
-
+    final controller = Get.find<MBankingController>();
     return FluScreen(
       overlayStyle: context.systemUiOverlayStyle.copyWith(
         statusBarColor: Colors.transparent,
@@ -95,8 +87,8 @@ class TransacFailedView extends GetView<SendMoneyController> {
 
                   iconStrokeWidth: 1.8,
                   onPressed: () {
-                    controller.numberController.clear();
-                    controller.amountController.clear();
+                    controller.amountTextField.clear();
+                    controller.codeTextField.clear();
                     // Get.toNamed(AppRoutes.BOTTOMNAV);
                     Get.back();
                     Get.back();

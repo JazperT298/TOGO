@@ -17,10 +17,8 @@ class RechargeCreditInputAmountBottomSheet {
           return Container(
             height: isKeyboardVisible ? 35.h : 45.h,
             width: 100.w,
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+            decoration:
+                const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,10 +28,7 @@ class RechargeCreditInputAmountBottomSheet {
                     padding: EdgeInsets.only(left: 5.w, right: 5.w),
                     child: Text(
                       "Purchase of Credit for a third party".toUpperCase(),
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFFFB6404),
-                          fontSize: 13.sp),
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 13.sp),
                     ),
                   ),
                   SizedBox(height: 1.h),
@@ -41,10 +36,7 @@ class RechargeCreditInputAmountBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         "Yorem ipsum dolor sit amet, adipiscing elit.", //  "CREDIT",
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                            fontSize: 19.sp),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
                       )),
                   SizedBox(height: 3.h),
                   Row(
@@ -65,14 +57,8 @@ class RechargeCreditInputAmountBottomSheet {
                     child: FluTextField(
                       inputController: controller.amountTextField,
                       hint: LocaleKeys.strEnterAmounts.tr, // "Enter amount",
-                      hintStyle: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xFF27303F),
-                          fontSize: 12.sp),
-                      textStyle: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                          fontSize: 12.sp),
+                      hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 12.sp),
+                      textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 12.sp),
                       height: 6.5.h,
                       cornerRadius: 15,
                       keyboardType: TextInputType.number,
@@ -80,25 +66,13 @@ class RechargeCreditInputAmountBottomSheet {
                       onChanged: (text) {},
                       onFieldSubmitted: (p0) {
                         if (controller.amountTextField.text.isEmpty) {
-                          Get.snackbar(
-                              "Message", LocaleKeys.strInvalidNumber.tr,
-                              backgroundColor: Colors.lightBlue,
-                              colorText: Colors.white);
+                          Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                         } else if (controller.amountTextField.text.length > 8) {
-                          Get.snackbar(
-                              "Message", LocaleKeys.strInvalidNumber.tr,
-                              backgroundColor: Colors.lightBlue,
-                              colorText: Colors.white);
-                        } else if (double.parse(
-                                controller.amountTextField.text) <=
-                            0) {
-                          Get.snackbar(
-                              "Message", LocaleKeys.strInvalidNumber.tr,
-                              backgroundColor: Colors.lightBlue,
-                              colorText: Colors.white);
+                          Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                        } else if (double.parse(controller.amountTextField.text) <= 0) {
+                          Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                         } else {
-                          controller.getCreditTransactionFee(
-                              amounts: controller.amountTextField.text);
+                          controller.getCreditTransactionFee(amounts: controller.amountTextField.text);
                         }
                       },
                     ),
@@ -114,26 +88,13 @@ class RechargeCreditInputAmountBottomSheet {
                         iconStrokeWidth: 1.8,
                         onPressed: () {
                           if (controller.amountTextField.text.isEmpty) {
-                            Get.snackbar(
-                                "Message", LocaleKeys.strInvalidNumber.tr,
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
-                          } else if (controller.amountTextField.text.length >
-                              8) {
-                            Get.snackbar(
-                                "Message", LocaleKeys.strInvalidNumber.tr,
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
-                          } else if (double.parse(
-                                  controller.amountTextField.text) <=
-                              0) {
-                            Get.snackbar(
-                                "Message", LocaleKeys.strInvalidNumber.tr,
-                                backgroundColor: Colors.lightBlue,
-                                colorText: Colors.white);
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                          } else if (controller.amountTextField.text.length > 8) {
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                          } else if (double.parse(controller.amountTextField.text) <= 0) {
+                            Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                           } else {
-                            controller.getCreditTransactionFee(
-                                amounts: controller.amountTextField.text);
+                            controller.getCreditTransactionFee(amounts: controller.amountTextField.text);
                           }
                         },
                         height: 7.h,
@@ -149,10 +110,7 @@ class RechargeCreditInputAmountBottomSheet {
                             offset: Offset(0, 5),
                           )
                         ],
-                        textStyle: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFFF4F5FA),
-                            fontSize: 14.sp),
+                        textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 14.sp),
                       ),
                     ),
                   ),

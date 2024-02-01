@@ -21,10 +21,7 @@ class SendMoneyMenuBottomSheet {
               height: 45.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8))),
+                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,10 +31,7 @@ class SendMoneyMenuBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strWalletSend.tr.toUpperCase(),
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFFFB6404),
-                            fontSize: 13.sp),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 13.sp),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -45,10 +39,7 @@ class SendMoneyMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           LocaleKeys.strMoneyTransferTitle.tr,
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                              fontSize: 22),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
                         )),
                     SizedBox(height: 3.h),
                     Row(
@@ -77,41 +68,26 @@ class SendMoneyMenuBottomSheet {
                           // await Future.delayed(const Duration(seconds: 2), () {
                           Get.back();
                           // Get.back();
-                          SendMoneyInputBottomSheet
-                              .showBottomSheetSendMoneyNationaInputNumber();
+                          SendMoneyInputBottomSheet.showBottomSheetSendMoneyNationaInputNumber();
                           // });
                         },
                         child: Container(
                             height: 11.h,
                             width: 100.w,
-                            padding: EdgeInsets.only(
-                                left: 2.w, right: 2.w, top: 1.h, bottom: 1.h),
-                            decoration: const BoxDecoration(
-                                color: Color(0xFFF4F5FA),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0))),
+                            padding: EdgeInsets.only(left: 2.w, right: 2.w, top: 1.h, bottom: 1.h),
+                            decoration: const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                    decoration: const BoxDecoration(
-                                        color: Color(0xFFDBE4FB),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0))),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 2),
-                                    child: Text('Send money',
-                                        style: TextStyle(
-                                            fontSize: 12.sp,
-                                            color: Colors.black))),
+                                    decoration: const BoxDecoration(color: Color(0xFFDBE4FB), borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                    child: Text('Send money', style: TextStyle(fontSize: 12.sp, color: Colors.black))),
                                 SizedBox(height: 1.h),
                                 Text(
                                   LocaleKeys.strNationalTransfer.tr,
-                                  style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                      fontSize: 19.sp),
+                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
                                 ),
                               ],
                             )),
@@ -131,41 +107,26 @@ class SendMoneyMenuBottomSheet {
                           //   Get.back();
                           controller.selectedCountryCode.value = "+228";
                           Get.back();
-                          SendMoneyInputBottomSheet
-                              .showBottomSheetSendMoneyInterationaInputNumber();
+                          SendMoneyInputBottomSheet.showBottomSheetSendMoneyInterationaInputNumber();
                           // });
                         },
                         child: Container(
                             height: 11.h,
                             width: 100.w,
-                            padding: EdgeInsets.only(
-                                left: 2.w, right: 2.w, top: 1.h, bottom: 1.h),
-                            decoration: const BoxDecoration(
-                                color: Color(0xFFF4F5FA),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0))),
+                            padding: EdgeInsets.only(left: 2.w, right: 2.w, top: 1.h, bottom: 1.h),
+                            decoration: const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                    decoration: const BoxDecoration(
-                                        color: Color(0xFFDBE4FB),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0))),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 2),
-                                    child: Text('Send money',
-                                        style: TextStyle(
-                                            fontSize: 12.sp,
-                                            color: Colors.black))),
+                                    decoration: const BoxDecoration(color: Color(0xFFDBE4FB), borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                    child: Text('Send money', style: TextStyle(fontSize: 12.sp, color: Colors.black))),
                                 SizedBox(height: 1.h),
                                 Text(
                                   LocaleKeys.strInternationalTransfer.tr,
-                                  style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                      fontSize: 19.sp),
+                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
                                 ),
                               ],
                             )),

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings
+// ignore_for_file: prefer_interpolation_to_compose_strings, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -48,4 +48,24 @@ class StringHelper {
     }
     return groups.join(' ');
   }
+
+  static String parseTimerDuration(Duration duration) {
+    String minutesString;
+    if (duration.inSeconds > 59) {
+      minutesString =
+          '${duration.inHours}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    } else {
+      minutesString =
+          '${(duration.inHours % 60).toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    }
+    return minutesString;
+  }
+
+  static String capitalizeFirstLetter(String input) {
+    if (input == null || input.isEmpty) {
+      return input;
+    }
+    return input[0].toUpperCase() + input.substring(1).toLowerCase();
+  }
 }
+//if user select flooz over ecobacnk

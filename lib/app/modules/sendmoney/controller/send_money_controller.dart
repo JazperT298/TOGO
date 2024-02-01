@@ -100,7 +100,7 @@ class SendMoneyController extends GetxController {
   RxString errorMessage = ''.obs;
   RxString responsemessage = ''.obs;
 
-  getMsisdnDetails() async {
+  getMsisdnDetails(String destmsisdn) async {
     try {
       // String usermsisdn = AppGlobal.MSISDN.replaceAll("from", replace)
       String usermsisdn = AppGlobal.MSISDN.substring(3);
@@ -113,7 +113,7 @@ class SendMoneyController extends GetxController {
               <soapenv:Header/>
               <soapenv:Body>
                   <app:getMsisdnDetails soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-                    <msisdn xsi:type="xsd:string">$usermsisdn</msisdn>
+                    <msisdn xsi:type="xsd:string">$destmsisdn</msisdn>
                   </app:getMsisdnDetails>
               </soapenv:Body>
             </soapenv:Envelope>''';
@@ -440,7 +440,7 @@ class SendMoneyController extends GetxController {
 
   getNationalTransactionFee(String msisdn, String amounts, String mess) async {
     FullScreenLoading.fullScreenLoadingWithText('Validating request. . .');
-    await getMsisdnDetails(); // GET MSISDN DETAILS
+    await getMsisdnDetails(msisdn); // GET MSISDN DETAILS
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
