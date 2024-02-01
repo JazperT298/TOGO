@@ -28,7 +28,7 @@ class WithdrawOtpBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: isKeyboardVisible ? 45.h : 55.h,
+              height: isKeyboardVisible ? 60.h : 70.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white,
@@ -48,10 +48,10 @@ class WithdrawOtpBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFFFB6404),
-                            fontSize: 14),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: .5.h),
                     Padding(
                       padding: EdgeInsets.only(
                           left: MediaQuery.of(Get.context!).size.height * .025),
@@ -64,20 +64,20 @@ class WithdrawOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
-                                  fontSize: 24),
+                                  fontSize: FontSizes.headerLargeText),
                             ),
                             TextSpan(
                               text: 'Normal',
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF124DE5),
-                                  fontSize: 24),
+                                  fontSize: FontSizes.headerLargeText),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(
                           left: MediaQuery.of(Get.context!).size.height * .025),
@@ -86,10 +86,10 @@ class WithdrawOtpBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 14),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(
                           left: MediaQuery.of(Get.context!).size.height * .025),
@@ -102,7 +102,7 @@ class WithdrawOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
@@ -112,21 +112,21 @@ class WithdrawOtpBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal:
                               MediaQuery.of(Get.context!).size.height * .025),
                       child: const LineSeparator(color: Colors.grey),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
                       padding: EdgeInsets.only(
                           left: MediaQuery.of(Get.context!).size.height * .025),
@@ -135,10 +135,10 @@ class WithdrawOtpBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: 14),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(
                           left: MediaQuery.of(Get.context!).size.height * .025),
@@ -151,7 +151,7 @@ class WithdrawOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
@@ -163,14 +163,14 @@ class WithdrawOtpBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(
                           left: MediaQuery.of(Get.context!).size.height * .025),
@@ -183,7 +183,7 @@ class WithdrawOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
@@ -195,12 +195,15 @@ class WithdrawOtpBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                             ),
                           ),
                         ],
                       ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
                     ),
                     Padding(
                       padding: EdgeInsets.only(
@@ -214,7 +217,7 @@ class WithdrawOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
@@ -226,14 +229,14 @@ class WithdrawOtpBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 2.h),
                     Padding(
                       padding: EdgeInsets.only(
                           left: MediaQuery.of(Get.context!).size.height * .025),
@@ -246,7 +249,7 @@ class WithdrawOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: 14),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           Expanded(
@@ -258,14 +261,14 @@ class WithdrawOtpBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: 14),
+                                    fontSize: FontSizes.headerMediumText),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 4.h),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal:
@@ -274,7 +277,7 @@ class WithdrawOtpBottomSheet {
                           inputController: controller.code,
                           hint: LocaleKeys
                               .strCodeSecret.tr, // "Votre code secret",
-                          height: 50,
+                          height: 6.5.h,
                           cornerRadius: 15,
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
@@ -283,11 +286,11 @@ class WithdrawOtpBottomSheet {
                           hintStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w400,
                               color: const Color(0xFF27303F),
-                              fontSize: 14),
+                              fontSize: FontSizes.textFieldText),
                           textStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w400,
                               color: Colors.black,
-                              fontSize: 14),
+                              fontSize: FontSizes.textFieldText),
                           onFieldSubmitted: (p0) async {
                             if (controller.code.text.isNotEmpty) {
                               AppGlobal.dateNow = DateTime.now().toString();
@@ -324,7 +327,7 @@ class WithdrawOtpBottomSheet {
                                   colorText: Colors.white);
                             }
                           },
-                          height: 55,
+                          height: 7.h,
                           width: 100.w,
                           cornerRadius: UISettings.minButtonCornerRadius,
                           backgroundColor: Colors.blue[900],
@@ -337,9 +340,9 @@ class WithdrawOtpBottomSheet {
                               offset: Offset(0, 5),
                             )
                           ],
-                          textStyle: const TextStyle(
+                          textStyle: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: M3FontSizes.bodyLarge),
+                              fontSize: FontSizes.buttonText),
                         ),
                       ),
                     ),

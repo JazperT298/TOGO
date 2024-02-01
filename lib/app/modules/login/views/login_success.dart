@@ -40,7 +40,8 @@ class _LoginSuccessState extends State<LoginSuccess> {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
+            padding:
+                UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -64,24 +65,32 @@ class _LoginSuccessState extends State<LoginSuccess> {
                         width: MediaQuery.of(context).size.height * .3,
                       ),
                 Padding(
-                  padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
+                  padding: UISettings.pagePadding
+                      .copyWith(top: 16, left: 24, right: 24),
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
                       LocaleKeys.strLoginSuccessMessage.tr,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          fontSize: 24),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: UISettings.pagePadding.copyWith(top: 12, left: 24, right: 24),
+                  padding: UISettings.pagePadding
+                      .copyWith(top: 12, left: 24, right: 24),
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
                       'The operation was carried out successfully. You can view the details in the transaction history.', //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          fontSize: 14),
                     ),
                   ),
                 ),
@@ -92,10 +101,11 @@ class _LoginSuccessState extends State<LoginSuccess> {
                   onPressed: showProgressIndicator
                       ? null
                       : () {
-                          Get.find<StorageServices>().isLoginSuccessClick(isLoginSuccessClick: true);
+                          Get.find<StorageServices>()
+                              .isLoginSuccessClick(isLoginSuccessClick: true);
                           Get.offAllNamed(AppRoutes.BOTTOMNAV);
                         },
-                  height: 5.8.h,
+                  height: 7.h,
                   width: MediaQuery.of(context).size.width * 16,
                   cornerRadius: UISettings.minButtonCornerRadius,
                   backgroundColor: context.colorScheme.primary,
@@ -108,7 +118,8 @@ class _LoginSuccessState extends State<LoginSuccess> {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp),
+                  textStyle:
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp),
                 ),
                 const SizedBox(
                   height: 24,

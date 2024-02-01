@@ -242,7 +242,7 @@ class PaymentServiceLinksBottomSheet {
                           ],
                           textStyle: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: FontSizes.headerLargeText),
+                              fontSize: FontSizes.buttonText),
                         ),
                       ),
                     ),

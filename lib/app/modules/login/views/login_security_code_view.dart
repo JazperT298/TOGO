@@ -5,9 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/app/routes/app_routes.dart';
-import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../utils/fontsize_config.dart';
 
 class LoginSecurityCodeView extends StatefulWidget {
   const LoginSecurityCodeView({super.key});
@@ -74,7 +75,7 @@ class _LoginSecurityCodeViewState extends State<LoginSecurityCodeView> {
                       child: loadingContainer(),
                     ),
                   Padding(
-                    padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+                    padding: EdgeInsets.only(top: 1.5.h, left: 5.w, right: 5.w),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -84,8 +85,8 @@ class _LoginSecurityCodeViewState extends State<LoginSecurityCodeView> {
                             Get.toNamed(AppRoutes.LOGINPROFILE);
                           },
                           child: Container(
-                            height: 80,
-                            width: 80,
+                            height: 10.h,
+                            width: 20.w,
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               boxShadow: [
@@ -95,38 +96,47 @@ class _LoginSecurityCodeViewState extends State<LoginSecurityCodeView> {
                                 ),
                               ],
                             ),
-                            padding: const EdgeInsets.all(8),
+                            padding: EdgeInsets.all(1.5.w),
                             child: Container(
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(color: Colors.grey),
                               ),
-                              child: Image.asset(AppImages.userIcon, height: 30, width: 30),
+                              child: Image.asset(
+                                AppImages.userIcon,
+                              ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 2.h),
+                        SizedBox(height: 3.h),
                         Align(
                           alignment: Alignment.center,
                           child: Text(
                             'Please enter your security code to access your application',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                                fontSize: FontSizes.smallText),
                           ),
                         ),
-                        SizedBox(height: 14.h),
+                        SizedBox(height: 6.h),
                         _buildPinCodeDisplay(),
-                        SizedBox(height: 7.h),
+                        SizedBox(height: 4.h),
                         _buildNumberPad(),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 7.h),
                         InkWell(
                           onTap: () {},
                           child: Text(
                             'Forgot security code?',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 14),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF124DE5),
+                                fontSize: FontSizes.smallText),
                           ),
                         ),
+                        SizedBox(height: 3.h),
                       ],
                     ),
                   ),
@@ -140,9 +150,9 @@ class _LoginSecurityCodeViewState extends State<LoginSecurityCodeView> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: filledCircles.map((filled) {
         return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-          width: 16.0,
-          height: 16.0,
+          margin: EdgeInsets.only(left: 2.w, right: 2.w),
+          width: 4.w,
+          height: 3.h,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
@@ -202,12 +212,13 @@ class _LoginSecurityCodeViewState extends State<LoginSecurityCodeView> {
     return InkWell(
       onTap: () => _handleKeyPress(number),
       child: Container(
-        width: 80.0,
-        height: 80.0,
+        width: 20.w,
+        height: 10.h,
         alignment: Alignment.center,
         child: Text(
           number,
-          style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+          style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
         ),
       ),
     );
@@ -217,8 +228,8 @@ class _LoginSecurityCodeViewState extends State<LoginSecurityCodeView> {
     return InkWell(
       onTap: _handleDelete,
       child: Container(
-        width: 80.0,
-        height: 80.0,
+        width: 20.w,
+        height: 10.h,
         alignment: Alignment.center,
         child: const Icon(Icons.backspace),
       ),
@@ -247,8 +258,8 @@ class _LoginSecurityCodeViewState extends State<LoginSecurityCodeView> {
         // Get.offAllNamed(AppRoutes.LOGINSUCCESS);
       },
       child: Container(
-        width: 80.0,
-        height: 80.0,
+        width: 20.w,
+        height: 10.h,
         alignment: Alignment.center,
         child: Container(
           padding: const EdgeInsets.all(16),
