@@ -7,4 +7,5 @@ class FontSizes {
   static double headerSmallText = 12.0.sp;
   static double buttonText = 14.0.sp;
   static double textFieldText = 11.0.sp;
+  static double smallText = 11.0.sp;
 }
