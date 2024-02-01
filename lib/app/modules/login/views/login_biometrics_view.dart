@@ -13,6 +13,8 @@ import 'package:ibank/utils/constants/app_images.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../utils/fontsize_config.dart';
+
 class LoginBiometricsView extends StatefulWidget {
   const LoginBiometricsView({super.key});
 
@@ -53,37 +55,49 @@ class _LoginBiometricsViewState extends State<LoginBiometricsView> {
                   child: loadingContainer(),
                 ),
               Padding(
-                padding: UISettings.pagePadding.copyWith(top: 10, left: 24, right: 24),
+                padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 4.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Spacer(),
-                    Text(
-                      'Add extra security options',
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Add extra security options',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                            fontSize: FontSizes.largeText),
+                      ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 2.h),
                     Padding(
-                      padding: UISettings.pagePadding.copyWith(left: 24, right: 24),
+                      padding:
+                          UISettings.pagePadding.copyWith(left: 24, right: 24),
                       child: Text(
                         'You may add extra security with facial recognition option to login to your account. This step is optional',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                            fontSize: FontSizes.smallText),
                       ),
                     ),
-                    const SizedBox(
-                      height: 32,
+                    SizedBox(
+                      height: 8.h,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      padding: EdgeInsets.only(
+                          top: 2.w, bottom: 2.h, left: 5.w, right: 5.w),
                       child: Image.asset(
                         AppImages.logoFaceId,
-                        height: 110,
-                        width: 110,
+                        height: 20.h,
+                        width: 40.w,
                       ),
                     ),
-                    const SizedBox(
-                      height: 42,
+                    SizedBox(
+                      height: 8.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -100,28 +114,33 @@ class _LoginBiometricsViewState extends State<LoginBiometricsView> {
                           },
                         ),
                         Text(
-                          'Enable facial recognition authentication',
+                          'Facial recognition authentication',
                           textAlign: TextAlign.left,
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.smallText),
                         ),
-                        const SizedBox(
-                          height: 42,
+                        SizedBox(
+                          height: 4.h,
                         ),
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: EdgeInsets.only(top: 2.h),
                       child: FluButton.text(
                         'Continue', //   'Réessayer',
                         iconStrokeWidth: 1.8,
                         onPressed: secured == true
                             ? () {
-                                Get.find<StorageServices>().saveBiometricsToStorage(biometrics: secured);
+                                Get.find<StorageServices>()
+                                    .saveBiometricsToStorage(
+                                        biometrics: secured);
                                 controller.biometricsContinueButtonClick();
                               }
                             : null,
-                        height: 55,
-                        width: MediaQuery.of(context).size.width * 16,
+                        height: 7.h,
+                        width: 100.w,
                         cornerRadius: UISettings.minButtonCornerRadius,
                         backgroundColor: context.colorScheme.primary,
                         foregroundColor: context.colorScheme.onPrimary,
@@ -133,11 +152,13 @@ class _LoginBiometricsViewState extends State<LoginBiometricsView> {
                             offset: const Offset(0, 5),
                           )
                         ],
-                        textStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: FontSizes.buttonText),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: EdgeInsets.only(top: 2.h),
                       child: FluButton.text(
                         'Not now', //   'Fermer',
 
@@ -147,9 +168,8 @@ class _LoginBiometricsViewState extends State<LoginBiometricsView> {
                           // Get.toNamed(AppRoutes.BOTTOMNAV);
                           Get.offAllNamed(AppRoutes.LOGINSUCCESS);
                         },
-                        height: 5.8.h,
-
-                        width: MediaQuery.of(context).size.width * 16,
+                        height: 7.h,
+                        width: 100.w,
                         cornerRadius: UISettings.minButtonCornerRadius,
                         border: BorderSide(color: context.colorScheme.primary),
                         // backgroundColor: context.colorScheme.primary,
@@ -162,7 +182,10 @@ class _LoginBiometricsViewState extends State<LoginBiometricsView> {
                             offset: const Offset(0, 5),
                           )
                         ],
-                        textStyle: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: context.colorScheme.primary),
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: FontSizes.buttonText,
+                            color: context.colorScheme.primary),
                       ),
                     ),
                     const Spacer(),

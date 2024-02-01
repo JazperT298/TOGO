@@ -60,16 +60,18 @@ class RechargeController extends GetxController {
 
   RxString thisHsonString = ''.obs;
 
-  logout() async {
+  logout({required String response}) async {
     await Get.find<StorageServices>().storage.remove('msisdn').then((value) {
-      Get.find<StorageServices>().storage.remove('isPrivacyCheck');
+      // Get.find<StorageServices>().storage.remove('isPrivacyCheck');
       Get.find<StorageServices>().storage.remove('isLoginSuccessClick');
       Get.find<StorageServices>().clearUserLocalData();
       Get.find<StorageServices>().clearUsersInformation();
       Get.offAllNamed(AppRoutes.LOGIN);
-      Future.delayed(const Duration(seconds: 2), () {
-        LoginAlertdialog.showMessageVersionNotUpToDate(controller: Get.find<LoginController>());
-      });
+      if (response == 'VERSION NOT UP TO DATE') {
+        Future.delayed(const Duration(seconds: 2), () {
+          LoginAlertdialog.showMessageVersionNotUpToDate(controller: Get.find<LoginController>());
+        });
+      }
     });
   }
 
@@ -114,12 +116,12 @@ class RechargeController extends GetxController {
             await transactCreditForOthers(msisdn: msisdn, amount: amount, code: code);
           }
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
-          logout();
+          logout(response: 'TOKEN_NOT_FOUND');
         } else if (decodedData['description'] == 'VERSION NOT UP TO DATE') {
-          logout();
+          logout(response: 'VERSION NOT UP TO DATE');
           // HomeAlertDialog.showMessageVersionNotUpToDate(controller: Get.find<HomeController>());
         } else {
-          logout();
+          logout(response: '');
         }
       } else {
         log("ERROR ${response.reasonPhrase}'");
@@ -546,12 +548,12 @@ class RechargeController extends GetxController {
             await transactInternetRechargeOthers(msisdn: msisdn, code: code);
           }
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
-          logout();
+          logout(response: 'TOKEN_NOT_FOUND');
         } else if (decodedData['description'] == 'VERSION NOT UP TO DATE') {
-          logout();
+          logout(response: 'VERSION NOT UP TO DATE');
           // HomeAlertDialog.showMessageVersionNotUpToDate(controller: Get.find<HomeController>());
         } else {
-          logout();
+          logout(response: '');
         }
       } else {
         log("ERROR ${response.reasonPhrase}'");
@@ -601,12 +603,12 @@ class RechargeController extends GetxController {
             await transactVoieRechargeOthers(msisdn: msisdn, code: code);
           }
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
-          logout();
+          logout(response: 'TOKEN_NOT_FOUND');
         } else if (decodedData['description'] == 'VERSION NOT UP TO DATE') {
-          logout();
+          logout(response: 'VERSION NOT UP TO DATE');
           // HomeAlertDialog.showMessageVersionNotUpToDate(controller: Get.find<HomeController>());
         } else {
-          logout();
+          logout(response: '');
         }
       } else {
         Get.back();

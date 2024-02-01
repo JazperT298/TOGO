@@ -42,8 +42,10 @@ class HomeController extends GetxController {
     isLoadingHome(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -71,9 +73,9 @@ class HomeController extends GetxController {
         // Get.back();
         if (decodedData['description'] == 'TOKEN_FOUND') {
         } else if (decodedData['description'] == 'TOKEN_NOT_FOUND') {
-          await logout();
+          await logout(response: 'TOKEN_NOT_FOUND');
         } else if (decodedData['description'] == 'VERSION NOT UP TO DATE') {
-          await logout();
+          await logout(response: 'VERSION NOT UP TO DATE');
         } else {}
       } else {
         // Get.back();
@@ -96,8 +98,10 @@ class HomeController extends GetxController {
     isLoadingDialog(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -141,12 +145,17 @@ class HomeController extends GetxController {
           firstname.value = dataDecoded['Prenoms'];
           msisdn.value = dataDecoded['Compte'];
           birthdate.value = dataDecoded['Date de naissance'];
-          soldeFlooz.value = dataDecoded['Solde Flooz'].toString().replaceAll("FCFA", "").trim().toString();
+          soldeFlooz.value = dataDecoded['Solde Flooz']
+              .toString()
+              .replaceAll("FCFA", "")
+              .trim()
+              .toString();
           afficherSolde.value = false;
           log(soldeFlooz.value);
           Get.back();
         } else {
-          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString,
+              backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         print(response.reasonPhrase);
@@ -157,15 +166,18 @@ class HomeController extends GetxController {
     isLoadingDialog(false);
   }
 
-  logout() async {
+  logout({required String response}) async {
     await Get.find<StorageServices>().storage.remove('msisdn').then((value) {
-      Get.find<StorageServices>().storage.remove('isPrivacyCheck');
+      // Get.find<StorageServices>().storage.remove('isPrivacyCheck');
       Get.find<StorageServices>().storage.remove('isLoginSuccessClick');
       Get.find<StorageServices>().clearUserLocalData();
       Get.find<StorageServices>().clearUsersInformation();
       Get.offAllNamed(AppRoutes.LOGIN);
       Future.delayed(const Duration(seconds: 2), () {
-        LoginAlertdialog.showMessageVersionNotUpToDate(controller: Get.find<LoginController>());
+        if (response == "VERSION NOT UP TO DATE") {
+          LoginAlertdialog.showMessageVersionNotUpToDate(
+              controller: Get.find<LoginController>());
+        }
       });
     });
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:ui';
 
 import 'package:flukit/flukit.dart';
@@ -11,6 +13,7 @@ import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
 import 'recharge_credit_input_amount_bottom_sheet.dart';
 
 class RechargeCreditInputNumberBottomSheet {
@@ -38,7 +41,8 @@ class RechargeCreditInputNumberBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         "Purchase of Credit for a third party".toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 13.sp),
+                        style:
+                            GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(
@@ -48,7 +52,7 @@ class RechargeCreditInputNumberBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Yorem ipsum dolor sit amet, adipiscing elit.", //  "CREDIT",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
                         )),
                     SizedBox(
                       height: 3.h,
@@ -73,8 +77,10 @@ class RechargeCreditInputNumberBottomSheet {
                       child: FluTextField(
                         inputController: controller.numberTextField,
                         hint: LocaleKeys.strEnterNumber.tr, // "Enter number",
-                        hintStyle: TextStyle(fontSize: 11.sp),
-                        textStyle: TextStyle(fontSize: 11.sp),
+                        hintStyle:
+                            GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                        textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.headerSmallText),
+
                         height: 6.5.h,
                         cornerRadius: 15,
                         keyboardType: TextInputType.number,
@@ -140,7 +146,7 @@ class RechargeCreditInputNumberBottomSheet {
                               offset: Offset(0, 5),
                             )
                           ],
-                          textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
+                          textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: FontSizes.buttonText),
                         ),
                       ),
                     ),

@@ -10,6 +10,7 @@ import 'package:ibank/app/components/divider_widget.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../generated/locales.g.dart';
 import '../../../../../utils/configs.dart';
+import '../../../../../utils/fontsize_config.dart';
 import '../../controller/mbanking_controller.dart';
 
 class MBankingInputAmountBottomSheet {
@@ -28,7 +29,10 @@ class MBankingInputAmountBottomSheet {
                   height: isKeyboardVisible ? 30.h : 38.h,
                   width: 100.w,
                   decoration: const BoxDecoration(
-                      color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8))),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +42,10 @@ class MBankingInputAmountBottomSheet {
                           padding: EdgeInsets.only(left: 5.w, right: 5.w),
                           child: Text(
                             selectedMenu.toUpperCase(),
-                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 11.sp),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFFFB6404),
+                                fontSize: FontSizes.headerMediumText),
                           ),
                         ),
                         SizedBox(height: 1.h),
@@ -49,40 +56,74 @@ class MBankingInputAmountBottomSheet {
                                 ? TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: 'You are recharging your ', // 'Vous allez envoyer de l’argent à ',
-                                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 18.sp),
+                                        text:
+                                            'You are recharging your ', // 'Vous allez envoyer de l’argent à ',
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontSize:
+                                                FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'Flooz ',
-                                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 18.sp),
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            color: const Color(0xFF124DE5),
+                                            fontSize:
+                                                FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'account via ',
-                                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 18.sp),
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontSize:
+                                                FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'Ecobank',
-                                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFFFB6404), fontSize: 18.sp),
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            color: const Color(0xFFFB6404),
+                                            fontSize:
+                                                FontSizes.headerLargeText),
                                       ),
                                     ],
                                   )
                                 : TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: 'You are recharging your ', // 'Vous allez envoyer de l’argent à ',
-                                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 18.sp),
+                                        text:
+                                            'You are recharging your ', // 'Vous allez envoyer de l’argent à ',
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontSize:
+                                                FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'Ecobank ',
-                                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: 18.sp),
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            color: const Color(0xFF124DE5),
+                                            fontSize:
+                                                FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'account via ',
-                                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 18.sp),
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontSize:
+                                                FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'Flooz',
-                                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFFFB6404), fontSize: 18.sp),
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            color: const Color(0xFFFB6404),
+                                            fontSize:
+                                                FontSizes.headerLargeText),
                                       ),
                                     ],
                                   ),
@@ -106,27 +147,50 @@ class MBankingInputAmountBottomSheet {
                           padding: EdgeInsets.only(left: 5.w, right: 5.w),
                           child: FluTextField(
                             inputController: controller.amountTextField,
-                            hint: LocaleKeys.strEnterAmounts.tr, // "Enter amount",
-                            hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 12.sp),
-                            textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 12.sp),
+                            hint: LocaleKeys
+                                .strEnterAmounts.tr, // "Enter amount",
+                            hintStyle: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xFF27303F),
+                                fontSize: FontSizes.headerSmallText),
+                            textStyle: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                                fontSize: FontSizes.headerSmallText),
                             height: 6.5.h,
                             cornerRadius: 15,
                             keyboardType: TextInputType.number,
                             inputFormatters: [
-                              FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9\s]')),
                             ],
                             fillColor: const Color(0xFFf4f5fa),
                             onChanged: (text) {},
                             onFieldSubmitted: (p0) {
                               if (controller.amountTextField.text.isEmpty) {
-                                Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                              } else if (controller.amountTextField.text.length > 8) {
-                                Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                              } else if (double.parse(controller.amountTextField.text) <= 0) {
-                                Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                Get.snackbar(
+                                    "Message", LocaleKeys.strInvalidNumber.tr,
+                                    backgroundColor: Colors.lightBlue,
+                                    colorText: Colors.white);
+                              } else if (controller
+                                      .amountTextField.text.length >
+                                  8) {
+                                Get.snackbar(
+                                    "Message", LocaleKeys.strInvalidNumber.tr,
+                                    backgroundColor: Colors.lightBlue,
+                                    colorText: Colors.white);
+                              } else if (double.parse(
+                                      controller.amountTextField.text) <=
+                                  0) {
+                                Get.snackbar(
+                                    "Message", LocaleKeys.strInvalidNumber.tr,
+                                    backgroundColor: Colors.lightBlue,
+                                    colorText: Colors.white);
                               } else {
                                 controller.getBankingTransactionFee(
-                                    controller.destmsisdn.value, controller.amountTextField.text, controller.keyword.value);
+                                    controller.destmsisdn.value,
+                                    controller.amountTextField.text,
+                                    controller.keyword.value);
                               }
                             },
                           ),
@@ -142,14 +206,29 @@ class MBankingInputAmountBottomSheet {
                               iconStrokeWidth: 1.8,
                               onPressed: () {
                                 if (controller.amountTextField.text.isEmpty) {
-                                  Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                                } else if (controller.amountTextField.text.length > 8) {
-                                  Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                                } else if (double.parse(controller.amountTextField.text) <= 0) {
-                                  Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                  Get.snackbar(
+                                      "Message", LocaleKeys.strInvalidNumber.tr,
+                                      backgroundColor: Colors.lightBlue,
+                                      colorText: Colors.white);
+                                } else if (controller
+                                        .amountTextField.text.length >
+                                    8) {
+                                  Get.snackbar(
+                                      "Message", LocaleKeys.strInvalidNumber.tr,
+                                      backgroundColor: Colors.lightBlue,
+                                      colorText: Colors.white);
+                                } else if (double.parse(
+                                        controller.amountTextField.text) <=
+                                    0) {
+                                  Get.snackbar(
+                                      "Message", LocaleKeys.strInvalidNumber.tr,
+                                      backgroundColor: Colors.lightBlue,
+                                      colorText: Colors.white);
                                 } else {
                                   controller.getBankingTransactionFee(
-                                      controller.destmsisdn.value, controller.amountTextField.text, controller.keyword.value);
+                                      controller.destmsisdn.value,
+                                      controller.amountTextField.text,
+                                      controller.keyword.value);
                                 }
                               },
                               height: 7.h,
@@ -165,7 +244,10 @@ class MBankingInputAmountBottomSheet {
                                   offset: Offset(0, 5),
                                 )
                               ],
-                              textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 14.sp),
+                              textStyle: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFFF4F5FA),
+                                  fontSize: FontSizes.buttonText),
                             ),
                           ),
                         ),

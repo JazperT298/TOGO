@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:ui';
 
 import 'package:dotted_line/dotted_line.dart';
@@ -13,6 +15,7 @@ import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
 import '../../../../../utils/helpers/string_helper.dart';
 import '../../../../data/local/getstorage_services.dart';
 

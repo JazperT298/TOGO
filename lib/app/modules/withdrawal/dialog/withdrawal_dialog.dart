@@ -16,10 +16,12 @@ import 'package:sizer/sizer.dart';
 class WithdrawalDialog {
   static void showRecapOperationDialog(context) async {
     // flutter defined function
-    final controller = Get.put(WithdrawalController());
+    final controller = Get.find<WithdrawalController>();
+
     print("Amount: ${controller.thisDsonString.value}");
 
-    Map<String, String> extractedValues = extractValues(controller.thisDsonString.value);
+    Map<String, String> extractedValues =
+        extractValues(controller.thisDsonString.value);
 
     String amount = extractedValues['amount'] ?? '';
     String trais = extractedValues['trais'] ?? '';
@@ -49,7 +51,10 @@ class WithdrawalDialog {
                   children: [
                     Text(
                       "Operation Recap",
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          fontSize: 24),
                     ),
                     InkWell(
                       onTap: () {
@@ -66,7 +71,10 @@ class WithdrawalDialog {
                 const SizedBox(height: 24),
                 Text(
                   'Point of sale'.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF27303F),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 18),
                 Row(
@@ -75,14 +83,20 @@ class WithdrawalDialog {
                     Expanded(
                       child: Text(
                         'Name',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Obx(
                         () => Text(
                           controller.nickname.value,
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF27303F),
+                              fontSize: 14),
                         ),
                       ),
                     ),
@@ -111,7 +125,10 @@ class WithdrawalDialog {
                 const SizedBox(height: 24),
                 Text(
                   'DETAILS'.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF27303F),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 18),
 
@@ -121,7 +138,10 @@ class WithdrawalDialog {
                     Expanded(
                       child: Text(
                         'Amount',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -129,7 +149,10 @@ class WithdrawalDialog {
                         controller.amount.value.isEmpty
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.amount.value.replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -141,7 +164,10 @@ class WithdrawalDialog {
                     Expanded(
                       child: Text(
                         'Fees',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -149,7 +175,10 @@ class WithdrawalDialog {
                         controller.fees.value.isEmpty
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -161,7 +190,10 @@ class WithdrawalDialog {
                     Expanded(
                       child: Text(
                         'Tax',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -169,7 +201,10 @@ class WithdrawalDialog {
                         controller.senderkeycosttva.value.isEmpty
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString()))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -181,7 +216,10 @@ class WithdrawalDialog {
                     Expanded(
                       child: Text(
                         'TTC',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -189,7 +227,10 @@ class WithdrawalDialog {
                         controller.totalAmount.value == 0
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -199,7 +240,10 @@ class WithdrawalDialog {
                 const SizedBox(height: 24),
                 Text(
                   'Operation information'.toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF27303F),
+                      fontSize: 14),
                 ),
                 const SizedBox(height: 18),
                 Row(
@@ -208,13 +252,20 @@ class WithdrawalDialog {
                     Expanded(
                       child: Text(
                         'Date',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        DateFormat('dd/MM/yyyy').format(DateTime.parse(AppGlobal.dateNow)),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        DateFormat('dd/MM/yyyy')
+                            .format(DateTime.parse(AppGlobal.dateNow)),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -226,13 +277,20 @@ class WithdrawalDialog {
                     Expanded(
                       child: Text(
                         'Hour',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        DateFormat('hh:mm:ss').format(DateTime.parse(AppGlobal.timeNow)),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        DateFormat('hh:mm:ss')
+                            .format(DateTime.parse(AppGlobal.timeNow)),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -244,13 +302,19 @@ class WithdrawalDialog {
                     Expanded(
                       child: Text(
                         'Txn ID',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         txnId.isEmpty ? '' : txnId,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -262,13 +326,21 @@ class WithdrawalDialog {
                     Expanded(
                       child: Text(
                         'Nouveau solde',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        nouveauSolde.isEmpty ? '' : '${StringHelper.formatNumberWithCommas(int.parse(nouveauSolde.replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
+                        nouveauSolde.isEmpty
+                            ? ''
+                            : '${StringHelper.formatNumberWithCommas(int.parse(nouveauSolde.replaceAll(',', '')))} FCFA',
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF27303F),
+                            fontSize: 14),
                       ),
                     ),
                   ],
@@ -307,7 +379,8 @@ class WithdrawalDialog {
     String frais = fraisMatch != null ? fraisMatch.group(1)! : '';
     String taf = tafMatch != null ? tafMatch.group(1)! : '';
     String nom = nomMatch != null ? nomMatch.group(1)! : '';
-    String nouveauSolde = nouveauSoldeMatch != null ? nouveauSoldeMatch.group(1)! : '';
+    String nouveauSolde =
+        nouveauSoldeMatch != null ? nouveauSoldeMatch.group(1)! : '';
     String txnId = trxIdMatch != null ? trxIdMatch.group(1)! : '';
 
     return {

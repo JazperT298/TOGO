@@ -51,7 +51,6 @@ class MBankingController extends GetxController {
   RxString lastname = ''.obs;
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     getMBankList();
     getMBankSubList();
@@ -89,12 +88,14 @@ class MBankingController extends GetxController {
     ];
   }
 
-  getBankingTransactionFee(String destmsisdn, String amounts, String keyword) async {
+  getBankingTransactionFee(
+      String destmsisdn, String amounts, String keyword) async {
     FullScreenLoading.fullScreenLoadingWithText('Validating request. . .');
     await getMsisdnDetails(); //
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
       request.body =
           '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
    <soapenv:Header/>
@@ -115,7 +116,8 @@ class MBankingController extends GetxController {
         log('getTransactionFee jsonString 1 $result');
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('getTransactionFeeReturn').single;
+        var soapElement =
+            document.findAllElements('getTransactionFeeReturn').single;
         var jsonString = soapElement.innerText;
         log('getTransactionFee jsonString 2 $jsonString');
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
@@ -123,8 +125,11 @@ class MBankingController extends GetxController {
         transactionFee = TransactionFee.fromJson(jsonData);
         senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
         senderkeycosttva.value = transactionFee!.senderkeycosttva;
-        totalFess.value = int.parse(senderkeycosttotal.value.replaceAll(',', '')) - int.parse(senderkeycosttva.value.replaceAll(',', ''));
-        totalAmount.value = int.parse(amounts) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
+        totalFess.value =
+            int.parse(senderkeycosttotal.value.replaceAll(',', '')) -
+                int.parse(senderkeycosttva.value.replaceAll(',', ''));
+        totalAmount.value = int.parse(amounts) +
+            int.parse(senderkeycosttotal.value.replaceAll(',', ''));
 
         Get.back();
         Get.back();
@@ -144,7 +149,8 @@ class MBankingController extends GetxController {
       String usermsisdn = AppGlobal.MSISDN.substring(3);
       log(usermsisdn);
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
 
       request.body =
           '''<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:app="http://applicationmanager.tlc.com">
@@ -163,7 +169,8 @@ class MBankingController extends GetxController {
         // log('getTransactionFee jsonString 1 $result');
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('getMsisdnDetailsReturn').single;
+        var soapElement =
+            document.findAllElements('getMsisdnDetailsReturn').single;
         var jsonString = soapElement.innerText;
         log('getMsisdnDetails jsonString 2 $jsonString');
         var jsonDecodedData = jsonDecode(jsonString);
@@ -173,17 +180,22 @@ class MBankingController extends GetxController {
     } catch (e) {
       log('getTransactionFee asd $e');
       Get.back();
-      Get.snackbar("Message", 'An Error occured! Please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      Get.snackbar("Message", 'An Error occured! Please try again later',
+          backgroundColor: Colors.lightBlue, colorText: Colors.white);
       // showMessageDialog(message: e.toString());
     }
   }
 
-  sendFinalTransaction(String keyword, String selectedMenu, String amount, String password) async {
-    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
+  sendFinalTransaction(String keyword, String selectedMenu, String amount,
+      String password) async {
+    FullScreenLoading.fullScreenLoadingWithText(
+        'Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
           <v:Header /><v:Body>
@@ -202,7 +214,8 @@ class MBankingController extends GetxController {
         log('result 2 $result');
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
+        var soapElement =
+            document.findAllElements('RequestTokenJsonReturn').single;
 
         var jsonString = soapElement.innerText;
         thisDsonString.value = jsonString;
@@ -215,12 +228,14 @@ class MBankingController extends GetxController {
           Get.back();
           responsemessage.value = jsonData['message'];
           Get.toNamed(AppRoutes.MBANKSUCCESS);
-          Get.find<StorageServices>().saveHistoryTransaction(message: responsemessage.value, service: 'MBanking');
+          Get.find<StorageServices>().saveHistoryTransaction(
+              message: responsemessage.value, service: 'MBanking');
         } else {
           Get.back();
           responsemessage.value = jsonData['message'];
           Get.toNamed(AppRoutes.MBANKFAILED);
-          Get.find<StorageServices>().saveHistoryTransaction(message: responsemessage.value, service: 'MBanking');
+          Get.find<StorageServices>().saveHistoryTransaction(
+              message: responsemessage.value, service: 'MBanking');
         }
       } else {
         Get.back();
@@ -228,13 +243,15 @@ class MBankingController extends GetxController {
       }
     } on Exception catch (_) {
       Get.back();
-      Get.snackbar("Message", 'An Error occured! Please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      Get.snackbar("Message", 'An Error occured! Please try again later',
+          backgroundColor: Colors.lightBlue, colorText: Colors.white);
 
       log("ERROR $_");
     } catch (e) {
       log('asd $e');
       Get.back();
-      Get.snackbar("Message", 'An Error occured! Please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      Get.snackbar("Message", 'An Error occured! Please try again later',
+          backgroundColor: Colors.lightBlue, colorText: Colors.white);
     }
   }
 }

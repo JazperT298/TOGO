@@ -14,6 +14,8 @@ import 'package:ibank/app/modules/mbanking/views/modals/mbanking_input_amount_bo
 import 'package:ibank/generated/locales.g.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
+
 class MBankingSubMenuBottomSheet {
   static void showMBankingSubMenuBottomSheet() {
     final controller = Get.find<MBankingController>();
@@ -25,10 +27,13 @@ class MBankingSubMenuBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: 43.h,
+                height: 50.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +46,10 @@ class MBankingSubMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "BANK".toUpperCase(),
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFB6404),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -49,7 +57,10 @@ class MBankingSubMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Ecobank",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerLargeText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -57,7 +68,10 @@ class MBankingSubMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Operate your transactions between Moov Money Flooz and your Ecobank account with complete peace of mind",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerSmallText),
                         ),
                       ),
                       SizedBox(height: 3.h),
@@ -108,81 +122,130 @@ class MBankingSubMenuBottomSheet {
                               padding: const EdgeInsets.only(top: 24),
                               itemCount: controller.mBankSubModel.length,
                               itemBuilder: (context, index) {
-                                MBankSubModel option = controller.mBankSubModel[index];
-                                bool isLogout = controller.lastIsLogout.value && index == controller.mBankSubModel.length - 1;
+                                MBankSubModel option =
+                                    controller.mBankSubModel[index];
+                                bool isLogout = controller.lastIsLogout.value &&
+                                    index ==
+                                        controller.mBankSubModel.length - 1;
 
                                 return FluButton(
                                   onPressed: () async {
                                     if (index == 0) {
-                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Verifying. . .');
-                                      await Future.delayed(const Duration(seconds: 2), () {
+                                      FullScreenLoading
+                                          .fullScreenLoadingWithTextAndTimer(
+                                              'Verifying. . .');
+                                      await Future.delayed(
+                                          const Duration(seconds: 2), () {
                                         Get.back();
                                         Get.back();
-                                        controller.selectedSubMenu.value = 'Flooz to Ecobank';
-                                        controller.destmsisdn.value = 'ECOBANK_MAINBANK';
+                                        controller.selectedSubMenu.value =
+                                            'Flooz to Ecobank';
+                                        controller.destmsisdn.value =
+                                            'ECOBANK_MAINBANK';
                                         controller.keyword.value = 'W2BE';
-                                        MBankingInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: controller.selectedSubMenu.value);
+                                        MBankingInputAmountBottomSheet
+                                            .showBottomSheetInputAmount(
+                                                selectedMenu: controller
+                                                    .selectedSubMenu.value);
                                       });
                                     }
                                     if (index == 1) {
-                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Verifying. . .');
-                                      await Future.delayed(const Duration(seconds: 2), () {
+                                      FullScreenLoading
+                                          .fullScreenLoadingWithTextAndTimer(
+                                              'Verifying. . .');
+                                      await Future.delayed(
+                                          const Duration(seconds: 2), () {
                                         Get.back();
                                         Get.back();
-                                        controller.selectedSubMenu.value = 'Flooz to Ecobank';
-                                        controller.destmsisdn.value = 'ECOBANK_MAINBANK';
+                                        controller.selectedSubMenu.value =
+                                            'Flooz to Ecobank';
+                                        controller.destmsisdn.value =
+                                            'ECOBANK_MAINBANK';
                                         controller.keyword.value = 'W2BE';
-                                        MBankingInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: controller.selectedSubMenu.value);
+                                        MBankingInputAmountBottomSheet
+                                            .showBottomSheetInputAmount(
+                                                selectedMenu: controller
+                                                    .selectedSubMenu.value);
                                       });
                                     }
                                   },
-                                  backgroundColor: context.colorScheme.background,
-                                  margin: const EdgeInsets.only(top: 12),
+                                  backgroundColor:
+                                      context.colorScheme.background,
+                                  margin:
+                                      EdgeInsets.only(top: .7.h, bottom: .7.h),
                                   padding: EdgeInsets.zero,
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Container(
-                                        margin: const EdgeInsets.only(right: 10),
+                                      SizedBox(
                                         child: Stack(
                                           alignment: Alignment.center,
                                           children: [
                                             SizedBox(
-                                                height: 70,
-                                                width: 70,
+                                                height: 10.h,
+                                                width: 20.w,
                                                 child: RotatedBox(
                                                   quarterTurns: 2,
-                                                  child: CircularProgressIndicator(
+                                                  child:
+                                                      CircularProgressIndicator(
                                                     strokeWidth: 1.5,
                                                     value: .25,
-                                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                                      (isLogout ? Colors.red : context.colorScheme.primary).withOpacity(.1),
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                            Color>(
+                                                      (isLogout
+                                                              ? Colors.red
+                                                              : context
+                                                                  .colorScheme
+                                                                  .primary)
+                                                          .withOpacity(.1),
                                                     ),
                                                   ),
                                                 )),
                                             Container(
-                                              height: 62,
-                                              width: 62,
-                                              decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
-                                              child: FluIcon(option.icon, size: 24, strokeWidth: 1.6, color: isLogout ? Colors.red : Colors.black),
+                                              height: 9.h,
+                                              width: 20.w,
+                                              decoration: const BoxDecoration(
+                                                  color: Color(0xFFDBE4FB),
+                                                  shape: BoxShape.circle),
+                                              child: FluIcon(option.icon,
+                                                  size: 24,
+                                                  strokeWidth: 1.6,
+                                                  color: isLogout
+                                                      ? Colors.red
+                                                      : Colors.black),
                                             ),
                                           ],
                                         ),
                                       ),
                                       Expanded(
-                                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                        Text(
-                                          option.mBankType,
-                                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
-                                        ),
-                                        const SizedBox(height: 2),
-                                        Text(
-                                          option.mBankType,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 14),
-                                        ),
-                                      ])),
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                            Text(
+                                              option.mBankType,
+                                              style: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.w600,
+                                                  color:
+                                                      const Color(0xFF27303F),
+                                                  fontSize: FontSizes
+                                                      .headerMediumText),
+                                            ),
+                                            const SizedBox(height: 2),
+                                            Text(
+                                              option.mBankType,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.w400,
+                                                  color:
+                                                      const Color(0xFF687997),
+                                                  fontSize: FontSizes
+                                                      .headerMediumText),
+                                            ),
+                                          ])),
                                       // const SizedBox(width: 15),
                                       // FluIcon(
                                       //   FluIcons.arrowRight1,

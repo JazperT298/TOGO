@@ -70,7 +70,7 @@ class WithdrawalView extends StatefulWidget {
 }
 
 class _WithdrawalViewState extends State<WithdrawalView> {
-  final controller = Get.put(WithdrawalController());
+  final controller = Get.find<WithdrawalController>();
   Barcode? result;
   QRViewController? qrcontroller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
@@ -138,7 +138,8 @@ class _WithdrawalViewState extends State<WithdrawalView> {
                           right: MediaQuery.of(context).size.width * 0.07,
                         ),
                         child: Text(
-                          LocaleKeys.strCollectionDetails.tr, //  "Details du retrait Flooz Point de vente",
+                          LocaleKeys.strCollectionDetails
+                              .tr, //  "Details du retrait Flooz Point de vente",
                           style: const TextStyle(
                             fontSize: M3FontSizes.labelMedium,
                           ),
@@ -156,7 +157,9 @@ class _WithdrawalViewState extends State<WithdrawalView> {
                               top: MediaQuery.of(context).size.height * 0.02,
                               left: MediaQuery.of(context).size.width * 0.02,
                             ),
-                            decoration: BoxDecoration(color: const Color.fromARGB(255, 193, 224, 238), borderRadius: BorderRadius.circular(20)),
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 193, 224, 238),
+                                borderRadius: BorderRadius.circular(20)),
                             child: Obx(
                               () => Text(
                                 controller.nickname.value,
@@ -193,7 +196,9 @@ class _WithdrawalViewState extends State<WithdrawalView> {
                               top: MediaQuery.of(context).size.height * 0.02,
                               left: MediaQuery.of(context).size.width * 0.02,
                             ),
-                            decoration: BoxDecoration(color: const Color.fromARGB(255, 193, 224, 238), borderRadius: BorderRadius.circular(20)),
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 193, 224, 238),
+                                borderRadius: BorderRadius.circular(20)),
                             child: Obx(
                               () => Text(
                                 controller.amount.value,
@@ -222,13 +227,16 @@ class _WithdrawalViewState extends State<WithdrawalView> {
                           foregroundColor: context.colorScheme.onPrimary,
                           boxShadow: [
                             BoxShadow(
-                              color: context.colorScheme.primary.withOpacity(.35),
+                              color:
+                                  context.colorScheme.primary.withOpacity(.35),
                               blurRadius: 25,
                               spreadRadius: 3,
                               offset: const Offset(0, 5),
                             )
                           ],
-                          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                          textStyle: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: M3FontSizes.bodyLarge),
                         ),
                       ),
                       // Expanded(flex: 4, child: _buildQrView(context)),
@@ -280,13 +288,21 @@ class _WithdrawalViewState extends State<WithdrawalView> {
 
   Widget _buildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    var scanArea = (MediaQuery.of(context).size.width < 400 || MediaQuery.of(context).size.height < 400) ? 150.0 : 300.0;
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+            MediaQuery.of(context).size.height < 400)
+        ? 150.0
+        : 300.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(borderColor: Colors.red, borderRadius: 10, borderLength: 30, borderWidth: 10, cutOutSize: scanArea),
+      overlay: QrScannerOverlayShape(
+          borderColor: Colors.red,
+          borderRadius: 10,
+          borderLength: 30,
+          borderWidth: 10,
+          cutOutSize: scanArea),
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }

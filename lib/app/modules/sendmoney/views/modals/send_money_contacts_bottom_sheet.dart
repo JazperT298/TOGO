@@ -17,6 +17,8 @@ import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/helpers/string_helper.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../utils/fontsize_config.dart';
+
 class SendMoneyContactsBottomSheet {
   static void showBottomSheetSendMoneyNationaContacts() {
     final favController = Get.put(NewFavController());
@@ -32,7 +34,10 @@ class SendMoneyContactsBottomSheet {
                     height: isKeyboardVisible ? 70.h : 80.h,
                     width: 100.w,
                     decoration: const BoxDecoration(
-                        color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8))),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +47,10 @@ class SendMoneyContactsBottomSheet {
                             padding: EdgeInsets.only(left: 5.w, right: 5.w),
                             child: Text(
                               LocaleKeys.strWalletSend.tr.toUpperCase(),
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFFFB6404),
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           SizedBox(height: 1.h),
@@ -50,14 +58,20 @@ class SendMoneyContactsBottomSheet {
                               padding: EdgeInsets.only(left: 5.w, right: 5.w),
                               child: Text(
                                 'Select a person.',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    fontSize: FontSizes.headerLargeText),
                               )),
                           SizedBox(height: 1.h),
                           Padding(
                             padding: EdgeInsets.only(left: 5.w, right: 5.w),
                             child: Text(
                               'Choose the contact you want to send money to.',
-                              style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontSize: FontSizes.headerMediumText),
                             ),
                           ),
                           SizedBox(height: 3.h),
@@ -66,8 +80,9 @@ class SendMoneyContactsBottomSheet {
                             child: Obx(
                               () => FluTextField(
                                 hint: "Name or telephone number",
-                                height: 50,
-                                inputController: favController.nameController.value,
+                                height: 6.5.h,
+                                inputController:
+                                    favController.nameController.value,
                                 cornerRadius: 15,
                                 onChanged: (query) {
                                   favController.filterContacts(query);
@@ -75,8 +90,14 @@ class SendMoneyContactsBottomSheet {
                                 keyboardType: TextInputType.name,
                                 fillColor: const Color(0xFFF4F5FA),
                                 cursorColor: const Color(0xFF27303F),
-                                hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
-                                textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                                hintStyle: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400,
+                                    color: const Color(0xFF27303F),
+                                    fontSize: FontSizes.textFieldText),
+                                textStyle: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontSize: FontSizes.textFieldText),
                                 suffixIcon: FluIcons.refresh,
                               ),
                             ),
@@ -96,46 +117,62 @@ class SendMoneyContactsBottomSheet {
                           ),
                           SizedBox(height: 4.h),
                           Padding(
-                            padding: EdgeInsets.only(left: 8.w, right: 8.w),
+                            padding: EdgeInsets.only(left: 5.w, right: 5.w),
                             child: Obx(
                               () => ListView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: favController.displayedContacts.length, // favorites.length,
+                                itemCount: favController.displayedContacts
+                                    .length, // favorites.length,
                                 itemBuilder: ((context, index) {
                                   final option = favController.contacts[index];
                                   return Obx(() => FluButton(
                                         onPressed: () {
-                                          if (favController.selectedContacts.value == favController.displayedContacts[index]) {
-                                            favController.selectedContacts.value = Contact(); // Deselect the user
+                                          if (favController
+                                                  .selectedContacts.value ==
+                                              favController
+                                                  .displayedContacts[index]) {
+                                            favController
+                                                    .selectedContacts.value =
+                                                Contact(); // Deselect the user
                                           } else {
-                                            favController.selectedContacts.value = favController.displayedContacts[index]; // Select the user
+                                            favController
+                                                    .selectedContacts.value =
+                                                favController.displayedContacts[
+                                                    index]; // Select the user
                                             // favController.selectedByUser.value = favController.contacts[index].id;
                                           }
                                         },
                                         backgroundColor: Colors.transparent,
                                         splashFactory: NoSplash.splashFactory,
-                                        margin: EdgeInsets.only(top: index == 0 ? 0 : 10),
+                                        margin: EdgeInsets.only(
+                                            top: index == 0 ? 0 : .7.h),
                                         child: Row(
                                           children: [
                                             FluArc(
                                               startOfArc: 90,
                                               angle: 80,
                                               strokeWidth: 1,
-                                              color: context.colorScheme.primaryContainer,
+                                              color: context
+                                                  .colorScheme.primaryContainer,
                                               child: Container(
-                                                height: 60,
-                                                width: 60,
+                                                height: 8.h,
+                                                width: 18.w,
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
-                                                  color: AppColors.getRandomColor(),
+                                                  color: AppColors
+                                                      .getRandomColor(),
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    option.name.toString().substring(0, 1),
-                                                    style: const TextStyle(
-                                                      color: Colors.white, // You can change the text color
-                                                      fontSize: 24.0, // You can adjust the font size
+                                                    option.name
+                                                        .toString()
+                                                        .substring(0, 1),
+                                                    style: TextStyle(
+                                                      color: Colors
+                                                          .white, // You can change the text color
+                                                      fontSize: FontSizes
+                                                          .headerLargeText, // You can adjust the font size
                                                     ),
                                                   ),
                                                 ),
@@ -143,41 +180,82 @@ class SendMoneyContactsBottomSheet {
                                             ),
                                             Expanded(
                                               child: Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12),
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(
                                                           // option.fullName,
-                                                          favController.displayedContacts[index].displayName.toString(),
+                                                          favController
+                                                              .displayedContacts[
+                                                                  index]
+                                                              .displayName
+                                                              .toString(),
                                                           style: TextStyle(
-                                                              fontSize: M3FontSizes.bodyLarge,
-                                                              fontWeight: FontWeight.w600,
-                                                              color: context.colorScheme.onSurface),
+                                                              fontSize: FontSizes
+                                                                  .headerMediumText,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: context
+                                                                  .colorScheme
+                                                                  .onSurface),
                                                         ),
                                                         Padding(
-                                                          padding: const EdgeInsets.only(top: 8.0),
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  top: 1.h),
                                                           child: Text(
                                                             // option.phoneNumber.toString(),
 
-                                                            favController.displayedContacts[index].phones.isEmpty
+                                                            favController
+                                                                    .displayedContacts[
+                                                                        index]
+                                                                    .phones
+                                                                    .isEmpty
                                                                 ? " "
-                                                                : favController.displayedContacts[index].phones[0].number.toString(),
+                                                                : favController
+                                                                    .displayedContacts[
+                                                                        index]
+                                                                    .phones[0]
+                                                                    .number
+                                                                    .toString(),
                                                             maxLines: 1,
-                                                            overflow: TextOverflow.ellipsis,
-                                                            style: const TextStyle(
-                                                              fontSize: M3FontSizes.titleSmall,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: TextStyle(
+                                                              fontSize: FontSizes
+                                                                  .headerSmallText,
                                                             ),
                                                           ),
                                                         ),
                                                       ],
                                                     ),
-                                                    Obx(() => favController.displayedContacts.value == favController.displayedContacts[index]
-                                                        ? const FluIcon(FluIcons.checkCircleUnicon, color: Colors.green)
-                                                        : const FluIcon(FluIcons.checkCircleUnicon, color: Colors.transparent)),
+                                                    Obx(() => favController
+                                                                .displayedContacts
+                                                                .value ==
+                                                            favController
+                                                                    .displayedContacts[
+                                                                index]
+                                                        ? const FluIcon(
+                                                            FluIcons
+                                                                .checkCircleUnicon,
+                                                            color: Colors.green)
+                                                        : const FluIcon(
+                                                            FluIcons
+                                                                .checkCircleUnicon,
+                                                            color: Colors
+                                                                .transparent)),
                                                   ],
                                                 ),
                                               ),
@@ -189,7 +267,9 @@ class SendMoneyContactsBottomSheet {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 55)
+                          SizedBox(
+                            height: 10.h,
+                          )
                         ],
                       ),
                     ),
@@ -201,45 +281,63 @@ class SendMoneyContactsBottomSheet {
                       child: Visibility(
                         visible: isKeyboardVisible ? false : true,
                         child: Container(
-                          height: 65,
+                          height: 7.h,
                           width: double.infinity,
                           color: Colors.white,
                           child: Padding(
-                            padding: UISettings.pagePadding.copyWith(top: 8, left: 24, right: 24),
+                            padding: EdgeInsets.only(left: 5.w, right: 5.w),
                             child: FluButton.text(
                               'Confirm',
                               iconStrokeWidth: 1.8,
-                              onPressed: favController.selectedContacts.value != null
+                              onPressed: favController.selectedContacts.value !=
+                                      null
                                   ? () async {
-                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Validating. . .');
-                                      await Future.delayed(const Duration(seconds: 2), () {
+                                      FullScreenLoading
+                                          .fullScreenLoadingWithTextAndTimer(
+                                              'Validating. . .');
+                                      await Future.delayed(
+                                          const Duration(seconds: 2), () {
                                         favController.formatPhone.value =
-                                            StringHelper.formatPhoneNumber(favController.selectedContacts.value.phones[0].number.trim());
-                                        favController.countryCode.value = favController.selectedContacts.value.phones[0].number.substring(0, 3);
+                                            StringHelper.formatPhoneNumber(
+                                                favController.selectedContacts
+                                                    .value.phones[0].number
+                                                    .trim());
+                                        favController.countryCode.value =
+                                            favController.selectedContacts.value
+                                                .phones[0].number
+                                                .substring(0, 3);
 
-                                        Get.find<SendMoneyController>().numberController.text =
+                                        Get.find<SendMoneyController>()
+                                                .numberController
+                                                .text =
                                             '${favController.countryCode.value.replaceAll("+", "")} ${favController.formatPhone.value}'; //countryCode.toString()  usersNumber.toString();
-                                        AppGlobal.phonenumberspan = {favController.formatPhone.value}.toString().replaceAll("[^0-9]", "");
+                                        AppGlobal.phonenumberspan = {
+                                          favController.formatPhone.value
+                                        }.toString().replaceAll("[^0-9]", "");
 
                                         Get.back();
                                         Get.back();
                                       });
                                     }
                                   : null,
-                              height: 50,
+                              height: 7.h,
                               width: MediaQuery.of(context).size.width * 16,
                               cornerRadius: UISettings.minButtonCornerRadius,
                               backgroundColor: context.colorScheme.primary,
                               foregroundColor: context.colorScheme.onPrimary,
                               boxShadow: [
                                 BoxShadow(
-                                  color: context.colorScheme.primary.withOpacity(.35),
+                                  color: context.colorScheme.primary
+                                      .withOpacity(.35),
                                   blurRadius: 25,
                                   spreadRadius: 3,
                                   offset: const Offset(0, 5),
                                 )
                               ],
-                              textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
+                              textStyle: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFFF4F5FA),
+                                  fontSize: FontSizes.buttonText),
                             ),
                           ),
                         ),

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:ui';
 
 import 'package:flukit/flukit.dart';
@@ -9,6 +11,7 @@ import 'package:ibank/app/components/divider_widget.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/fontsize_config.dart';
 import 'package:sizer/sizer.dart';
 
 class RechargeCreditInputAmountBottomSheet {
@@ -35,7 +38,8 @@ class RechargeCreditInputAmountBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Purchase of Credit for a third party".toUpperCase(),
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 13.sp),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -43,7 +47,7 @@ class RechargeCreditInputAmountBottomSheet {
                           padding: EdgeInsets.only(left: 5.w, right: 5.w),
                           child: Text(
                             "Yorem ipsum dolor sit amet, adipiscing elit.", //  "CREDIT",
-                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
+                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
                           )),
                       SizedBox(height: 3.h),
                       Row(
@@ -64,8 +68,9 @@ class RechargeCreditInputAmountBottomSheet {
                         child: FluTextField(
                           inputController: controller.amountTextField,
                           hint: LocaleKeys.strEnterAmounts.tr, // "Enter amount",
-                          hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 12.sp),
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 12.sp),
+                          hintStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.headerSmallText),
                           height: 6.5.h,
                           cornerRadius: 15,
                           keyboardType: TextInputType.number,
@@ -117,7 +122,8 @@ class RechargeCreditInputAmountBottomSheet {
                                 offset: Offset(0, 5),
                               )
                             ],
-                            textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 14.sp),
+                            textStyle:
+                                GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: FontSizes.buttonText),
                           ),
                         ),
                       ),

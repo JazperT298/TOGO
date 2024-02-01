@@ -11,6 +11,7 @@ import 'package:ibank/app/modules/payment/view/modal/payment_sub_menu_bottom_she
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
+import 'package:ibank/utils/fontsize_config.dart';
 import 'package:sizer/sizer.dart';
 
 class PaymentMainMenuBottomSheet {
@@ -43,7 +44,7 @@ class PaymentMainMenuBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFFFB6404),
-                            fontSize: 14),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -54,7 +55,7 @@ class PaymentMainMenuBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
-                            fontSize: 22),
+                            fontSize: FontSizes.headerLargeText),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -65,7 +66,7 @@ class PaymentMainMenuBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
-                            fontSize: 14),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 3.h),
@@ -125,8 +126,8 @@ class PaymentMainMenuBottomSheet {
                                     strokeWidth: 1,
                                     color: context.colorScheme.primaryContainer,
                                     child: Container(
-                                        height: 62,
-                                        width: 62,
+                                        height: 9.h,
+                                        width: 20.w,
                                         clipBehavior: Clip.hardEdge,
                                         decoration: const BoxDecoration(
                                             color: Color(0xFFDBE4FB),
@@ -138,22 +139,23 @@ class PaymentMainMenuBottomSheet {
                                   ),
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 2.w),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 4.0),
+                                            padding:
+                                                EdgeInsets.only(bottom: 1.h),
                                             child: Text(
                                               option.name,
                                               style: GoogleFonts.montserrat(
                                                   fontWeight: FontWeight.w600,
                                                   color:
                                                       const Color(0xFF27303F),
-                                                  fontSize: 14),
+                                                  fontSize: FontSizes
+                                                      .headerMediumText),
                                             ),
                                           ),
                                           Text(
@@ -163,7 +165,8 @@ class PaymentMainMenuBottomSheet {
                                             style: GoogleFonts.montserrat(
                                                 fontWeight: FontWeight.w400,
                                                 color: const Color(0xFF687997),
-                                                fontSize: 14),
+                                                fontSize:
+                                                    FontSizes.headerSmallText),
                                           ),
                                         ],
                                       ),

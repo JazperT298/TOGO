@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:ui';
 
 import 'package:flukit/flukit.dart';
@@ -8,6 +10,8 @@ import 'package:ibank/app/components/divider_widget.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../../utils/fontsize_config.dart';
 
 class RechargeVoiceSelectedPackageBottomSheet {
   static void showBottomSheetSelectPackage() {

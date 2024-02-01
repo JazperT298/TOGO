@@ -13,6 +13,7 @@ import 'package:ibank/app/modules/mbanking/controller/mbanking_controller.dart';
 import 'package:ibank/app/modules/mbanking/views/modals/mbanking_submenu_bottom_sheet.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/fontsize_config.dart';
 import 'package:sizer/sizer.dart';
 
 class MBankingMenuBottomSheet {
@@ -26,10 +27,13 @@ class MBankingMenuBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: 52.h,
+                height: 65.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +46,10 @@ class MBankingMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "MBANKING".toUpperCase(),
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFB6404),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -50,7 +57,10 @@ class MBankingMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "My online bank",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerLargeText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -58,7 +68,10 @@ class MBankingMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Securely transact between Moov Money and your affiliated bank accounts.",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 3.h),
@@ -110,58 +123,87 @@ class MBankingMenuBottomSheet {
                             itemCount: controller.mBankModel.length,
                             itemBuilder: (context, index) {
                               MBankModel option = controller.mBankModel[index];
-                              bool isLogout = controller.lastIsLogout.value && index == controller.mBankModel.length - 1;
+                              bool isLogout = controller.lastIsLogout.value &&
+                                  index == controller.mBankModel.length - 1;
 
-                              return FluButton(
-                                onPressed: () async {
-                                  if (index == 0) {
-                                    FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
-                                    await Future.delayed(const Duration(seconds: 2), () {
-                                      Get.back();
-                                      Get.back();
-                                      controller.selectedMenu.value = 'EcoBank';
-                                      controller.amountTextField.clear();
-                                      controller.codeTextField.clear();
-                                      MBankingSubMenuBottomSheet.showMBankingSubMenuBottomSheet();
-                                    });
-                                  } else {
-                                    Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                                        backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
-                                  }
-                                },
-                                backgroundColor: context.colorScheme.background,
-                                margin: const EdgeInsets.only(top: 16, left: 12),
-                                padding: EdgeInsets.zero,
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 12.0),
-                                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                    Text(
-                                      option.mBankType,
-                                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
-                                    ),
-                                    const SizedBox(height: 2),
-                                    Text(
-                                      option.mBankTypeDesc,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 14),
-                                    ),
-                                  ]),
+                              return Padding(
+                                padding:
+                                    EdgeInsets.only(top: .75.h, bottom: .75.h),
+                                child: FluButton(
+                                  onPressed: () async {
+                                    if (index == 0) {
+                                      FullScreenLoading
+                                          .fullScreenLoadingWithTextAndTimer(
+                                              'Processing. . .');
+                                      await Future.delayed(
+                                          const Duration(seconds: 1), () {
+                                        Get.back();
+                                        Get.back();
+                                        controller.selectedMenu.value =
+                                            'EcoBank';
+                                        controller.amountTextField.clear();
+                                        controller.codeTextField.clear();
+                                        MBankingSubMenuBottomSheet
+                                            .showMBankingSubMenuBottomSheet();
+                                      });
+                                    } else {
+                                      Get.snackbar("Message",
+                                          LocaleKeys.strComingSoon.tr,
+                                          backgroundColor: Colors.lightBlue,
+                                          colorText: Colors.white,
+                                          duration: const Duration(seconds: 3));
+                                    }
+                                  },
+                                  backgroundColor:
+                                      context.colorScheme.background,
+                                  padding: EdgeInsets.only(
+                                      left: 4.w,
+                                      right: 4.w,
+                                      top: 1.5.h,
+                                      bottom: 1.5.h),
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 2.w),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            option.mBankType,
+                                            style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                color: const Color(0xFF27303F),
+                                                fontSize:
+                                                    FontSizes.headerMediumText),
+                                          ),
+                                          SizedBox(height: .1.h),
+                                          Text(
+                                            option.mBankTypeDesc,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w400,
+                                                color: const Color(0xFF687997),
+                                                fontSize:
+                                                    FontSizes.headerMediumText),
+                                          ),
+                                        ]),
+                                  ),
                                 ),
                               );
                             }),
                       ),
-                      SizedBox(height: 3.0.h),
+                      SizedBox(height: 4.h),
                       Padding(
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: FluButton.text(
                           'Link a bank',
                           iconStrokeWidth: 1.8,
                           onPressed: () {
-                            FullScreenLoading.fullScreenLoadingWithText('Processing. . .');
+                            FullScreenLoading.fullScreenLoadingWithText(
+                                'Processing. . .');
                           },
-                          height: 55,
+                          height: 7.h,
                           width: 100.w,
                           cornerRadius: UISettings.minButtonCornerRadius,
                           backgroundColor: const Color(0xFF124DE5),
@@ -174,7 +216,10 @@ class MBankingMenuBottomSheet {
                               offset: Offset(0, 5),
                             )
                           ],
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 16),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFF4F5FA),
+                              fontSize: FontSizes.buttonText),
                         ),
                       ),
                     ],
