@@ -20,7 +20,7 @@ class SendMoneyMenuBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: 45.h,
+              // height: 45.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white,
@@ -173,32 +173,6 @@ class SendMoneyMenuBottomSheet {
                             )),
                       ).paddingOnly(bottom: 3.h),
                     ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                    //         backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
-                    //   },
-                    //   child: Container(
-                    //       height: 9.h,
-                    //       width: MediaQuery.of(context).size.width,
-                    //       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                    //       decoration: const BoxDecoration(color: Color(0xFFF4F5FA), borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    //       child: Column(
-                    //         mainAxisAlignment: MainAxisAlignment.center,
-                    //         crossAxisAlignment: CrossAxisAlignment.start,
-                    //         children: [
-                    //           Container(
-                    //               decoration: const BoxDecoration(color: Color(0xFFDBE4FB), borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    //               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                    //               child: Text(LocaleKeys.strWalletSend.tr, style: const TextStyle(color: Colors.black))),
-                    //           const SizedBox(height: 12),
-                    //           Text(
-                    //             LocaleKeys.strReversal.tr,
-                    //             style: TextStyle(fontSize: 16.sp, color: Colors.black, fontWeight: FontWeight.bold),
-                    //           ),
-                    //         ],
-                    //       )),
-                    // ),
                   ],
                 ),
               ),

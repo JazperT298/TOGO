@@ -26,7 +26,7 @@ class BalanceCheckBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: isKeyboardVisible ? 34.h : 44.h,
+                // height: isKeyboardVisible ? 27.h : 33.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -165,6 +165,9 @@ class BalanceCheckBottomSheet {
                                 fontSize: FontSizes.buttonText),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
                       ),
                     ],
                   ),

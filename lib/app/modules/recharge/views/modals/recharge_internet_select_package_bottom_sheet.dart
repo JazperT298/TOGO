@@ -24,7 +24,7 @@ class RechargeInternetSelectPackageBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: 80.h,
+                // height: 80.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                     color: Colors.white,
@@ -412,6 +412,9 @@ class RechargeInternetSelectPackageBottomSheet {
                               fontSize: FontSizes.buttonText),
                         ),
                       ),
+                      SizedBox(
+                        height: 2.h,
+                      )
                     ],
                   ),
                 ),

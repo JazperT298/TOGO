@@ -21,7 +21,6 @@ import 'package:ibank/app/modules/mbanking/views/modals/mbanking_select_bank_bot
 import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_main_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_service_link_bottom_sheet.dart';
-import 'package:ibank/app/modules/sendmoney/views/modals/envoi_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/sendmoney/views/modals/send_money_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
 import 'package:ibank/app/modules/withdrawal/modals/withdraw_menu_bottom_sheet.dart';

@@ -31,7 +31,7 @@ class RechargeCreditOTPBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: 79.h,
+                // height: 79.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                     color: Colors.white,
@@ -418,6 +418,9 @@ class RechargeCreditOTPBottomSheet {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 2.h,
+                      )
                     ],
                   ),
                 ),

@@ -31,7 +31,7 @@ class SendMoneyContactsBottomSheet {
               return Stack(
                 children: [
                   Container(
-                    height: isKeyboardVisible ? 70.h : 80.h,
+                    // height: isKeyboardVisible ? 70.h : 80.h,
                     width: 100.w,
                     decoration: const BoxDecoration(
                         color: Colors.white,
@@ -115,160 +115,165 @@ class SendMoneyContactsBottomSheet {
                               )
                             ],
                           ),
-                          SizedBox(height: 4.h),
-                          Padding(
-                            padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                            child: Obx(
-                              () => ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: favController.displayedContacts
-                                    .length, // favorites.length,
-                                itemBuilder: ((context, index) {
-                                  final option = favController.contacts[index];
-                                  return Obx(() => FluButton(
-                                        onPressed: () {
-                                          if (favController
-                                                  .selectedContacts.value ==
+                          SizedBox(height: 2.h),
+                          SizedBox(
+                            height: 35.h,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                              child: Obx(
+                                () => ListView.builder(
+                                  // shrinkWrap: true,
+                                  // physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: favController.displayedContacts
+                                      .length, // favorites.length,
+                                  itemBuilder: ((context, index) {
+                                    final option =
+                                        favController.contacts[index];
+                                    return Obx(() => FluButton(
+                                          onPressed: () {
+                                            if (favController
+                                                    .selectedContacts.value ==
+                                                favController
+                                                    .displayedContacts[index]) {
                                               favController
-                                                  .displayedContacts[index]) {
-                                            favController
-                                                    .selectedContacts.value =
-                                                Contact(); // Deselect the user
-                                          } else {
-                                            favController
-                                                    .selectedContacts.value =
-                                                favController.displayedContacts[
-                                                    index]; // Select the user
-                                            // favController.selectedByUser.value = favController.contacts[index].id;
-                                          }
-                                        },
-                                        backgroundColor: Colors.transparent,
-                                        splashFactory: NoSplash.splashFactory,
-                                        margin: EdgeInsets.only(
-                                            top: index == 0 ? 0 : .7.h),
-                                        child: Row(
-                                          children: [
-                                            FluArc(
-                                              startOfArc: 90,
-                                              angle: 80,
-                                              strokeWidth: 1,
-                                              color: context
-                                                  .colorScheme.primaryContainer,
-                                              child: Container(
-                                                height: 8.h,
-                                                width: 18.w,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: AppColors
-                                                      .getRandomColor(),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    option.name
-                                                        .toString()
-                                                        .substring(0, 1),
-                                                    style: TextStyle(
-                                                      color: Colors
-                                                          .white, // You can change the text color
-                                                      fontSize: FontSizes
-                                                          .headerLargeText, // You can adjust the font size
+                                                      .selectedContacts.value =
+                                                  Contact(); // Deselect the user
+                                            } else {
+                                              favController.selectedContacts
+                                                  .value = favController
+                                                      .displayedContacts[
+                                                  index]; // Select the user
+                                              // favController.selectedByUser.value = favController.contacts[index].id;
+                                            }
+                                          },
+                                          backgroundColor: Colors.transparent,
+                                          splashFactory: NoSplash.splashFactory,
+                                          margin: EdgeInsets.only(
+                                              top: index == 0 ? 0 : .7.h),
+                                          child: Row(
+                                            children: [
+                                              FluArc(
+                                                startOfArc: 90,
+                                                angle: 80,
+                                                strokeWidth: 1,
+                                                color: context.colorScheme
+                                                    .primaryContainer,
+                                                child: Container(
+                                                  height: 8.h,
+                                                  width: 18.w,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: AppColors
+                                                        .getRandomColor(),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      option.name
+                                                          .toString()
+                                                          .substring(0, 1),
+                                                      style: TextStyle(
+                                                        color: Colors
+                                                            .white, // You can change the text color
+                                                        fontSize: FontSizes
+                                                            .headerLargeText, // You can adjust the font size
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 12),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          // option.fullName,
-                                                          favController
-                                                              .displayedContacts[
-                                                                  index]
-                                                              .displayName
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: FontSizes
-                                                                  .headerMediumText,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color: context
-                                                                  .colorScheme
-                                                                  .onSurface),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  top: 1.h),
-                                                          child: Text(
-                                                            // option.phoneNumber.toString(),
-
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 12),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            // option.fullName,
                                                             favController
-                                                                    .displayedContacts[
-                                                                        index]
-                                                                    .phones
-                                                                    .isEmpty
-                                                                ? " "
-                                                                : favController
-                                                                    .displayedContacts[
-                                                                        index]
-                                                                    .phones[0]
-                                                                    .number
-                                                                    .toString(),
-                                                            maxLines: 1,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
+                                                                .displayedContacts[
+                                                                    index]
+                                                                .displayName
+                                                                .toString(),
                                                             style: TextStyle(
-                                                              fontSize: FontSizes
-                                                                  .headerSmallText,
+                                                                fontSize: FontSizes
+                                                                    .headerMediumText,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color: context
+                                                                    .colorScheme
+                                                                    .onSurface),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 1.h),
+                                                            child: Text(
+                                                              // option.phoneNumber.toString(),
+
+                                                              favController
+                                                                      .displayedContacts[
+                                                                          index]
+                                                                      .phones
+                                                                      .isEmpty
+                                                                  ? " "
+                                                                  : favController
+                                                                      .displayedContacts[
+                                                                          index]
+                                                                      .phones[0]
+                                                                      .number
+                                                                      .toString(),
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                fontSize: FontSizes
+                                                                    .headerSmallText,
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Obx(() => favController
-                                                                .displayedContacts
-                                                                .value ==
-                                                            favController
-                                                                    .displayedContacts[
-                                                                index]
-                                                        ? const FluIcon(
-                                                            FluIcons
-                                                                .checkCircleUnicon,
-                                                            color: Colors.green)
-                                                        : const FluIcon(
-                                                            FluIcons
-                                                                .checkCircleUnicon,
-                                                            color: Colors
-                                                                .transparent)),
-                                                  ],
+                                                        ],
+                                                      ),
+                                                      Obx(() => favController
+                                                                  .displayedContacts
+                                                                  .value ==
+                                                              favController
+                                                                      .displayedContacts[
+                                                                  index]
+                                                          ? const FluIcon(
+                                                              FluIcons
+                                                                  .checkCircleUnicon,
+                                                              color:
+                                                                  Colors.green)
+                                                          : const FluIcon(
+                                                              FluIcons
+                                                                  .checkCircleUnicon,
+                                                              color: Colors
+                                                                  .transparent)),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ).paddingSymmetric(vertical: 1.h));
-                                }),
+                                            ],
+                                          ),
+                                        ).paddingSymmetric(vertical: 1.h));
+                                  }),
+                                ),
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 10.h,
+                            height: 5.h,
                           )
                         ],
                       ),

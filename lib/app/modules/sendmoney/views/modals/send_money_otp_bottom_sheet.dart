@@ -26,7 +26,7 @@ class SendMoneyOtpsBottomSheet {
           bottomSheetDivider(),
           KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
             return Container(
-              height: isKeyboardVisible ? 77.h : 80.h,
+              // height: isKeyboardVisible ? 77.h : 80.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white,
@@ -384,6 +384,7 @@ class SendMoneyOtpsBottomSheet {
                         ),
                       ),
                     ),
+                    SizedBox(height: 2.h)
                   ],
                 ),
               ),
@@ -405,7 +406,7 @@ class SendMoneyOtpsBottomSheet {
           bottomSheetDivider(),
           KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
             return Container(
-              height: isKeyboardVisible ? 77.h : 80.h,
+              // height: isKeyboardVisible ? 77.h : 80.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white,
@@ -800,6 +801,9 @@ class SendMoneyOtpsBottomSheet {
                               fontSize: FontSizes.buttonText),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
                     ),
                   ],
                 ),

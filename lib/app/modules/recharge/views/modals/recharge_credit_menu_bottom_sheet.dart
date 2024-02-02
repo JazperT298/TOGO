@@ -26,7 +26,7 @@ class RechargeCreditMainMenuBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: 45.h,
+              // height: 45.h,
               width: 100.w,
               clipBehavior: Clip.antiAlias,
               decoration: const BoxDecoration(
@@ -212,6 +212,9 @@ class RechargeCreditMainMenuBottomSheet {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 2.h,
+                    )
                   ],
                 ),
               ),

@@ -31,7 +31,7 @@ class RechargeVoiceOTPBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: 86.h,
+                // height: 86.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                     color: Colors.white,
@@ -474,6 +474,9 @@ class RechargeVoiceOTPBottomSheet {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 2.h,
+                      )
                     ],
                   ),
                 ),

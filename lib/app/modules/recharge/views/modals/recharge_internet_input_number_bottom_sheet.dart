@@ -28,7 +28,7 @@ class RechargeInternetsInputNumberBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: isKeyboardVisible ? 35.h : 45.h,
+                // height: isKeyboardVisible ? 35.h : 45.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                     color: Colors.white,
@@ -211,6 +211,9 @@ class RechargeInternetsInputNumberBottomSheet {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 2.h,
+                      )
                     ],
                   ),
                 ),

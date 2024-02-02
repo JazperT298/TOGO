@@ -29,7 +29,7 @@ class RechargeInternetMainMenuBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: 45.h,
+              // height: 45.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white,
@@ -218,6 +218,9 @@ class RechargeInternetMainMenuBottomSheet {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 2.h,
+                    )
                   ],
                 ),
               ),
@@ -238,7 +241,7 @@ class RechargeInternetMainMenuBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: 45.h,
+              // height: 45.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white,
@@ -426,6 +429,9 @@ class RechargeInternetMainMenuBottomSheet {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 2.h,
+                    )
                   ],
                 ),
               ),
