@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:ibank/app/components/line.dart';
 import 'package:ibank/app/components/options.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/constants/app_global.dart';
+import 'package:ibank/utils/constants/app_images.dart';
 import 'package:ibank/utils/core/users.dart';
 import 'package:ibank/utils/ui/options.dart';
 
@@ -51,7 +53,7 @@ class SettingsView extends StatelessWidget {
                               Hero(
                                 tag: "titleTextHeroTag",
                                 child: Text(
-                                  'Paramètres',
+                                  'Settings',
                                   style: TextStyle(
                                     fontSize: M3FontSizes.headlineLarge,
                                     fontWeight: FontWeight.bold,
@@ -72,25 +74,29 @@ class SettingsView extends StatelessWidget {
                               // ),
 
                               const Text(
-                                "Configurez Flooz pour qu'il corresponde plus à vos exigences.",
+                                "Configure Flooz to better suit your requirements.",
                                 maxLines: null,
                                 overflow: TextOverflow.visible,
                               ),
                             ],
                           ),
                         ),
-                        Hero(
-                          tag: 'user_avatar',
-                          child: FluAvatar(
-                            image: authenticatedUser.avatar,
-                            label: authenticatedUser.fullName,
-                            outlined: true,
-                            outlineGap: 2,
-                            size: 50,
-                            cornerRadius: 20,
-                            margin: const EdgeInsets.only(left: 20),
-                          ),
-                        ),
+                        AppGlobal.PROFILEAVATAR.isEmpty && AppGlobal.PROFILEIMAGE.isNotEmpty
+                            ? Hero(
+                                tag: 'user_avatar',
+                                child: FluAvatar(
+                                  image: authenticatedUser.avatar,
+                                  label: authenticatedUser.fullName,
+                                  outlined: true,
+                                  outlineGap: 2,
+                                  size: 50,
+                                  cornerRadius: 20,
+                                  margin: const EdgeInsets.only(left: 20),
+                                ),
+                              )
+                            : AppGlobal.PROFILEIMAGE.isEmpty && AppGlobal.PROFILEAVATAR.isNotEmpty
+                                ? Hero(tag: 'user_avatar', child: Image.asset(AppGlobal.PROFILEAVATAR, height: 52, width: 52))
+                                : Hero(tag: 'user_avatar', child: Image.asset(AppImages.userIcon, height: 52, width: 52)),
                       ],
                     ),
                   ],

@@ -20,8 +20,8 @@ class DevicePlatformServices extends GetxController {
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       deviceID = iosInfo.identifierForVendor!.toString();
-      channelID = "IOSAPP"; // "app-ios";
-      deviceType = "IOS";
+      channelID = "ANDROIDAPP"; //-->  change to this is IOS will be avaiable channelID = "IOSAPP"; // "app-ios";
+      deviceType = "ANDROID"; //-->  change to this is IOS will be avaiable deviceType = "IOS";
       log('IOS $channelID deviceID $deviceID');
     }
   }

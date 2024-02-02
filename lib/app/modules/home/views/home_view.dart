@@ -80,8 +80,11 @@ class HomeView extends GetView<HomeController> {
                                 const Spacer(),
                                 /* FluButton.icon(FluIcons.plusUnicon,
                                   size: UISettings.minButtonSize), */
-                                const FluButton.icon(
+                                FluButton.icon(
                                   FluIcons.notification,
+                                  onPressed: () {
+                                    Get.toNamed(AppRoutes.NOTIFICAITON);
+                                  },
                                   size: UISettings.minButtonSize,
                                 ),
                               ],

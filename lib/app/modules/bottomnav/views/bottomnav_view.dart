@@ -93,7 +93,7 @@ class _BottomNavViewState extends ConsumerState<BottomNavView> {
             FluBottomNavBarItem(FluIcons.more2, LocaleKeys.strProfile.tr),
           ],
           style: FluBottomNavBarStyle(
-            height: MediaQuery.of(context).size.height * .1,
+            height: MediaQuery.of(context).size.height * .09,
             backgroundColor: Colors.black,
             foregroundColor: context.colorScheme.secondary.withOpacity(.85),
             unSelectedForegroundColor: context.colorScheme.onPrimary,

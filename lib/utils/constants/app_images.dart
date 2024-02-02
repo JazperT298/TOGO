@@ -38,4 +38,5 @@ class AppImages {
   static const logoFaceId = "assets/images/face_id.png";
   static const icOops = "assets/images/ic_oops.png";
   static const progressLoading = "assets/images/progressLoading.png";
+  static const notificationIcon = "assets/images/notification_icon.png";
 }

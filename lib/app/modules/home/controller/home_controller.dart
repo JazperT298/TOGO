@@ -59,10 +59,12 @@ class HomeController extends GetxController {
           </v:Body>
           </v:Envelope>''';
       request.headers.addAll(headers);
-
+      log('VERIFY ${request.body}');
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
         var result = await response.stream.bytesToString();
+        log('RESULT $result');
+
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
         var soapElement = document.findAllElements('RequestTokenReturn').single;
