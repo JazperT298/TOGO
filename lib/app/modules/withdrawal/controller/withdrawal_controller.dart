@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, unused_local_variable
+// ignore_for_file: avoid_print, unused_local_variable, unused_import
 
 import 'dart:convert';
 
@@ -49,7 +49,10 @@ class WithdrawalController extends GetxController {
   late RegExp inputValidationRegExp;
   final RxBool isValid = true.obs;
 
-  RxString thisDsonString = ''.obs;
+  RxString thisHsonString = ''.obs;
+  RxString transactionID = ''.obs;
+  RxString senderBalance = ''.obs;
+  RxString responsemessage = ''.obs;
 
   getBack() {
     Get.back();
@@ -168,7 +171,7 @@ class WithdrawalController extends GetxController {
           <v:Body>
           <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
           <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
-          <message i:type="d:string">APPAGNT ${AppGlobal.REFID} $code F</message>
+          <message i:type="d:string">APPAGNT ${refID.value} $code F</message>
           <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
           <sendsms i:type="d:string">true</sendsms>
           </n0:RequestTokenJson>
@@ -187,47 +190,23 @@ class WithdrawalController extends GetxController {
         var jsonString = soapElement.innerText;
 
         var decodedData = jsonDecode(jsonString);
+        thisHsonString.value = jsonString;
+
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        responsemessage.value = jsonData['message'];
 
         log('enterPinToTransactWithdrawal 2 ${jsonString.toString()}');
-        // var decodedData = jsonDecode(jsonString);
-        if (jsonString.contains('Retrait validé')) {
-          // SqlHelper.setTransacHistory("-1", jsonString);
-          Get.find<StorageServices>().saveHistoryTransaction(message: jsonString, service: "Retrait");
-          String trimString = jsonString.replaceAll('Retrait validé', '');
-          String inputString = "'''$trimString'''";
-          var lines = inputString.trim().split('\n');
-          var jsonMap = {};
-          for (var line in lines) {
-            var parts = line.split(':');
-            if (parts.length == 2) {
-              var key = parts[0].trim();
-              var value = parts[1].trim();
-              jsonMap[key] = value;
-            }
-            if (parts.length == 3) {
-              var trioPart = line.split(',');
-              for (var lin in trioPart) {
-                var finLine = lin.split(':');
-                var key = finLine[0].trim();
-                var value = finLine[1].trim();
-                jsonMap[key] = value;
-              }
-            }
-          }
-          var dataEncoded = jsonEncode(jsonMap);
-          var dataDecoded = jsonDecode(dataEncoded);
-          log('data decoded ${dataDecoded.toString()}');
-          // fees.value = dataDecoded['Frais HT'];
-          // withdrawalAmountWithUnit.value = dataDecoded['Montant'];
-          // taf.value = dataDecoded['TAF'];
-          // balance.value = dataDecoded['Nouveau solde Flooz'];
-          // message = dataDecoded['message'];
+
+        int msgId = jsonData["msgid"];
+        if (msgId == 0) {
+          transactionID.value = jsonData['refid'];
+          senderBalance.value = jsonData['senderbalance'];
           Get.back();
-          // Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
-          Get.toNamed(AppRoutes.WITHDRAWALSUCCESS, arguments: {'msisdn': '', 'amounts': '', 'trimString': jsonString});
+          Get.back();
+          Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
         } else {
           Get.back();
-          Get.snackbar("Message", jsonString, backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+          Get.toNamed(AppRoutes.WITHDRAWALFAILED);
         }
       } else {
         Get.back();
@@ -242,7 +221,7 @@ class WithdrawalController extends GetxController {
   }
 
   void getTransactionFee(String msisdn, String amounts, String mess) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -288,7 +267,7 @@ class WithdrawalController extends GetxController {
   }
 
   void sendCounterWithdrawalTransactions(String trasacType, String amounts, String messageTpe) async {
-    ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
@@ -315,18 +294,33 @@ class WithdrawalController extends GetxController {
         var soapElement = document.findAllElements('getTransactionFeeReturn').single;
         var jsonString = soapElement.innerText;
         log('sendCounterWithdrawalTransactions jsonString 2 $jsonString');
+        var decodedData = jsonDecode(jsonString);
+        thisHsonString.value = jsonString;
 
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        responsemessage.value = jsonData['message'];
+
+        log('enterPinToTransactWithdrawal 2 ${jsonString.toString()}');
+
         transactionFee = TransactionFee.fromJson(jsonData);
         senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
         senderkeycosttva.value = transactionFee!.senderkeycosttva;
         totalFess.value = int.parse(senderkeycosttotal.value.replaceAll(',', '')) - int.parse(senderkeycosttva.value.replaceAll(',', ''));
         totalAmount.value = int.parse(amounts) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
 
-        Get.back();
-        // Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
-        thisDsonString.value = jsonString;
-        Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
+        log('enterPinToTransactWithdrawal 2 ${jsonString.toString()}');
+        int msgId = jsonData["msgid"];
+        if (msgId == 0) {
+          transactionID.value = jsonData['refid'];
+          senderBalance.value = jsonData['senderbalance'];
+          Get.back();
+          Get.back();
+          // Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
+          Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
+        } else {
+          Get.back();
+          Get.toNamed(AppRoutes.WITHDRAWALFAILED);
+        }
       }
     } catch (e) {
       log('sendCounterWithdrawalTransactions asd $e');

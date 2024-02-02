@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/main_loading.dart';
-import 'package:ibank/app/components/progress_dialog.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/app/modules/login/modals/login_settings_bottom_sheet.dart';

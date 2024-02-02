@@ -536,10 +536,11 @@ class RechargeController extends GetxController {
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
 
         responsemessage.value = jsonData['message'];
-        Get.back();
-        Get.back();
+
         int msgId = jsonData["msgid"];
         if (msgId == 0) {
+          Get.back();
+          Get.back();
           transactionID.value = jsonData['refid'];
           senderBalance.value = jsonData['senderbalance'];
           Get.toNamed(AppRoutes.RECHARGESUCCESS);
@@ -598,10 +599,11 @@ class RechargeController extends GetxController {
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
 
         responsemessage.value = jsonData['message'];
-        Get.back();
-        Get.back();
+
         int msgId = jsonData["msgid"];
         if (msgId == 0) {
+          Get.back();
+          Get.back();
           transactionID.value = jsonData['refid'];
           senderBalance.value = jsonData['senderbalance'];
           Get.toNamed(AppRoutes.RECHARGESUCCESS);
@@ -661,10 +663,11 @@ class RechargeController extends GetxController {
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
 
         responsemessage.value = jsonData['message'];
-        Get.back();
-        Get.back();
+
         int msgId = jsonData["msgid"];
         if (msgId == 0) {
+          Get.back();
+          Get.back();
           transactionID.value = jsonData['refid'];
           senderBalance.value = jsonData['senderbalance'];
           Get.toNamed(AppRoutes.RECHARGESUCCESS);
@@ -723,10 +726,11 @@ class RechargeController extends GetxController {
         log('transactInternetRechargeOthers ${jsonString.toString()}');
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
         responsemessage.value = jsonData['message'];
-        Get.back();
-        Get.back();
+
         int msgId = jsonData["msgid"];
         if (msgId == 0) {
+          Get.back();
+          Get.back();
           transactionID.value = jsonData['refid'];
           senderBalance.value = jsonData['senderbalance'];
           Get.toNamed(AppRoutes.RECHARGESUCCESS);

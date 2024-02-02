@@ -29,6 +29,7 @@ class BalanceCheckBottomSheet {
               bottomSheetDivider(),
               Container(
                 // height: isKeyboardVisible ? 27.h : 33.h,
+                height: isKeyboardVisible ? 34.h : 44.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -50,9 +51,7 @@ class BalanceCheckBottomSheet {
                         child: Text(
                           "Balance consultation".toUpperCase(),
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFFFB6404),
-                              fontSize: FontSizes.headerMediumText),
+                              fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -60,10 +59,7 @@ class BalanceCheckBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Norem ipsum dolor sit amet \nconsectetur ",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                              fontSize: FontSizes.headerLargeText),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
                         ),
                       ),
                       SizedBox(height: 3.h),
@@ -86,31 +82,23 @@ class BalanceCheckBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: FluTextField(
                             inputController: controller.code,
-                            hint: LocaleKeys
-                                .strCodeSecret.tr, // "Votre code secret",
+                            hint: LocaleKeys.strCodeSecret.tr, // "Votre code secret",
                             height: 6.5.h,
                             cornerRadius: 15,
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.number,
                             fillColor: const Color(0xFFF4F5FA),
                             cursorColor: const Color(0xFF27303F),
-                            hintStyle: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xFF27303F),
-                                fontSize: FontSizes.textFieldText),
-                            textStyle: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                                fontSize: FontSizes.textFieldText),
+                            hintStyle:
+                                GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: FontSizes.smallText),
+                            textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.smallText),
                             onChanged: (text) {
-                              String newText = text.replaceAll(' ', '');
-                              String spacedText = newText.split('').join(' ');
-                              controller.code.value =
-                                  controller.code.value.copyWith(
-                                text: spacedText,
-                                selection: TextSelection.collapsed(
-                                    offset: spacedText.length),
-                              );
+                              // String newText = text.replaceAll(' ', '');
+                              // String spacedText = newText.split('').join(' ');
+                              // controller.code.value = controller.code.value.copyWith(
+                              //   text: spacedText,
+                              //   selection: TextSelection.collapsed(offset: spacedText.length),
+                              // );
                             },
                             onFieldSubmitted: (p0) async {
                               if (controller.code.text.isNotEmpty) {
@@ -124,15 +112,11 @@ class BalanceCheckBottomSheet {
                                       code: finalPINCode);
                                 }
                               } else {
-                                Get.snackbar("Message", "Entrées manquantes",
-                                    backgroundColor: Colors.lightBlue,
-                                    colorText: Colors.white);
+                                Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                               }
                             }),
                       ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
+                      SizedBox(height: 3.h),
                       Padding(
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Visibility(
@@ -153,9 +137,7 @@ class BalanceCheckBottomSheet {
                                       code: finalPINCode);
                                 }
                               } else {
-                                Get.snackbar("Message", "Entrées manquantes",
-                                    backgroundColor: Colors.lightBlue,
-                                    colorText: Colors.white);
+                                Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                               }
                             },
                             height: 7.h,
@@ -171,15 +153,11 @@ class BalanceCheckBottomSheet {
                                 offset: Offset(0, 5),
                               )
                             ],
-                            textStyle: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: FontSizes.buttonText),
+                            textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.white, fontSize: FontSizes.headerSmallText),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
+                      SizedBox(height: 3.h),
                     ],
                   ),
                 ),

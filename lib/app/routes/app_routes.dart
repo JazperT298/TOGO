@@ -26,6 +26,7 @@ class AppRoutes {
   static const String NEWFAV = '/newfav';
   static const String WITHDRAWALOTP = '/withdrawalotp';
   static const String WITHDRAWALSUCCESS = '/withdrawalsuccess';
+  static const String WITHDRAWALFAILED = '/withdrawalfailed';
 
   static const String PROFILE = '/profile';
   static const String PROFILEINFORMATIONPERSONELLES =

@@ -33,10 +33,7 @@ class MBankingOTpBottomSheet {
                 height: isKeyboardVisible ? 64.h : 73.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8))),
+                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,9 +44,7 @@ class MBankingOTpBottomSheet {
                         child: Text(
                           "SUMMARY".toUpperCase(),
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFFFB6404),
-                              fontSize: FontSizes.headerMediumText),
+                              fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -57,79 +52,52 @@ class MBankingOTpBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Obx(
                           () => Text.rich(
-                            controller.selectedSubMenu.value ==
-                                    "Flooz to Ecobank"
+                            controller.selectedSubMenu.value == "Flooz to Ecobank"
                                 ? TextSpan(
                                     children: [
                                       TextSpan(
-                                        text:
-                                            'Flooz ', // 'Vous allez envoyer de l’argent à ',
+                                        text: 'Flooz ', // 'Vous allez envoyer de l’argent à ',
                                         style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            color: const Color(0xFF124DE5),
-                                            fontSize:
-                                                FontSizes.headerLargeText),
+                                            fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'transfer to  ',
                                         style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontSize:
-                                                FontSizes.headerLargeText),
+                                            fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'Ecobank ',
                                         style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            color: const Color(0xFFFB6404),
-                                            fontSize:
-                                                FontSizes.headerLargeText),
+                                            fontWeight: FontWeight.w600, color: const Color(0xFFFB6404), fontSize: FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'account',
                                         style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontSize:
-                                                FontSizes.headerLargeText),
+                                            fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
                                       ),
                                     ],
                                   )
                                 : TextSpan(
                                     children: [
                                       TextSpan(
-                                        text:
-                                            'EcoBank ', // 'Vous allez envoyer de l’argent à ',
+                                        text: 'EcoBank ', // 'Vous allez envoyer de l’argent à ',
                                         style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            color: const Color(0xFFFB6404),
-                                            fontSize:
-                                                FontSizes.headerLargeText),
+                                            fontWeight: FontWeight.w600, color: const Color(0xFFFB6404), fontSize: FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'transfer to  ',
                                         style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontSize:
-                                                FontSizes.headerLargeText),
+                                            fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'Flooz ',
                                         style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            color: const Color(0xFF124DE5),
-                                            fontSize:
-                                                FontSizes.headerLargeText),
+                                            fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
                                         text: 'account',
                                         style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontSize:
-                                                FontSizes.headerLargeText),
+                                            fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
                                       ),
                                     ],
                                   ),
@@ -142,9 +110,7 @@ class MBankingOTpBottomSheet {
                         child: Text(
                           LocaleKeys.strTransferBeneficiary.tr.toUpperCase(),
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFF27303F),
-                              fontSize: FontSizes.headerMediumText),
+                              fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 2.h),
@@ -153,16 +119,11 @@ class MBankingOTpBottomSheet {
                           child: Container(
                             height: 7.h,
                             width: 100.w,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                color: Colors.white),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Colors.white),
                             child: Center(
                               child: Text(
                                 "Moi meme",
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                    fontSize: FontSizes.headerSmallText),
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                           )),
@@ -179,9 +140,7 @@ class MBankingOTpBottomSheet {
                         child: Text(
                           LocaleKeys.strTransferDetails.tr.toUpperCase(),
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFF27303F),
-                              fontSize: FontSizes.headerMediumText),
+                              fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 2.h),
@@ -194,18 +153,14 @@ class MBankingOTpBottomSheet {
                               child: Text(
                                 'Amount',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: FontSizes.headerSmallText),
+                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                             Expanded(
                               child: Text(
-                                '${StringHelper.formatNumberWithCommas(int.parse(controller.amountTextField.text.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
+                                '${StringHelper.formatNumberWithCommas(int.parse(controller.amountTextField.value.text.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: FontSizes.headerSmallText),
+                                    fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                           ],
@@ -221,9 +176,7 @@ class MBankingOTpBottomSheet {
                               child: Text(
                                 'Fees',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: FontSizes.headerSmallText),
+                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                             Expanded(
@@ -233,9 +186,7 @@ class MBankingOTpBottomSheet {
                                       ? '0 FCFA'
                                       : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
                                   style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      color: const Color(0xFF27303F),
-                                      fontSize: FontSizes.headerSmallText),
+                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                                 ),
                               ),
                             ),
@@ -252,9 +203,7 @@ class MBankingOTpBottomSheet {
                               child: Text(
                                 'Tax',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: FontSizes.headerSmallText),
+                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                             Expanded(
@@ -264,9 +213,7 @@ class MBankingOTpBottomSheet {
                                       ? '0 FCFA'
                                       : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
                                   style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      color: const Color(0xFF27303F),
-                                      fontSize: FontSizes.headerSmallText),
+                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                                 ),
                               ),
                             ),
@@ -283,9 +230,7 @@ class MBankingOTpBottomSheet {
                               child: Text(
                                 'TTC ',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: FontSizes.headerSmallText),
+                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                             Expanded(
@@ -295,9 +240,7 @@ class MBankingOTpBottomSheet {
                                       ? '0 FCFA'
                                       : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
                                   style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      color: const Color(0xFF27303F),
-                                      fontSize: FontSizes.headerSmallText),
+                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                                 ),
                               ),
                             ),
@@ -311,62 +254,43 @@ class MBankingOTpBottomSheet {
                           textAlign: TextAlign.center,
                           inputController: controller.codeTextField,
                           hint: "Enter PIN code", // "Montant à envoyer",
-                          hintStyle: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xFF27303F),
-                              fontSize: FontSizes.textFieldText),
-                          textStyle: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: FontSizes.textFieldText),
+                          hintStyle:
+                              GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: FontSizes.textFieldText),
+                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.textFieldText),
                           height: 6.5.h,
                           cornerRadius: 15,
                           keyboardType: TextInputType.number,
                           fillColor: const Color(0xFFf4f5fa),
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9\s]')),
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
                           ],
                           onChanged: (text) {
                             String newText = text.replaceAll(' ', '');
                             String spacedText = newText.split('').join(' ');
-                            controller.codeTextField.value =
-                                controller.codeTextField.value.copyWith(
+                            controller.codeTextField.value = controller.codeTextField.value.copyWith(
                               text: spacedText,
-                              selection: TextSelection.collapsed(
-                                  offset: spacedText.length),
+                              selection: TextSelection.collapsed(offset: spacedText.length),
                             );
                           },
                           onFieldSubmitted: (p0) {
                             if (controller.codeTextField.text.isNotEmpty) {
-                              String finalPINCode = controller
-                                  .codeTextField.value.text
-                                  .replaceAll(' ', '');
-                              if (controller.selectedSubMenu.value ==
-                                  "Flooz to Ecobank") {
+                              String finalPINCode = controller.codeTextField.value.text.replaceAll(' ', '');
+                              if (controller.selectedSubMenu.value == "Flooz to Ecobank") {
                                 log('Flooz to bank 1 keyword ${controller.keyword.value}');
                                 log('Flooz to bank 1 selectMenu ${controller.selectedMenu.value}');
 
                                 controller.sendFinalTransaction(
-                                    controller.keyword.value,
-                                    controller.selectedMenu.value,
-                                    controller.amountTextField.text,
-                                    finalPINCode);
+                                    controller.keyword.value, controller.selectedMenu.value, controller.amountTextField.text, finalPINCode);
                               } else {
                                 log('Flooz to bank 2 keyword ${controller.keyword.value}');
                                 log('Flooz to bank 2 selectMenu ${controller.selectedMenu.value}');
                                 controller.sendFinalTransaction(
-                                    controller.keyword.value,
-                                    controller.selectedMenu.value,
-                                    controller.amountTextField.text,
-                                    finalPINCode);
+                                    controller.keyword.value, controller.selectedMenu.value, controller.amountTextField.text, finalPINCode);
                               }
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
                             } else {
-                              Get.snackbar("Message", "Entrées manquantes",
-                                  backgroundColor: Colors.lightBlue,
-                                  colorText: Colors.white);
+                              Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             }
                           },
                         ),
@@ -382,32 +306,22 @@ class MBankingOTpBottomSheet {
                             iconStrokeWidth: 1.8,
                             onPressed: () {
                               if (controller.codeTextField.text.isNotEmpty) {
-                                String finalPINCode =
-                                    controller.selectedMenu.replaceAll(' ', '');
-                                if (controller.selectedSubMenu.value ==
-                                    "Flooz to Ecobank") {
+                                String finalPINCode = controller.selectedMenu.replaceAll(' ', '');
+                                if (controller.selectedSubMenu.value == "Flooz to Ecobank") {
                                   log('Flooz to bank 1 keyword ${controller.keyword.value}');
                                   log('Flooz to bank 1 selectMenu ${controller.selectedMenu.value}');
                                   controller.sendFinalTransaction(
-                                      controller.keyword.value,
-                                      controller.selectedMenu.value,
-                                      controller.amountTextField.text,
-                                      finalPINCode);
+                                      controller.keyword.value, controller.selectedMenu.value, controller.amountTextField.text, finalPINCode);
                                 } else {
                                   log('Flooz to bank 2 keyword ${controller.keyword.value}');
                                   log('Flooz to bank 2 selectMenu ${controller.selectedMenu.value}');
                                   controller.sendFinalTransaction(
-                                      controller.keyword.value,
-                                      controller.selectedMenu.value,
-                                      controller.amountTextField.text,
-                                      finalPINCode);
+                                      controller.keyword.value, controller.selectedMenu.value, controller.amountTextField.text, finalPINCode);
                                 }
                                 AppGlobal.dateNow = DateTime.now().toString();
                                 AppGlobal.timeNow = DateTime.now().toString();
                               } else {
-                                Get.snackbar("Message", "Entrées manquantes",
-                                    backgroundColor: Colors.lightBlue,
-                                    colorText: Colors.white);
+                                Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                               }
                             },
                             height: 7.h,
@@ -423,10 +337,8 @@ class MBankingOTpBottomSheet {
                                 offset: Offset(0, 5),
                               )
                             ],
-                            textStyle: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFFF4F5FA),
-                                fontSize: FontSizes.buttonText),
+                            textStyle:
+                                GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: FontSizes.buttonText),
                           ),
                         ),
                       ),
