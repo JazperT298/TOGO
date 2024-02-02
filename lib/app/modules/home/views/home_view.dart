@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -248,17 +249,20 @@ class _CardState extends State<_Card> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Obx(
-                    () => Text(
-                      // authenticatedUser.fullName.toUpperCase(),
-                      '${controller.name.value} ${controller.firstname.value}',
-                      style: TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        color: context.colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  // Obx(
+                  //   () =>
+                  Text(
+                    // authenticatedUser.fullName.toUpperCase(),
+                    // '${controller.name.value} ${controller.firstname.value}',
+                    '${Get.find<StorageServices>().userFirstname().toString()} ${Get.find<StorageServices>().userName().toString()}',
+
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      color: context.colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
+                  // ),
                   Text(
                     Get.find<StorageServices>().storage.read('formattedMSISDN'),
                     style: TextStyle(
@@ -416,8 +420,8 @@ class _Favorites extends StatelessWidget {
                 margin: const EdgeInsets.only(right: 10),
               ),
               Container(
+                  color: Colors.transparent,
                   height: itemSize,
-                  color: Colors.white,
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -431,29 +435,25 @@ class _Favorites extends StatelessWidget {
                       //   child: const FluIcon(FluIcons.plus),
                       // );
 
-                      return FluButton(
-                        onPressed: () => onItemTap(index),
-                        height: itemSize,
-                        width: itemSize,
-                        margin: EdgeInsets.only(left: index == 0 ? 0 : 10),
-                        child: Container(
-                          decoration: const BoxDecoration(shape: BoxShape.circle),
-                          // child: Center(
-                          //   child: Text(
-                          //     user.firstName.substring(0, 1),
-                          //     style: const TextStyle(
-                          //       color: Colors.white, // You can change the text color
-                          //       fontSize: 24.0, // You can adjust the font size
-                          //     ),
-                          //   ),
-                          // ),
-                          child: const FluIcon(
-                            FluIcons.add,
-                            size: 24.0,
-                            color: Colors.black,
+                      return DottedBorder(
+                        borderType: BorderType.Circle,
+                        strokeWidth: 1,
+                        color: Colors.grey,
+                        dashPattern: const [8, 8, 8, 8],
+                        child: const FluButton(
+                          backgroundColor: Colors.transparent,
+                          // onPressed: () => onItemTap(index),
+                          height: itemSize,
+                          width: itemSize,
+                          child: Center(
+                            child: FluIcon(
+                              FluIcons.add,
+                              size: 24.0,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
-                      );
+                      ).paddingOnly(left: 10);
                     },
                   )),
             ],

@@ -52,7 +52,7 @@ class HomeController extends GetxController {
           <v:Body>
           <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
           <msisdn i:type="d:string">$msisdn</msisdn>
-          <message i:type="d:string">VRFY ANDROIDAPP ${Get.find<DevicePlatformServices>().deviceID} ANDROID $version F</message>
+          <message i:type="d:string">VRFY ${Get.find<DevicePlatformServices>().channelID} ${Get.find<DevicePlatformServices>().deviceID} ${Get.find<DevicePlatformServices>().deviceType} $version F</message>
           <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
           <sendsms i:type="d:string">false</sendsms>
           </n0:RequestToken>

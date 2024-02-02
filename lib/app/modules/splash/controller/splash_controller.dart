@@ -11,6 +11,7 @@ import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/location_service.dart';
+import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/main.dart';
 import 'package:ibank/utils/common/eula.dart';
 import 'package:ibank/utils/constants/app_config.dart';
@@ -161,7 +162,7 @@ class SplashController extends GetxController {
       String? token = await SqlHelper.getToken();
       //				String hits = "VRFY ANDROIDAPP " + SqlHelper.getToken(this) + " ANDROID " + BuildConfig.VERSION_NAME + " " + getLanguage();
 
-      String hits = 'VRFY ANDROIDAPP $token ANDROID V2 F';
+      String hits = 'VRFY ${Get.find<DevicePlatformServices>().channelID} $token ${Get.find<DevicePlatformServices>().deviceType} V2 F';
 
       SoapSender.sendSoap(context, hits, '', SmsOption.WAIT_RESPONSE, '', false);
 
