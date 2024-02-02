@@ -23,8 +23,6 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 class SendMenuDialog {
-
-
   static void showMenuModal(context) async {
     await showCupertinoModalPopup(
       context: context,
@@ -795,36 +793,5 @@ class SendMenuDialog {
       'nouveauSolde': nouveauSolde,
       'txnId': txnId,
     };
-  }
-}
-
-class _ModalBottomSheet extends StatelessWidget {
-  const _ModalBottomSheet(
-      {required this.child, required this.sendType, required this.siOTPPage});
-
-  final Widget child;
-  final String sendType;
-  final bool siOTPPage;
-
-  @override
-  Widget build(BuildContext context) {
-    return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
-      return Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Container(
-            height: isKeyboardVisible
-                ? AppGlobal.siOTPPage == true
-                    ? MediaQuery.of(context).size.height * .4
-                    : MediaQuery.of(context).size.height * .3
-                : AppGlobal.siOTPPage == true
-                    ? MediaQuery.of(context).size.height * .47
-                    : MediaQuery.of(context).size.height * .35,
-            decoration: BoxDecoration(
-              color: context.colorScheme.background,
-            ),
-            child: child),
-      );
-    });
   }
 }

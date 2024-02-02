@@ -7,13 +7,11 @@ import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
 
-class RechargeFailedView extends StatelessWidget {
+class RechargeFailedView extends GetView<RechargeController> {
   const RechargeFailedView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<RechargeController>();
-
     return FluScreen(
       overlayStyle: context.systemUiOverlayStyle.copyWith(
         statusBarColor: Colors.transparent,
@@ -22,7 +20,8 @@ class RechargeFailedView extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
+            padding:
+                UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -42,12 +41,16 @@ class RechargeFailedView extends StatelessWidget {
                     child: Text(
                       'Operation Failed', //    "Échec de l'Opération",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          fontSize: 24),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
+                  padding: UISettings.pagePadding
+                      .copyWith(top: 16, left: 24, right: 24),
                   child: Align(
                     alignment: Alignment.center,
                     child: Obx(
@@ -57,7 +60,10 @@ class RechargeFailedView extends StatelessWidget {
                             : controller.responsemessage
                                 .value, //     "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste",
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                            fontSize: 14),
                       ),
                     ),
                   ),
@@ -82,7 +88,8 @@ class RechargeFailedView extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.w400, fontSize: 16),
                 ),
                 const SizedBox(
                   height: 16,
@@ -111,7 +118,10 @@ class RechargeFailedView extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: context.colorScheme.primary),
+                  textStyle: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: context.colorScheme.primary),
                 ),
                 const SizedBox(
                   height: 24,

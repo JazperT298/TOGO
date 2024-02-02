@@ -99,7 +99,6 @@ class HomeController extends GetxController {
   }
 
   enterPinForInformationPersonelles({required String code}) async {
-    FullScreenLoading.fullScreenLoadingWithText('Validating PIN...');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST',

@@ -1,9 +1,5 @@
-// ignore_for_file: unused_import, deprecated_member_use
-
 import 'dart:async';
 import 'dart:developer';
-
-import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
@@ -11,19 +7,15 @@ import 'package:get_storage/get_storage.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/routes/app_pages.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/app/services/android_verify_services.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/config/theme/theme_manager.dart';
-import 'package:ibank/config/theme/theme_provider.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
-import 'package:ibank/utils/constants/app_locale.dart';
-import 'package:ibank/utils/constants/ws_const.dart';
-import 'package:ibank/utils/theme.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:telephony/telephony.dart';
-
 import 'app/data/local/getstorage_services.dart';
 import 'utils/configs.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart' as flc;
@@ -56,6 +48,9 @@ Future<void> main() async {
   }
 
   await Get.putAsync<StorageServices>(() async => StorageServices());
+  await Get.putAsync<AndroidVerifyServices>(
+      () async => AndroidVerifyServices());
+
   initializeDateFormatting().then((value) => runApp(
         const AutoLogoutView(),
       ));
@@ -68,7 +63,8 @@ class AutoLogoutView extends StatefulWidget {
   State<AutoLogoutView> createState() => _AutoLogoutViewState();
 }
 
-class _AutoLogoutViewState extends State<AutoLogoutView> with WidgetsBindingObserver {
+class _AutoLogoutViewState extends State<AutoLogoutView>
+    with WidgetsBindingObserver {
   Timer? _timer;
   @override
   void initState() {
