@@ -27,10 +27,12 @@ class WithdrawInputBottomSheet {
         children: [
           bottomSheetDivider(),
           Container(
-            height: 30.h,
+            // height: 30.h,
             width: 100.w,
-            decoration:
-                const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8), topRight: Radius.circular(8))),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,8 +43,10 @@ class WithdrawInputBottomSheet {
                     padding: EdgeInsets.only(left: 5.w, right: 5.w),
                     child: Text(
                       "Withdraw normal".toUpperCase(),
-                      style:
-                          GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFFFB6404),
+                          fontSize: FontSizes.headerMediumText),
                     ),
                   ),
                   SizedBox(height: 1.h),
@@ -50,7 +54,10 @@ class WithdrawInputBottomSheet {
                     padding: EdgeInsets.only(left: 5.w, right: 5.w),
                     child: Text(
                       "Yorem ipsum dolor sit amet, adipiscing elit.",
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                          fontSize: FontSizes.headerLargeText),
                     ),
                   ),
                   SizedBox(
@@ -74,10 +81,13 @@ class WithdrawInputBottomSheet {
                   Center(
                     child: Text(
                       'You have no pending withdrawals',
-                      style:
-                          GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xFF27303F),
+                          fontSize: FontSizes.headerMediumText),
                     ),
                   ),
+                  SizedBox(height: 4.h),
                 ],
               ),
             ),
@@ -91,10 +101,12 @@ class WithdrawInputBottomSheet {
     final controller = Get.find<WithdrawalController>();
     Get.bottomSheet(
       Container(
-        height: 30.h,
+        // height: 30.h,
         width: 100.w,
-        decoration:
-            const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8), topRight: Radius.circular(8))),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +119,10 @@ class WithdrawInputBottomSheet {
                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
                 child: Text(
                   "Withdraw normal".toUpperCase(),
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFFFB6404),
+                      fontSize: FontSizes.headerMediumText),
                 ),
               ),
               SizedBox(
@@ -117,7 +132,10 @@ class WithdrawInputBottomSheet {
                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
                 child: Text(
                   "Yorem ipsum dolor sit amet, adipiscing elit.",
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: FontSizes.headerLargeText),
                 ),
               ),
               SizedBox(
@@ -141,8 +159,14 @@ class WithdrawInputBottomSheet {
               Center(
                 child: Text(
                   'You have no pending withdrawals',
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xFF27303F),
+                      fontSize: FontSizes.headerSmallText),
                 ),
+              ),
+              SizedBox(
+                height: 4.h,
               ),
             ],
           ),
@@ -162,10 +186,13 @@ class WithdrawInputBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: isKeyboardVisible ? 33.h : 42.h,
+                // height: isKeyboardVisible ? 33.h : 42.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,23 +204,33 @@ class WithdrawInputBottomSheet {
                         child: Text(
                           "Counter withdrawal".toUpperCase(),
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFB6404),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
                       Padding(
-                        padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                        padding: EdgeInsets.only(
+                            left:
+                                MediaQuery.of(Get.context!).size.height * .025),
                         child: Text.rich(
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: 'You will withdraw money from the ATM ', // 'Vous allez envoyer de l’argent à ',
-                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
+                                text:
+                                    'You will withdraw money from the ATM ', // 'Vous allez envoyer de l’argent à ',
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    fontSize: FontSizes.headerLargeText),
                               ),
                               TextSpan(
                                 text: '\nEcobank',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: FontSizes.headerLargeText),
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF124DE5),
+                                    fontSize: FontSizes.headerLargeText),
                               ),
                             ],
                           ),
@@ -216,13 +253,20 @@ class WithdrawInputBottomSheet {
                         height: 3.h,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(Get.context!).size.height * .025),
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                MediaQuery.of(Get.context!).size.height * .025),
                         child: FluTextField(
                           inputController: controller.counterWithdrawalAmount,
                           hint: 'Amount to withdraw', // "Montant à envoyer",
-                          hintStyle:
-                              GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: FontSizes.textFieldText),
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.textFieldText),
+                          hintStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xFF27303F),
+                              fontSize: FontSizes.textFieldText),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.textFieldText),
                           height: 6.5.h,
                           cornerRadius: 15,
                           keyboardType: TextInputType.number,
@@ -233,13 +277,19 @@ class WithdrawInputBottomSheet {
                           ],
 
                           onFieldSubmitted: (p0) async {
-                            if (controller.counterWithdrawalAmount.value.text.isEmpty) {
-                              Get.snackbar("Message", 'Please input an amount', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                            if (controller
+                                .counterWithdrawalAmount.value.text.isEmpty) {
+                              Get.snackbar("Message", 'Please input an amount',
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             } else {
-                              controller.amount.value = controller.counterWithdrawalAmount.text;
+                              controller.amount.value =
+                                  controller.counterWithdrawalAmount.text;
                               // WithdrawOtpBottomSheet.showBottomSheetCounterWithdrawnOTP();
                               controller.getCounterTransactionFee(
-                                  amounts: controller.amount.value, selectedMessageType: controller.counterWithdrawalSelectedMessage.value);
+                                  amounts: controller.amount.value,
+                                  selectedMessageType: controller
+                                      .counterWithdrawalSelectedMessage.value);
                             }
                           },
                         ),
@@ -256,28 +306,48 @@ class WithdrawInputBottomSheet {
                             suffixIcon: FluIcons.arrowRight,
                             iconStrokeWidth: 1.8,
                             onPressed: () async {
-                              if (controller.counterWithdrawalAmount.value.text.isEmpty) {
-                                Get.snackbar("Message", 'Please input an amount', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              if (controller
+                                  .counterWithdrawalAmount.value.text.isEmpty) {
+                                Get.snackbar(
+                                    "Message", 'Please input an amount',
+                                    backgroundColor: Colors.lightBlue,
+                                    colorText: Colors.white);
                               } else {
-                                String input = controller.counterWithdrawalAmount.value.text.replaceAll(RegExp('^0+'), '');
+                                String input = controller
+                                    .counterWithdrawalAmount.value.text
+                                    .replaceAll(RegExp('^0+'), '');
                                 controller.counterWithdrawalAmount.text = input;
                                 // input = input.replaceAll(RegExp('^0+'), '');
                                 if (input.length < 4 || input.length > 6) {
                                   log('less than 4');
-                                  Get.snackbar("Message", 'Input amount is not accepted.', backgroundColor: Colors.red, colorText: Colors.white);
-                                } else if (input[1] == '0' && StringHelper.validateThousandInput(input, 3) ||
-                                    StringHelper.validateThousandInput(input, 4) ||
-                                    StringHelper.validateThousandInput(input, 5)) {
+                                  Get.snackbar("Message",
+                                      'Input amount is not accepted.',
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white);
+                                } else if (input[1] == '0' &&
+                                        StringHelper.validateThousandInput(
+                                            input, 3) ||
+                                    StringHelper.validateThousandInput(
+                                        input, 4) ||
+                                    StringHelper.validateThousandInput(
+                                        input, 5)) {
                                   // controller.counterWithdrawalAmount.value.text.replaceAll(RegExp('^0+'), '');
                                   log('Passed');
                                   log('Passed ${input[1]}');
-                                  controller.amount.value = controller.counterWithdrawalAmount.text;
+                                  controller.amount.value =
+                                      controller.counterWithdrawalAmount.text;
                                   // WithdrawOtpBottomSheet.showBottomSheetCounterWithdrawnOTP();
                                   controller.getCounterTransactionFee(
-                                      amounts: controller.amount.value, selectedMessageType: controller.counterWithdrawalSelectedMessage.value);
+                                      amounts: controller.amount.value,
+                                      selectedMessageType: controller
+                                          .counterWithdrawalSelectedMessage
+                                          .value);
                                 } else {
                                   log('Failed');
-                                  Get.snackbar("Message", 'Please input only thousands.', backgroundColor: Colors.red, colorText: Colors.white);
+                                  Get.snackbar(
+                                      "Message", 'Please input only thousands.',
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white);
                                 }
                               }
 
@@ -302,9 +372,14 @@ class WithdrawInputBottomSheet {
                                 offset: Offset(0, 5),
                               )
                             ],
-                            textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: FontSizes.buttonText),
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: FontSizes.buttonText),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 3.h,
                       ),
                     ],
                   ),

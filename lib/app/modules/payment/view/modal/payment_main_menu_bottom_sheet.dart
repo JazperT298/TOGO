@@ -31,7 +31,10 @@ class PaymentMainMenuBottomSheet {
                 // height: 60.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +46,9 @@ class PaymentMainMenuBottomSheet {
                         child: Text(
                           'Payment'.toUpperCase(),
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFB6404),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -51,7 +56,10 @@ class PaymentMainMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           'Easy and Practical',
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerLargeText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -59,7 +67,10 @@ class PaymentMainMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           'Select the services to pay for and simplify your financial life in just a few clicks.',
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.headerMediumText),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 3.h),
@@ -77,7 +88,8 @@ class PaymentMainMenuBottomSheet {
                       ),
                       SizedBox(height: 3.h),
                       Padding(
-                        padding: EdgeInsets.only(left: 5.w, right: 5.w, bottom: 3.h),
+                        padding:
+                            EdgeInsets.only(left: 5.w, right: 5.w, bottom: 3.h),
                         child: SizedBox(
                           height: 45.h,
                           width: double.infinity,
@@ -91,34 +103,45 @@ class PaymentMainMenuBottomSheet {
                                   // onPressed: toNextStep,
                                   onPressed: () async {
                                     if (index != 2) {
-                                      Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                                          backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                      Get.snackbar("Message",
+                                          LocaleKeys.strComingSoon.tr,
+                                          backgroundColor: Colors.lightBlue,
+                                          colorText: Colors.white);
                                     } else {
                                       AppGlobal.dateNow = '';
                                       AppGlobal.timeNow = '';
-                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
-                                      await Future.delayed(const Duration(seconds: 2), () {
+                                      FullScreenLoading
+                                          .fullScreenLoadingWithTextAndTimer(
+                                              'Processing. . .');
+                                      await Future.delayed(
+                                          const Duration(seconds: 2), () {
                                         Get.back();
                                         Get.back();
-                                        PaymentSubMenuBottomSheet.showBottomSheetPaymentCeetSubMenu(context);
+                                        PaymentSubMenuBottomSheet
+                                            .showBottomSheetPaymentCeetSubMenu(
+                                                context);
                                       });
                                     }
                                   },
                                   backgroundColor: Colors.transparent,
                                   splashFactory: NoSplash.splashFactory,
-                                  margin: EdgeInsets.only(top: index == 0 ? 0 : 10),
+                                  margin:
+                                      EdgeInsets.only(top: index == 0 ? 0 : 10),
                                   child: Row(
                                     children: [
                                       FluArc(
                                         startOfArc: 90,
                                         angle: 80,
                                         strokeWidth: 1,
-                                        color: context.colorScheme.primaryContainer,
+                                        color: context
+                                            .colorScheme.primaryContainer,
                                         child: Container(
                                             height: 9.h,
                                             width: 20.w,
                                             clipBehavior: Clip.hardEdge,
-                                            decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
+                                            decoration: const BoxDecoration(
+                                                color: Color(0xFFDBE4FB),
+                                                shape: BoxShape.circle),
                                             child: FluIcon(
                                               option.icon,
                                               color: Colors.black,
@@ -126,26 +149,31 @@ class PaymentMainMenuBottomSheet {
                                       ),
                                       Expanded(
                                         child: Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 2.w),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 2.w),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Padding(
-                                                padding: EdgeInsets.only(bottom: 1.h),
-                                                child: Text(
-                                                  option.name,
-                                                  style: GoogleFonts.montserrat(
-                                                      fontWeight: FontWeight.w600,
-                                                      color: const Color(0xFF27303F),
-                                                      fontSize: FontSizes.headerMediumText),
-                                                ),
+                                              Text(
+                                                option.name,
+                                                style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w600,
+                                                    color:
+                                                        const Color(0xFF27303F),
+                                                    fontSize: FontSizes
+                                                        .headerMediumText),
                                               ),
                                               Text(
                                                 option.description,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: GoogleFonts.montserrat(
-                                                    fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: FontSizes.headerSmallText),
+                                                    fontWeight: FontWeight.w400,
+                                                    color:
+                                                        const Color(0xFF687997),
+                                                    fontSize: FontSizes
+                                                        .headerSmallText),
                                               ),
                                             ],
                                           ),

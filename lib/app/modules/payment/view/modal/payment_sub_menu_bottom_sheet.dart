@@ -23,10 +23,13 @@ class PaymentSubMenuBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: 75.h,
+                // height: 75.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +41,9 @@ class PaymentSubMenuBottomSheet {
                         child: Text(
                           'Payment'.toUpperCase(),
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFB6404),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -46,7 +51,10 @@ class PaymentSubMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           'Energy and water',
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerLargeText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -54,7 +62,10 @@ class PaymentSubMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           'Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.headerMediumText),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 3.h),
@@ -71,94 +82,119 @@ class PaymentSubMenuBottomSheet {
                         ],
                       ),
                       SizedBox(height: 3.h),
-                      Padding(
-                        padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.walletChild.length,
-                            itemBuilder: (context, index) {
-                              final option = controller.walletChild[index];
+                      SizedBox(
+                        height: 40.h,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                          child: ListView.builder(
+                              // shrinkWrap: true,
+                              // physics: const NeverScrollableScrollPhysics(),
+                              itemCount: controller.walletChild.length,
+                              itemBuilder: (context, index) {
+                                final option = controller.walletChild[index];
 
-                              return FluButton(
-                                // onPressed: toNextStep,
-                                onPressed: () async {
-                                  if (index == 0) {
-                                    controller.selectedOption.value = 'CEET';
-                                    controller.ceetPackageRadioGroupValue.value = '';
-                                    controller.numberTextField.clear();
-                                    controller.code.clear();
-                                    controller.verifyGetCeetLink();
-                                  } else if (index == 3) {
-                                    controller.selectedOption.value = 'SOLERGIE';
-                                    controller.numberTextField.clear();
-                                    FullScreenLoading.fullScreenLoadingWithTextAndTimer('Requesting. . .');
-                                    await Future.delayed(const Duration(seconds: 2), () {
-                                      Get.back();
-                                      Get.back();
-                                      PaymentInputsBottomSheet.showBottomSheetSolergieInputNumber();
-                                    });
-                                  } else {
-                                    Get.snackbar("Message", "Comming Soon", backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                                  }
-                                },
-                                backgroundColor: Colors.transparent,
-                                splashFactory: NoSplash.splashFactory,
-                                margin: EdgeInsets.only(top: index == 0 ? 0 : 10),
-                                child: Row(
-                                  children: [
-                                    FluArc(
-                                      startOfArc: 90,
-                                      angle: 90,
-                                      strokeWidth: 1,
-                                      color: context.colorScheme.primaryContainer,
-                                      child: Container(
-                                          height: 9.h,
-                                          width: 20.w,
-                                          clipBehavior: Clip.hardEdge,
-                                          decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
-                                          child: FluIcon(
-                                            option.icon,
-                                            color: Colors.black,
-                                          )),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 2.w),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(bottom: .5.h),
-                                              child: Text(
-                                                option.name,
-                                                style: GoogleFonts.montserrat(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: const Color(0xFF27303F),
-                                                    fontSize: FontSizes.headerMediumText),
+                                return FluButton(
+                                  // onPressed: toNextStep,
+                                  onPressed: () async {
+                                    if (index == 0) {
+                                      controller.selectedOption.value = 'CEET';
+                                      controller.ceetPackageRadioGroupValue
+                                          .value = '';
+                                      controller.numberTextField.clear();
+                                      controller.code.clear();
+                                      controller.verifyGetCeetLink();
+                                    } else if (index == 3) {
+                                      controller.selectedOption.value =
+                                          'SOLERGIE';
+                                      controller.numberTextField.clear();
+                                      FullScreenLoading
+                                          .fullScreenLoadingWithTextAndTimer(
+                                              'Requesting. . .');
+                                      await Future.delayed(
+                                          const Duration(seconds: 2), () {
+                                        Get.back();
+                                        Get.back();
+                                        PaymentInputsBottomSheet
+                                            .showBottomSheetSolergieInputNumber();
+                                      });
+                                    } else {
+                                      Get.snackbar("Message", "Comming Soon",
+                                          backgroundColor: Colors.lightBlue,
+                                          colorText: Colors.white);
+                                    }
+                                  },
+                                  backgroundColor: Colors.transparent,
+                                  splashFactory: NoSplash.splashFactory,
+                                  margin:
+                                      EdgeInsets.only(top: index == 0 ? 0 : 10),
+                                  child: Row(
+                                    children: [
+                                      FluArc(
+                                        startOfArc: 90,
+                                        angle: 90,
+                                        strokeWidth: 1,
+                                        color: context
+                                            .colorScheme.primaryContainer,
+                                        child: Container(
+                                            height: 9.h,
+                                            width: 20.w,
+                                            clipBehavior: Clip.hardEdge,
+                                            decoration: const BoxDecoration(
+                                                color: Color(0xFFDBE4FB),
+                                                shape: BoxShape.circle),
+                                            child: FluIcon(
+                                              option.icon,
+                                              color: Colors.black,
+                                            )),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 2.w),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom: .5.h),
+                                                child: Text(
+                                                  option.name,
+                                                  style: GoogleFonts.montserrat(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: const Color(
+                                                          0xFF27303F),
+                                                      fontSize: FontSizes
+                                                          .headerMediumText),
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              option.description,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.montserrat(
-                                                  fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: FontSizes.headerMediumText),
-                                            ),
-                                          ],
+                                              Text(
+                                                option.description,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w400,
+                                                    color:
+                                                        const Color(0xFF687997),
+                                                    fontSize: FontSizes
+                                                        .headerMediumText),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    // FluIcon(
-                                    //   FluIcons.arrowRight1,
-                                    //   size: 16,
-                                    //   color: context.colorScheme.onBackground,
-                                    // )
-                                  ],
-                                ),
-                              );
-                            }),
-                      )
+                                      // FluIcon(
+                                      //   FluIcons.arrowRight1,
+                                      //   size: 16,
+                                      //   color: context.colorScheme.onBackground,
+                                      // )
+                                    ],
+                                  ),
+                                );
+                              }),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -179,10 +215,13 @@ class PaymentSubMenuBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: 75.h,
+                // height: 75.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,7 +233,9 @@ class PaymentSubMenuBottomSheet {
                         child: Text(
                           'Payment'.toUpperCase(),
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFB6404),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -202,7 +243,10 @@ class PaymentSubMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           'Energy and water',
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerLargeText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -210,7 +254,10 @@ class PaymentSubMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           'Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.headerMediumText),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 3.h),
@@ -227,93 +274,113 @@ class PaymentSubMenuBottomSheet {
                         ],
                       ),
                       SizedBox(height: 3.h),
-                      Padding(
-                        padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.walletChild.length,
-                            itemBuilder: (context, index) {
-                              final option = controller.walletChild[index];
+                      SizedBox(
+                        height: 40.h,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                          child: ListView.builder(
+                              // shrinkWrap: true,
+                              // physics: const NeverScrollableScrollPhysics(),
+                              itemCount: controller.walletChild.length,
+                              itemBuilder: (context, index) {
+                                final option = controller.walletChild[index];
 
-                              return FluButton(
-                                // onPressed: toNextStep,
-                                onPressed: () async {
-                                  if (index == 0) {
-                                    controller.selectedOption.value = 'CEET';
-                                    controller.ceetPackageRadioGroupValue.value = '';
-                                    controller.numberTextField.clear();
-                                    controller.code.clear();
-                                    controller.verifyGetCeetLink();
-                                  } else if (index == 3) {
-                                    controller.selectedOption.value = 'SOLERGIE';
-                                    controller.numberTextField.clear();
-                                    FullScreenLoading.fullScreenLoadingWithTextAndTimer('Requesting. . .');
-                                    await Future.delayed(const Duration(seconds: 2), () {
-                                      Get.back();
-                                      Get.back();
-                                      PaymentInputsBottomSheet.showBottomSheetSolergieInputNumber();
-                                    });
-                                  } else {
-                                    Get.snackbar("Message", "Comming Soon", backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                                  }
-                                },
-                                backgroundColor: Colors.transparent,
-                                splashFactory: NoSplash.splashFactory,
-                                margin: EdgeInsets.only(top: index == 0 ? 0 : 10),
-                                child: Row(
-                                  children: [
-                                    FluArc(
-                                      startOfArc: 90,
-                                      angle: 90,
-                                      strokeWidth: 1,
-                                      color: context.colorScheme.primaryContainer,
-                                      child: Container(
-                                          height: 9.h,
-                                          width: 20.w,
-                                          clipBehavior: Clip.hardEdge,
-                                          decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
-                                          child: FluIcon(
-                                            option.icon,
-                                            color: Colors.black,
-                                          )),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 2.w),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(bottom: .5.h),
-                                              child: Text(
+                                return FluButton(
+                                  // onPressed: toNextStep,
+                                  onPressed: () async {
+                                    if (index == 0) {
+                                      controller.selectedOption.value = 'CEET';
+                                      controller.ceetPackageRadioGroupValue
+                                          .value = '';
+                                      controller.numberTextField.clear();
+                                      controller.code.clear();
+                                      controller.verifyGetCeetLink();
+                                    } else if (index == 3) {
+                                      controller.selectedOption.value =
+                                          'SOLERGIE';
+                                      controller.numberTextField.clear();
+                                      FullScreenLoading
+                                          .fullScreenLoadingWithTextAndTimer(
+                                              'Requesting. . .');
+                                      await Future.delayed(
+                                          const Duration(seconds: 2), () {
+                                        Get.back();
+                                        Get.back();
+                                        PaymentInputsBottomSheet
+                                            .showBottomSheetSolergieInputNumber();
+                                      });
+                                    } else {
+                                      Get.snackbar("Message", "Comming Soon",
+                                          backgroundColor: Colors.lightBlue,
+                                          colorText: Colors.white);
+                                    }
+                                  },
+                                  backgroundColor: Colors.transparent,
+                                  splashFactory: NoSplash.splashFactory,
+                                  margin:
+                                      EdgeInsets.only(top: index == 0 ? 0 : 10),
+                                  child: Row(
+                                    children: [
+                                      FluArc(
+                                        startOfArc: 90,
+                                        angle: 90,
+                                        strokeWidth: 1,
+                                        color: context
+                                            .colorScheme.primaryContainer,
+                                        child: Container(
+                                            height: 9.h,
+                                            width: 20.w,
+                                            clipBehavior: Clip.hardEdge,
+                                            decoration: const BoxDecoration(
+                                                color: Color(0xFFDBE4FB),
+                                                shape: BoxShape.circle),
+                                            child: FluIcon(
+                                              option.icon,
+                                              color: Colors.black,
+                                            )),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 2.w),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
                                                 option.name,
                                                 style: GoogleFonts.montserrat(
                                                     fontWeight: FontWeight.w600,
-                                                    color: const Color(0xFF27303F),
-                                                    fontSize: FontSizes.headerMediumText),
+                                                    color:
+                                                        const Color(0xFF27303F),
+                                                    fontSize: FontSizes
+                                                        .headerMediumText),
                                               ),
-                                            ),
-                                            Text(
-                                              option.description,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.montserrat(
-                                                  fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: FontSizes.headerMediumText),
-                                            ),
-                                          ],
+                                              Text(
+                                                option.description,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w400,
+                                                    color:
+                                                        const Color(0xFF687997),
+                                                    fontSize: FontSizes
+                                                        .headerSmallText),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    // FluIcon(
-                                    //   FluIcons.arrowRight1,
-                                    //   size: 16,
-                                    //   color: context.colorScheme.onBackground,
-                                    // )
-                                  ],
-                                ),
-                              );
-                            }),
+                                      // FluIcon(
+                                      //   FluIcons.arrowRight1,
+                                      //   size: 16,
+                                      //   color: context.colorScheme.onBackground,
+                                      // )
+                                    ],
+                                  ),
+                                );
+                              }),
+                        ),
                       )
                     ],
                   ),

@@ -28,10 +28,13 @@ class WithdrawSelectBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: 44.h,
+                // height: 44.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +46,9 @@ class WithdrawSelectBottomSheet {
                         child: Text(
                           "Counter withdrawal".toUpperCase(),
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFB6404),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -51,14 +56,21 @@ class WithdrawSelectBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           'Select a bank',
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerLargeText),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 8),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 5.w, vertical: 8),
                         child: Text(
                           "Morem ipsum dolor sit amet, consectetur adipiscing elit.",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.headerMediumText),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(
@@ -80,17 +92,21 @@ class WithdrawSelectBottomSheet {
                         height: 2.5.h,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 1.h),
+                        padding:
+                            EdgeInsets.only(left: 5.w, right: 5.w, top: 1.h),
                         child: GestureDetector(
                           onTap: () {
-                            if (controller.internetRadioGroupValue.value == '1') {
+                            if (controller.internetRadioGroupValue.value ==
+                                '1') {
                               controller.internetRadioGroupValue.value = '';
                               controller.selectedBank.value = '';
-                              controller.counterWithdrawalSelectedMessage.value = '';
+                              controller
+                                  .counterWithdrawalSelectedMessage.value = '';
                             } else {
                               controller.internetRadioGroupValue.value = '1';
                               controller.selectedBank.value = 'Ecobank';
-                              controller.counterWithdrawalSelectedMessage.value = 'COMPTE_ECOBANKCARDLESS';
+                              controller.counterWithdrawalSelectedMessage
+                                  .value = 'COMPTE_ECOBANKCARDLESS';
                             }
                           },
                           child: Obx(
@@ -98,13 +114,18 @@ class WithdrawSelectBottomSheet {
                               height: 8.h,
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: controller.internetRadioGroupValue.value == '1' ? const Color(0xFFFEE8D9) : const Color(0xFFe7edfc),
+                                color:
+                                    controller.internetRadioGroupValue.value ==
+                                            '1'
+                                        ? const Color(0xFFFEE8D9)
+                                        : const Color(0xFFe7edfc),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Padding(
                                 padding: EdgeInsets.only(left: 5.w, right: 1.w),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Ecobank',
@@ -117,11 +138,16 @@ class WithdrawSelectBottomSheet {
                                     Obx(
                                       () => Radio(
                                           value: '1',
-                                          groupValue: controller.internetRadioGroupValue.value,
+                                          groupValue: controller
+                                              .internetRadioGroupValue.value,
                                           onChanged: (value) {
-                                            controller.internetRadioGroupValue.value = '1';
-                                            controller.selectedBank.value = 'Ecobank';
-                                            controller.counterWithdrawalSelectedMessage.value = 'COMPTE_ECOBANKCARDLESS';
+                                            controller.internetRadioGroupValue
+                                                .value = '1';
+                                            controller.selectedBank.value =
+                                                'Ecobank';
+                                            controller
+                                                .counterWithdrawalSelectedMessage
+                                                .value = 'COMPTE_ECOBANKCARDLESS';
                                           }),
                                     )
                                   ],
@@ -143,16 +169,23 @@ class WithdrawSelectBottomSheet {
                             suffixIcon: FluIcons.checkCircleUnicon,
                             iconStrokeWidth: 1.8,
                             onPressed: () async {
-                              if (controller.internetRadioGroupValue.value.isEmpty) {
-                                Get.snackbar("Message", 'Please choose a bank', backgroundColor: Colors.red, colorText: Colors.white);
+                              if (controller
+                                  .internetRadioGroupValue.value.isEmpty) {
+                                Get.snackbar("Message", 'Please choose a bank',
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white);
                               } else {
-                                FullScreenLoading.fullScreenLoadingWithTextAndTimer('Validating request. . .');
-                                await Future.delayed(const Duration(seconds: 2), () {
+                                FullScreenLoading
+                                    .fullScreenLoadingWithTextAndTimer(
+                                        'Validating request. . .');
+                                await Future.delayed(const Duration(seconds: 2),
+                                    () {
                                   controller.amounts.clear();
                                   controller.counterWithdrawalAmount.clear();
                                   Get.back();
                                   Get.back();
-                                  WithdrawInputBottomSheet.showBottomSheeCountertWithdrawalInputNumber();
+                                  WithdrawInputBottomSheet
+                                      .showBottomSheeCountertWithdrawalInputNumber();
                                 });
                               }
 
@@ -177,9 +210,14 @@ class WithdrawSelectBottomSheet {
                                 offset: Offset(0, 5),
                               )
                             ],
-                            textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: FontSizes.buttonText),
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: FontSizes.buttonText),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 3.h,
                       ),
                     ],
                   ),
