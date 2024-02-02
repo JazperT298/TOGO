@@ -17,6 +17,7 @@ class AppRoutes {
   static const String HISTORY = '/history';
   static const String SHOP = '/shop';
   static const String SETTINGS = '/settings';
+  static const String NOTIFICAITON = '/notification';
 
   static const String PRIVACY = '/privacy';
   static const String MAP = '/map';

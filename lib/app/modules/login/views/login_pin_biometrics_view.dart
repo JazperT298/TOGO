@@ -120,7 +120,7 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.toNamed(AppRoutes.LOGINPROFILE);
+                            // Get.toNamed(AppRoutes.LOGINPROFILE);
                           },
                           child: Container(
                             height: 10.h,
@@ -179,39 +179,37 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
                             //     ),
                             //   )∂
                             Center(
-                                child: Obx(
-                                  () => InkWell(
-                                    onTap: () {
-                                      if (AppGlobal.BIOMETRICS == false) {
-                                        controller.getSecureTextFromStorage();
-                                        LoginSettingsBottomSheet.showBottomSheetBiometrics();
-                                      } else {
-                                        ScreenLock(context: context)
-                                            .authenticateUser(context: context, deviceName: _deviceName, platformId: _platformId);
-                                      }
-                                    },
-                                    child: Text.rich(
-                                      TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: 'Please enter your security code or use ',
-                                            style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.smallText),
-                                          ),
-                                          TextSpan(
-                                            text: 'Face ID',
-                                            style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w700, color: const Color(0xFF27303F), fontSize: FontSizes.smallText),
-                                          ),
-                                          TextSpan(
-                                            text: ' to unlock your app',
-                                            style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.smallText),
-                                          ),
-                                        ],
-                                      ),
-                                      textAlign: TextAlign.center,
+                                child: InkWell(
+                                  onTap: () {
+                                    if (AppGlobal.BIOMETRICS == false) {
+                                      controller.getSecureTextFromStorage();
+                                      LoginSettingsBottomSheet.showBottomSheetBiometrics();
+                                    } else {
+                                      ScreenLock(context: context)
+                                          .authenticateUser(context: context, deviceName: _deviceName, platformId: _platformId);
+                                    }
+                                  },
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Please enter your security code or use ',
+                                          style:
+                                              GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.smallText),
+                                        ),
+                                        TextSpan(
+                                          text: 'Face ID',
+                                          style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w700, color: const Color(0xFF27303F), fontSize: FontSizes.smallText),
+                                        ),
+                                        TextSpan(
+                                          text: ' to unlock your app',
+                                          style:
+                                              GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.smallText),
+                                        ),
+                                      ],
                                     ),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               )

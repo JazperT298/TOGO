@@ -11,6 +11,7 @@ import 'package:ibank/app/modules/map/views/map_view.dart';
 import 'package:ibank/app/modules/mbanking/views/mbanking_failed_view.dart';
 import 'package:ibank/app/modules/mbanking/views/mbanking_success_view.dart';
 import 'package:ibank/app/modules/newfav/views/newfav_view.dart';
+import 'package:ibank/app/modules/notification/views/notification_view.dart';
 import 'package:ibank/app/modules/onboard/views/onboard_view.dart';
 import 'package:ibank/app/modules/otp/views/otp_recovery_view.dart';
 import 'package:ibank/app/modules/otp/views/otp_view.dart';
@@ -80,5 +81,6 @@ class AppPages {
     GetPage(name: AppRoutes.MBANKSUCCESS, page: () => const MBangkingSuccessView()),
     GetPage(name: AppRoutes.RECHARGEFAILED, page: () => const RechargeFailedView()),
     GetPage(name: AppRoutes.RECHARGESUCCESS, page: () => const RechargeSuccessView()),
+    GetPage(name: AppRoutes.NOTIFICAITON, page: () => const NotificationView()),
   ];
 }

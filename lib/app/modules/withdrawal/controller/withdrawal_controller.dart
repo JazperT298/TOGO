@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_local_variable
 
 import 'dart:convert';
 
@@ -286,8 +286,6 @@ class WithdrawalController extends GetxController {
       Get.snackbar("Message", 'An error occured! Please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
     }
   }
-
-  
 
   void sendCounterWithdrawalTransactions(String trasacType, String amounts, String messageTpe) async {
     ProgressAlertDialog.progressAlertDialog(Get.context!, LocaleKeys.strLoading.tr);

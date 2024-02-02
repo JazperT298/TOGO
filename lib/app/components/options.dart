@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/bottomnav/controller/bottomnav_controller.dart';
-import 'package:ibank/app/modules/profile/controller/profile_controller.dart';
-import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 
@@ -65,24 +63,7 @@ class Options extends StatelessWidget {
         bool isLogout = lastIsLogout && index == options.length - 1;
 
         return FluButton(
-          onPressed: option.onPressed ??
-              () {
-                if (index == 0) {
-                  Get.find<ProfileController>().selectedRoute.value = LocaleKeys.strPersonalInfo.tr;
-                  Get.toNamed(AppRoutes.PROFILEOTP);
-                } else if (index == 1) {
-                  Get.find<ProfileController>().selectedRoute.value = LocaleKeys.strChangePass.tr;
-                  Get.toNamed(AppRoutes.PROFILECHANGESPASSWORD);
-                  Get.find<ProfileController>().oldPIN.clear();
-                  Get.find<ProfileController>().newPIN.clear();
-                  Get.find<ProfileController>().confirmNewPIN.clear();
-                } else if (index == 2) {
-                  showSelectLanguageDialog(context);
-                } else {
-                  Get.snackbar("Message", "À venir",
-                      backgroundColor: Colors.lightBlue, colorText: Colors.white, duration: const Duration(seconds: 3));
-                }
-              },
+          onPressed: option.onPressed ?? () {},
           backgroundColor: context.colorScheme.background,
           margin: EdgeInsets.only(top: index == 0 ? 0 : spaceBetweenOptions),
           padding: EdgeInsets.zero,

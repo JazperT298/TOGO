@@ -27,6 +27,7 @@ class AppGlobal {
   static String PROFILEAVATAR = "";
   static String PROFILEIMAGE = "";
   static String REFID = "";
+  static String PLATFORMAPP = "";
 
   static bool BIOMETRICS = false;
 

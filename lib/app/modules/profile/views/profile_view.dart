@@ -239,7 +239,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   tag: "backButtonHeroTag",
                                   child: FluButton.icon(
                                     FluIcons.setting2,
-                                    // onPressed: () => Get.toNamed(AppRoutes.SETTINGS),
+                                    onPressed: () => Get.toNamed(AppRoutes.SETTINGS),
                                     size: UISettings.minButtonSize,
                                     cornerRadius: UISettings.minButtonCornerRadius,
                                     backgroundColor: const Color(0xFFDBE4FB),

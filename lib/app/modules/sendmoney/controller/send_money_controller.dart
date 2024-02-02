@@ -150,7 +150,7 @@ class SendMoneyController extends GetxController {
     <v:Body>
         <n0:RequestToken xmlns:n0="http://applicationmanager.tlc.com">
             <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
-            <message i:type="d:string">VRFY ANDROIDAPP ${Get.find<DevicePlatformServices>().deviceID} ANDROID 3.0.1.0 F</message>
+            <message i:type="d:string">VRFY ${Get.find<DevicePlatformServices>().channelID} ${Get.find<DevicePlatformServices>().deviceID} ${Get.find<DevicePlatformServices>().deviceType} 3.0.1.0 F</message>
             <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
             <sendsms i:type="d:string">false</sendsms>
         </n0:RequestToken>

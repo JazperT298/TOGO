@@ -24,15 +24,14 @@ List<FluOption> profileScreenOptions = [
 ];
 
 List<FluOption> settingsScreenOptions = [
-  FluOption(icon: FluIcons.profile, title: 'Informations personelles.', description: 'Modifiez ou ajoutez des informations.'),
-  FluOption(icon: FluIcons.coin1, title: 'Devises', description: 'Changez de devises.'),
-  FluOption(icon: FluIcons.flag, title: 'Langues', description: 'Selectionnez la langue qui vous convient le mieux.'),
-  FluOption(icon: FluIcons.notificationBing, title: 'Notifications', description: 'Parametrez les notifications'),
-  FluOption(icon: FluIcons.shieldSecurity, title: 'Securité', description: 'Mot de passe, Empreinte digitale et autres.'),
-  FluOption(icon: FluIcons.textalignCenter, title: 'Système', description: 'Parametres liés au systeme d\'exploitation.'),
+  FluOption(icon: FluIcons.coin1, title: 'Devices', description: 'Change currencies.'),
+  FluOption(icon: FluIcons.flag, title: 'Language', description: 'Select the language that suits you best.'),
+  FluOption(icon: FluIcons.notificationBing, title: 'Notifications', description: 'Configure notifications'),
+  FluOption(icon: FluIcons.shieldSecurity, title: 'Security', description: 'Password, Fingerprint and others.'),
+  FluOption(icon: FluIcons.textalignCenter, title: 'System', description: 'Settings related to the operating system.'),
   FluOption(
       icon: FluIcons.logout1,
-      title: 'Deconnexion',
-      description: 'Fermez la session actuelle.',
+      title: 'Disconnect',
+      description: 'Close the current session.',
       onPressed: () => Get.toNamed(AppRoutes.ONBOARD)) // KRouter.noContextPush(Routes.onboarding)),
 ];
