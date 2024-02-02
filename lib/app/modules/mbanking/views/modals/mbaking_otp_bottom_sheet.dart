@@ -153,14 +153,14 @@ class MBankingOTpBottomSheet {
                               child: Text(
                                 'Amount',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 '${StringHelper.formatNumberWithCommas(int.parse(controller.amountTextField.value.text.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                                    fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                           ],
@@ -176,7 +176,7 @@ class MBankingOTpBottomSheet {
                               child: Text(
                                 'Fees',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                             Expanded(
@@ -186,7 +186,7 @@ class MBankingOTpBottomSheet {
                                       ? '0 FCFA'
                                       : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
                                   style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                                 ),
                               ),
                             ),
@@ -203,7 +203,7 @@ class MBankingOTpBottomSheet {
                               child: Text(
                                 'Tax',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                             Expanded(
@@ -213,7 +213,7 @@ class MBankingOTpBottomSheet {
                                       ? '0 FCFA'
                                       : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
                                   style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                                 ),
                               ),
                             ),
@@ -230,7 +230,7 @@ class MBankingOTpBottomSheet {
                               child: Text(
                                 'TTC ',
                                 style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                             Expanded(
@@ -240,7 +240,7 @@ class MBankingOTpBottomSheet {
                                       ? '0 FCFA'
                                       : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
                                   style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                                 ),
                               ),
                             ),

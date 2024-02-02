@@ -24,10 +24,13 @@ class RechargeVoiceSelectedPackageBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: 80.h,
+                // height: 80.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +40,10 @@ class RechargeVoiceSelectedPackageBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "All network package".toUpperCase(),
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 13.sp),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFB6404),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -47,11 +53,17 @@ class RechargeVoiceSelectedPackageBottomSheet {
                           () => controller.selectedOption.value == "For myself"
                               ? Text(
                                   "Please select a package.",
-                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      fontSize: FontSizes.headerLargeText),
                                 )
                               : Text(
                                   "Please select a package.",
-                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      fontSize: FontSizes.headerLargeText),
                                 ),
                         ),
                       ),
@@ -61,8 +73,14 @@ class RechargeVoiceSelectedPackageBottomSheet {
                         child: FluTextField(
                           inputController: controller.amountTextField,
                           hint: "Package name", // "Enter amount",
-                          hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 13.sp),
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 13.sp),
+                          hintStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xFF27303F),
+                              fontSize: FontSizes.textFieldText),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.textFieldText),
                           height: 6.5.h,
                           cornerRadius: 15,
                           // keyboardType: TextInputType.number,
@@ -93,23 +111,37 @@ class RechargeVoiceSelectedPackageBottomSheet {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  controller.voicePackageProductType.value = "All";
+                                  controller.voicePackageProductType.value =
+                                      "All";
                                   controller.changeVoiceProductType();
                                 },
                                 child: Obx(
                                   () => Container(
-                                    padding: EdgeInsets.only(top: 1.5.h, bottom: 1.5.h, left: 3.w, right: 3.w),
+                                    padding: EdgeInsets.only(
+                                        top: 1.5.h,
+                                        bottom: 1.5.h,
+                                        left: 3.w,
+                                        right: 3.w),
                                     decoration: BoxDecoration(
-                                      color: controller.voicePackageProductType.value == "All" ? const Color(0xFFB6C8F7) : Colors.white,
+                                      color: controller.voicePackageProductType
+                                                  .value ==
+                                              "All"
+                                          ? const Color(0xFFB6C8F7)
+                                          : Colors.white,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Center(
                                         child: Text(
                                       "All",
                                       style: GoogleFonts.montserrat(
-                                          fontWeight: controller.voicePackageProductType.value == "All" ? FontWeight.w500 : FontWeight.w400,
+                                          fontWeight: controller
+                                                      .voicePackageProductType
+                                                      .value ==
+                                                  "All"
+                                              ? FontWeight.w500
+                                              : FontWeight.w400,
                                           color: const Color(0xFF27303F),
-                                          fontSize: 12.sp),
+                                          fontSize: FontSizes.headerSmallText),
                                     )),
                                   ),
                                 ),
@@ -117,24 +149,38 @@ class RechargeVoiceSelectedPackageBottomSheet {
                               SizedBox(width: 1.w),
                               InkWell(
                                 onTap: () {
-                                  controller.voicePackageProductType.value = "Mixes";
+                                  controller.voicePackageProductType.value =
+                                      "Mixes";
 
                                   controller.changeVoiceProductType();
                                 },
                                 child: Obx(
                                   () => Container(
-                                    padding: EdgeInsets.only(top: 1.5.h, bottom: 1.5.h, left: 3.w, right: 3.w),
+                                    padding: EdgeInsets.only(
+                                        top: 1.5.h,
+                                        bottom: 1.5.h,
+                                        left: 3.w,
+                                        right: 3.w),
                                     decoration: BoxDecoration(
-                                      color: controller.voicePackageProductType.value == "Mixes" ? const Color(0xFFB6C8F7) : Colors.white,
+                                      color: controller.voicePackageProductType
+                                                  .value ==
+                                              "Mixes"
+                                          ? const Color(0xFFB6C8F7)
+                                          : Colors.white,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Center(
                                         child: Text(
                                       "Mixes",
                                       style: GoogleFonts.montserrat(
-                                          fontWeight: controller.voicePackageProductType.value == "Mixes" ? FontWeight.w500 : FontWeight.w400,
+                                          fontWeight: controller
+                                                      .voicePackageProductType
+                                                      .value ==
+                                                  "Mixes"
+                                              ? FontWeight.w500
+                                              : FontWeight.w400,
                                           color: const Color(0xFF27303F),
-                                          fontSize: 12.sp),
+                                          fontSize: FontSizes.headerSmallText),
                                     )),
                                   ),
                                 ),
@@ -142,23 +188,37 @@ class RechargeVoiceSelectedPackageBottomSheet {
                               SizedBox(width: 1.w),
                               InkWell(
                                 onTap: () {
-                                  controller.voicePackageProductType.value = "Voice";
+                                  controller.voicePackageProductType.value =
+                                      "Voice";
                                   controller.changeVoiceProductType();
                                 },
                                 child: Obx(
                                   () => Container(
-                                    padding: EdgeInsets.only(top: 1.5.h, bottom: 1.5.h, left: 3.w, right: 3.w),
+                                    padding: EdgeInsets.only(
+                                        top: 1.5.h,
+                                        bottom: 1.5.h,
+                                        left: 3.w,
+                                        right: 3.w),
                                     decoration: BoxDecoration(
-                                      color: controller.voicePackageProductType.value == "Voice" ? const Color(0xFFB6C8F7) : Colors.white,
+                                      color: controller.voicePackageProductType
+                                                  .value ==
+                                              "Voice"
+                                          ? const Color(0xFFB6C8F7)
+                                          : Colors.white,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Center(
                                         child: Text(
                                       "Voice",
                                       style: GoogleFonts.montserrat(
-                                          fontWeight: controller.voicePackageProductType.value == "Voice" ? FontWeight.w500 : FontWeight.w400,
+                                          fontWeight: controller
+                                                      .voicePackageProductType
+                                                      .value ==
+                                                  "Voice"
+                                              ? FontWeight.w500
+                                              : FontWeight.w400,
                                           color: const Color(0xFF27303F),
-                                          fontSize: 12.sp),
+                                          fontSize: FontSizes.headerSmallText),
                                     )),
                                   ),
                                 ),
@@ -166,23 +226,37 @@ class RechargeVoiceSelectedPackageBottomSheet {
                               SizedBox(width: 1.w),
                               InkWell(
                                 onTap: () {
-                                  controller.voicePackageProductType.value = "Promo";
+                                  controller.voicePackageProductType.value =
+                                      "Promo";
                                   controller.changeVoiceProductType();
                                 },
                                 child: Obx(
                                   () => Container(
-                                    padding: EdgeInsets.only(top: 1.5.h, bottom: 1.5.h, left: 3.w, right: 3.w),
+                                    padding: EdgeInsets.only(
+                                        top: 1.5.h,
+                                        bottom: 1.5.h,
+                                        left: 3.w,
+                                        right: 3.w),
                                     decoration: BoxDecoration(
-                                      color: controller.voicePackageProductType.value == "Promo" ? const Color(0xFFB6C8F7) : Colors.white,
+                                      color: controller.voicePackageProductType
+                                                  .value ==
+                                              "Promo"
+                                          ? const Color(0xFFB6C8F7)
+                                          : Colors.white,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Center(
                                         child: Text(
                                       "Promo",
                                       style: GoogleFonts.montserrat(
-                                          fontWeight: controller.voicePackageProductType.value == "Promo" ? FontWeight.w500 : FontWeight.w400,
+                                          fontWeight: controller
+                                                      .voicePackageProductType
+                                                      .value ==
+                                                  "Promo"
+                                              ? FontWeight.w500
+                                              : FontWeight.w400,
                                           color: const Color(0xFF27303F),
-                                          fontSize: 12.sp),
+                                          fontSize: FontSizes.headerSmallText),
                                     )),
                                   ),
                                 ),
@@ -200,58 +274,102 @@ class RechargeVoiceSelectedPackageBottomSheet {
                             itemCount: controller.voiceProdList.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
-                                padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 1.h),
+                                padding: EdgeInsets.only(
+                                    left: 5.w, right: 5.w, top: 1.h),
                                 child: GestureDetector(
                                   onTap: () {
-                                    controller.voicePackageRadioGroupValue.value = controller.voiceProdList[index].productid;
-                                    controller.selectedVoice = controller.voiceProdList[index];
+                                    controller
+                                            .voicePackageRadioGroupValue.value =
+                                        controller
+                                            .voiceProdList[index].productid;
+                                    controller.selectedVoice =
+                                        controller.voiceProdList[index];
                                   },
                                   child: Obx(
                                     () => Container(
                                       height: 8.h,
                                       width: 20.w,
                                       decoration: BoxDecoration(
-                                        color: controller.voicePackageRadioGroupValue.value == controller.voiceProdList[index].productid
+                                        color: controller
+                                                    .voicePackageRadioGroupValue
+                                                    .value ==
+                                                controller.voiceProdList[index]
+                                                    .productid
                                             ? const Color(0xFFFEE8D9)
                                             : const Color(0xFFe7edfc),
                                         borderRadius: BorderRadius.circular(16),
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsets.only(left: 5.w, right: 1.w),
+                                        padding: EdgeInsets.only(
+                                            left: 5.w, right: 1.w),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 SizedBox(
                                                   width: 70.w,
                                                   child: Text(
-                                                    controller.textSplitterPackageName(text: controller.voiceProdList[index].description),
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: GoogleFonts.montserrat(
-                                                        fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 26),
+                                                    controller
+                                                        .textSplitterPackageName(
+                                                            text: controller
+                                                                .voiceProdList[
+                                                                    index]
+                                                                .description),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style:
+                                                        GoogleFonts.montserrat(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: const Color(
+                                                                0xFF27303F),
+                                                            fontSize: FontSizes
+                                                                .largeText),
                                                   ),
                                                 ),
                                                 SizedBox(
                                                   width: 70.w,
                                                   child: Text(
                                                     "${controller.voiceProdList[index].price} FCFA - ${controller.textSplitterPrice(text: controller.voiceProdList[index].description)}",
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     style: GoogleFonts.montserrat(
-                                                        fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 14),
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: const Color(
+                                                            0xFF687997),
+                                                        fontSize: FontSizes
+                                                            .headerSmallText),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                             Obx(
                                               () => Radio(
-                                                  value: controller.voiceProdList[index].productid,
-                                                  groupValue: controller.voicePackageRadioGroupValue.value,
+                                                  value: controller
+                                                      .voiceProdList[index]
+                                                      .productid,
+                                                  groupValue: controller
+                                                      .voicePackageRadioGroupValue
+                                                      .value,
                                                   onChanged: (value) {
-                                                    controller.voicePackageRadioGroupValue.value = controller.voiceProdList[index].productid;
-                                                    controller.selectedVoice = controller.voiceProdList[index];
+                                                    controller
+                                                            .voicePackageRadioGroupValue
+                                                            .value =
+                                                        controller
+                                                            .voiceProdList[
+                                                                index]
+                                                            .productid;
+                                                    controller.selectedVoice =
+                                                        controller
+                                                                .voiceProdList[
+                                                            index];
                                                   }),
                                             )
                                           ],
@@ -277,9 +395,13 @@ class RechargeVoiceSelectedPackageBottomSheet {
                           iconStrokeWidth: 1.8,
                           onPressed: () {
                             if (controller.selectedVoice != null) {
-                              controller.getInternetAndVoiceTransactionFee(from: "voice", amounts: controller.selectedVoice!.price);
+                              controller.getInternetAndVoiceTransactionFee(
+                                  from: "voice",
+                                  amounts: controller.selectedVoice!.price);
                             } else {
-                              Get.snackbar("Message", "Please select a product", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              Get.snackbar("Message", "Please select a product",
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             }
                           },
                           height: 7.h,
@@ -295,9 +417,15 @@ class RechargeVoiceSelectedPackageBottomSheet {
                               offset: Offset(0, 5),
                             )
                           ],
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 14.sp),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFF4F5FA),
+                              fontSize: FontSizes.buttonText),
                         ),
                       ),
+                      SizedBox(
+                        height: 2.h,
+                      )
                     ],
                   ),
                 ),
@@ -307,159 +435,4 @@ class RechargeVoiceSelectedPackageBottomSheet {
         ),
         isScrollControlled: true);
   }
-
-//   static void showBottomSheetInputNumber() {
-//     var controller = Get.find<RechargeController>();
-//     Get.bottomSheet(
-//       Container(
-//         height: 40.h,
-//         width: 100.w,
-//         decoration:
-//             const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
-//         child: SingleChildScrollView(
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               SizedBox(
-//                 height: 2.h,
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
-//                 child: Text(
-//                   "Voice".toUpperCase(),
-//                   style: TextStyle(
-//                     color: const Color(0xFFfb6708),
-//                     fontWeight: FontWeight.w600,
-//                     fontSize: 11.sp,
-//                     letterSpacing: 1.0,
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 1.h,
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
-//                 child: Text(
-//                   "Please enter the mobile number of the recipient.",
-//                   style: TextStyle(
-//                     fontSize: 14.sp,
-//                     fontWeight: FontWeight.w600,
-//                     color: Colors.black,
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 4.h,
-//               ),
-//               Row(
-//                 children: [
-//                   FluLine(
-//                     width: 30.w,
-//                     color: const Color(0xFFfb6708),
-//                   ),
-//                   CircleAvatar(
-//                     radius: 1.w,
-//                     backgroundColor: const Color(0xFFfb6708),
-//                   )
-//                 ],
-//               ),
-//               SizedBox(
-//                 height: 4.h,
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
-//                 child: FluTextField(
-//                   inputController: controller.numberTextField,
-//                   hint: LocaleKeys.strEnterNumber.tr, // "Enter number",
-//                   hintStyle: TextStyle(fontSize: 11.sp),
-//                   textStyle: TextStyle(fontSize: 11.sp),
-//                   height: 50,
-//                   cornerRadius: 15,
-//                   keyboardType: TextInputType.number,
-//                   fillColor: const Color(0xFFf4f5fa),
-//                   onChanged: (text) {},
-//                   onFieldSubmitted: (p0) {
-//                     if (controller.numberTextField.text.isEmpty) {
-//                       Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-//                     } else {
-//                       if (controller.numberTextField.text.length == 8 || controller.numberTextField.text.length == 11) {
-//                         if (controller.numberTextField.text.length == 8) {
-//                           controller.numberTextField.text = "228${controller.numberTextField.text}";
-//                           Get.back();
-//                           RechargeVoiceSelectedPackageBottomSheet.showBottomSheetSelectPackage();
-//                         } else {
-//                           if (controller.numberTextField.text.substring(0, 3) == "228") {
-//                             Get.back();
-//                             RechargeVoiceSelectedPackageBottomSheet.showBottomSheetSelectPackage();
-//                           } else {
-//                             Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-//                           }
-//                         }
-//                       } else {
-//                         Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-//                       }
-//                     }
-//                   },
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 3.h,
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.only(
-//                   left: 5.w,
-//                   right: 5.w,
-//                 ),
-//                 child: FluButton.text(
-//                   LocaleKeys.strContinue.tr, //   'Continuer',
-//                   suffixIcon: FluIcons.passwordCheck,
-//                   iconStrokeWidth: 1.8,
-//                   onPressed: () {
-//                     if (controller.numberTextField.text.isEmpty) {
-//                       Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-//                     } else {
-//                       if (controller.numberTextField.text.length == 8 || controller.numberTextField.text.length == 11) {
-//                         if (controller.numberTextField.text.length == 8) {
-//                           controller.numberTextField.text = "228${controller.numberTextField.text}";
-//                           Get.back();
-//                           RechargeInternetSelectPackageBottomSheet.showBottomSheetSelectPackage();
-//                         } else {
-//                           if (controller.numberTextField.text.substring(0, 3) == "228") {
-//                             Get.back();
-//                             RechargeInternetSelectPackageBottomSheet.showBottomSheetSelectPackage();
-//                           } else {
-//                             Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-//                           }
-//                         }
-//                       } else {
-//                         Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-//                       }
-//                     }
-//                   },
-//                   height: 55,
-//                   width: 100.w,
-//                   cornerRadius: UISettings.minButtonCornerRadius,
-//                   backgroundColor: Colors.blue[900],
-//                   foregroundColor: Colors.white,
-//                   boxShadow: const [
-//                     BoxShadow(
-//                       color: Colors.grey,
-//                       blurRadius: 25,
-//                       spreadRadius: 3,
-//                       offset: Offset(0, 5),
-//                     )
-//                   ],
-//                   textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 1.h,
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
 }

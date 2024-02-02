@@ -30,7 +30,12 @@ class BalanceCheckBottomSheet {
                 height: isKeyboardVisible ? 34.h : 44.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  ),
+                ),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +48,8 @@ class BalanceCheckBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Balance consultation".toUpperCase(),
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -51,7 +57,7 @@ class BalanceCheckBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Norem ipsum dolor sit amet \nconsectetur ",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
                         ),
                       ),
                       SizedBox(height: 3.h),
@@ -71,11 +77,11 @@ class BalanceCheckBottomSheet {
                         height: 3.h,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(Get.context!).size.height * .025),
+                        padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: FluTextField(
                             inputController: controller.code,
                             hint: LocaleKeys.strCodeSecret.tr, // "Votre code secret",
-                            height: 50,
+                            height: 6.5.h,
                             cornerRadius: 15,
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.number,
@@ -119,7 +125,7 @@ class BalanceCheckBottomSheet {
                                 Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                               }
                             },
-                            height: 55,
+                            height: 7.h,
                             width: 100.w,
                             cornerRadius: UISettings.minButtonCornerRadius,
                             backgroundColor: Colors.blue[900],

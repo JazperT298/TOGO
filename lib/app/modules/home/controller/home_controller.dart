@@ -43,8 +43,10 @@ class HomeController extends GetxController {
     isLoadingHome(true);
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -100,8 +102,10 @@ class HomeController extends GetxController {
     FullScreenLoading.fullScreenLoadingWithText('Validating PIN...');
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -145,24 +149,31 @@ class HomeController extends GetxController {
           firstname.value = dataDecoded['Prenoms'];
           msisdn.value = dataDecoded['Compte'];
           birthdate.value = dataDecoded['Date de naissance'];
-          soldeFlooz.value = dataDecoded['Solde Flooz'].toString().replaceAll("FCFA", "").trim().toString();
+          soldeFlooz.value = dataDecoded['Solde Flooz']
+              .toString()
+              .replaceAll("FCFA", "")
+              .trim()
+              .toString();
           afficherSolde.value = false;
           log(soldeFlooz.value);
           Get.back();
           Get.back();
         } else {
           Get.back();
-          Get.snackbar("Message", jsonString, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", jsonString,
+              backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         Get.back();
         print(response.reasonPhrase);
-        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+        Get.snackbar("Message", 'Service unavailable, please try again later.',
+            backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } on Exception catch (_) {
       log("ERROR $_");
       Get.back();
-      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+      Get.snackbar("Message", 'Service unavailable, please try again later.',
+          backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 
@@ -170,8 +181,10 @@ class HomeController extends GetxController {
     FullScreenLoading.fullScreenLoadingWithText('Validating PIN...');
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST',
+          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body =
+          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -193,7 +206,8 @@ class HomeController extends GetxController {
         var result = await response.stream.bytesToString();
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
+        var soapElement =
+            document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
         // var decodedData = jsonDecode(jsonString);
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
@@ -203,18 +217,22 @@ class HomeController extends GetxController {
           Get.back();
         } else {
           Get.back();
-          Get.snackbar("Message", jsonData["message"], backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+          Get.snackbar("Message", jsonData["message"],
+              backgroundColor: const Color(0xFFE60000),
+              colorText: Colors.white);
         }
       } else {
         Get.back();
-        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+        Get.snackbar("Message", 'Service unavailable, please try again later.',
+            backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
 
         print(response.reasonPhrase);
       }
     } on Exception catch (_) {
       Get.back();
       log("ERROR $_");
-      Get.snackbar("Message", 'An error occured, please try again', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+      Get.snackbar("Message", 'An error occured, please try again',
+          backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 
@@ -227,7 +245,8 @@ class HomeController extends GetxController {
       Get.offAllNamed(AppRoutes.LOGIN);
       Future.delayed(const Duration(seconds: 2), () {
         if (response == "VERSION NOT UP TO DATE") {
-          LoginAlertdialog.showMessageVersionNotUpToDate(controller: Get.find<LoginController>());
+          LoginAlertdialog.showMessageVersionNotUpToDate(
+              controller: Get.find<LoginController>());
         }
       });
     });

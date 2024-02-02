@@ -30,7 +30,7 @@ class SendMoneyInputBottomSheet {
             bottomSheetDivider(),
             KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
               return Container(
-                height: isKeyboardVisible ? 36.h : 45.h,
+                // height: isKeyboardVisible ? 36.h : 45.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                     color: Colors.white,
@@ -302,6 +302,7 @@ class SendMoneyInputBottomSheet {
                           ),
                         ),
                       ),
+                      SizedBox(height: 2.h),
                     ],
                   ),
                 ),
@@ -324,7 +325,7 @@ class SendMoneyInputBottomSheet {
               bottomSheetDivider(),
               KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
                 return Container(
-                  height: isKeyboardVisible ? 31.h : 41.h,
+                  // height: isKeyboardVisible ? 31.h : 41.h,
                   width: 100.w,
                   decoration: const BoxDecoration(
                       color: Colors.white,
@@ -535,6 +536,7 @@ class SendMoneyInputBottomSheet {
                             ),
                           ),
                         ),
+                        SizedBox(height: 2.h),
                       ],
                     ),
                   ),
@@ -881,6 +883,9 @@ class SendMoneyInputBottomSheet {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 2.h,
+                        )
                       ],
                     ),
                   ),
@@ -905,7 +910,7 @@ class SendMoneyInputBottomSheet {
               KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
                 return Container(
                   // height: isKeyboardVisible ? 28.h : 34.h,
-                  height: isKeyboardVisible ? 36.h : 45.h,
+                  // height: isKeyboardVisible ? 36.h : 45.h,
                   width: 100.w,
                   decoration: const BoxDecoration(
                       color: Colors.white,
@@ -1113,6 +1118,9 @@ class SendMoneyInputBottomSheet {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 2.h,
+                        )
                       ],
                     ),
                   ),
