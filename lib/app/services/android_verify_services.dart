@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:ibank/app/components/progress_dialog.dart';
+import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
-import 'package:ibank/generated/locales.g.dart';
+
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:developer';
@@ -15,8 +15,8 @@ import '../modules/login/controller/login_controller.dart';
 
 class AndroidVerifyServices extends GetxService {
   Future<bool> verifyAndroid() async {
-    ProgressAlertDialog.progressAlertDialog(
-        Get.context!, LocaleKeys.strLoading.tr);
+    FullScreenLoading.fullScreenLoadingWithText(
+        'Sending request. Please wait. . .');
     try {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String version = "${packageInfo.version}.0";
@@ -44,7 +44,6 @@ class AndroidVerifyServices extends GetxService {
       if (response.statusCode == 200) {
         var result = await response.stream.bytesToString();
         log('RESULT $result');
-
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
         var soapElement = document.findAllElements('RequestTokenReturn').single;

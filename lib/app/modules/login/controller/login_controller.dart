@@ -352,7 +352,6 @@ class LoginController extends GetxController {
   }
 
   enterPINFromBiometrics({required String code}) async {
-    FullScreenLoading.fullScreenLoadingWithText('Authenticating...');
     try {
       var headers = {'Content-Type': 'application/xml'};
       var request = http.Request('POST',
