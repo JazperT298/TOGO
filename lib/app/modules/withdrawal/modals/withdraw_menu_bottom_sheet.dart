@@ -76,6 +76,7 @@ class WithdrawMenuBottomSheets {
                           AppGlobal.timeNow = '';
                           controller.code.clear();
                           controller.amounts.clear();
+                          controller.withdrawType.value = 'Normal';
                           controller.checkPendingCashout();
                         },
                         child: Padding(
@@ -126,6 +127,8 @@ class WithdrawMenuBottomSheets {
                           await Future.delayed(const Duration(seconds: 2), () {
                             Get.back();
                             Get.back();
+                            controller.withdrawType.value = 'Collection';
+                            //controller.getTransactionFee();
                             WithdrawOtpBottomSheet.showBottomSheetWithdrawCollectionOTP();
                           });
                         },
@@ -176,6 +179,8 @@ class WithdrawMenuBottomSheets {
                           await Future.delayed(const Duration(seconds: 2), () {
                             Get.back();
                             Get.back();
+                            controller.withdrawType.value = 'Counter';
+                            controller.counterWithdrawalSelectedMessage.value = '';
                             WithdrawSelectBottomSheet.showBottomSheetWithdrawCounterSelect();
                           });
                         },

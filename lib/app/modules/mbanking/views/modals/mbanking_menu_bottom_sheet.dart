@@ -123,9 +123,11 @@ class MBankingMenuBottomSheet {
                                       await Future.delayed(const Duration(seconds: 1), () {
                                         Get.back();
                                         Get.back();
+                                        controller.selectedSubMenu.value = '';
                                         controller.selectedMenu.value = 'EcoBank';
                                         controller.amountTextField.clear();
                                         controller.codeTextField.clear();
+                                        controller.selectedIndex.value = 0;
                                         // MBankingSubMenuBottomSheet.showMBankingSubMenuBottomSheet();
                                         MBankingSelectBankBottomSheet.showMBankingSelectBankBottomSheet();
                                       });

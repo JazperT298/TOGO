@@ -34,6 +34,8 @@ class WithdrawalController extends GetxController {
   RxString internetRadioGroupValue = ''.obs;
   RxString selectedBank = ''.obs;
   RxBool isLoading = true.obs;
+  RxString withdrawType = ''.obs;
+  RxString counterWithdrawalSelectedMessage = ''.obs;
 
   RxInt totalFess = 0.obs;
   RxInt totalAmount = 0.obs;
@@ -257,7 +259,10 @@ class WithdrawalController extends GetxController {
         totalAmount.value = int.parse(amounts) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
 
         Get.back();
-        WithdrawOtpBottomSheet.showBottomSheetWithdrawNormalOTP();
+        if (withdrawType.value == 'Normal') {
+          WithdrawOtpBottomSheet.showBottomSheetWithdrawNormalOTP();
+        } else if (withdrawType.value == 'Collection') {
+        } else if (withdrawType.value == 'Counter') {}
       }
     } catch (e) {
       log('getTransactionFee asd $e');
@@ -266,7 +271,7 @@ class WithdrawalController extends GetxController {
     }
   }
 
-  void sendCounterWithdrawalTransactions(String trasacType, String amounts, String messageTpe) async {
+  void getCounterTransactionFee({required String amounts, required String selectedMessageType}) async {
     FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
@@ -276,24 +281,74 @@ class WithdrawalController extends GetxController {
    <soapenv:Header/>
    <soapenv:Body>
       <app:getTransactionFee soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-          <msisdn xsi:type="xsd:string">${AppGlobal.MSISDN}</msisdn>
-         <destmsisdn xsi:type="xsd:string">COMPTE_ECOBANKCARDLESS</destmsisdn>
-         <keyword xsi:type="xsd:string">APPCCOUT</keyword>
+         <msisdn xsi:type="xsd:string">${AppGlobal.MSISDN}</msisdn>
+        <destmsisdn xsi:type="xsd:string">$counterWithdrawalSelectedMessage</destmsisdn>
+         <keyword xsi:type="xsd:string">CCOUT</keyword>
          <value xsi:type="xsd:string">$amounts</value>
       </app:getTransactionFee>
    </soapenv:Body>
 </soapenv:Envelope>''';
-      log('sendCounterWithdrawalTransactions ${request.body}');
+      log('getCounterTransactionFee ${request.body}');
       http.StreamedResponse response = await request.send();
       request.headers.addAll(headers);
       if (response.statusCode == 200) {
         var result = await response.stream.bytesToString();
-        log('sendCounterWithdrawalTransactions jsonString 1 $result');
+        log('getCounterTransactionFee jsonString 1 $result');
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
         var soapElement = document.findAllElements('getTransactionFeeReturn').single;
         var jsonString = soapElement.innerText;
-        log('sendCounterWithdrawalTransactions jsonString 2 $jsonString');
+        log('getCounterTransactionFee jsonString 2 $jsonString');
+
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        transactionFee = TransactionFee.fromJson(jsonData);
+        senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
+        senderkeycosttva.value = transactionFee!.senderkeycosttva;
+        totalFess.value = int.parse(senderkeycosttotal.value.replaceAll(',', '')) - int.parse(senderkeycosttva.value.replaceAll(',', ''));
+        totalAmount.value = int.parse(amounts) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
+
+        Get.back();
+        Get.back();
+        WithdrawOtpBottomSheet.showBottomSheetCounterWithdrawnOTP();
+      }
+    } catch (e) {
+      log('getCounterTransactionFee asd $e');
+      Get.back();
+      Get.snackbar("Message", 'An error occured! Please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+    }
+  }
+
+  enterPinToCounterWithdrawal({required String selectedMessageType, required String code, required String amount}) async {
+    FullScreenLoading.fullScreenLoadingWithText('Sending request. Please wait. . .');
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+          <v:Body>
+          <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
+          <msisdn i:type="d:string">${AppGlobal.MSISDN}</msisdn>
+          <message i:type="d:string">CCOUT $selectedMessageType $amount $code F</message>
+          <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
+          <sendsms i:type="d:string">true</sendsms>
+          </n0:RequestTokenJson>
+          </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      log('enterPinToCounterWithdrawal 1 ${request.body}');
+
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
+        var jsonString = soapElement.innerText;
+
         var decodedData = jsonDecode(jsonString);
         thisHsonString.value = jsonString;
 
@@ -302,30 +357,26 @@ class WithdrawalController extends GetxController {
 
         log('enterPinToTransactWithdrawal 2 ${jsonString.toString()}');
 
-        transactionFee = TransactionFee.fromJson(jsonData);
-        senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
-        senderkeycosttva.value = transactionFee!.senderkeycosttva;
-        totalFess.value = int.parse(senderkeycosttotal.value.replaceAll(',', '')) - int.parse(senderkeycosttva.value.replaceAll(',', ''));
-        totalAmount.value = int.parse(amounts) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
-
-        log('enterPinToTransactWithdrawal 2 ${jsonString.toString()}');
         int msgId = jsonData["msgid"];
         if (msgId == 0) {
           transactionID.value = jsonData['refid'];
           senderBalance.value = jsonData['senderbalance'];
           Get.back();
           Get.back();
-          // Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
           Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
         } else {
           Get.back();
           Get.toNamed(AppRoutes.WITHDRAWALFAILED);
         }
+      } else {
+        Get.back();
+        print(response.reasonPhrase);
+        Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
-    } catch (e) {
-      log('sendCounterWithdrawalTransactions asd $e');
+    } on Exception catch (_) {
+      log("ERROR $_");
       Get.back();
-      Get.snackbar("Message", 'An error occured! Please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      Get.snackbar("Message", 'Service unavailable, please try again later.', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
     }
   }
 
@@ -359,3 +410,8 @@ class WithdrawalController extends GetxController {
 //       </app:getTransactionFee>
 //    </soapenv:Body>
 // </soapenv:Envelope>
+
+
+//counter with
+//after amount
+//getTransfee

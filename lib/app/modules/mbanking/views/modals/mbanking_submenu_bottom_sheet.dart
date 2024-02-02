@@ -27,7 +27,7 @@ class MBankingSubMenuBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: 50.h,
+                // height: 50.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                     color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
@@ -126,13 +126,12 @@ class MBankingSubMenuBottomSheet {
                                         controller.keyword.value = 'W2BE';
                                         MBankingInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: controller.selectedSubMenu.value);
                                       });
-                                    }
-                                    if (index == 1) {
+                                    } else if (index == 1) {
                                       FullScreenLoading.fullScreenLoadingWithTextAndTimer('Verifying. . .');
                                       await Future.delayed(const Duration(seconds: 2), () {
                                         Get.back();
                                         Get.back();
-                                        controller.selectedSubMenu.value = 'Flooz to Ecobank';
+                                        controller.selectedSubMenu.value = 'Ecobank to Flooz';
                                         controller.destmsisdn.value = 'ECOBANK_MAINBANK';
                                         controller.keyword.value = 'W2BE';
                                         MBankingInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: controller.selectedSubMenu.value);

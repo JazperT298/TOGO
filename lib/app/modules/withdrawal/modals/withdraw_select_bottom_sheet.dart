@@ -86,9 +86,11 @@ class WithdrawSelectBottomSheet {
                             if (controller.internetRadioGroupValue.value == '1') {
                               controller.internetRadioGroupValue.value = '';
                               controller.selectedBank.value = '';
+                              controller.counterWithdrawalSelectedMessage.value = '';
                             } else {
                               controller.internetRadioGroupValue.value = '1';
                               controller.selectedBank.value = 'Ecobank';
+                              controller.counterWithdrawalSelectedMessage.value = 'COMPTE_ECOBANKCARDLESS';
                             }
                           },
                           child: Obx(
@@ -119,6 +121,7 @@ class WithdrawSelectBottomSheet {
                                           onChanged: (value) {
                                             controller.internetRadioGroupValue.value = '1';
                                             controller.selectedBank.value = 'Ecobank';
+                                            controller.counterWithdrawalSelectedMessage.value = 'COMPTE_ECOBANKCARDLESS';
                                           }),
                                     )
                                   ],
@@ -145,6 +148,8 @@ class WithdrawSelectBottomSheet {
                               } else {
                                 FullScreenLoading.fullScreenLoadingWithTextAndTimer('Validating request. . .');
                                 await Future.delayed(const Duration(seconds: 2), () {
+                                  controller.amounts.clear();
+                                  controller.counterWithdrawalAmount.clear();
                                   Get.back();
                                   Get.back();
                                   WithdrawInputBottomSheet.showBottomSheeCountertWithdrawalInputNumber();

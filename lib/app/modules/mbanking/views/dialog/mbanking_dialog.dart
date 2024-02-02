@@ -26,8 +26,7 @@ class MBankingMenuDialog {
     // flutter defined function
     final controller = Get.find<MBankingController>();
 
-    Map<String, String> extractedValues =
-        extractValues(controller.thisDsonString.value);
+    Map<String, String> extractedValues = extractValues(controller.thisDsonString.value);
     Map<String, dynamic> jsonData = jsonDecode(controller.thisDsonString.value);
 
     String amount = extractedValues['amount'] ?? '';
@@ -48,7 +47,7 @@ class MBankingMenuDialog {
 
           content: Container(
             width: MediaQuery.of(context).size.width - 60,
-            height: 530,
+            height: 70.h,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -58,10 +57,7 @@ class MBankingMenuDialog {
                   children: [
                     Text(
                       "Operation Recap",
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          fontSize: 24),
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
                     ),
                     InkWell(
                       onTap: () {
@@ -75,32 +71,28 @@ class MBankingMenuDialog {
                     )
                   ],
                 ),
-                const SizedBox(height: 24),
 
+                SizedBox(height: 3.h),
+                Text(
+                  controller.selectedSubMenu.value == 'Flooz to Ecobank' ? 'Flooz transfer to Ecobank account' : "Ecobank transfer to Flooz account",
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 19.sp),
+                ),
+                SizedBox(height: 3.h),
                 Text(
                   LocaleKeys.strTransferBeneficiary.tr.toUpperCase(),
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF27303F),
-                      fontSize: 13.sp),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 13.sp),
                 ),
-
                 SizedBox(height: 2.h),
                 Padding(
                     padding: EdgeInsets.only(left: 5.w, right: 5.w),
                     child: Container(
                       height: 7.h,
                       width: 100.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: Colors.white),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Color(0xFFE7EDFC)),
                       child: Center(
                         child: Text(
                           "Moi meme",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: 13.sp),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 13.sp),
                         ),
                       ),
                     )),
@@ -154,10 +146,7 @@ class MBankingMenuDialog {
                 const SizedBox(height: 24),
                 Text(
                   'DETAILS'.toUpperCase(),
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF27303F),
-                      fontSize: 14),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                 ),
                 const SizedBox(height: 18),
                 Row(
@@ -166,10 +155,7 @@ class MBankingMenuDialog {
                     Expanded(
                       child: Text(
                         'Amount',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -177,10 +163,7 @@ class MBankingMenuDialog {
                         controller.amountTextField.text.isEmpty
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.amountTextField.text.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -192,10 +175,7 @@ class MBankingMenuDialog {
                     Expanded(
                       child: Text(
                         'Fees',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -203,10 +183,7 @@ class MBankingMenuDialog {
                         controller.totalFess.value == 0
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -218,10 +195,7 @@ class MBankingMenuDialog {
                     Expanded(
                       child: Text(
                         'Tax',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -229,10 +203,7 @@ class MBankingMenuDialog {
                         controller.senderkeycosttva.value.isEmpty
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -244,10 +215,7 @@ class MBankingMenuDialog {
                     Expanded(
                       child: Text(
                         'TTC',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
@@ -255,10 +223,7 @@ class MBankingMenuDialog {
                         controller.totalAmount.value == 0
                             ? '0 FCFA'
                             : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -268,10 +233,7 @@ class MBankingMenuDialog {
                 const SizedBox(height: 24),
                 Text(
                   'Operation information'.toUpperCase(),
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF27303F),
-                      fontSize: 14),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                 ),
                 const SizedBox(height: 18),
                 Row(
@@ -280,19 +242,13 @@ class MBankingMenuDialog {
                     Expanded(
                       child: Text(
                         'Date',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         DateFormat.yMMMd().format(DateTime.now()),
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -304,19 +260,13 @@ class MBankingMenuDialog {
                     Expanded(
                       child: Text(
                         'Hour',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         DateFormat.jm().format(DateTime.now()),
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -328,19 +278,13 @@ class MBankingMenuDialog {
                     Expanded(
                       child: Text(
                         'Txn ID',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         controller.transactionID.value,
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -352,19 +296,13 @@ class MBankingMenuDialog {
                     Expanded(
                       child: Text(
                         'New Balance',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         "${controller.senderBalance.value} FCFA",
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 14),
                       ),
                     ),
                   ],
@@ -400,13 +338,10 @@ class MBankingMenuDialog {
     Match? txnIdMatch = txnIdRegExp.firstMatch(message);
 
     String amount = amountMatch != null ? amountMatch.group(1)! : '';
-    String beneficiaire =
-        beneficiaireMatch != null ? beneficiaireMatch.group(1)! : '';
+    String beneficiaire = beneficiaireMatch != null ? beneficiaireMatch.group(1)! : '';
     String date = dateMatch != null ? dateMatch.group(1)! : '';
-    String codeRetait =
-        codeRetraitMatch != null ? codeRetraitMatch.group(1)! : '';
-    String nouveauSolde =
-        nouveauSoldeMatch != null ? nouveauSoldeMatch.group(1)! : '';
+    String codeRetait = codeRetraitMatch != null ? codeRetraitMatch.group(1)! : '';
+    String nouveauSolde = nouveauSoldeMatch != null ? nouveauSoldeMatch.group(1)! : '';
     String txnId = txnIdMatch != null ? txnIdMatch.group(1)! : '';
 
     return {

@@ -100,7 +100,7 @@ class PaymentMainMenuBottomSheet {
                                       await Future.delayed(const Duration(seconds: 2), () {
                                         Get.back();
                                         Get.back();
-                                        PaymentSubMenuBottomSheet.showBottomSheetPaymentSubMenu(context);
+                                        PaymentSubMenuBottomSheet.showBottomSheetPaymentCeetSubMenu(context);
                                       });
                                     }
                                   },
