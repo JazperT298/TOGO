@@ -34,6 +34,7 @@ class WithdrawalController extends GetxController {
   RxString internetRadioGroupValue = ''.obs;
   RxString selectedBank = ''.obs;
   RxBool isLoading = true.obs;
+  RxString withdrawType = ''.obs;
 
   RxInt totalFess = 0.obs;
   RxInt totalAmount = 0.obs;
@@ -257,7 +258,10 @@ class WithdrawalController extends GetxController {
         totalAmount.value = int.parse(amounts) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
 
         Get.back();
-        WithdrawOtpBottomSheet.showBottomSheetWithdrawNormalOTP();
+        if (withdrawType.value == 'Normal') {
+          WithdrawOtpBottomSheet.showBottomSheetWithdrawNormalOTP();
+        } else if (withdrawType.value == 'Collection') {
+        } else if (withdrawType.value == 'Counter') {}
       }
     } catch (e) {
       log('getTransactionFee asd $e');

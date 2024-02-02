@@ -30,7 +30,7 @@ class MBankingOTpBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: isKeyboardVisible ? 64.h : 73.h,
+                // height: isKeyboardVisible ? 64.h : 73.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                     color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
@@ -264,28 +264,20 @@ class MBankingOTpBottomSheet {
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
                           ],
-                          onChanged: (text) {
-                            String newText = text.replaceAll(' ', '');
-                            String spacedText = newText.split('').join(' ');
-                            controller.codeTextField.value = controller.codeTextField.value.copyWith(
-                              text: spacedText,
-                              selection: TextSelection.collapsed(offset: spacedText.length),
-                            );
-                          },
+
                           onFieldSubmitted: (p0) {
                             if (controller.codeTextField.text.isNotEmpty) {
-                              String finalPINCode = controller.codeTextField.value.text.replaceAll(' ', '');
                               if (controller.selectedSubMenu.value == "Flooz to Ecobank") {
                                 log('Flooz to bank 1 keyword ${controller.keyword.value}');
                                 log('Flooz to bank 1 selectMenu ${controller.selectedMenu.value}');
 
-                                controller.sendFinalTransaction(
-                                    controller.keyword.value, controller.selectedMenu.value, controller.amountTextField.text, finalPINCode);
+                                controller.sendFinalTransaction(controller.keyword.value, controller.selectedMenu.value,
+                                    controller.amountTextField.text, controller.codeTextField.value.text);
                               } else {
                                 log('Flooz to bank 2 keyword ${controller.keyword.value}');
                                 log('Flooz to bank 2 selectMenu ${controller.selectedMenu.value}');
-                                controller.sendFinalTransaction(
-                                    controller.keyword.value, controller.selectedMenu.value, controller.amountTextField.text, finalPINCode);
+                                controller.sendFinalTransaction(controller.keyword.value, controller.selectedMenu.value,
+                                    controller.amountTextField.text, controller.codeTextField.value.text);
                               }
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
@@ -306,17 +298,16 @@ class MBankingOTpBottomSheet {
                             iconStrokeWidth: 1.8,
                             onPressed: () {
                               if (controller.codeTextField.text.isNotEmpty) {
-                                String finalPINCode = controller.selectedMenu.replaceAll(' ', '');
                                 if (controller.selectedSubMenu.value == "Flooz to Ecobank") {
                                   log('Flooz to bank 1 keyword ${controller.keyword.value}');
                                   log('Flooz to bank 1 selectMenu ${controller.selectedMenu.value}');
-                                  controller.sendFinalTransaction(
-                                      controller.keyword.value, controller.selectedMenu.value, controller.amountTextField.text, finalPINCode);
+                                  controller.sendFinalTransaction(controller.keyword.value, controller.selectedMenu.value,
+                                      controller.amountTextField.text, controller.codeTextField.value.text);
                                 } else {
                                   log('Flooz to bank 2 keyword ${controller.keyword.value}');
                                   log('Flooz to bank 2 selectMenu ${controller.selectedMenu.value}');
-                                  controller.sendFinalTransaction(
-                                      controller.keyword.value, controller.selectedMenu.value, controller.amountTextField.text, finalPINCode);
+                                  controller.sendFinalTransaction(controller.keyword.value, controller.selectedMenu.value,
+                                      controller.amountTextField.text, controller.codeTextField.value.text);
                                 }
                                 AppGlobal.dateNow = DateTime.now().toString();
                                 AppGlobal.timeNow = DateTime.now().toString();
@@ -342,6 +333,7 @@ class MBankingOTpBottomSheet {
                           ),
                         ),
                       ),
+                      SizedBox(height: 3.h)
                     ],
                   ),
                 ),

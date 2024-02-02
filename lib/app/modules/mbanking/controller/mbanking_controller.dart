@@ -25,6 +25,7 @@ class MBankingController extends GetxController {
 
   RxString selectedMenu = ''.obs;
   RxString selectedSubMenu = ''.obs;
+  RxString transferDesc = ''.obs;
 
   List<MBankModel> mBankModel = [];
   List<MBankSubModel> mBankSubModel = [];
@@ -51,6 +52,8 @@ class MBankingController extends GetxController {
   RxString firstname = ''.obs;
 
   RxString lastname = ''.obs;
+  RxInt selectedIndex = 0.obs;
+  RxString selectedBank = ''.obs;
   @override
   void onInit() {
     super.onInit();
