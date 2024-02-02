@@ -29,6 +29,7 @@ import 'package:ibank/app/modules/settings/views/settings_view.dart';
 import 'package:ibank/app/modules/shop/views/shop_view.dart';
 import 'package:ibank/app/modules/splash/views/splash_view.dart';
 import 'package:ibank/app/modules/transfer/views/transfer_view.dart';
+import 'package:ibank/app/modules/withdrawal/views/withdrawal_failed.dart';
 import 'package:ibank/app/modules/withdrawal/views/withdrawal_progress_view.dart';
 import 'package:ibank/app/modules/withdrawal/views/withdrawal_view.dart';
 import 'package:ibank/app/routes/app_routes.dart';
@@ -62,6 +63,7 @@ class AppPages {
     GetPage(name: AppRoutes.TRANSFER, page: () => const TransferView()),
     GetPage(name: AppRoutes.WITHDRAWALOTP, page: () => const WithdrawalOtpView()),
     GetPage(name: AppRoutes.WITHDRAWALSUCCESS, page: () => const WithdrawalSuccessView()),
+    GetPage(name: AppRoutes.WITHDRAWALFAILED, page: () => const WithdrawalFailed()),
     GetPage(name: AppRoutes.PROFILE, page: () => const ProfileView()),
     GetPage(name: AppRoutes.PROFILEINFORMATIONPERSONELLES, page: () => const ProfileInformationPersonellesView()),
     GetPage(name: AppRoutes.PROFILEOTP, page: () => const ProfileOtpView()),

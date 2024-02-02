@@ -13,3 +13,15 @@ class MBankSubModel {
     required this.icon,
   });
 }
+
+class MBankListModel {
+  final String mBankType;
+  final String mBankTypeDesc;
+  final FluIcons icon;
+
+  MBankListModel({
+    required this.mBankType,
+    required this.mBankTypeDesc,
+    required this.icon,
+  });
+}

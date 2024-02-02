@@ -90,14 +90,12 @@ class PaymentController extends GetxController {
   RxString errorMessage = ''.obs;
 
   verifyGetCeetLink() async {
-    FullScreenLoading.fullScreenLoadingWithTextAndTimer('Requesting. . .');
+    // FullScreenLoading.fullScreenLoadingWithTextAndTimer('Requesting. . .');
     try {
       ceetProductList.clear();
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -127,47 +125,39 @@ class PaymentController extends GetxController {
         // var apiResponseMap = json.decode(decodedData);
         if (decodedData['description'] == 'SUCCESS') {
           if (selectedOption.value == "CEET") {
-            Get.back();
+            // Get.back();
             Get.back();
             // PaymentInputsBottomSheet.showBottomSheetInputNumber();
             // CeetProducts apiResponse = CeetProducts.fromJson(json.decode(decodedData));
 
-            ceetDataList.assignAll(CeetDataProductsFromJson(
-                jsonEncode(decodedData['data']))); //<----
+            ceetDataList.assignAll(CeetDataProductsFromJson(jsonEncode(decodedData['data']))); //<----
             // PaymentServiceLinksBottomSheet.showBottomSheetCeetServicePackageTo();
             PaymentInputsBottomSheet.showBottomSheetCeetInputNumber();
             // await transactVoiceRechargeOwn(msisdn: msisdn, code: code);
           }
         } else if (decodedData['description'] == 'DATA_NOT_FOUND') {
           // await transactVoieRechargeOthers(msisdn: msisdn, code: code);
-          Get.back();
-          Get.snackbar("Message", decodedData['message'],
-              backgroundColor: const Color(0xFFE60000),
-              colorText: Colors.white);
+          // Get.back();
+          Get.snackbar("Message", decodedData['message'], backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
         }
       } else {
-        Get.back();
+        // Get.back();
         log("ERROR ${response.reasonPhrase}'");
-        Get.snackbar("Message", 'An Error Occured, Please try again later',
-            backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+        Get.snackbar("Message", 'An Error Occured, Please try again later', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
       }
     } catch (e) {
       log('verifyGetCeetLink $e');
-      Get.back();
-      RechargeMenuDialog.showMessageDialog(
-          message: 'An Error Occured, Please try again later');
+      // Get.back();
+      RechargeMenuDialog.showMessageDialog(message: 'An Error Occured, Please try again later');
     }
   }
 
   verifyCeetRefIDfromInput({required String refId}) async {
-    FullScreenLoading.fullScreenLoadingWithTextAndTimer(
-        'Validating Reference ID. . .');
+    FullScreenLoading.fullScreenLoadingWithTextAndTimer('Validating Reference ID. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -209,18 +199,13 @@ class PaymentController extends GetxController {
           getTransactionFee(selectedOption.value, price.value, 'APPBILL');
         } else if (decodedData['status'] == "99") {
           Get.back();
-          Get.snackbar(
-              "Message", 'Reference unavailable, please try again later',
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", 'Reference unavailable, please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
         } else if ((decodedData['status'] == "98")) {
           Get.back();
-          Get.snackbar("Message", 'No pending bills. ',
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", 'No pending bills. ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
         } else {
           Get.back();
-          Get.snackbar(
-              "Message", 'Service unavailable, pelase try again later ',
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", 'Service unavailable, pelase try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         log("ERROR verifyCeetRefIDfromInput ${response.reasonPhrase}");
@@ -228,20 +213,16 @@ class PaymentController extends GetxController {
     } catch (e) {
       Get.back();
       log('verifyCeetRefIDfromInput $e');
-      RechargeMenuDialog.showMessageDialog(
-          message: 'An Error Occured, Please try again later');
+      RechargeMenuDialog.showMessageDialog(message: 'An Error Occured, Please try again later');
     }
   }
 
   verifySolergieRefIDfromInput({required String refId}) async {
-    FullScreenLoading.fullScreenLoadingWithTextAndTimer(
-        'Validating Reference ID. . .');
+    FullScreenLoading.fullScreenLoadingWithTextAndTimer('Validating Reference ID. . .');
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -283,40 +264,31 @@ class PaymentController extends GetxController {
           getTransactionFee(selectedOption.value, price.value, 'APPBILL');
         } else if (decodedData['status'] == "99") {
           Get.back();
-          Get.snackbar(
-              "Message", 'Reference unavailable, please try again later',
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", 'Reference unavailable, please try again later', backgroundColor: Colors.lightBlue, colorText: Colors.white);
         } else if ((decodedData['status'] == "98")) {
           Get.back();
-          Get.snackbar("Message", 'No pending bills. ',
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", 'No pending bills. ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
         } else {
           Get.back();
-          Get.snackbar(
-              "Message", 'Service unavailable, please try again later ',
-              backgroundColor: Colors.lightBlue, colorText: Colors.white);
+          Get.snackbar("Message", 'Service unavailable, please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
         }
       } else {
         log("ERROR verifySolergieRefIDfromInput ${response.reasonPhrase}");
         Get.back();
-        Get.snackbar("Message", 'Service unavailable, please try again later ',
-            backgroundColor: Colors.lightBlue, colorText: Colors.white);
+        Get.snackbar("Message", 'Service unavailable, please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
       }
     } catch (e) {
       Get.back();
       log('verifyCeetRefIDfromInput $e');
-      Get.snackbar("Message", 'An Error Occured, Please try again later ',
-          backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      Get.snackbar("Message", 'An Error Occured, Please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
     }
   }
 
   verifyCeetRefIDfromSaved() async {
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -352,13 +324,11 @@ class PaymentController extends GetxController {
   }
 
   getTransactionFee(String destmsisdn, String price, String keywords) async {
-    FullScreenLoading.fullScreenLoading();
+    // FullScreenLoading.fullScreenLoading();
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -378,46 +348,37 @@ class PaymentController extends GetxController {
         var result = await response.stream.bytesToString();
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement =
-            document.findAllElements('getTransactionFeeReturn').single;
+        var soapElement = document.findAllElements('getTransactionFeeReturn').single;
         var jsonString = soapElement.innerText;
         Map<String, dynamic> jsonData = jsonDecode(jsonString);
 
         transactionFee = TransactionFee.fromJson(jsonData);
         senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
         senderkeycosttva.value = transactionFee!.senderkeycosttva;
-        totalFess.value =
-            int.parse(senderkeycosttotal.value.replaceAll(',', '')) -
-                int.parse(senderkeycosttva.value.replaceAll(',', ''));
-        totalAmount.value = int.parse(price) +
-            int.parse(senderkeycosttotal.value.replaceAll(',', ''));
+        totalFess.value = int.parse(senderkeycosttotal.value.replaceAll(',', '')) - int.parse(senderkeycosttva.value.replaceAll(',', ''));
+        totalAmount.value = int.parse(price) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
 
-        Get.back();
+        // Get.back();
         Get.back();
         PaymentEnterOtpBottomSheet.showBottomSheetOTPCEET();
       } else {
-        Get.back();
+        // Get.back();
         log("ERROR getTransactionFee ${response.reasonPhrase}");
-        RechargeMenuDialog.showMessageDialog(
-            message: 'An Error Occured, Please try again later');
+        RechargeMenuDialog.showMessageDialog(message: 'An Error Occured, Please try again later');
       }
     } catch (e) {
-      Get.back();
+      // Get.back();
       log('getTransactionFee $e');
-      RechargeMenuDialog.showMessageDialog(
-          message: 'An Error Occured, Please try again later');
+      RechargeMenuDialog.showMessageDialog(message: 'An Error Occured, Please try again later');
     }
   }
 
-  sentBillPaymentRequest(
-      String billType, String billRef, String pice, String password) async {
+  sentBillPaymentRequest(String billType, String billRef, String pice, String password) async {
     FullScreenLoading.fullScreenLoading();
     try {
       var headers = {'Content-Type': 'application/xml'};
-      var request = http.Request('POST',
-          Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
-      request.body =
-          '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns:d="http://www.w3.org/2001/XMLSchema" 
           xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
           xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
@@ -439,8 +400,7 @@ class PaymentController extends GetxController {
         log('result  $result');
         var parseResult = "'''$result'''";
         var document = xml.XmlDocument.parse(parseResult);
-        var soapElement =
-            document.findAllElements('RequestTokenJsonReturn').single;
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
         var jsonString = soapElement.innerText;
         var decodedData = jsonDecode(jsonString);
         log('jsonString  $jsonString');
@@ -454,9 +414,7 @@ class PaymentController extends GetxController {
         } else if (decodedData['msgid'] == 5) {
           Get.back();
           errorMessage.value = decodedData['message'];
-          Get.snackbar("Message", decodedData['message'],
-              backgroundColor: const Color(0xFFE60000),
-              colorText: Colors.white);
+          Get.snackbar("Message", decodedData['message'], backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
         } else {
           Get.back();
           errorMessage.value = decodedData['message'];
@@ -472,14 +430,12 @@ class PaymentController extends GetxController {
       } else {
         Get.back();
         log("ERROR getTransactionFee ${response.reasonPhrase}");
-        RechargeMenuDialog.showMessageDialog(
-            message: 'An Error Occured, Please try again later');
+        RechargeMenuDialog.showMessageDialog(message: 'An Error Occured, Please try again later');
       }
     } catch (e) {
       Get.back();
       log('getTransactionFee $e');
-      RechargeMenuDialog.showMessageDialog(
-          message: 'An Error Occured, Please try again later');
+      RechargeMenuDialog.showMessageDialog(message: 'An Error Occured, Please try again later');
     }
   }
 
@@ -491,8 +447,7 @@ class PaymentController extends GetxController {
       Get.find<StorageServices>().clearUsersInformation();
       Get.offAllNamed(AppRoutes.LOGIN);
       Future.delayed(const Duration(seconds: 2), () {
-        LoginAlertdialog.showMessageVersionNotUpToDate(
-            controller: Get.find<LoginController>());
+        LoginAlertdialog.showMessageVersionNotUpToDate(controller: Get.find<LoginController>());
       });
     });
   }

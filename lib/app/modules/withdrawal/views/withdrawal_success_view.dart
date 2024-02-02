@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
 import 'package:ibank/app/modules/withdrawal/dialog/withdrawal_dialog.dart';
-import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
@@ -53,7 +52,7 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'The operation was carried out successfully. You can view the details in the transaction history.', //    "L'opération a été confirmée avec succès. Vous pouvez consulter les détails dans l'historique des transactions.",
+                      'The operation was carried out successfully. You can view the details in the transaction history.',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
                     ),
@@ -84,7 +83,8 @@ class WithdrawalSuccessView extends GetView<WithdrawalController> {
                   iconStrokeWidth: 1.8,
                   onPressed: () {
                     controller.code.clear();
-                    Get.toNamed(AppRoutes.BOTTOMNAV);
+                    Get.back();
+                    Get.back();
                   },
                   height: 5.8.h,
                   width: MediaQuery.of(context).size.width * 16,

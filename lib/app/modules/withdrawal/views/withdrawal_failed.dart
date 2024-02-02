@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
-import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
@@ -16,10 +13,6 @@ class WithdrawalFailed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<WithdrawalController>();
-    var jsonString = Get.arguments['jsonString'];
-    Map<String, dynamic> response = json.decode(jsonString);
-
-    String message = response["message"];
 
     return FluScreen(
       overlayStyle: context.systemUiOverlayStyle.copyWith(
@@ -29,8 +22,7 @@ class WithdrawalFailed extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding:
-                UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
+            padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -50,25 +42,23 @@ class WithdrawalFailed extends StatelessWidget {
                     child: Text(
                       'Operation Failed', //    "Échec de l'Opération",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          fontSize: 24),
+                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: UISettings.pagePadding
-                      .copyWith(top: 16, left: 24, right: 24),
+                  padding: UISettings.pagePadding.copyWith(top: 16, left: 24, right: 24),
                   child: Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      message, //   'Sorry, the operation failed. Please try again later or contact support if the problem persists', //     "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                          fontSize: 14),
+                    child: Obx(
+                      () => Text(
+                        controller.responsemessage.value.isEmpty
+                            ? 'Sorry, the operation failed. Please try again later or contact support if the problem persists'
+                            : controller.responsemessage
+                                .value, //     "Désolé, l'opération a échoué. Veuillez réessayer ultérieurement ou contacter le support si le problème persiste",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                      ),
                     ),
                   ),
                 ),
@@ -92,8 +82,7 @@ class WithdrawalFailed extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w400, fontSize: 16),
+                  textStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                 ),
                 const SizedBox(
                   height: 16,
@@ -104,7 +93,8 @@ class WithdrawalFailed extends StatelessWidget {
                   iconStrokeWidth: 1.8,
                   onPressed: () {
                     controller.code.clear();
-                    Get.toNamed(AppRoutes.BOTTOMNAV);
+                    Get.back();
+                    Get.back();
                   },
                   height: 5.8.h,
 
@@ -121,10 +111,7 @@ class WithdrawalFailed extends StatelessWidget {
                       offset: const Offset(0, 5),
                     )
                   ],
-                  textStyle: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: context.colorScheme.primary),
+                  textStyle: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: context.colorScheme.primary),
                 ),
                 const SizedBox(
                   height: 24,
