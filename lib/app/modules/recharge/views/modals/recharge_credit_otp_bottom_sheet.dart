@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
 import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/recharge/controller/recharge_controller.dart';
+import 'package:ibank/app/services/android_verify_services.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
@@ -335,25 +336,29 @@ class RechargeCreditOTPBottomSheet {
                           keyboardType: TextInputType.number,
                           fillColor: const Color(0xFFf4f5fa),
                           onChanged: (text) {},
-                          onFieldSubmitted: (p0) {
+                          onFieldSubmitted: (p0) async {
                             if (controller.code.text.isNotEmpty) {
-                              if (controller.selectedOption.value ==
-                                  "For myself") {
-                                AppGlobal.dateNow = DateTime.now().toString();
-                                AppGlobal.timeNow = DateTime.now().toString();
-                                controller.verifyAndroidCredit(
+                              bool verified =
+                                  await Get.find<AndroidVerifyServices>()
+                                      .verifyAndroid();
+                              if (verified) {
+                                if (controller.selectedOption.value ==
+                                    "For myself") {
+                                  AppGlobal.dateNow = DateTime.now().toString();
+                                  AppGlobal.timeNow = DateTime.now().toString();
+
+                                  await controller.transactCreditForMyself(
                                     code: controller.code.text,
                                     amount: controller.amountTextField.text,
-                                    msisdn: Get.find<StorageServices>()
-                                        .storage
-                                        .read('msisdn'));
-                              } else {
-                                AppGlobal.dateNow = DateTime.now().toString();
-                                AppGlobal.timeNow = DateTime.now().toString();
-                                controller.verifyAndroidCredit(
-                                    code: controller.code.text,
-                                    amount: controller.amountTextField.text,
-                                    msisdn: controller.numberTextField.text);
+                                  );
+                                } else {
+                                  AppGlobal.dateNow = DateTime.now().toString();
+                                  AppGlobal.timeNow = DateTime.now().toString();
+                                  await controller.transactCreditForOthers(
+                                      code: controller.code.text,
+                                      amount: controller.amountTextField.text,
+                                      msisdn: controller.numberTextField.text);
+                                }
                               }
                             } else {
                               Get.snackbar("Message", "Entrées manquantes",
@@ -372,25 +377,34 @@ class RechargeCreditOTPBottomSheet {
                             'Validate',
                             suffixIcon: FluIcons.checkCircleUnicon,
                             iconStrokeWidth: 1.8,
-                            onPressed: () {
+                            onPressed: () async {
                               if (controller.code.text.isNotEmpty) {
-                                if (controller.selectedOption.value ==
-                                    "For myself") {
-                                  AppGlobal.dateNow = DateTime.now().toString();
-                                  AppGlobal.timeNow = DateTime.now().toString();
-                                  controller.verifyAndroidCredit(
+                                bool verified =
+                                    await Get.find<AndroidVerifyServices>()
+                                        .verifyAndroid();
+                                if (verified) {
+                                  if (controller.selectedOption.value ==
+                                      "For myself") {
+                                    AppGlobal.dateNow =
+                                        DateTime.now().toString();
+                                    AppGlobal.timeNow =
+                                        DateTime.now().toString();
+
+                                    await controller.transactCreditForMyself(
                                       code: controller.code.text,
                                       amount: controller.amountTextField.text,
-                                      msisdn: Get.find<StorageServices>()
-                                          .storage
-                                          .read('msisdn'));
-                                } else {
-                                  AppGlobal.dateNow = DateTime.now().toString();
-                                  AppGlobal.timeNow = DateTime.now().toString();
-                                  controller.verifyAndroidCredit(
-                                      code: controller.code.text,
-                                      amount: controller.amountTextField.text,
-                                      msisdn: controller.numberTextField.text);
+                                    );
+                                  } else {
+                                    AppGlobal.dateNow =
+                                        DateTime.now().toString();
+                                    AppGlobal.timeNow =
+                                        DateTime.now().toString();
+                                    await controller.transactCreditForOthers(
+                                        code: controller.code.text,
+                                        amount: controller.amountTextField.text,
+                                        msisdn:
+                                            controller.numberTextField.text);
+                                  }
                                 }
                               } else {
                                 Get.snackbar("Message", "Entrées manquantes",

@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
 import 'package:ibank/app/components/line_separator.dart';
 import 'package:ibank/app/modules/sendmoney/controller/send_money_controller.dart';
+import 'package:ibank/app/services/android_verify_services.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
@@ -311,10 +312,20 @@ class SendMoneyOtpsBottomSheet {
                               } else {
                                 AppGlobal.dateNow = DateTime.now().toString();
                                 AppGlobal.timeNow = DateTime.now().toString();
-                                controller.addNumberFromReceiver(
-                                    controller.numberController.value.text,
-                                    Get.find<DevicePlatformServices>()
-                                        .deviceID);
+                                bool verified =
+                                    await Get.find<AndroidVerifyServices>()
+                                        .verifyAndroid();
+                                if (verified) {
+                                  var finalmsisdnformat =
+                                      '228${controller.numberController.value.text.replaceAll(" ", "")}';
+                                  controller.sendMoneyToReceiver(
+                                      finalmsisdnformat,
+                                      Get.find<DevicePlatformServices>()
+                                          .deviceID,
+                                      controller.amountController.value.text,
+                                      controller.otpController.value.text,
+                                      controller.messageType.value);
+                                }
                               }
                             }
                           }),
@@ -352,9 +363,19 @@ class SendMoneyOtpsBottomSheet {
                           onPressed: () async {
                             if (controller
                                 .otpController.value.text.isNotEmpty) {
-                              controller.addNumberFromReceiver(
-                                  controller.amountController.value.text,
-                                  Get.find<DevicePlatformServices>().deviceID);
+                              bool verified =
+                                  await Get.find<AndroidVerifyServices>()
+                                      .verifyAndroid();
+                              if (verified) {
+                                var finalmsisdnformat =
+                                    '228${controller.numberController.value.text.replaceAll(" ", "")}';
+                                controller.sendMoneyToReceiver(
+                                    finalmsisdnformat,
+                                    Get.find<DevicePlatformServices>().deviceID,
+                                    controller.amountController.value.text,
+                                    controller.otpController.value.text,
+                                    controller.messageType.value);
+                              }
                               // "Code invalide. S'il vous plaît essayer à nouveau";
                             } else if (controller
                                 .otpController.value.text.isEmpty) {
@@ -718,13 +739,19 @@ class SendMoneyOtpsBottomSheet {
                                 //     controller.numberController.value.text,
                                 //     Get.find<DevicePlatformServices>()
                                 //         .deviceID);
-                                controller.sendMoneyInternationFinalHit(
-                                    destinationMSISDN:
-                                        controller.numberController.text,
-                                    amount: controller.amountController.text,
-                                    selectedCountryCode:
-                                        controller.selectedCountryCode.value,
-                                    code: controller.otpController.value.text);
+                                bool verified =
+                                    await Get.find<AndroidVerifyServices>()
+                                        .verifyAndroid();
+                                if (verified) {
+                                  await controller.sendMoneyInternationFinalHit(
+                                      destinationMSISDN:
+                                          controller.numberController.text,
+                                      amount: controller.amountController.text,
+                                      selectedCountryCode:
+                                          controller.selectedCountryCode.value,
+                                      code:
+                                          controller.otpController.value.text);
+                                }
                               }
                             }
                           }),
@@ -762,17 +789,18 @@ class SendMoneyOtpsBottomSheet {
                           onPressed: () async {
                             if (controller
                                 .otpController.value.text.isNotEmpty) {
-                              // controller.addNumberFromReceiver(
-                              //     controller.amountController.value.text,
-                              //     Get.find<DevicePlatformServices>().deviceID);
-
-                              controller.sendMoneyInternationFinalHit(
-                                  destinationMSISDN:
-                                      controller.numberController.text,
-                                  amount: controller.amountController.text,
-                                  selectedCountryCode:
-                                      controller.selectedCountryCode.value,
-                                  code: controller.otpController.value.text);
+                              bool verified =
+                                  await Get.find<AndroidVerifyServices>()
+                                      .verifyAndroid();
+                              if (verified) {
+                                await controller.sendMoneyInternationFinalHit(
+                                    destinationMSISDN:
+                                        controller.numberController.text,
+                                    amount: controller.amountController.text,
+                                    selectedCountryCode:
+                                        controller.selectedCountryCode.value,
+                                    code: controller.otpController.value.text);
+                              }
                               // "Code invalide. S'il vous plaît essayer à nouveau";
                             } else if (controller
                                 .otpController.value.text.isEmpty) {

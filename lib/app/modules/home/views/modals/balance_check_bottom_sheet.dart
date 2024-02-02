@@ -14,6 +14,8 @@ import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/fontsize_config.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../services/android_verify_services.dart';
+
 class BalanceCheckBottomSheet {
   static void showBottomSheetInputNumber() {
     var controller = Get.find<HomeController>();
@@ -100,8 +102,15 @@ class BalanceCheckBottomSheet {
                             },
                             onFieldSubmitted: (p0) async {
                               if (controller.code.text.isNotEmpty) {
-                                String finalPINCode = controller.code.text.replaceAll(' ', '');
-                                controller.enterPinForInformationPersonelles(code: controller.code.text);
+                                bool verified =
+                                    await Get.find<AndroidVerifyServices>()
+                                        .verifyAndroid();
+                                if (verified) {
+                                  String finalPINCode =
+                                      controller.code.text.replaceAll(' ', '');
+                                  controller.enterPinForInformationPersonelles(
+                                      code: finalPINCode);
+                                }
                               } else {
                                 Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                               }
@@ -116,11 +125,17 @@ class BalanceCheckBottomSheet {
                             'Validate',
                             suffixIcon: FluIcons.checkCircleUnicon,
                             iconStrokeWidth: 1.8,
-                            onPressed: () {
+                            onPressed: () async {
                               if (controller.code.text.isNotEmpty) {
-                                String finalPINCode = controller.code.text.replaceAll(' ', '');
-                                // AppGlobal.dateNow = DateTime.now().toString();
-                                controller.enterPinForInformationPersonelles(code: controller.code.text);
+                                bool verified =
+                                    await Get.find<AndroidVerifyServices>()
+                                        .verifyAndroid();
+                                if (verified) {
+                                  String finalPINCode =
+                                      controller.code.text.replaceAll(' ', '');
+                                  controller.enterPinForInformationPersonelles(
+                                      code: finalPINCode);
+                                }
                               } else {
                                 Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                               }

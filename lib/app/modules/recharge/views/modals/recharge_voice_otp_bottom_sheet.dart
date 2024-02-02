@@ -18,6 +18,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../../../utils/fontsize_config.dart';
 import '../../../../../utils/helpers/string_helper.dart';
+import '../../../../services/android_verify_services.dart';
 
 class RechargeVoiceOTPBottomSheet {
   static showBottomSheetOTP() {
@@ -395,23 +396,28 @@ class RechargeVoiceOTPBottomSheet {
                           keyboardType: TextInputType.number,
                           fillColor: const Color(0xFFf4f5fa),
                           onChanged: (text) {},
-                          onFieldSubmitted: (p0) {
+                          onFieldSubmitted: (p0) async {
                             if (controller.code.text.isNotEmpty) {
-                              if (controller.selectedOption.value ==
-                                  "For myself") {
-                                AppGlobal.dateNow = DateTime.now().toString();
-                                AppGlobal.timeNow = DateTime.now().toString();
-                                controller.verifyAndroidVoice(
-                                    code: controller.code.text,
-                                    msisdn: Get.find<StorageServices>()
-                                        .storage
-                                        .read('msisdn'));
-                              } else {
-                                AppGlobal.dateNow = DateTime.now().toString();
-                                AppGlobal.timeNow = DateTime.now().toString();
-                                controller.verifyAndroidVoice(
-                                    code: controller.code.text,
-                                    msisdn: controller.numberTextField.text);
+                              bool verified =
+                                  await Get.find<AndroidVerifyServices>()
+                                      .verifyAndroid();
+                              if (verified) {
+                                if (controller.selectedOption.value ==
+                                    "For myself") {
+                                  AppGlobal.dateNow = DateTime.now().toString();
+                                  AppGlobal.timeNow = DateTime.now().toString();
+                                  await controller.transactVoiceRechargeOwn(
+                                      code: controller.code.text,
+                                      msisdn: Get.find<StorageServices>()
+                                          .storage
+                                          .read('msisdn'));
+                                } else {
+                                  AppGlobal.dateNow = DateTime.now().toString();
+                                  AppGlobal.timeNow = DateTime.now().toString();
+                                  await controller.transactVoieRechargeOthers(
+                                      code: controller.code.text,
+                                      msisdn: controller.numberTextField.text);
+                                }
                               }
                             } else {
                               Get.snackbar("Message", "Entrées manquantes",
@@ -430,23 +436,33 @@ class RechargeVoiceOTPBottomSheet {
                             'Validate',
                             suffixIcon: FluIcons.checkCircleUnicon,
                             iconStrokeWidth: 1.8,
-                            onPressed: () {
+                            onPressed: () async {
                               if (controller.code.text.isNotEmpty) {
-                                if (controller.selectedOption.value ==
-                                    "For myself") {
-                                  AppGlobal.dateNow = DateTime.now().toString();
-                                  AppGlobal.timeNow = DateTime.now().toString();
-                                  controller.verifyAndroidVoice(
-                                      code: controller.code.text,
-                                      msisdn: Get.find<StorageServices>()
-                                          .storage
-                                          .read('msisdn'));
-                                } else {
-                                  AppGlobal.dateNow = DateTime.now().toString();
-                                  AppGlobal.timeNow = DateTime.now().toString();
-                                  controller.verifyAndroidVoice(
-                                      code: controller.code.text,
-                                      msisdn: controller.numberTextField.text);
+                                bool verified =
+                                    await Get.find<AndroidVerifyServices>()
+                                        .verifyAndroid();
+                                if (verified) {
+                                  if (controller.selectedOption.value ==
+                                      "For myself") {
+                                    AppGlobal.dateNow =
+                                        DateTime.now().toString();
+                                    AppGlobal.timeNow =
+                                        DateTime.now().toString();
+                                    await controller.transactVoiceRechargeOwn(
+                                        code: controller.code.text,
+                                        msisdn: Get.find<StorageServices>()
+                                            .storage
+                                            .read('msisdn'));
+                                  } else {
+                                    AppGlobal.dateNow =
+                                        DateTime.now().toString();
+                                    AppGlobal.timeNow =
+                                        DateTime.now().toString();
+                                    await controller.transactVoieRechargeOthers(
+                                        code: controller.code.text,
+                                        msisdn:
+                                            controller.numberTextField.text);
+                                  }
                                 }
                               } else {
                                 Get.snackbar("Message", "Entrées manquantes",

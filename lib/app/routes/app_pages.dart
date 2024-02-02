@@ -19,9 +19,7 @@ import 'package:ibank/app/modules/payment/view/payment_failed_view.dart';
 import 'package:ibank/app/modules/payment/view/payment_success_view.dart';
 import 'package:ibank/app/modules/privacy/views/privacy_view.dart';
 import 'package:ibank/app/modules/recharge/views/recharge_failed_view.dart';
-import 'package:ibank/app/modules/recharge/views/recharge_otp_view.dart';
 import 'package:ibank/app/modules/recharge/views/recharge_success_view.dart';
-import 'package:ibank/app/modules/recharge/views/recharge_view.dart';
 import 'package:ibank/app/modules/sendmoney/views/transac_complete.dart';
 import 'package:ibank/app/modules/sendmoney/views/transac_failed.dart';
 import 'package:ibank/app/modules/sendmoney/views/transac_success.dart';
@@ -47,9 +45,15 @@ class AppPages {
     GetPage(name: AppRoutes.ONBOARD, page: () => const OnboardView()),
     GetPage(name: AppRoutes.LOGIN, page: () => const LoginView()),
     GetPage(name: AppRoutes.LOGINPROFILE, page: () => const LoginProfileView()),
-    GetPage(name: AppRoutes.LOGINSECURITYCODE, page: () => const LoginSecurityCodeView()),
-    GetPage(name: AppRoutes.LOGINBIOMETRICS, page: () => const LoginBiometricsView()),
-    GetPage(name: AppRoutes.LOGINPINBIOMETRICS, page: () => const LoginPinBiometricsView()),
+    GetPage(
+        name: AppRoutes.LOGINSECURITYCODE,
+        page: () => const LoginSecurityCodeView()),
+    GetPage(
+        name: AppRoutes.LOGINBIOMETRICS,
+        page: () => const LoginBiometricsView()),
+    GetPage(
+        name: AppRoutes.LOGINPINBIOMETRICS,
+        page: () => const LoginPinBiometricsView()),
     GetPage(name: AppRoutes.OTP, page: () => const OtpView()),
     GetPage(name: AppRoutes.PRIVACY, page: () => const PrivacyView()),
     GetPage(name: AppRoutes.LOGINSUCCESS, page: () => const LoginSuccess()),
@@ -65,24 +69,39 @@ class AppPages {
     GetPage(name: AppRoutes.WITHDRAWALSUCCESS, page: () => const WithdrawalSuccessView()),
     GetPage(name: AppRoutes.WITHDRAWALFAILED, page: () => const WithdrawalFailed()),
     GetPage(name: AppRoutes.PROFILE, page: () => const ProfileView()),
-    GetPage(name: AppRoutes.PROFILEINFORMATIONPERSONELLES, page: () => const ProfileInformationPersonellesView()),
+    GetPage(
+        name: AppRoutes.PROFILEINFORMATIONPERSONELLES,
+        page: () => const ProfileInformationPersonellesView()),
     GetPage(name: AppRoutes.PROFILEOTP, page: () => const ProfileOtpView()),
-    GetPage(name: AppRoutes.PROFILECHANGESPASSWORD, page: () => const ProfileChangePinView()),
-    GetPage(name: AppRoutes.WITHDRAWALOTP, page: () => const WithdrawalOtpView()),
-    GetPage(name: AppRoutes.WITHDRAWALSUCCESS, page: () => const WithdrawalSuccessView()),
-    GetPage(name: AppRoutes.TRANSACCOMPLETE, page: () => const TransacCompleteView()),
-    GetPage(name: AppRoutes.TRANSACFAILED, page: () => const TransacFailedView()),
-    GetPage(name: AppRoutes.TRANSACSUCCESS, page: () => const TransacSuccessView()),
-    GetPage(name: AppRoutes.RECHARGE, page: () => const RechargeView()),
-    GetPage(name: AppRoutes.RECHARGEOTP, page: () => const RechargeOtpView()),
-    GetPage(name: AppRoutes.WITHDRAWPROGRESS, page: () => const WithdrawalProgressView()),
-    GetPage(name: AppRoutes.PAYMENTSUCCESS, page: () => const PaymentSuccessView()),
-    GetPage(name: AppRoutes.PAYMENTFAILED, page: () => const PaymentFieldView()),
+    GetPage(
+        name: AppRoutes.PROFILECHANGESPASSWORD,
+        page: () => const ProfileChangePinView()),
+    GetPage(
+        name: AppRoutes.WITHDRAWALOTP, page: () => const WithdrawalOtpView()),
+    GetPage(
+        name: AppRoutes.TRANSACCOMPLETE,
+        page: () => const TransacCompleteView()),
+    GetPage(
+        name: AppRoutes.TRANSACFAILED, page: () => const TransacFailedView()),
+    GetPage(
+        name: AppRoutes.TRANSACSUCCESS, page: () => const TransacSuccessView()),
+    GetPage(
+        name: AppRoutes.WITHDRAWPROGRESS,
+        page: () => const WithdrawalProgressView()),
+    GetPage(
+        name: AppRoutes.PAYMENTSUCCESS, page: () => const PaymentSuccessView()),
+    GetPage(
+        name: AppRoutes.PAYMENTFAILED, page: () => const PaymentFieldView()),
     GetPage(name: AppRoutes.OTPRECOVERY, page: () => const OtpRecoveryView()),
-    GetPage(name: AppRoutes.MBANKFAILED, page: () => const MBangkingFailedView()),
-    GetPage(name: AppRoutes.MBANKSUCCESS, page: () => const MBangkingSuccessView()),
-    GetPage(name: AppRoutes.RECHARGEFAILED, page: () => const RechargeFailedView()),
-    GetPage(name: AppRoutes.RECHARGESUCCESS, page: () => const RechargeSuccessView()),
+    GetPage(
+        name: AppRoutes.MBANKFAILED, page: () => const MBangkingFailedView()),
+    GetPage(
+        name: AppRoutes.MBANKSUCCESS, page: () => const MBangkingSuccessView()),
+    GetPage(
+        name: AppRoutes.RECHARGEFAILED, page: () => const RechargeFailedView()),
+    GetPage(
+        name: AppRoutes.RECHARGESUCCESS,
+        page: () => const RechargeSuccessView()),
     GetPage(name: AppRoutes.NOTIFICAITON, page: () => const NotificationView()),
   ];
 }

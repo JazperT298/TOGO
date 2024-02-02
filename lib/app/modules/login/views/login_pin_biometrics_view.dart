@@ -13,6 +13,7 @@ import 'package:ibank/app/data/local/getstorage_services.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/app/modules/login/modals/login_settings_bottom_sheet.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/app/services/android_verify_services.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/constants/app_global.dart';
 import 'package:ibank/utils/constants/app_images.dart';
@@ -141,7 +142,8 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
                                 shape: BoxShape.circle,
                                 border: Border.all(color: Colors.grey),
                               ),
-                              child: AppGlobal.PROFILEAVATAR.isEmpty && AppGlobal.PROFILEIMAGE.isNotEmpty
+                              child: AppGlobal.PROFILEAVATAR.isEmpty &&
+                                      AppGlobal.PROFILEIMAGE.isNotEmpty
                                   ? CircleAvatar(
                                       backgroundColor: Colors.black,
                                       radius: 30.0,
@@ -150,7 +152,8 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
                                           File(AppGlobal.PROFILEIMAGE),
                                         ),
                                       ))
-                                  : AppGlobal.PROFILEIMAGE.isEmpty && AppGlobal.PROFILEAVATAR.isNotEmpty
+                                  : AppGlobal.PROFILEIMAGE.isEmpty &&
+                                          AppGlobal.PROFILEAVATAR.isNotEmpty
                                       ? Image.asset(
                                           AppGlobal.PROFILEAVATAR,
                                         )
@@ -163,7 +166,10 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
                         SizedBox(height: 2.h),
                         Text(
                           '${Get.find<StorageServices>().userFirstname().toString()} ${Get.find<StorageServices>().userName().toString()}',
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 24),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                              fontSize: 24),
                         ),
                         SizedBox(height: 2.h),
                         (Platform.isIOS)
@@ -183,29 +189,40 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
                                   onTap: () {
                                     if (AppGlobal.BIOMETRICS == false) {
                                       controller.getSecureTextFromStorage();
-                                      LoginSettingsBottomSheet.showBottomSheetBiometrics();
+                                      LoginSettingsBottomSheet
+                                          .showBottomSheetBiometrics();
                                     } else {
                                       ScreenLock(context: context)
-                                          .authenticateUser(context: context, deviceName: _deviceName, platformId: _platformId);
+                                          .authenticateUser(
+                                              context: context,
+                                              deviceName: _deviceName,
+                                              platformId: _platformId);
                                     }
                                   },
                                   child: Text.rich(
                                     TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: 'Please enter your security code or use ',
-                                          style:
-                                              GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.smallText),
+                                          text:
+                                              'Please enter your security code or use ',
+                                          style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontSize: FontSizes.smallText),
                                         ),
                                         TextSpan(
                                           text: 'Face ID',
                                           style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w700, color: const Color(0xFF27303F), fontSize: FontSizes.smallText),
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF27303F),
+                                              fontSize: FontSizes.smallText),
                                         ),
                                         TextSpan(
                                           text: ' to unlock your app',
-                                          style:
-                                              GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.smallText),
+                                          style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontSize: FontSizes.smallText),
                                         ),
                                       ],
                                     ),
@@ -217,29 +234,40 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
                                 child: InkWell(
                                   onTap: () {
                                     if (AppGlobal.BIOMETRICS == false) {
-                                      LoginSettingsBottomSheet.showBottomSheetBiometrics();
+                                      LoginSettingsBottomSheet
+                                          .showBottomSheetBiometrics();
                                     } else {
                                       ScreenLock(context: context)
-                                          .authenticateUser(context: context, deviceName: _deviceName, platformId: _platformId);
+                                          .authenticateUser(
+                                              context: context,
+                                              deviceName: _deviceName,
+                                              platformId: _platformId);
                                     }
                                   },
                                   child: Text.rich(
                                     TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: 'Please enter your security code or use your ',
-                                          style:
-                                              GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.smallText),
+                                          text:
+                                              'Please enter your security code or use your ',
+                                          style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontSize: FontSizes.smallText),
                                         ),
                                         TextSpan(
                                           text: 'Fingerprint',
                                           style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w700, color: const Color(0xFF27303F), fontSize: FontSizes.smallText),
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF27303F),
+                                              fontSize: FontSizes.smallText),
                                         ),
                                         TextSpan(
                                           text: ' to unlock your app ',
-                                          style:
-                                              GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.smallText),
+                                          style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontSize: FontSizes.smallText),
                                         ),
                                       ],
                                     ),
@@ -257,7 +285,10 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
                           child: Text(
                             'Forgot security code?',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF124DE5), fontSize: FontSizes.smallText),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF124DE5),
+                                fontSize: FontSizes.smallText),
                           ),
                         ),
                         SizedBox(height: 3.h),
@@ -349,7 +380,10 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
         alignment: Alignment.center,
         child: Text(
           number,
-          style: GoogleFonts.montserrat(fontWeight: FontWeight.w700, color: Colors.black, fontSize: FontSizes.largeText),
+          style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              fontSize: FontSizes.largeText),
         ),
       ),
     );
@@ -376,13 +410,19 @@ class _LoginPinBiometricsViewState extends State<LoginPinBiometricsView> {
           });
         } else {
           if (pinCode.isNotEmpty) {
-            controller.enterPINFromBiometrics(code: pinCode);
+            bool verified =
+                await Get.find<AndroidVerifyServices>().verifyAndroid();
+            if (verified) {
+              controller.enterPINFromBiometrics(code: pinCode);
+            }
             setState(() {
               _resetFilledCircles();
               pinCode = '';
             });
           } else {
-            Get.snackbar("Message", 'Invalid PIN, Please try again!', backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+            Get.snackbar("Message", 'Invalid PIN, Please try again!',
+                backgroundColor: const Color(0xFFE60000),
+                colorText: Colors.white);
             setState(() {
               _resetFilledCircles();
               pinCode = '';

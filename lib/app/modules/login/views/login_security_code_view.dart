@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/app/services/android_verify_services.dart';
 import 'package:ibank/utils/constants/app_images.dart';
 import 'package:sizer/sizer.dart';
 
@@ -238,13 +239,17 @@ class _LoginSecurityCodeViewState extends State<LoginSecurityCodeView> {
 
   Widget _buildSendContainer() {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         if (pinCode.length < 4) {
           setState(() {
             hasError = true;
           });
         } else {
-          controller.enterPinForInformationPersonelles(code: pinCode);
+          bool verified =
+              await Get.find<AndroidVerifyServices>().verifyAndroid();
+          if (verified) {
+            controller.enterPinForInformationPersonelles(code: pinCode);
+          }
           // CLEAR THE CIRCLE AFTER THE FAILED MESSAGE
           if (controller.isResetCircle.value == true) {
             setState(() {
