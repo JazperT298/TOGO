@@ -219,6 +219,9 @@ class MBankingSubMenuBottomSheet {
                                           ],
                                         ),
                                       ),
+                                      SizedBox(
+                                        width: 3.w,
+                                      ),
                                       Expanded(
                                           child: Column(
                                               crossAxisAlignment:
@@ -243,7 +246,7 @@ class MBankingSubMenuBottomSheet {
                                                   color:
                                                       const Color(0xFF687997),
                                                   fontSize: FontSizes
-                                                      .headerMediumText),
+                                                      .headerSmallText),
                                             ),
                                           ])),
                                       // const SizedBox(width: 15),

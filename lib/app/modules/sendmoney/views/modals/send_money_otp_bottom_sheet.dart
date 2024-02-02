@@ -141,7 +141,7 @@ class SendMoneyOtpsBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: FontSizes.headerSmallText),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 4.h),
@@ -268,8 +268,8 @@ class SendMoneyOtpsBottomSheet {
                     ),
                     Obx(() => controller.firstname.value.isEmpty &&
                             controller.lastname.value.isEmpty
-                        ? SizedBox(height: 6.h)
-                        : SizedBox(height: 3.h)),
+                        ? SizedBox(height: 7.h)
+                        : SizedBox(height: 4.h)),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: FluTextField(
@@ -323,7 +323,7 @@ class SendMoneyOtpsBottomSheet {
                       () => controller.isInvalidCode.value == true
                           ? Center(
                               child: Container(
-                                height: 5.h,
+                                height: 3.h,
                                 padding: EdgeInsets.only(top: 1.h),
                                 child: Text(
                                   controller.invalidCodeString.value,
@@ -334,8 +334,13 @@ class SendMoneyOtpsBottomSheet {
                                 ),
                               ),
                             )
-                          : SizedBox(height: 5.h),
+                          : SizedBox(height: 3.h),
                     ),
+                    Obx(() => controller.isInvalidCode.value
+                        ? SizedBox(
+                            height: 1.h,
+                          )
+                        : const SizedBox()),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Visibility(
@@ -441,7 +446,7 @@ class SendMoneyOtpsBottomSheet {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF27303F),
-                            fontSize: FontSizes.headerSmallText),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 4.h),
@@ -685,11 +690,11 @@ class SendMoneyOtpsBottomSheet {
                           hintStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w400,
                               color: const Color(0xFF27303F),
-                              fontSize: FontSizes.headerSmallText),
+                              fontSize: FontSizes.textFieldText),
                           textStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w400,
                               color: Colors.black,
-                              fontSize: FontSizes.headerSmallText),
+                              fontSize: FontSizes.textFieldText),
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'[0-9\s]')),
@@ -727,7 +732,7 @@ class SendMoneyOtpsBottomSheet {
                       () => controller.isInvalidCode.value == true
                           ? Center(
                               child: Container(
-                                height: 5.h,
+                                height: 3.h,
                                 padding: EdgeInsets.only(top: 1.h),
                                 child: Text(
                                   controller.invalidCodeString.value,
@@ -738,13 +743,13 @@ class SendMoneyOtpsBottomSheet {
                                 ),
                               ),
                             )
-                          : SizedBox(height: 5.h),
+                          : SizedBox(height: 3.h),
                     ),
-                    // Obx(() => controller.isInvalidCode.value
-                    //     ? SizedBox(
-                    //         height: 3.h,
-                    //       )
-                    //     : const SizedBox()),
+                    Obx(() => controller.isInvalidCode.value
+                        ? SizedBox(
+                            height: 1.h,
+                          )
+                        : const SizedBox()),
                     Padding(
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Visibility(

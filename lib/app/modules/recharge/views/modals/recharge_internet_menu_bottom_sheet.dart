@@ -21,7 +21,8 @@ import 'recharge_internet_select_package_bottom_sheet.dart';
 class RechargeInternetMainMenuBottomSheet {
   static void showBottomSheetRechargeInternetTo() {
     var controller = Get.find<RechargeController>();
-    Get.bottomSheet(KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+    Get.bottomSheet(
+        KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
         child: Wrap(
@@ -31,7 +32,10 @@ class RechargeInternetMainMenuBottomSheet {
               height: 45.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +45,10 @@ class RechargeInternetMainMenuBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         "Internet package".toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 13.sp),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -49,7 +56,10 @@ class RechargeInternetMainMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Yorem ipsum dolor sit amet, adipiscing elit.", //  "CREDIT",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerLargeText),
                         )),
                     SizedBox(
                       height: 3.h,
@@ -83,7 +93,8 @@ class RechargeInternetMainMenuBottomSheet {
                           controller.internetRadioGroupValue.value = '';
                           AppGlobal.dateNow = '';
                           AppGlobal.timeNow = '';
-                          RechargeInternetSelectPackageBottomSheet.showBottomSheetSelectPackage();
+                          RechargeInternetSelectPackageBottomSheet
+                              .showBottomSheetSelectPackage();
                         },
                         child: SizedBox(
                           child: Row(
@@ -99,8 +110,12 @@ class RechargeInternetMainMenuBottomSheet {
                                       height: 9.h,
                                       width: 20.w,
                                       clipBehavior: Clip.hardEdge,
-                                      decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
-                                      child: const FluIcon(FluIcons.userCircleUnicon, color: Colors.black),
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xFFDBE4FB),
+                                          shape: BoxShape.circle),
+                                      child: const FluIcon(
+                                          FluIcons.userCircleUnicon,
+                                          color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -111,13 +126,19 @@ class RechargeInternetMainMenuBottomSheet {
                                   children: [
                                     Text(
                                       'For myself', //  "OWN",
-                                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 12.sp),
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w600,
+                                          color: const Color(0xFF27303F),
+                                          fontSize: FontSizes.headerSmallText),
                                     ),
                                     Text(
                                       "Recharge your Moov account.",
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 12.sp),
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xFF687997),
+                                          fontSize: FontSizes.headerSmallText),
                                     ),
                                   ],
                                 ),
@@ -143,7 +164,8 @@ class RechargeInternetMainMenuBottomSheet {
                           controller.internetRadioGroupValue.value = '';
                           AppGlobal.dateNow = '';
                           AppGlobal.timeNow = '';
-                          RechargeInternetsInputNumberBottomSheet.showBottomSheetInputNumber();
+                          RechargeInternetsInputNumberBottomSheet
+                              .showBottomSheetInputNumber();
                           // RechargeInternetSelectPackageBottomSheet
                           //     .showBottomSheetSelectPackage();
                         },
@@ -160,8 +182,11 @@ class RechargeInternetMainMenuBottomSheet {
                                     height: 9.h,
                                     width: 20.w,
                                     clipBehavior: Clip.hardEdge,
-                                    decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
-                                    child: const FluIcon(FluIcons.userCirlceAdd, color: Colors.black),
+                                    decoration: const BoxDecoration(
+                                        color: Color(0xFFDBE4FB),
+                                        shape: BoxShape.circle),
+                                    child: const FluIcon(FluIcons.userCirlceAdd,
+                                        color: Colors.black),
                                   ),
                                 ],
                               ),
@@ -172,13 +197,19 @@ class RechargeInternetMainMenuBottomSheet {
                                 children: [
                                   Text(
                                     'For another person', //   "OTHERS",
-                                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 12.sp),
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color(0xFF27303F),
+                                        fontSize: FontSizes.headerSmallText),
                                   ),
                                   Text(
                                     "Enter the number and recharge for others.",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 12.sp),
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w400,
+                                        color: const Color(0xFF687997),
+                                        fontSize: FontSizes.headerSmallText),
                                   ),
                                 ],
                               ),
@@ -199,7 +230,8 @@ class RechargeInternetMainMenuBottomSheet {
 
   static void showBottomSheetRechargeVoicePackageTo() {
     var controller = Get.find<RechargeController>();
-    Get.bottomSheet(backgroundColor: Colors.transparent, KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+    Get.bottomSheet(backgroundColor: Colors.transparent,
+        KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
         child: Wrap(
@@ -209,7 +241,10 @@ class RechargeInternetMainMenuBottomSheet {
               height: 45.h,
               width: 100.w,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,7 +254,10 @@ class RechargeInternetMainMenuBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         "All network package".toUpperCase(),
-                        style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 13.sp),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -227,7 +265,10 @@ class RechargeInternetMainMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Yorem ipsum dolor sit amet, adipiscing elit.", //  "CREDIT",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerLargeText),
                         )),
                     SizedBox(
                       height: 3.h,
@@ -260,7 +301,8 @@ class RechargeInternetMainMenuBottomSheet {
                           controller.voicePackageRadioGroupValue.value = '';
                           AppGlobal.dateNow = '';
                           AppGlobal.timeNow = '';
-                          RechargeVoiceSelectedPackageBottomSheet.showBottomSheetSelectPackage();
+                          RechargeVoiceSelectedPackageBottomSheet
+                              .showBottomSheetSelectPackage();
                         },
                         child: SizedBox(
                           child: Row(
@@ -276,8 +318,12 @@ class RechargeInternetMainMenuBottomSheet {
                                       height: 9.h,
                                       width: 20.w,
                                       clipBehavior: Clip.hardEdge,
-                                      decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
-                                      child: const FluIcon(FluIcons.userCirlceAdd, color: Colors.black),
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xFFDBE4FB),
+                                          shape: BoxShape.circle),
+                                      child: const FluIcon(
+                                          FluIcons.userCirlceAdd,
+                                          color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -288,13 +334,19 @@ class RechargeInternetMainMenuBottomSheet {
                                   children: [
                                     Text(
                                       "For Myself",
-                                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 12.sp),
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w600,
+                                          color: const Color(0xFF27303F),
+                                          fontSize: FontSizes.headerSmallText),
                                     ),
                                     Text(
                                       "Recharge your Moov account.",
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 12.sp),
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xFF687997),
+                                          fontSize: FontSizes.headerSmallText),
                                     ),
                                   ],
                                 ),
@@ -320,7 +372,8 @@ class RechargeInternetMainMenuBottomSheet {
                           controller.voicePackageRadioGroupValue.value = '';
                           AppGlobal.dateNow = '';
                           AppGlobal.timeNow = '';
-                          RechargeVoiceInputNumberBottomSheet.showBottomSheetInputNumber();
+                          RechargeVoiceInputNumberBottomSheet
+                              .showBottomSheetInputNumber();
                           // RechargeInternetSelectPackageBottomSheet
                           //     .showBottomSheetSelectPackage();
                         },
@@ -337,8 +390,11 @@ class RechargeInternetMainMenuBottomSheet {
                                     height: 9.h,
                                     width: 20.w,
                                     clipBehavior: Clip.hardEdge,
-                                    decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
-                                    child: const FluIcon(FluIcons.userCirlceAdd, color: Colors.black),
+                                    decoration: const BoxDecoration(
+                                        color: Color(0xFFDBE4FB),
+                                        shape: BoxShape.circle),
+                                    child: const FluIcon(FluIcons.userCirlceAdd,
+                                        color: Colors.black),
                                   ),
                                 ],
                               ),
@@ -349,13 +405,19 @@ class RechargeInternetMainMenuBottomSheet {
                                 children: [
                                   Text(
                                     "For Others",
-                                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 12.sp),
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color(0xFF27303F),
+                                        fontSize: FontSizes.headerSmallText),
                                   ),
                                   Text(
                                     "Enter the number and recharge for others.",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: 12.sp),
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w400,
+                                        color: const Color(0xFF687997),
+                                        fontSize: FontSizes.headerSmallText),
                                   ),
                                 ],
                               ),

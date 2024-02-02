@@ -140,24 +140,18 @@ class PaymentSubMenuBottomSheet {
                                   ),
                                   Expanded(
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 2.w),
+                                      padding: EdgeInsets.only(left: 2.w),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(bottom: .5.h),
-                                            child: Text(
-                                              option.name,
-                                              style: GoogleFonts.montserrat(
-                                                  fontWeight: FontWeight.w600,
-                                                  color:
-                                                      const Color(0xFF27303F),
-                                                  fontSize: FontSizes
-                                                      .headerMediumText),
-                                            ),
+                                          Text(
+                                            option.name,
+                                            style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                color: const Color(0xFF27303F),
+                                                fontSize:
+                                                    FontSizes.headerMediumText),
                                           ),
                                           Text(
                                             option.description,

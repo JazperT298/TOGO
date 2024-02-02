@@ -185,7 +185,7 @@ class MBankingMenuBottomSheet {
                                                 fontWeight: FontWeight.w400,
                                                 color: const Color(0xFF687997),
                                                 fontSize:
-                                                    FontSizes.headerMediumText),
+                                                    FontSizes.headerSmallText),
                                           ),
                                         ]),
                                   ),

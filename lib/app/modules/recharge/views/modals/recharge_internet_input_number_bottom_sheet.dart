@@ -31,7 +31,10 @@ class RechargeInternetsInputNumberBottomSheet {
                 height: isKeyboardVisible ? 35.h : 45.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +44,10 @@ class RechargeInternetsInputNumberBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Internet package for a third party".toUpperCase(),
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 13.sp),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFB6404),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -49,7 +55,10 @@ class RechargeInternetsInputNumberBottomSheet {
                           padding: EdgeInsets.only(left: 5.w, right: 5.w),
                           child: Text(
                             "Yorem ipsum dolor sit amet, adipiscing elit.", //  "CREDIT",
-                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 19.sp),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                                fontSize: FontSizes.headerLargeText),
                           )),
                       SizedBox(
                         height: 3.h,
@@ -74,8 +83,14 @@ class RechargeInternetsInputNumberBottomSheet {
                         child: FluTextField(
                           inputController: controller.numberTextField,
                           hint: LocaleKeys.strEnterNumber.tr, // "Enter number",
-                          hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 12.sp),
-                          textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 12.sp),
+                          hintStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xFF27303F),
+                              fontSize: FontSizes.textFieldText),
+                          textStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: FontSizes.textFieldText),
                           height: 6.5.h,
                           cornerRadius: 15,
                           keyboardType: TextInputType.number,
@@ -83,24 +98,40 @@ class RechargeInternetsInputNumberBottomSheet {
                           onChanged: (text) {},
                           onFieldSubmitted: (p0) {
                             if (controller.numberTextField.text.isEmpty) {
-                              Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              Get.snackbar(
+                                  "Message", LocaleKeys.strInvalidNumber.tr,
+                                  backgroundColor: Colors.lightBlue,
+                                  colorText: Colors.white);
                             } else {
-                              if (controller.numberTextField.text.length == 8 || controller.numberTextField.text.length == 11) {
-                                if (controller.numberTextField.text.length == 8) {
-                                  controller.numberTextField.text = "228${controller.numberTextField.text}";
+                              if (controller.numberTextField.text.length == 8 ||
+                                  controller.numberTextField.text.length ==
+                                      11) {
+                                if (controller.numberTextField.text.length ==
+                                    8) {
+                                  controller.numberTextField.text =
+                                      "228${controller.numberTextField.text}";
                                   Get.back();
-                                  RechargeInternetSelectPackageBottomSheet.showBottomSheetSelectPackage();
+                                  RechargeInternetSelectPackageBottomSheet
+                                      .showBottomSheetSelectPackage();
                                 } else {
-                                  if (controller.numberTextField.text.substring(0, 3) == "228") {
+                                  if (controller.numberTextField.text
+                                          .substring(0, 3) ==
+                                      "228") {
                                     Get.back();
-                                    RechargeInternetSelectPackageBottomSheet.showBottomSheetSelectPackage();
+                                    RechargeInternetSelectPackageBottomSheet
+                                        .showBottomSheetSelectPackage();
                                   } else {
-                                    Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                                        backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                    Get.snackbar("Message",
+                                        LocaleKeys.strInvalidNumber.tr,
+                                        backgroundColor: Colors.lightBlue,
+                                        colorText: Colors.white);
                                   }
                                 }
                               } else {
-                                Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                Get.snackbar(
+                                    "Message", LocaleKeys.strInvalidNumber.tr,
+                                    backgroundColor: Colors.lightBlue,
+                                    colorText: Colors.white);
                               }
                             }
                           },
@@ -122,24 +153,41 @@ class RechargeInternetsInputNumberBottomSheet {
                             iconStrokeWidth: 1.8,
                             onPressed: () {
                               if (controller.numberTextField.text.isEmpty) {
-                                Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                Get.snackbar(
+                                    "Message", LocaleKeys.strInvalidNumber.tr,
+                                    backgroundColor: Colors.lightBlue,
+                                    colorText: Colors.white);
                               } else {
-                                if (controller.numberTextField.text.length == 8 || controller.numberTextField.text.length == 11) {
-                                  if (controller.numberTextField.text.length == 8) {
-                                    controller.numberTextField.text = "228${controller.numberTextField.text}";
+                                if (controller.numberTextField.text.length ==
+                                        8 ||
+                                    controller.numberTextField.text.length ==
+                                        11) {
+                                  if (controller.numberTextField.text.length ==
+                                      8) {
+                                    controller.numberTextField.text =
+                                        "228${controller.numberTextField.text}";
                                     Get.back();
-                                    RechargeInternetSelectPackageBottomSheet.showBottomSheetSelectPackage();
+                                    RechargeInternetSelectPackageBottomSheet
+                                        .showBottomSheetSelectPackage();
                                   } else {
-                                    if (controller.numberTextField.text.substring(0, 3) == "228") {
+                                    if (controller.numberTextField.text
+                                            .substring(0, 3) ==
+                                        "228") {
                                       Get.back();
-                                      RechargeInternetSelectPackageBottomSheet.showBottomSheetSelectPackage();
+                                      RechargeInternetSelectPackageBottomSheet
+                                          .showBottomSheetSelectPackage();
                                     } else {
-                                      Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr,
-                                          backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                      Get.snackbar("Message",
+                                          LocaleKeys.strInvalidNumber.tr,
+                                          backgroundColor: Colors.lightBlue,
+                                          colorText: Colors.white);
                                     }
                                   }
                                 } else {
-                                  Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                  Get.snackbar(
+                                      "Message", LocaleKeys.strInvalidNumber.tr,
+                                      backgroundColor: Colors.lightBlue,
+                                      colorText: Colors.white);
                                 }
                               }
                             },
@@ -156,7 +204,10 @@ class RechargeInternetsInputNumberBottomSheet {
                                 offset: Offset(0, 5),
                               )
                             ],
-                            textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFF4F5FA), fontSize: 14.sp),
+                            textStyle: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFFF4F5FA),
+                                fontSize: FontSizes.buttonText),
                           ),
                         ),
                       ),

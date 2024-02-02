@@ -148,7 +148,7 @@ class PaymentEnterOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: FontSizes.headerMediumText),
+                                  fontSize: FontSizes.headerSmallText),
                             ),
                           ),
                           Expanded(
@@ -159,7 +159,7 @@ class PaymentEnterOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0xFF27303F),
-                                  fontSize: FontSizes.headerMediumText),
+                                  fontSize: FontSizes.headerSmallText),
                             ),
                           ),
                         ],
@@ -192,7 +192,7 @@ class PaymentEnterOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: FontSizes.headerMediumText),
+                                  fontSize: FontSizes.headerSmallText),
                             ),
                           ),
                           Expanded(
@@ -204,7 +204,7 @@ class PaymentEnterOtpBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: FontSizes.headerMediumText),
+                                    fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                           ),
@@ -223,7 +223,7 @@ class PaymentEnterOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: FontSizes.headerMediumText),
+                                  fontSize: FontSizes.headerSmallText),
                             ),
                           ),
                           Expanded(
@@ -235,7 +235,7 @@ class PaymentEnterOtpBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: FontSizes.headerMediumText),
+                                    fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                           ),
@@ -254,7 +254,7 @@ class PaymentEnterOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: FontSizes.headerMediumText),
+                                  fontSize: FontSizes.headerSmallText),
                             ),
                           ),
                           Expanded(
@@ -266,7 +266,7 @@ class PaymentEnterOtpBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: FontSizes.headerMediumText),
+                                    fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                           ),
@@ -285,7 +285,7 @@ class PaymentEnterOtpBottomSheet {
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: const Color(0xFF27303F),
-                                  fontSize: FontSizes.headerMediumText),
+                                  fontSize: FontSizes.headerSmallText),
                             ),
                           ),
                           Expanded(
@@ -297,7 +297,7 @@ class PaymentEnterOtpBottomSheet {
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xFF27303F),
-                                    fontSize: FontSizes.headerMediumText),
+                                    fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                           ),

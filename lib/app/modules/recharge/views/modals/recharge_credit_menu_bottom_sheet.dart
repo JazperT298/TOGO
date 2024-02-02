@@ -30,7 +30,10 @@ class RechargeCreditMainMenuBottomSheet {
               width: 100.w,
               clipBehavior: Clip.antiAlias,
               decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,8 +43,10 @@ class RechargeCreditMainMenuBottomSheet {
                       padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         "Communication credit".toUpperCase(),
-                        style:
-                            GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: FontSizes.headerMediumText),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFFFB6404),
+                            fontSize: FontSizes.headerMediumText),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -49,7 +54,10 @@ class RechargeCreditMainMenuBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Yorem ipsum dolor sit amet, adipiscing elit.", //  "CREDIT",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerLargeText),
                         )),
                     // Padding(
                     //   padding: EdgeInsets.only(left: 5.w, right: 5.w),
@@ -87,7 +95,8 @@ class RechargeCreditMainMenuBottomSheet {
                           controller.selectedOption.value = 'For myself';
                           AppGlobal.dateNow = '';
                           AppGlobal.timeNow = '';
-                          RechargeCreditInputAmountBottomSheet.showBottomSheetInputAmount(selectedMenu: "OWN");
+                          RechargeCreditInputAmountBottomSheet
+                              .showBottomSheetInputAmount(selectedMenu: "OWN");
                         },
                         child: Row(
                           children: [
@@ -102,8 +111,12 @@ class RechargeCreditMainMenuBottomSheet {
                                     height: 9.h,
                                     width: 20.w,
                                     clipBehavior: Clip.hardEdge,
-                                    decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
-                                    child: const FluIcon(FluIcons.userCircleUnicon, color: Colors.black),
+                                    decoration: const BoxDecoration(
+                                        color: Color(0xFFDBE4FB),
+                                        shape: BoxShape.circle),
+                                    child: const FluIcon(
+                                        FluIcons.userCircleUnicon,
+                                        color: Colors.black),
                                   ),
                                 ],
                               ),
@@ -114,14 +127,18 @@ class RechargeCreditMainMenuBottomSheet {
                                 Text(
                                   'For myself', //  "OWN",
                                   style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                                      fontWeight: FontWeight.w600,
+                                      color: const Color(0xFF27303F),
+                                      fontSize: FontSizes.headerSmallText),
                                 ),
                                 Text(
                                   "Recharge your Moov account.",
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: FontSizes.headerSmallText),
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xFF687997),
+                                      fontSize: FontSizes.headerSmallText),
                                 ),
                               ],
                             ),
@@ -143,7 +160,8 @@ class RechargeCreditMainMenuBottomSheet {
                           controller.selectedOption.value = 'For others';
                           AppGlobal.dateNow = '';
                           AppGlobal.timeNow = '';
-                          RechargeCreditInputNumberBottomSheet.showBottomSheetInputNumber();
+                          RechargeCreditInputNumberBottomSheet
+                              .showBottomSheetInputNumber();
                         },
                         child: Row(
                           children: [
@@ -158,8 +176,11 @@ class RechargeCreditMainMenuBottomSheet {
                                     height: 9.h,
                                     width: 20.w,
                                     clipBehavior: Clip.hardEdge,
-                                    decoration: const BoxDecoration(color: Color(0xFFDBE4FB), shape: BoxShape.circle),
-                                    child: const FluIcon(FluIcons.userCirlceAdd, color: Colors.black),
+                                    decoration: const BoxDecoration(
+                                        color: Color(0xFFDBE4FB),
+                                        shape: BoxShape.circle),
+                                    child: const FluIcon(FluIcons.userCirlceAdd,
+                                        color: Colors.black),
                                   ),
                                 ],
                               ),
@@ -171,14 +192,18 @@ class RechargeCreditMainMenuBottomSheet {
                                   Text(
                                     'For another person', //   "OTHERS",
                                     style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color(0xFF27303F),
+                                        fontSize: FontSizes.headerSmallText),
                                   ),
                                   Text(
                                     "Enter the number and recharge for others.",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w400, color: const Color(0xFF687997), fontSize: FontSizes.headerSmallText),
+                                        fontWeight: FontWeight.w400,
+                                        color: const Color(0xFF687997),
+                                        fontSize: FontSizes.headerSmallText),
                                   ),
                                 ],
                               ),

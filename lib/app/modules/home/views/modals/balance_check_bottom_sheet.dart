@@ -11,6 +11,7 @@ import 'package:ibank/app/components/divider_widget.dart';
 import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/fontsize_config.dart';
 import 'package:sizer/sizer.dart';
 
 class BalanceCheckBottomSheet {
@@ -25,10 +26,15 @@ class BalanceCheckBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                height: isKeyboardVisible ? 27.h : 33.h,
+                height: isKeyboardVisible ? 34.h : 44.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  ),
+                ),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +47,10 @@ class BalanceCheckBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Balance consultation".toUpperCase(),
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w500, color: const Color(0xFFFB6404), fontSize: 14),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFB6404),
+                              fontSize: FontSizes.headerMediumText),
                         ),
                       ),
                       SizedBox(height: 1.h),
@@ -49,7 +58,10 @@ class BalanceCheckBottomSheet {
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
                           "Norem ipsum dolor sit amet \nconsectetur ",
-                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 22),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontSize: FontSizes.headerLargeText),
                         ),
                       ),
                       SizedBox(height: 3.h),
@@ -69,32 +81,45 @@ class BalanceCheckBottomSheet {
                         height: 3.h,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(Get.context!).size.height * .025),
+                        padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: FluTextField(
                             inputController: controller.code,
-                            hint: LocaleKeys.strCodeSecret.tr, // "Votre code secret",
-                            height: 50,
+                            hint: LocaleKeys
+                                .strCodeSecret.tr, // "Votre code secret",
+                            height: 6.5.h,
                             cornerRadius: 15,
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.number,
                             fillColor: const Color(0xFFF4F5FA),
                             cursorColor: const Color(0xFF27303F),
-                            hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: const Color(0xFF27303F), fontSize: 14),
-                            textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                            hintStyle: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xFF27303F),
+                                fontSize: FontSizes.textFieldText),
+                            textStyle: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                                fontSize: FontSizes.textFieldText),
                             onChanged: (text) {
                               String newText = text.replaceAll(' ', '');
                               String spacedText = newText.split('').join(' ');
-                              controller.code.value = controller.code.value.copyWith(
+                              controller.code.value =
+                                  controller.code.value.copyWith(
                                 text: spacedText,
-                                selection: TextSelection.collapsed(offset: spacedText.length),
+                                selection: TextSelection.collapsed(
+                                    offset: spacedText.length),
                               );
                             },
                             onFieldSubmitted: (p0) async {
                               if (controller.code.text.isNotEmpty) {
-                                String finalPINCode = controller.code.text.replaceAll(' ', '');
-                                controller.enterPinForInformationPersonelles(code: finalPINCode);
+                                String finalPINCode =
+                                    controller.code.text.replaceAll(' ', '');
+                                controller.enterPinForInformationPersonelles(
+                                    code: finalPINCode);
                               } else {
-                                Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                Get.snackbar("Message", "Entrées manquantes",
+                                    backgroundColor: Colors.lightBlue,
+                                    colorText: Colors.white);
                               }
                             }),
                       ),
@@ -111,14 +136,18 @@ class BalanceCheckBottomSheet {
                             iconStrokeWidth: 1.8,
                             onPressed: () {
                               if (controller.code.text.isNotEmpty) {
-                                String finalPINCode = controller.code.text.replaceAll(' ', '');
+                                String finalPINCode =
+                                    controller.code.text.replaceAll(' ', '');
                                 // AppGlobal.dateNow = DateTime.now().toString();
-                                controller.enterPinForInformationPersonelles(code: finalPINCode);
+                                controller.enterPinForInformationPersonelles(
+                                    code: finalPINCode);
                               } else {
-                                Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                Get.snackbar("Message", "Entrées manquantes",
+                                    backgroundColor: Colors.lightBlue,
+                                    colorText: Colors.white);
                               }
                             },
-                            height: 55,
+                            height: 7.h,
                             width: 100.w,
                             cornerRadius: UISettings.minButtonCornerRadius,
                             backgroundColor: Colors.blue[900],
@@ -131,7 +160,9 @@ class BalanceCheckBottomSheet {
                                 offset: Offset(0, 5),
                               )
                             ],
-                            textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: M3FontSizes.bodyLarge),
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: FontSizes.buttonText),
                           ),
                         ),
                       ),
