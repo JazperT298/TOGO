@@ -180,6 +180,7 @@ class WithdrawMenuBottomSheets {
                             Get.back();
                             Get.back();
                             controller.withdrawType.value = 'Counter';
+                            controller.counterWithdrawalSelectedMessage.value = '';
                             WithdrawSelectBottomSheet.showBottomSheetWithdrawCounterSelect();
                           });
                         },

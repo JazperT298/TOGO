@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flukit/flukit.dart';
@@ -9,10 +10,11 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
-import 'package:ibank/app/components/main_loading.dart';
+// import 'package:ibank/app/components/main_loading.dart';
 import 'package:ibank/app/modules/withdrawal/controller/withdrawal_controller.dart';
-import 'package:ibank/app/modules/withdrawal/modals/withdraw_otp_bottom_sheet.dart';
+// import 'package:ibank/app/modules/withdrawal/modals/withdraw_otp_bottom_sheet.dart';
 import 'package:ibank/utils/configs.dart';
+import 'package:ibank/utils/helpers/string_helper.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../utils/fontsize_config.dart';
@@ -234,13 +236,10 @@ class WithdrawInputBottomSheet {
                             if (controller.counterWithdrawalAmount.value.text.isEmpty) {
                               Get.snackbar("Message", 'Please input an amount', backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             } else {
-                              controller.amounts = controller.counterWithdrawalAmount;
-                              FullScreenLoading.fullScreenLoadingWithTextAndTimer('Verifying request. . .');
-                              await Future.delayed(const Duration(seconds: 2), () {
-                                Get.back();
-                                Get.back();
-                                WithdrawOtpBottomSheet.showBottomSheetCounterWithdrawnOTP();
-                              });
+                              controller.amount.value = controller.counterWithdrawalAmount.text;
+                              // WithdrawOtpBottomSheet.showBottomSheetCounterWithdrawnOTP();
+                              controller.getCounterTransactionFee(
+                                  amounts: controller.amount.value, selectedMessageType: controller.counterWithdrawalSelectedMessage.value);
                             }
                           },
                         ),
@@ -260,13 +259,26 @@ class WithdrawInputBottomSheet {
                               if (controller.counterWithdrawalAmount.value.text.isEmpty) {
                                 Get.snackbar("Message", 'Please input an amount', backgroundColor: Colors.lightBlue, colorText: Colors.white);
                               } else {
-                                controller.amounts = controller.counterWithdrawalAmount;
-                                FullScreenLoading.fullScreenLoadingWithTextAndTimer('Verifying request. . .');
-                                await Future.delayed(const Duration(seconds: 2), () {
-                                  Get.back();
-                                  Get.back();
-                                  WithdrawOtpBottomSheet.showBottomSheetCounterWithdrawnOTP();
-                                });
+                                String input = controller.counterWithdrawalAmount.value.text.replaceAll(RegExp('^0+'), '');
+                                controller.counterWithdrawalAmount.text = input;
+                                // input = input.replaceAll(RegExp('^0+'), '');
+                                if (input.length < 4 || input.length > 6) {
+                                  log('less than 4');
+                                  Get.snackbar("Message", 'Input amount is not accepted.', backgroundColor: Colors.red, colorText: Colors.white);
+                                } else if (input[1] == '0' && StringHelper.validateThousandInput(input, 3) ||
+                                    StringHelper.validateThousandInput(input, 4) ||
+                                    StringHelper.validateThousandInput(input, 5)) {
+                                  // controller.counterWithdrawalAmount.value.text.replaceAll(RegExp('^0+'), '');
+                                  log('Passed');
+                                  log('Passed ${input[1]}');
+                                  controller.amount.value = controller.counterWithdrawalAmount.text;
+                                  // WithdrawOtpBottomSheet.showBottomSheetCounterWithdrawnOTP();
+                                  controller.getCounterTransactionFee(
+                                      amounts: controller.amount.value, selectedMessageType: controller.counterWithdrawalSelectedMessage.value);
+                                } else {
+                                  log('Failed');
+                                  Get.snackbar("Message", 'Please input only thousands.', backgroundColor: Colors.red, colorText: Colors.white);
+                                }
                               }
 
                               // if (controller.code.text.isNotEmpty) {

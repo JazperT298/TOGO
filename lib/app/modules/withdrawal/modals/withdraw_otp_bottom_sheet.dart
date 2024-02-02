@@ -1,5 +1,6 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, unrelated_type_equality_checks
 
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flukit/flukit.dart';
@@ -411,9 +412,9 @@ class WithdrawOtpBottomSheet {
                             Expanded(
                               child: Obx(
                                 () => Text(
-                                  controller.fees.value.isEmpty
+                                  controller.totalFess.value == 0
                                       ? '0 FCFA'
-                                      : '${StringHelper.formatNumberWithCommas(int.parse(controller.fees.value.replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
+                                      : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
                                 ),
@@ -437,9 +438,9 @@ class WithdrawOtpBottomSheet {
                             ),
                             Expanded(
                               child: Text(
-                                controller.amounts.value.text.isEmpty
+                                controller.totalAmount.value == 0
                                     ? '0 FCFA'
-                                    : '${StringHelper.formatNumberWithCommas(int.parse(controller.amounts.value.text.toString().replaceAll(',', '')))} FCFA',
+                                    : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
                               ),
@@ -487,6 +488,7 @@ class WithdrawOtpBottomSheet {
                               if (controller.code.text.isNotEmpty) {
                                 AppGlobal.dateNow = DateTime.now().toString();
                                 AppGlobal.timeNow = DateTime.now().toString();
+
                                 controller.enterPinToTransactWithdrawal(code: controller.code.text);
                               } else {
                                 Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
@@ -530,7 +532,7 @@ class WithdrawOtpBottomSheet {
           children: [
             bottomSheetDivider(),
             Container(
-              height: isKeyboardVisible ? 51.h : 61.h,
+              // height: isKeyboardVisible ? 51.h : 61.h,
               width: 100.w,
               decoration: const BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
@@ -579,7 +581,7 @@ class WithdrawOtpBottomSheet {
                     ),
                     SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -593,7 +595,7 @@ class WithdrawOtpBottomSheet {
                           Expanded(
                             child: Obx(
                               () => Text(
-                                controller.nickname.value,
+                                controller.selectedBank.value,
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
                               ),
@@ -609,7 +611,7 @@ class WithdrawOtpBottomSheet {
                     ),
                     SizedBox(height: 4.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Text(
                         LocaleKeys.strTransferDetails.tr.toUpperCase(),
                         style:
@@ -618,7 +620,7 @@ class WithdrawOtpBottomSheet {
                     ),
                     SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -630,12 +632,14 @@ class WithdrawOtpBottomSheet {
                             ),
                           ),
                           Expanded(
-                            child: Text(
-                              controller.amounts.value.text.isEmpty
-                                  ? '0 FCFA'
-                                  : '${StringHelper.formatNumberWithCommas(int.parse(controller.amounts.value.text.toString().replaceAll(',', '')))} FCFA',
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                            child: Obx(
+                              () => Text(
+                                controller.amount.value.isEmpty
+                                    ? '0 FCFA'
+                                    : '${StringHelper.formatNumberWithCommas(int.parse(controller.amount.value.toString().replaceAll(',', '')))} FCFA',
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                              ),
                             ),
                           ),
                         ],
@@ -643,7 +647,7 @@ class WithdrawOtpBottomSheet {
                     ),
                     SizedBox(height: 2.h),
                     Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(Get.context!).size.height * .025),
+                      padding: EdgeInsets.only(left: 5.w, right: 5.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -662,6 +666,60 @@ class WithdrawOtpBottomSheet {
                                     : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA', //'${controller.fees.value} FCFA',
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 2.h),
+                    Padding(
+                      padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Tax',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                            ),
+                          ),
+                          Expanded(
+                            child: Obx(
+                              () => Text(
+                                controller.senderkeycosttva.isEmpty
+                                    ? '0 FCFA'
+                                    : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 2.h),
+                    Padding(
+                      padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'TTC ',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                            ),
+                          ),
+                          Expanded(
+                            child: Obx(
+                              () => Text(
+                                controller.totalAmount.value == 0
+                                    ? '0 FCFA'
+                                    : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),
                             ),
                           ),
@@ -687,7 +745,10 @@ class WithdrawOtpBottomSheet {
                             if (controller.code.text.isNotEmpty) {
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
-                              controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                              controller.enterPinToCounterWithdrawal(
+                                  selectedMessageType: controller.counterWithdrawalSelectedMessage.value,
+                                  amount: controller.amount.value,
+                                  code: controller.code.text);
                             } else {
                               Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             }
@@ -710,7 +771,10 @@ class WithdrawOtpBottomSheet {
                             if (controller.code.text.isNotEmpty) {
                               AppGlobal.dateNow = DateTime.now().toString();
                               AppGlobal.timeNow = DateTime.now().toString();
-                              controller.enterPinToTransactWithdrawal(code: controller.code.text);
+                              controller.enterPinToCounterWithdrawal(
+                                  selectedMessageType: controller.counterWithdrawalSelectedMessage.value,
+                                  amount: controller.amount.value,
+                                  code: controller.code.text);
                             } else {
                               Get.snackbar("Message", "Entrées manquantes", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             }
@@ -739,6 +803,7 @@ class WithdrawOtpBottomSheet {
                         ),
                       ),
                     ),
+                    SizedBox(height: 2.h)
                   ],
                 ),
               ),

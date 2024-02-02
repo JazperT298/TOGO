@@ -38,6 +38,12 @@ class StringHelper {
     }
   }
 
+  static bool validateThousandInput(String input, int numberOfDigits) {
+    String pattern = '.*[^0]{1,}${'0' * (numberOfDigits - 1)}\$';
+    RegExp regExp = RegExp(pattern);
+    return regExp.hasMatch(input);
+  }
+
   static String formatMSISDN(String msisdn) {
     List<int> groupLengths = [3, 2, 2, 2, 2];
     int startIndex = 0;
