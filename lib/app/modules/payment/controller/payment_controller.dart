@@ -18,6 +18,7 @@ import 'package:ibank/app/data/models/cash_power_sub_model.dart';
 import 'package:ibank/app/data/models/ceet_products_model.dart';
 import 'package:ibank/app/data/models/moon_payment_mode.dart';
 import 'package:ibank/app/data/models/moon_payment_sub_model.dart';
+import 'package:ibank/app/data/models/payment_merchant.dart';
 import 'package:ibank/app/data/models/soleva_payment_model.dart';
 import 'package:ibank/app/data/models/soleva_payment_sub_model.dart';
 import 'package:ibank/app/data/models/tde_model.dart';
@@ -40,6 +41,7 @@ import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
 
 class PaymentController extends GetxController {
+  TextEditingController referenceTextField = TextEditingController();
   TextEditingController numberTextField = TextEditingController();
   TextEditingController titleTextField = TextEditingController();
   TextEditingController namneTextField = TextEditingController();
@@ -51,15 +53,21 @@ class PaymentController extends GetxController {
   RxInt totalAmount = 0.obs;
   DateTime? parsedDate;
   RxString extractedDate = ''.obs;
-
-  RxList<CeetProducts> ceetProductList = <CeetProducts>[].obs;
-  RxList<Datum> ceetDataList = <Datum>[].obs;
-
-  RxString ceetPackageRadioGroupValue = ''.obs;
-  RxString keyword = ''.obs;
-
   RxString selectedOption = ''.obs;
   RxString selectedSubOption = ''.obs;
+
+  //Merchant Payment variables
+  RxInt selectedMerchantIndex = 0.obs;
+  RxInt selectedMerchanSubMenutIndex = 0.obs;
+  RxInt selectedMerchanEcobanktIndex = 0.obs;
+
+  //TV Channels variables
+
+  //Energies variables
+  RxList<CeetProducts> ceetProductList = <CeetProducts>[].obs;
+  RxList<Datum> ceetDataList = <Datum>[].obs;
+  RxString ceetPackageRadioGroupValue = ''.obs;
+  RxString keyword = ''.obs;
 
   Datum? selectDatum;
   BillPayment? billPayment;
@@ -86,6 +94,18 @@ class PaymentController extends GetxController {
   RxString tdePaymentRadioGroupValue = ''.obs;
   RxString bboxCizoackageRadioGroupValue = ''.obs;
 
+  //Canal Box variables
+
+  //Insurance variables
+
+  //Tuition variables
+
+  //Transport and Freight variables
+
+  //Fuel Card variables
+
+  //Moov Postpaid variables
+
   final _solevaPaymentModelList = <SolevaPaymentSubModel>[].obs;
   List<SolevaPaymentSubModel> get solevaPaymentModelList => _solevaPaymentModelList;
 
@@ -97,6 +117,17 @@ class PaymentController extends GetxController {
 
   final _tdeSubModelList = <TDESubModel>[].obs;
   List<TDESubModel> get tdeSubModelList => _tdeSubModelList;
+
+  List<PaymentMerchantModel> paymentMerchatList = [
+    PaymentMerchantModel(title: 'Contactless payment', description: 'Pay your merchant quickly', icon: FluIcons.tvRetroUnicon),
+    PaymentMerchantModel(title: 'Online payment', description: 'Pay for your orders online', icon: FluIcons.tvRetroUnicon),
+  ];
+
+  List<PaymentMerchantSubModel> paymentMerchatSubList = [
+    PaymentMerchantSubModel(title: 'Payment with reference', description: 'Pay using the merchant ref', icon: FluIcons.tvRetroUnicon),
+    PaymentMerchantSubModel(title: 'Payment without reference', description: 'Pay without merchant ref', icon: FluIcons.tvRetroUnicon),
+    PaymentMerchantSubModel(title: 'EcobankPay', description: 'Pay with your Ecobank account', icon: FluIcons.tvRetroUnicon),
+  ];
 
   List<TVChannelsModel> tvChannelsMode = [
     TVChannelsModel(title: 'Canal + ', description: 'Resubscribe to Canal +', icon: FluIcons.tvRetroUnicon),
