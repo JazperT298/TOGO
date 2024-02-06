@@ -8,14 +8,38 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
 import 'package:ibank/app/modules/mbanking/controller/mbanking_controller.dart';
-import 'package:ibank/app/modules/mbanking/views/modals/bank_ecobank_submenu_bottom_sheet.dart';
 import 'package:ibank/utils/configs.dart';
 import 'package:ibank/utils/fontsize_config.dart';
 import 'package:sizer/sizer.dart';
 
-class MBankingSelectBankBottomSheet {
-  static void showMBankingSelectBankBottomSheet() {
+import 'bank_bank_atlantique_submenu_bottom_sheet.dart';
+import 'bank_laposte_submenu_bottom_sheet.dart';
+
+class MBankingSelectLinkBankBottomSheet {
+  static void showMBankingSelectLinkedBankBottomSheet(
+      {required String bankName,
+      required List bankList,
+      required String fieldName}) {
     final controller = Get.find<MBankingController>();
+    RxList linkedBanks = bankList.obs;
+    RxList linkedBanksMasterList = bankList.obs;
+
+    searchLinkedBanks({required String word}) async {
+      linkedBanks.clear();
+      if (word.isNotEmpty) {
+        for (var i = 0; i < linkedBanksMasterList.length; i++) {
+          if (linkedBanksMasterList[i][fieldName]
+              .toLowerCase()
+              .toString()
+              .contains(word.toLowerCase().toString())) {
+            linkedBanks.add(linkedBanksMasterList[i]);
+          }
+        }
+      } else {
+        linkedBanks.assignAll(linkedBanksMasterList);
+      }
+    }
+
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
       BackdropFilter(
@@ -52,7 +76,7 @@ class MBankingSelectBankBottomSheet {
                   Padding(
                     padding: EdgeInsets.only(left: 5.w, right: 5.w),
                     child: Text(
-                      "My online bank",
+                      bankName,
                       style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
@@ -80,12 +104,7 @@ class MBankingSelectBankBottomSheet {
                       fillColor: const Color(0xFFF4F5FA),
                       onChanged: (value) {
                         // filterContacts(query);
-                        if (value.isEmpty) {
-                          controller.mBankListModel
-                              .assignAll(controller.mBankListModelMasterList);
-                        } else {
-                          controller.searchBank(word: value.toString());
-                        }
+                        searchLinkedBanks(word: value);
                       },
                       margin: const EdgeInsets.only(top: 25),
                       textStyle:
@@ -110,45 +129,38 @@ class MBankingSelectBankBottomSheet {
                   // Padding(
                   //   padding: EdgeInsets.only(left: 5.w, right: 5.w, bottom: 3.h),
                   // ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 1.5.w, right: 1.5.w),
-                    child: SizedBox(
-                      height: 40.h,
-                      child: Obx(
-                        () => ListView.builder(
-                          itemCount: controller.mBankListModel.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                  left: 5.w, right: 5.w, bottom: 1.h),
-                              child: InkWell(
-                                onTap: () async {
-                                  // Get.back();
-                                  // controller.selectedIndex.value = 1;
-                                  if (controller.selectedBankName.value !=
-                                      controller.mBankListModel[index]
-                                          .mBankTypeDesc) {
-                                    controller.selectedBankName.value =
-                                        controller.mBankListModel[index]
-                                            .mBankTypeDesc;
-                                  } else {
-                                    controller.selectedBankName.value = "";
-                                  }
-                                },
-                                child: Obx(
-                                  () => Container(
+                  SizedBox(
+                    height: 40.h,
+                    child: Obx(
+                      () => ListView.builder(
+                        itemCount: linkedBanks.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                left: 5.w, right: 5.w, bottom: 1.h),
+                            child: InkWell(
+                              onTap: () async {
+                                if (controller.selectedLinkedBank.value == "") {
+                                  controller.selectedLinkedBank.value =
+                                      linkedBanks[index][fieldName];
+                                } else {
+                                  controller.selectedLinkedBank.value = "";
+                                }
+                                // Get.back();
+                                // Get.snackbar("Message", 'Comming Soon', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                              },
+                              child: Obx(
+                                () => Container(
                                     height: 12.h,
                                     width: 100.w,
                                     padding:
                                         EdgeInsets.only(left: 3.w, right: 3.w),
                                     decoration: BoxDecoration(
-                                        color:
-                                            controller.selectedBankName.value ==
-                                                    controller
-                                                        .mBankListModel[index]
-                                                        .mBankTypeDesc
-                                                ? const Color(0xFFFEE8D9)
-                                                : const Color(0xFFF4F5FA),
+                                        color: controller
+                                                    .selectedLinkedBank.value ==
+                                                linkedBanks[index][fieldName]
+                                            ? const Color(0xFFFEE8D9)
+                                            : const Color(0xFFF4F5FA),
                                         borderRadius: const BorderRadius.all(
                                             Radius.circular(30.0))),
                                     child: Row(
@@ -163,11 +175,11 @@ class MBankingSelectBankBottomSheet {
                                           children: [
                                             Container(
                                                     decoration: BoxDecoration(
-                                                        color: controller.selectedBankName.value ==
-                                                                controller
-                                                                    .mBankListModel[
-                                                                        index]
-                                                                    .mBankTypeDesc
+                                                        color: controller
+                                                                    .selectedLinkedBank
+                                                                    .value ==
+                                                                linkedBanks[index]
+                                                                    [fieldName]
                                                             ? const Color(
                                                                 0xFFFECFB1)
                                                             : const Color(
@@ -186,8 +198,22 @@ class MBankingSelectBankBottomSheet {
                                                             color: const Color(0xFF27303F))))
                                                 .paddingOnly(bottom: 1.5.h),
                                             Text(
-                                              controller.mBankListModel[index]
-                                                  .mBankTypeDesc,
+                                              bankName == "La Poste"
+                                                  ? ('X' *
+                                                          (linkedBanks[index][
+                                                                      fieldName]
+                                                                  .length -
+                                                              4) +
+                                                      linkedBanks[index]
+                                                              [fieldName]
+                                                          .substring(linkedBanks[
+                                                                          index]
+                                                                      [
+                                                                      fieldName]
+                                                                  .length -
+                                                              4))
+                                                  : linkedBanks[index]
+                                                      [fieldName],
                                               style: GoogleFonts.montserrat(
                                                   fontWeight: FontWeight.w600,
                                                   color: Colors.black,
@@ -195,9 +221,8 @@ class MBankingSelectBankBottomSheet {
                                             ).paddingOnly(bottom: 1.5.h),
                                           ],
                                         ),
-                                        controller.selectedBankName.value ==
-                                                controller.mBankListModel[index]
-                                                    .mBankTypeDesc
+                                        controller.selectedLinkedBank.value ==
+                                                linkedBanks[index][fieldName]
                                             ? Container(
                                                 padding: EdgeInsets.only(
                                                     left: .3.w,
@@ -217,13 +242,11 @@ class MBankingSelectBankBottomSheet {
                                             : const FluIcon(
                                                 FluIcons.circleUnicon)
                                       ],
-                                    ),
-                                  ),
-                                ),
+                                    )),
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -236,21 +259,21 @@ class MBankingSelectBankBottomSheet {
                       'Continue',
                       iconStrokeWidth: 1.8,
                       onPressed: () {
-                        if (controller.selectedBankName.value == "EcoBank") {
+                        if (controller.selectedLinkedBank.value != "") {
                           Get.back();
-                          MBankingEcoSubMenuBottomSheet
-                              .showMBankingEcoSubMenuBottomSheet();
-                        } else if (controller.selectedBankName.value ==
-                            "La Poste") {
-                          controller.getLaposteLinkedBanks();
-                        } else if (controller.selectedBankName.value ==
-                            "Bank Atlantique") {
-                          controller.getBankAtlantiqueLinkedBanks();
-                        } else if (controller.selectedBankName.value ==
-                            "Orabank") {
-                          Get.snackbar("Message", 'Comming soon',
-                              backgroundColor: Colors.lightBlue,
-                              colorText: Colors.white);
+                          if (bankName == "La Poste") {
+                            MBankingLaposteSubMenuBottomSheet
+                                .showMBankingLaPosteSubMenuBottomSheet();
+                          }
+                          if (bankName == "Bank Atlantique") {
+                            MBankingBankAtlantiqueSubMenuBottomSheet
+                                .showMBankingBankAtlantiqueSubMenuBottomSheet();
+                          }
+                          if (bankName == "Orabank") {
+                            Get.snackbar("Message", 'Comming soon',
+                                backgroundColor: Colors.lightBlue,
+                                colorText: Colors.white);
+                          }
                         } else {
                           Get.snackbar("Message", 'Please select a bank',
                               backgroundColor: Colors.lightBlue,

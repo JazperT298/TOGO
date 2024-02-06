@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -79,7 +77,11 @@ class StorageServices extends GetxService {
   }
 
   //Store verify profile
-  saveVerifyProfile({required String profile, required String description, required String message, required String status}) {
+  saveVerifyProfile(
+      {required String profile,
+      required String description,
+      required String message,
+      required String status}) {
     storage.write('profile', profile);
     storage.write('description', description);
     storage.write('message', message);
@@ -131,21 +133,59 @@ class StorageServices extends GetxService {
   saveHistoryTransaction({
     required String message,
     required String service,
+    required String beneficiary,
+    required String amount,
+    required String fees,
+    required String tax,
+    required String ttc,
+    required String operationDate,
+    required String operationHour,
+    required String txnID,
+    required String newBalance,
+    required bool status,
   }) async {
     if (storage.read('history') == null) {
       List data = [];
-      Map map = {"service": service, "message": message, "date": DateTime.now().toString()};
+      Map map = {
+        "service": service,
+        "message": message,
+        "date": DateTime.now().toString(),
+        "beneficiary": beneficiary,
+        "amount": amount,
+        "fees": fees,
+        "tax": tax,
+        "ttc": ttc,
+        "operationDate": operationDate,
+        "operationHour": operationHour,
+        "txnID": txnID,
+        "newBalance": newBalance,
+        "status": status
+      };
       data.add(map);
       storage.write("history", jsonEncode(data));
 
-      log(storage.read('history'));
+      // log(storage.read('history'));
     } else {
       var stringdata = storage.read('history');
       var decodedData = jsonDecode(stringdata);
-      Map map = {"service": service, "message": message, "date": DateTime.now().toString()};
+      Map map = {
+        "service": service,
+        "message": message,
+        "date": DateTime.now().toString(),
+        "beneficiary": beneficiary,
+        "amount": amount,
+        "fees": fees,
+        "tax": tax,
+        "ttc": ttc,
+        "operationDate": operationDate,
+        "operationHour": operationHour,
+        "txnID": txnID,
+        "newBalance": newBalance,
+        "status": status
+      };
       decodedData.add(map);
       storage.write("history", jsonEncode(decodedData));
-      log(storage.read('history'));
+      // log(storage.read('history'));
     }
   }
 }

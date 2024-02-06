@@ -51,7 +51,8 @@ class HistoryController extends GetxController {
       historytransactions.clear();
       DateTime now = DateTime.now();
       for (var i = 0; i < historytransactionsMasterList.length; i++) {
-        var daysCount = now.difference(historytransactionsMasterList[i].date).inDays;
+        var daysCount =
+            now.difference(historytransactionsMasterList[i].date).inDays;
         if (daysCount <= 7) {
           historytransactions.add(historytransactionsMasterList[i]);
         }
@@ -62,7 +63,8 @@ class HistoryController extends GetxController {
       historytransactions.clear();
       DateTime now = DateTime.now();
       for (var i = 0; i < historytransactionsMasterList.length; i++) {
-        var daysCount = now.difference(historytransactionsMasterList[i].date).inDays;
+        var daysCount =
+            now.difference(historytransactionsMasterList[i].date).inDays;
         if (daysCount <= 30) {
           historytransactions.add(historytransactionsMasterList[i]);
         }

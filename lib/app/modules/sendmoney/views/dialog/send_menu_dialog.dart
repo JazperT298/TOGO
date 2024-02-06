@@ -91,341 +91,344 @@ class SendMenuDialog {
           insetPadding: EdgeInsets.all(12), // Outside Padding
           contentPadding: EdgeInsets.all(12),
 
-          content: Container(
-            width: MediaQuery.of(context).size.width - 60,
-            height: 520,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Operation Recap",
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          fontSize: 24),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: FluIcon(
-                        FluIcons.closeCircle,
-                        size: 30,
-                        color: Colors.red,
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'Bénéficiaire'.toUpperCase(),
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF27303F),
-                      fontSize: 14),
-                ),
-                const SizedBox(height: 18),
-                Obx(
-                  () => controller.firstname.value.isEmpty
-                      ? SizedBox.shrink()
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Name',
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: 14),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'N/A',
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF27303F),
-                                    fontSize: 14),
-                              ),
-                            ),
-                          ],
+          content: Wrap(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width - 60,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Operation Recap",
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                              fontSize: 24),
                         ),
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Country',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: FluIcon(
+                            FluIcons.closeCircle,
+                            size: 30,
+                            color: Colors.red,
+                          ),
+                        )
+                      ],
                     ),
-                    Expanded(
-                      child: Text(
-                        controller.selectedCountryName.value,
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
+                    const SizedBox(height: 24),
+                    Text(
+                      'Bénéficiaire'.toUpperCase(),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF27303F),
+                          fontSize: 14),
+                    ),
+                    const SizedBox(height: 18),
+                    Obx(
+                      () => controller.firstname.value.isEmpty
+                          ? SizedBox.shrink()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Name',
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xFF27303F),
+                                        fontSize: 14),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    'N/A',
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color(0xFF27303F),
+                                        fontSize: 14),
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Country',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            controller.selectedCountryName.value,
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Number',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "${controller.selectedCountryCode.value} ${controller.numberController.value.text}",
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    const LineSeparator(color: Colors.grey),
+                    const SizedBox(height: 24),
+                    Text(
+                      'DETAILS'.toUpperCase(),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF27303F),
+                          fontSize: 14),
+                    ),
+                    const SizedBox(height: 18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Amount',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            controller.amountController.text.isEmpty
+                                ? '0 FCFA'
+                                : '${StringHelper.formatNumberWithCommas(int.parse(controller.amountController.text.toString().replaceAll(',', '')))} FCFA',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 1.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Fees',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            controller.totalFess.value == 0
+                                ? '0 FCFA'
+                                : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 1.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Tax',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            controller.senderkeycosttva.value.isEmpty
+                                ? '0 FCFA'
+                                : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 1.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'TTC',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            controller.totalAmount.value == 0
+                                ? '0 FCFA'
+                                : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    const LineSeparator(color: Colors.grey),
+                    const SizedBox(height: 24),
+                    Text(
+                      'Operation information'.toUpperCase(),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF27303F),
+                          fontSize: 14),
+                    ),
+                    const SizedBox(height: 18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Date',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            DateFormat.yMMMd().format(DateTime.now()),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Hour',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            DateFormat.jm().format(DateTime.now()),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Txn ID',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            controller.transactionID.value,
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'New Balance',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "${controller.senderBalance.value} FCFA",
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF27303F),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Number',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "${controller.selectedCountryCode.value} ${controller.numberController.value.text}",
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                const LineSeparator(color: Colors.grey),
-                const SizedBox(height: 24),
-                Text(
-                  'DETAILS'.toUpperCase(),
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF27303F),
-                      fontSize: 14),
-                ),
-                const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Amount',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        controller.amountController.text.isEmpty
-                            ? '0 FCFA'
-                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.amountController.text.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 1.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Fees',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        controller.totalFess.value == 0
-                            ? '0 FCFA'
-                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalFess.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 1.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Tax',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        controller.senderkeycosttva.value.isEmpty
-                            ? '0 FCFA'
-                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.senderkeycosttva.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 1.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'TTC',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        controller.totalAmount.value == 0
-                            ? '0 FCFA'
-                            : '${StringHelper.formatNumberWithCommas(int.parse(controller.totalAmount.value.toString().replaceAll(',', '')))} FCFA',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                const LineSeparator(color: Colors.grey),
-                const SizedBox(height: 24),
-                Text(
-                  'Operation information'.toUpperCase(),
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF27303F),
-                      fontSize: 14),
-                ),
-                const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Date',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        DateFormat.yMMMd().format(DateTime.now()),
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Hour',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        DateFormat.jm().format(DateTime.now()),
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Txn ID',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        controller.transactionID.value,
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'New Balance',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "${controller.senderBalance.value} FCFA",
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF27303F),
-                            fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
