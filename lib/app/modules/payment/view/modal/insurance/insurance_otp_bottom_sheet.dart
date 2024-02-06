@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'dart:developer';
 import 'dart:ui';
 
@@ -17,8 +19,8 @@ import 'package:ibank/utils/fontsize_config.dart';
 import 'package:ibank/utils/helpers/string_helper.dart';
 import 'package:sizer/sizer.dart';
 
-class MerchantPaymentOtpBottomSheet {
-  static showBottomSheetOTPMerchant() {
+class InsuranceOtpBottomSheet {
+  static showBottomSheetOTPInsurance() {
     var controller = Get.find<PaymentController>();
     log(controller.selectedOption.value);
     Get.bottomSheet(
@@ -53,21 +55,25 @@ class MerchantPaymentOtpBottomSheet {
                           padding: EdgeInsets.only(left: 5.w, right: 5.w),
                           child: RichText(
                             text: TextSpan(children: [
-                              controller.selectedOption.value == 'Ecobankpay'
-                                  ? TextSpan(
-                                      text: '${controller.selectedOption.value} ',
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
-                                    )
-                                  : TextSpan(
-                                      text: 'Merchant payment ',
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
-                                    ),
+                              // controller.selectedOption.value == 'Ecobankpay'
+                              //     ? TextSpan(
+                              //         text: '${controller.selectedOption.value} ',
+                              //         style: GoogleFonts.montserrat(
+                              //             fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
+                              //       )
+                              //     : TextSpan(
+                              //         text: 'Merchant payment ',
+                              //         style: GoogleFonts.montserrat(
+                              //             fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
+                              //       ),
                               TextSpan(
-                                text: '${controller.selectedSubOption.value}erence',
+                                text: '${controller.selectedOption.value} ',
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600, color: const Color(0xFF295fe7), fontSize: FontSizes.headerLargeText),
+                              ),
+                              TextSpan(
+                                text: 'Insurance Payment ',
+                                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
                               ),
                             ]),
                           )),
@@ -75,37 +81,66 @@ class MerchantPaymentOtpBottomSheet {
                       Padding(
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
-                          'Merchant'.toUpperCase(),
+                          controller.selectedOption.value == 'BLI' ? 'beneficiary'.toUpperCase() : 'Merchant'.toUpperCase(),
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
                         ),
                       ),
-                      SizedBox(height: 1.h),
+                      SizedBox(height: 2.h),
+                      Obx(() => controller.selectedOption.value == 'BLI'
+                          ? const SizedBox.shrink()
+                          : Padding(
+                              padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: controller.selectedOption.value == 'Ecobankpay'
+                                        ? Text(
+                                            "Terminal ID",
+                                            style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                                          )
+                                        : Text(
+                                            "Number",
+                                            style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                                          ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      // controller.textSplitterPackageName(text: controller.selectedProduct!.description),
+                                      // controller.selectDatum!.reference,
+                                      controller.numberTextField.text,
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                      Obx(() => controller.selectedOption.value == 'BLI' ? const SizedBox.shrink() : SizedBox(height: 1.h)),
                       Padding(
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              child: controller.selectedOption.value == 'Ecobankpay'
-                                  ? Text(
-                                      "Terminal ID",
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
-                                    )
-                                  : Text(
-                                      "Number",
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
-                                    ),
+                              child: Text(
+                                "Policy ",
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                              ),
                             ),
                             Expanded(
-                              child: Text(
-                                // controller.textSplitterPackageName(text: controller.selectedProduct!.description),
-                                // controller.selectDatum!.reference,
-                                controller.numberTextField.text,
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                              child: Obx(
+                                () => Text(
+                                  controller.insurancePolicyPackageRadioGroupValue.value.isEmpty
+                                      ? controller.numberTextField.text
+                                      : controller.insurancePolicyPackageRadioGroupValue.value,
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                                ),
                               ),
                             ),
                           ],
@@ -122,32 +157,65 @@ class MerchantPaymentOtpBottomSheet {
                               fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerMediumText),
                         ),
                       ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Product Ref ",
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                      SizedBox(height: 2.h),
+                      Obx(() => controller.selectedOption.value == 'BLI'
+                          ? const SizedBox.shrink()
+                          : Padding(
+                              padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Contract Type ",
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Obx(
+                                      () => Text(
+                                        controller.insuranceTypePackageRadioGroupValue.value.isEmpty
+                                            ? 'N/A'
+                                            : controller.insuranceTypePackageRadioGroupValue.value,
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                controller.referenceTextField.value.text.isEmpty ? 'N/A' : controller.referenceTextField.value.text,
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                            )),
+                      Obx(() => controller.selectedOption.value == 'BLI' ? const SizedBox.shrink() : SizedBox(height: 1.h)),
+                      Obx(() => controller.selectedOption.value == 'BLI'
+                          ? const SizedBox.shrink()
+                          : Padding(
+                              padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Duration ",
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w500, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Obx(
+                                      () => Text(
+                                        controller.insuranceTermsPackageRadioGroupValue.value.isEmpty
+                                            ? 'N/A'
+                                            : controller.insuranceTermsPackageRadioGroupValue.value,
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 1.h),
+                            )),
+                      Obx(() => controller.selectedOption.value == 'BLI' ? const SizedBox.shrink() : SizedBox(height: 1.h)),
                       Padding(
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Row(
@@ -162,9 +230,9 @@ class MerchantPaymentOtpBottomSheet {
                             ),
                             Expanded(
                               child: Text(
-                                controller.amountTextField.value.text.isEmpty
-                                    ? '0 FCFA'
-                                    : '${StringHelper.formatNumberWithCommas(int.parse(controller.amountTextField.value.text.replaceAll(',', '')))} FCFA',
+                                controller.insuranceTermsDescPackageRadioGroupValue.value.isEmpty
+                                    ? controller.amountTextField.text
+                                    : '${StringHelper.formatNumberWithCommas(int.parse(controller.insuranceTermsDescPackageRadioGroupValue.value.replaceAll(',', '')))} FCFA',
                                 style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: FontSizes.headerSmallText),
                               ),

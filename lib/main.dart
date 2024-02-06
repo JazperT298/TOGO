@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/config/theme/theme_manager.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
+import 'package:ibank/utils/togo_theme.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -48,8 +51,7 @@ Future<void> main() async {
   }
 
   await Get.putAsync<StorageServices>(() async => StorageServices());
-  await Get.putAsync<AndroidVerifyServices>(
-      () async => AndroidVerifyServices());
+  await Get.putAsync<AndroidVerifyServices>(() async => AndroidVerifyServices());
 
   initializeDateFormatting().then((value) => runApp(
         const AutoLogoutView(),
@@ -63,8 +65,7 @@ class AutoLogoutView extends StatefulWidget {
   State<AutoLogoutView> createState() => _AutoLogoutViewState();
 }
 
-class _AutoLogoutViewState extends State<AutoLogoutView>
-    with WidgetsBindingObserver {
+class _AutoLogoutViewState extends State<AutoLogoutView> with WidgetsBindingObserver {
   Timer? _timer;
   @override
   void initState() {
@@ -136,8 +137,8 @@ class AppView extends StatelessWidget {
         return GetMaterialApp(
           title: Configs.appName,
           debugShowCheckedModeBanner: false,
-          theme: ThemeManager().lightTheme,
-          darkTheme: ThemeManager().darkTheme,
+          theme: ThemeManager().lightTheme, //TogoTheme.lightTheme,
+          darkTheme: ThemeManager().darkTheme, //TogoTheme.darkTheme,
           initialRoute: AppRoutes.SPLASH, //  Routes.splash.path,
           getPages: AppPages.list,
           translationsKeys: AppTranslation.translations,

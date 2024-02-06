@@ -1,5 +1,3 @@
-// ignore_for_file: unrelated_type_equality_checks, unused_import
-
 import 'dart:ui';
 
 import 'package:flukit/flukit.dart';
@@ -8,22 +6,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ibank/app/components/divider_widget.dart';
 import 'package:ibank/app/components/main_loading.dart';
-import 'package:ibank/app/data/models/wallet.dart';
-import 'package:ibank/app/modules/payment/view/modal/energies/energies_sub_menu_bottom_sheet.dart';
-import 'package:ibank/app/modules/payment/view/modal/insurance/insurance_sub_menu_bottom_sheet.dart';
-import 'package:ibank/app/modules/payment/view/modal/merchant_payment/merchant_payment_sub_menu_bottom_sheet.dart';
-import 'package:ibank/app/modules/payment/view/modal/payment_sub_menu_bottom_sheet.dart';
-import 'package:ibank/app/modules/payment/view/modal/tv_channels/tvchannels_sub_menu_bottom_sheet.dart';
-import 'package:ibank/generated/locales.g.dart';
-import 'package:ibank/utils/configs.dart';
-import 'package:ibank/utils/constants/app_global.dart';
+import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
+import 'package:ibank/app/modules/payment/view/modal/insurance/insurance_inputs_bottom_sheet.dart';
 import 'package:ibank/utils/fontsize_config.dart';
 import 'package:sizer/sizer.dart';
 
-class PaymentMainMenuBottomSheet {
-  static void showBottomSheetPaymentMenu(BuildContext context) {
-    final action = WalletAction.getAll()[2];
-    // var controller = Get.find<PaymentController>();
+class InsuranceSubMenuBottomSheet {
+  static void showBottomSheetInsuranceSubMenu(BuildContext context) {
+    var controller = Get.find<PaymentController>();
     Get.bottomSheet(
         backgroundColor: Colors.transparent,
         BackdropFilter(
@@ -32,7 +22,7 @@ class PaymentMainMenuBottomSheet {
             children: [
               bottomSheetDivider(),
               Container(
-                // height: 60.h,
+                // height: 75.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                     color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
@@ -54,7 +44,7 @@ class PaymentMainMenuBottomSheet {
                       Padding(
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
-                          'Easy and Practical',
+                          'Insurance',
                           style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black, fontSize: FontSizes.headerLargeText),
                         ),
                       ),
@@ -62,7 +52,7 @@ class PaymentMainMenuBottomSheet {
                       Padding(
                         padding: EdgeInsets.only(left: 5.w, right: 5.w),
                         child: Text(
-                          'Select the services to pay for and simplify your financial life in just a few clicks.',
+                          'Take out insurance and contribute to it in complete security and in just a few seconds.',
                           style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: FontSizes.headerMediumText),
                         ),
                       ),
@@ -80,59 +70,70 @@ class PaymentMainMenuBottomSheet {
                         ],
                       ),
                       SizedBox(height: 3.h),
-                      Padding(
-                        padding: EdgeInsets.only(left: 5.w, right: 5.w, bottom: 3.h),
-                        child: SizedBox(
-                          height: 45.h,
-                          width: double.infinity,
+                      SizedBox(
+                        height: 30.h,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 5.w, right: 5.w),
                           child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: action.children.length,
+                              // shrinkWrap: true,
+                              // physics: const NeverScrollableScrollPhysics(),
+                              itemCount: controller.insuranceModel.length,
                               itemBuilder: (context, index) {
-                                final option = action.children[index];
+                                final option = controller.insuranceModel[index];
+
                                 return FluButton(
                                   // onPressed: toNextStep,
                                   onPressed: () async {
                                     if (index == 0) {
-                                      AppGlobal.dateNow = '';
-                                      AppGlobal.timeNow = '';
-                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
+                                      controller.numberTextField.clear();
+                                      controller.referenceTextField.clear();
+                                      controller.code.clear();
+                                      controller.amountTextField.clear();
+                                      controller.selectedOption.value = 'GTAC2A-LIFE';
+                                      controller.insuranceTypePackageRadioGroupValue.value = '';
+                                      controller.insurancePolicyPackageRadioGroupValue.value = '';
+                                      controller.insuranceTermsPackageRadioGroupValue.value = '';
+                                      controller.insuranceTermsDescPackageRadioGroupValue.value = '';
+                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Requesting. . .');
                                       await Future.delayed(const Duration(seconds: 2), () {
                                         Get.back();
                                         Get.back();
-                                        MerchantPaymentSubMenuBottomSheet.showBottomSheetPaymentMerchantSubMenu(context);
+                                        InsuranceInputsBottomSheet.showBottomSheetInsuranceInputNumber();
                                       });
                                     } else if (index == 1) {
-                                      AppGlobal.dateNow = '';
-                                      AppGlobal.timeNow = '';
-                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
+                                      controller.numberTextField.clear();
+                                      controller.referenceTextField.clear();
+                                      controller.code.clear();
+                                      controller.amountTextField.clear();
+                                      controller.selectedOption.value = 'BLI';
+                                      controller.insuranceTypePackageRadioGroupValue.value = '';
+                                      controller.insurancePolicyPackageRadioGroupValue.value = '';
+                                      controller.insuranceTermsPackageRadioGroupValue.value = '';
+                                      controller.insuranceTermsDescPackageRadioGroupValue.value = '';
+                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Requesting. . .');
                                       await Future.delayed(const Duration(seconds: 2), () {
                                         Get.back();
                                         Get.back();
-                                        TvChannelsSubMenuBottomSheet.showBottomSheetPaymentTvChannelsSubMenu(context);
+                                        InsuranceInputsBottomSheet.showBottomSheetInsuranceInputPolicy();
                                       });
                                     } else if (index == 2) {
-                                      AppGlobal.dateNow = '';
-                                      AppGlobal.timeNow = '';
-                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
+                                      controller.numberTextField.clear();
+                                      controller.referenceTextField.clear();
+                                      controller.code.clear();
+                                      controller.amountTextField.clear();
+                                      controller.selectedOption.value = 'NSIA';
+                                      controller.insuranceTypePackageRadioGroupValue.value = '';
+                                      controller.insurancePolicyPackageRadioGroupValue.value = '';
+                                      controller.insuranceTermsPackageRadioGroupValue.value = '';
+                                      controller.insuranceTermsDescPackageRadioGroupValue.value = '';
+                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Requesting. . .');
                                       await Future.delayed(const Duration(seconds: 2), () {
                                         Get.back();
                                         Get.back();
-                                        EnergiesSubMenuBottomSheet.showBottomSheetPaymentCeetSubMenu(context);
-                                      });
-                                    } else if (index == 4) {
-                                      AppGlobal.dateNow = '';
-                                      AppGlobal.timeNow = '';
-                                      FullScreenLoading.fullScreenLoadingWithTextAndTimer('Processing. . .');
-                                      await Future.delayed(const Duration(seconds: 2), () {
-                                        Get.back();
-                                        Get.back();
-                                        InsuranceSubMenuBottomSheet.showBottomSheetInsuranceSubMenu(context);
+                                        // showBottomSheetMerchantOnlinePayment();
                                       });
                                     } else {
-                                      Get.snackbar("Message", LocaleKeys.strComingSoon.tr,
-                                          backgroundColor: Colors.lightBlue, colorText: Colors.white);
+                                      Get.snackbar("Message", "Comming Soon", backgroundColor: Colors.lightBlue, colorText: Colors.white);
                                     }
                                   },
                                   backgroundColor: Colors.transparent,
@@ -142,7 +143,7 @@ class PaymentMainMenuBottomSheet {
                                     children: [
                                       FluArc(
                                         startOfArc: 90,
-                                        angle: 80,
+                                        angle: 90,
                                         strokeWidth: 1,
                                         color: context.colorScheme.primaryContainer,
                                         child: Container(
@@ -162,7 +163,7 @@ class PaymentMainMenuBottomSheet {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                option.name,
+                                                option.title,
                                                 style: GoogleFonts.montserrat(
                                                     fontWeight: FontWeight.w600,
                                                     color: const Color(0xFF27303F),
@@ -179,6 +180,11 @@ class PaymentMainMenuBottomSheet {
                                           ),
                                         ),
                                       ),
+                                      // FluIcon(
+                                      //   FluIcons.arrowRight1,
+                                      //   size: 16,
+                                      //   color: context.colorScheme.onBackground,
+                                      // )
                                     ],
                                   ),
                                 );

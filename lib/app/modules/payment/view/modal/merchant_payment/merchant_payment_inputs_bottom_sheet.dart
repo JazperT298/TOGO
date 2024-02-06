@@ -267,7 +267,7 @@ class MerchantPaymentInputsBottomSheet {
                             if (controller.numberTextField.text.isEmpty) {
                               Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             } else {
-                              if (controller.numberTextField.text.length == 4 || controller.numberTextField.text.length == 4) {
+                              if (controller.numberTextField.text.length == 8 || controller.numberTextField.text.length == 11) {
                                 // controller.verifyCeetRefIDfromInput(refId: controller.numberTextField.text);
                                 Get.back();
                                 // EnergiesAmountBottomSheet.showBottomSheetMoonInputAmount();

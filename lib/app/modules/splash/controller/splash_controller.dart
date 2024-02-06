@@ -1,6 +1,7 @@
-// ignore_for_file: unused_local_variable, avoid_print, use_build_context_synchronously
+// ignore_for_file: unused_local_variable, avoid_print, use_build_context_synchronously, unused_import
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:ibank/app/data/local/getstorage_services.dart';
 // import 'package:ibank/app/data/local/shared_preference.dart';
 import 'package:ibank/app/data/local/sql_helper.dart';
 import 'package:ibank/app/routes/app_routes.dart';
+import 'package:ibank/app/services/android_verify_services.dart';
 import 'package:ibank/app/services/location_service.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/main.dart';
@@ -92,6 +94,30 @@ class SplashController extends GetxController {
             }
           });
         });
+        // bool verified = await Get.find<AndroidVerifyServices>().verifyAndroid();
+        // log('verified $verified');
+        // if (verified) {
+        //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+        //     // await Future.delayed(3.seconds, () => Get.offAllNamed(AppRoutes.BOTTOMNAV));
+        //     await Future.delayed(3.seconds, () {
+        //       Get.offAllNamed(AppRoutes.LOGINPINBIOMETRICS);
+        //       if (Get.find<StorageServices>().storage.read('biometrics') != null) {
+        //         AppGlobal.BIOMETRICS = Get.find<StorageServices>().storage.read('biometrics');
+        //       }
+        //     });
+        //   });
+        // } else {
+        //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+        //     await Future.delayed(2.seconds, () {
+        //       Get.find<StorageServices>().storage.remove('msisdn');
+        //       Get.find<StorageServices>().storage.remove('isPrivacyCheck');
+        //       Get.find<StorageServices>().storage.remove('isLoginSuccessClick');
+        //       Get.find<StorageServices>().clearUserLocalData();
+        //       Get.find<StorageServices>().clearUsersInformation();
+        //       Get.offAllNamed(AppRoutes.LOGIN);
+        //     });
+        //   });
+        // }
       }
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) => Future.delayed(2.seconds, () => Get.offAllNamed(AppRoutes.ONBOARD)).then((value) {

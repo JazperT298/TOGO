@@ -16,6 +16,7 @@ import 'package:ibank/app/data/models/bill_payment_model.dart';
 import 'package:ibank/app/data/models/cash_power_model.dart';
 import 'package:ibank/app/data/models/cash_power_sub_model.dart';
 import 'package:ibank/app/data/models/ceet_products_model.dart';
+import 'package:ibank/app/data/models/insurance_model.dart';
 import 'package:ibank/app/data/models/moon_payment_mode.dart';
 import 'package:ibank/app/data/models/moon_payment_sub_model.dart';
 import 'package:ibank/app/data/models/payment_merchant.dart';
@@ -31,6 +32,7 @@ import 'package:ibank/app/modules/login/alertdialog/login_alertdialog.dart';
 import 'package:ibank/app/modules/login/controller/login_controller.dart';
 import 'package:ibank/app/modules/payment/view/modal/energies/energies_enter_otp_bottom_sheet.dart';
 import 'package:ibank/app/modules/payment/view/modal/energies/energies_inputs_bottom_sheet.dart';
+import 'package:ibank/app/modules/payment/view/modal/merchant_payment/merchant_payment_otp_bottom_sheet.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_enter_otp_bottom_sheet.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_inputs_bottom_sheet.dart';
 import 'package:ibank/app/modules/recharge/views/dialog/recharge_menu_dialog.dart';
@@ -97,6 +99,34 @@ class PaymentController extends GetxController {
   //Canal Box variables
 
   //Insurance variables
+  RxString insuranceTypePackageRadioGroupValue = ''.obs;
+  RxString insurancePolicyPackageRadioGroupValue = ''.obs;
+  RxString insuranceTermsPackageRadioGroupValue = ''.obs;
+  RxString insuranceTermsDescPackageRadioGroupValue = ''.obs;
+
+  InsuranceTypeModel? selectedInsuranceTypeModel;
+  InsurancePolicyModel? selectedInsurancePolicyModel;
+  InsuranceTermsModel? selectedInsuranceTermsModel;
+
+  List<InsuranceModel> insuranceModel = [
+    InsuranceModel(title: 'GTAC2A-LIFE', description: 'Contribute with confidence...', icon: FluIcons.tvRetroUnicon),
+    InsuranceModel(title: 'Beneficial Life Insurance', description: 'Insurance with complete peace of mind', icon: FluIcons.tvRetroUnicon),
+    InsuranceModel(title: 'NSIA', description: 'Reinventing insurance', icon: FluIcons.tvRetroUnicon),
+  ];
+  List<InsuranceTypeModel> insuranceTypeModel = [
+    InsuranceTypeModel(title: 'Life', description: 'Life', icon: FluIcons.tvRetroUnicon),
+    InsuranceTypeModel(title: 'None Life', description: 'None Life', icon: FluIcons.tvRetroUnicon),
+  ];
+  List<InsurancePolicyModel> insurancePolicyModel = [
+    InsurancePolicyModel(title: '2404040', description: '2404040', icon: FluIcons.tvRetroUnicon),
+    InsurancePolicyModel(title: '2403030', description: '2403030', icon: FluIcons.tvRetroUnicon),
+    InsurancePolicyModel(title: '2453050', description: '2453050', icon: FluIcons.tvRetroUnicon),
+  ];
+  List<InsuranceTermsModel> insuranceTermsModel = [
+    InsuranceTermsModel(title: '1 month', description: '5 000', icon: FluIcons.tvRetroUnicon),
+    InsuranceTermsModel(title: '2 months', description: '10 000', icon: FluIcons.tvRetroUnicon),
+    InsuranceTermsModel(title: '3 months', description: '15 000', icon: FluIcons.tvRetroUnicon),
+  ];
 
   //Tuition variables
 
@@ -122,13 +152,11 @@ class PaymentController extends GetxController {
     PaymentMerchantModel(title: 'Contactless payment', description: 'Pay your merchant quickly', icon: FluIcons.tvRetroUnicon),
     PaymentMerchantModel(title: 'Online payment', description: 'Pay for your orders online', icon: FluIcons.tvRetroUnicon),
   ];
-
   List<PaymentMerchantSubModel> paymentMerchatSubList = [
     PaymentMerchantSubModel(title: 'Payment with reference', description: 'Pay using the merchant ref', icon: FluIcons.tvRetroUnicon),
     PaymentMerchantSubModel(title: 'Payment without reference', description: 'Pay without merchant ref', icon: FluIcons.tvRetroUnicon),
     PaymentMerchantSubModel(title: 'EcobankPay', description: 'Pay with your Ecobank account', icon: FluIcons.tvRetroUnicon),
   ];
-
   List<TVChannelsModel> tvChannelsMode = [
     TVChannelsModel(title: 'Canal + ', description: 'Resubscribe to Canal +', icon: FluIcons.tvRetroUnicon),
     TVChannelsModel(title: 'New World TV', description: 'Resubscribe to New World TV', icon: FluIcons.tvRetroUnicon),
@@ -138,28 +166,23 @@ class PaymentController extends GetxController {
     MoonPaymentModel(title: 'Payment offer', description: 'I would like to subscribe to the offer', icon: FluIcons.tvRetroUnicon),
     MoonPaymentModel(title: 'Accessory payment', description: 'I would like to pay for accessories', icon: FluIcons.tvRetroUnicon),
   ];
-
   List<MoonPaymentSubModel> moonPaymentSubModel = [
     MoonPaymentSubModel(title: 'New customer', description: 'Validate the subscription', icon: FluIcons.tvRetroUnicon),
     MoonPaymentSubModel(title: 'Pay for me', description: 'I pay for myself', icon: FluIcons.tvRetroUnicon),
     MoonPaymentSubModel(title: 'Pay for a third party', description: 'I pay for a third party', icon: FluIcons.tvRetroUnicon),
   ];
-
   List<SolevaPaymentModel> solevaPaymentModel = [
     SolevaPaymentModel(title: 'For myself', description: 'I pay for myself', icon: FluIcons.tvRetroUnicon),
     SolevaPaymentModel(title: 'For another person', description: 'I pay for a loved one', icon: FluIcons.tvRetroUnicon),
   ];
-
   List<CashPowerModel> cashPowerModel = [
     CashPowerModel(title: 'Buying Cash Power', description: 'Make a cash power payment', icon: FluIcons.tvRetroUnicon),
     CashPowerModel(title: 'Duplicate', description: 'Retrieve the cash power code', icon: FluIcons.tvRetroUnicon),
   ];
-
   List<BBoxCizoModel> bboxCizoModel = [
     BBoxCizoModel(title: 'For myself', description: 'I pay for myself', icon: FluIcons.tvRetroUnicon),
     BBoxCizoModel(title: 'For another person', description: 'I pay for a loved one', icon: FluIcons.tvRetroUnicon),
   ];
-
   List<TDEModel> tdeModel = [
     TDEModel(title: 'TDE payment for me', description: 'I pay for myself', icon: FluIcons.tvRetroUnicon),
     TDEModel(title: 'TDE payment for a third party', description: 'I pay for a loved one', icon: FluIcons.tvRetroUnicon),
@@ -507,6 +530,119 @@ class PaymentController extends GetxController {
       }
     } catch (e) {
       log('transactInternetRechargeOwn $e');
+    }
+  }
+
+  getMerchantTransactionFee(String destmsisdn, String price, String keywords) async {
+    FullScreenLoading.fullScreenLoadingWithTextAndTimer('Validating Reference ID. . .');
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+          <v:Body>
+          <n0:getTransactionFee xmlns:n0="http://applicationmanager.tlc.com">
+              <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
+              <destmsisdn i:type="d:string">$destmsisdn</destmsisdn>
+              <keyword i:type="d:string">$keywords</keyword>
+              <value i:type="d:string">$price</value>
+          </n0:getTransactionFee>
+          </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('getTransactionFeeReturn').single;
+        var jsonString = soapElement.innerText;
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        log('jsonData $jsonData');
+
+        transactionFee = TransactionFee.fromJson(jsonData);
+        senderkeycosttotal.value = transactionFee!.senderkeycosttotal;
+        senderkeycosttva.value = transactionFee!.senderkeycosttva;
+        totalFess.value = int.parse(senderkeycosttotal.value.replaceAll(',', '')) - int.parse(senderkeycosttva.value.replaceAll(',', ''));
+        totalAmount.value = int.parse(price) + int.parse(senderkeycosttotal.value.replaceAll(',', ''));
+
+        Get.back();
+        Get.back();
+        //<-- Show Merchant OTP
+        // EnergiesEnterOtpBottomSheet.showBottomSheetOTPCEET();
+        MerchantPaymentOtpBottomSheet.showBottomSheetOTPMerchant();
+      } else {
+        // Get.back();
+        log("ERROR getTransactionFee ${response.reasonPhrase}");
+        Get.back();
+        Get.snackbar("Message", 'Service unavailable, please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+      }
+    } catch (e) {
+      Get.back();
+      log('getTransactionFee $e');
+      Get.snackbar("Message", 'An Error Occured, Please try again later ', backgroundColor: Colors.lightBlue, colorText: Colors.white);
+    }
+  }
+
+  sendMerchantPaymentFinalHit(String reference, String merchantMsisdn, String amount, String password) async {
+    // FullScreenLoading.fullScreenLoading();
+    try {
+      var headers = {'Content-Type': 'application/xml'};
+      var request = http.Request('POST', Uri.parse('https://flooznfctest.moov-africa.tg/WebReceive?wsdl'));
+      request.body = '''<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:d="http://www.w3.org/2001/XMLSchema" 
+          xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" 
+          xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+          <v:Header />
+            <v:Body>
+              <n0:RequestTokenJson xmlns:n0="http://applicationmanager.tlc.com">
+                <msisdn i:type="d:string">${Get.find<StorageServices>().storage.read('msisdn')}</msisdn>
+                <message i:type="d:string">MRCH $reference $merchantMsisdn $amount $password F</message>
+                <token i:type="d:string">${Get.find<DevicePlatformServices>().deviceID}</token>
+                <sendsms i:type="d:string">true</sendsms>
+              </n0:RequestTokenJson>
+            </v:Body>
+          </v:Envelope>''';
+      request.headers.addAll(headers);
+      log('request.body  ${request.body}');
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var result = await response.stream.bytesToString();
+        log('result  $result');
+        var parseResult = "'''$result'''";
+        var document = xml.XmlDocument.parse(parseResult);
+        var soapElement = document.findAllElements('RequestTokenJsonReturn').single;
+        var jsonString = soapElement.innerText;
+        var decodedData = jsonDecode(jsonString);
+        log('jsonString  $jsonString');
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        log('jsonData  $jsonData');
+        //60001
+        if (decodedData['msgid'] == 0) {
+          Get.back();
+          thisDsonString.value = jsonString;
+          Get.toNamed(AppRoutes.PAYMENTSUCCESS);
+        } else if (decodedData['msgid'] == 5) {
+          Get.back();
+          errorMessage.value = decodedData['message'];
+          Get.snackbar("Message", decodedData['message'], backgroundColor: const Color(0xFFE60000), colorText: Colors.white);
+        } else {
+          Get.back();
+          errorMessage.value = decodedData['message'];
+          Get.toNamed(AppRoutes.PAYMENTFAILED);
+        }
+      } else {
+        Get.back();
+        log("ERROR sendMerchantPaymentFinalHit ${response.reasonPhrase}");
+        Get.snackbar("Message", 'Service unavailable, please try again later ', backgroundColor: Colors.red, colorText: Colors.white);
+      }
+    } catch (e) {
+      Get.back();
+      log('sendMerchantPaymentFinalHit $e');
+      Get.snackbar("Message", 'An Error Occured, Please try again later ', backgroundColor: Colors.red, colorText: Colors.white);
     }
   }
 

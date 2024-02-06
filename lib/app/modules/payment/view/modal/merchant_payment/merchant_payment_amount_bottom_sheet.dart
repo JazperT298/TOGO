@@ -90,14 +90,11 @@ class MerchantPaymentAmountsBottomSheet {
                               fillColor: const Color(0xFFf4f5fa),
                               onChanged: (text) {},
                               onFieldSubmitted: (p0) {
-                                log('NUM ${controller.numberTextField.text.length.toString()}');
-                                if (controller.numberTextField.text.isEmpty) {
+                                if (controller.amountTextField.text.isEmpty) {
                                   Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                                 } else {
-                                  Get.back();
-                                  MerchantPaymentOtpBottomSheet.showBottomSheetOTPMerchant();
-                                  // if (controller.numberTextField.text.length == 4) {
-                                  // controller.verifyCeetRefIDfromInput(refId: controller.numberTextField.text);
+                                  // MerchantPaymentOtpBottomSheet.showBottomSheetOTPMerchant();
+                                  controller.getMerchantTransactionFee(controller.numberTextField.text, controller.amountTextField.text, 'MRCH');
                                 }
                               },
                             ),
@@ -127,13 +124,8 @@ class MerchantPaymentAmountsBottomSheet {
                             if (controller.amountTextField.text.isEmpty) {
                               Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
                             } else {
-                              if (controller.amountTextField.text.length == 4 || controller.amountTextField.text.length == 4) {
-                                // controller.verifyCeetRefIDfromInput(refId: controller.numberTextField.text);
-                                Get.back();
-                                MerchantPaymentOtpBottomSheet.showBottomSheetOTPMerchant();
-                              } else {
-                                Get.snackbar("Message", LocaleKeys.strInvalidNumber.tr, backgroundColor: Colors.lightBlue, colorText: Colors.white);
-                              }
+                              // MerchantPaymentOtpBottomSheet.showBottomSheetOTPMerchant();
+                              controller.getMerchantTransactionFee(controller.numberTextField.text, controller.amountTextField.text, 'MRCH');
                             }
                           },
                           height: 7.h,
