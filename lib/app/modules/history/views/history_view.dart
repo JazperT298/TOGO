@@ -20,7 +20,8 @@ class HistoryView extends StatefulWidget {
   State<HistoryView> createState() => _HistoryViewState();
 }
 
-class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStateMixin {
+class _HistoryViewState extends State<HistoryView>
+    with SingleTickerProviderStateMixin {
   late final TabController tabController;
   late List<Map<String, dynamic>>? history = [];
 
@@ -41,7 +42,8 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     return FluScreen(
-      overlayStyle: context.systemUiOverlayStyle.copyWith(statusBarIconBrightness: Brightness.dark),
+      overlayStyle: context.systemUiOverlayStyle
+          .copyWith(statusBarIconBrightness: Brightness.dark),
       body: SafeArea(
           child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -55,17 +57,26 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
                 children: [
                   Text(
                     LocaleKeys.strHistory.tr.toUpperCase(),
-                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF687997), fontSize: 14),
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF687997),
+                        fontSize: 14),
                   ),
                   Text(
                     'Monitor your operations.'.toUpperCase(),
-                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: const Color(0xFF27303F), fontSize: 26),
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF27303F),
+                        fontSize: 26),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 8),
                     child: Text(
                       "Horem ipsum dolor sit amet, consectetur adipiscing elit.",
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          fontSize: 14),
                     ),
                   ),
                   SizedBox(height: 2.5.h),
@@ -76,8 +87,14 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
                     keyboardType: TextInputType.name,
                     fillColor: Color(0xFFF4F5FA),
                     cursorColor: Color(0xFF27303F),
-                    hintStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Color(0xFF27303F), fontSize: 14),
-                    textStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+                    hintStyle: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF27303F),
+                        fontSize: 14),
+                    textStyle: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                        fontSize: 14),
                     suffixIcon: FluIcons.refresh,
                   ),
                   SizedBox(height: 3.h),
@@ -89,15 +106,21 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
                             isScrollable: true,
                             onTap: (index) {
                               print(index);
-                              Get.find<HistoryController>().onClickHover(index: index);
+                              Get.find<HistoryController>()
+                                  .onClickHover(index: index);
                             },
-                            indicator: const RectangularIndicator(cornerRadius: 50),
+                            indicator:
+                                const RectangularIndicator(cornerRadius: 50),
                             labelColor: context.colorScheme.onPrimary,
-                            unselectedLabelColor: context.colorScheme.onBackground,
+                            unselectedLabelColor:
+                                context.colorScheme.onBackground,
                             splashFactory: NoSplash.splashFactory,
-                            labelPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                            labelPadding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
                             tabs: _Filters.values.map((filter) {
-                              return Tab(text: StringUtils(filter.label).capitalizeFirst!);
+                              return Tab(
+                                  text: StringUtils(filter.label)
+                                      .capitalizeFirst!);
                             }).toList()),
                       ),
                       // const FluButton.icon(
@@ -111,7 +134,8 @@ class _HistoryViewState extends State<HistoryView> with SingleTickerProviderStat
             ),
             FluLine(
               width: double.infinity,
-              margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * .025),
+              margin: EdgeInsets.symmetric(
+                  vertical: MediaQuery.of(context).size.height * .025),
             ),
             _TransactionsList(
               transactions,
@@ -132,7 +156,8 @@ class _TransactionsList extends GetView<HistoryController> {
   Color getTransactionColor(Transaction transaction) {
     if (transaction.status == TransactionStatus.waiting) {
       return Colors.orange;
-    } else if (transaction.status == TransactionStatus.canceled || transaction.status == TransactionStatus.failed) {
+    } else if (transaction.status == TransactionStatus.canceled ||
+        transaction.status == TransactionStatus.failed) {
       return Colors.red;
     } else {
       switch (transaction.type) {
@@ -145,7 +170,8 @@ class _TransactionsList extends GetView<HistoryController> {
     }
   }
 
-  Color getTransactionStatusColor(BuildContext context, Transaction transaction) {
+  Color getTransactionStatusColor(
+      BuildContext context, Transaction transaction) {
     switch (transaction.status) {
       case TransactionStatus.waiting:
         return Colors.yellow;
@@ -160,7 +186,10 @@ class _TransactionsList extends GetView<HistoryController> {
   String getTransactionStatus(Transaction transaction) {
     switch (transaction.status) {
       case TransactionStatus.ok:
-        return Flu.timeago(transaction.createdAt).split('ago').join().replaceFirst('a moment', 'un instant...');
+        return Flu.timeago(transaction.createdAt)
+            .split('ago')
+            .join()
+            .replaceFirst('a moment', 'un instant...');
       case TransactionStatus.waiting:
         return 'En cours...';
       case TransactionStatus.failed:
@@ -182,7 +211,9 @@ class _TransactionsList extends GetView<HistoryController> {
       int endIndex = valueSubstring.indexOf('\n');
 
       // Extract the value
-      String value = endIndex != -1 ? valueSubstring.substring(0, endIndex).trim() : valueSubstring.trim();
+      String value = endIndex != -1
+          ? valueSubstring.substring(0, endIndex).trim()
+          : valueSubstring.trim();
 
       return value;
     }
@@ -201,7 +232,24 @@ class _TransactionsList extends GetView<HistoryController> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                HistoryDialog.showMessageDialog(message: controller.historytransactions[index].message);
+                HistoryDialog.showNewHistoryDialog(
+                    context: context,
+                    message: controller.historytransactions[index].message,
+                    service: controller.historytransactions[index].service,
+                    beneficiary:
+                        controller.historytransactions[index].beneficiary,
+                    amount: controller.historytransactions[index].amount,
+                    fees: controller.historytransactions[index].fees,
+                    tax: controller.historytransactions[index].tax,
+                    ttc: controller.historytransactions[index].ttc,
+                    operationDate:
+                        controller.historytransactions[index].operationDate,
+                    operationHour:
+                        controller.historytransactions[index].operationHour,
+                    txnID: controller.historytransactions[index].txnID,
+                    newBalance:
+                        controller.historytransactions[index].newBalance,
+                    status: controller.historytransactions[index].status);
               },
               child: Container(
                 margin: EdgeInsets.only(top: index == 0 ? 0 : 20),
@@ -220,19 +268,23 @@ class _TransactionsList extends GetView<HistoryController> {
                                 Text(
                                   controller.historytransactions[index].service,
                                   maxLines: 2,
-                                  style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight.bold),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
                                   controller.historytransactions[index].message,
                                   maxLines: 2,
-                                  style: TextStyle(color: Colors.black54, fontSize: 11.sp),
+                                  style: TextStyle(
+                                      color: Colors.black54, fontSize: 11.sp),
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
                                   "${DateFormat.yMMMMd().format(controller.historytransactions[index].date)} ${DateFormat.jm().format(controller.historytransactions[index].date)}", //  transactionss['TIME'].toString(),
-                                  style: TextStyle(color: Colors.red, fontSize: 11.sp),
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 11.sp),
                                 ),
                                 const SizedBox(height: 17),
                                 Divider()

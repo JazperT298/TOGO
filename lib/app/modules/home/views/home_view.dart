@@ -16,7 +16,7 @@ import 'package:ibank/app/modules/home/alertdialog/home_alertdialog.dart';
 import 'package:ibank/app/modules/home/controller/home_controller.dart';
 import 'package:ibank/app/modules/home/views/modals/balance_check_bottom_sheet.dart';
 import 'package:ibank/app/modules/home/views/widgets/carousel_widget.dart';
-import 'package:ibank/app/modules/mbanking/views/modals/mbanking_menu_bottom_sheet.dart';
+import 'package:ibank/app/modules/mbanking/views/modals/mbanking_main_menu_bottom_sheet.dart';
 import 'package:ibank/app/modules/mbanking/views/modals/mbanking_select_bank_bottom_sheet.dart';
 import 'package:ibank/app/modules/payment/controller/payment_controller.dart';
 import 'package:ibank/app/modules/payment/view/modal/payment_main_menu_bottom_sheet.dart';

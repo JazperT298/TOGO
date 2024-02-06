@@ -19,6 +19,7 @@ import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
+import 'package:intl/intl.dart';
 import 'package:xml/xml.dart' as xml;
 
 import '../../../components/main_loading.dart';
@@ -238,9 +239,35 @@ class RechargeController extends GetxController {
           senderBalance.value = jsonData['senderbalance'];
           // RechargeMenuDialog.showMessageDialog(message: jsonString);
           Get.toNamed(AppRoutes.RECHARGESUCCESS);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: 'Moi-même',
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: true,
+              message: responsemessage.value,
+              service: 'Recharge Credit');
         } else {
           log("ERROR transactCreditForMyself ${response.reasonPhrase}'");
           Get.toNamed(AppRoutes.RECHARGEFAILED);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: 'Moi-même',
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: false,
+              message: responsemessage.value,
+              service: 'Recharge Credit');
         }
       } else {
         Get.back();
@@ -299,9 +326,35 @@ class RechargeController extends GetxController {
           transactionID.value = jsonData['refid'];
           senderBalance.value = jsonData['senderbalance'];
           Get.toNamed(AppRoutes.RECHARGESUCCESS);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: numberTextField.text,
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: true,
+              message: responsemessage.value,
+              service: 'Recharge Credit');
         } else {
           log("ERROR transactCreditForOthers ${response.reasonPhrase}'");
           Get.toNamed(AppRoutes.RECHARGEFAILED);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: numberTextField.text,
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: false,
+              message: responsemessage.value,
+              service: 'Recharge Credit');
         }
       } else {
         Get.back();
@@ -496,8 +549,6 @@ class RechargeController extends GetxController {
     }
   }
 
-
-
   transactInternetRechargeOwn({
     required String msisdn,
     required String code,
@@ -544,10 +595,36 @@ class RechargeController extends GetxController {
           transactionID.value = jsonData['refid'];
           senderBalance.value = jsonData['senderbalance'];
           Get.toNamed(AppRoutes.RECHARGESUCCESS);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: 'Moi-même',
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: true,
+              message: responsemessage.value,
+              service: 'Recharge Internet');
         } else {
           Get.back();
           log("ERROR ${response.reasonPhrase}'");
           Get.toNamed(AppRoutes.RECHARGEFAILED);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: 'Moi-même',
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: false,
+              message: responsemessage.value,
+              service: 'Recharge Internet');
         }
       } else {
         Get.back();
@@ -607,10 +684,36 @@ class RechargeController extends GetxController {
           transactionID.value = jsonData['refid'];
           senderBalance.value = jsonData['senderbalance'];
           Get.toNamed(AppRoutes.RECHARGESUCCESS);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: 'Moi-même',
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: true,
+              message: responsemessage.value,
+              service: 'Recharge Voice');
         } else {
           Get.back();
           log("ERROR ${response.reasonPhrase}'");
           Get.toNamed(AppRoutes.RECHARGEFAILED);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: 'Moi-même',
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: false,
+              message: responsemessage.value,
+              service: 'Recharge Voice');
         }
       } else {
         Get.back();
@@ -671,10 +774,36 @@ class RechargeController extends GetxController {
           transactionID.value = jsonData['refid'];
           senderBalance.value = jsonData['senderbalance'];
           Get.toNamed(AppRoutes.RECHARGESUCCESS);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: numberTextField.text,
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: true,
+              message: responsemessage.value,
+              service: 'Recharge Internet');
         } else {
           Get.back();
           log("ERROR ${response.reasonPhrase}'");
           Get.toNamed(AppRoutes.RECHARGEFAILED);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: numberTextField.text,
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: false,
+              message: responsemessage.value,
+              service: 'Recharge Internet');
         }
       } else {
         Get.back();
@@ -734,10 +863,36 @@ class RechargeController extends GetxController {
           transactionID.value = jsonData['refid'];
           senderBalance.value = jsonData['senderbalance'];
           Get.toNamed(AppRoutes.RECHARGESUCCESS);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: numberTextField.text,
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: true,
+              message: responsemessage.value,
+              service: 'Recharge Voice');
         } else {
           Get.back();
           log("ERROR ${response.reasonPhrase}'");
           Get.toNamed(AppRoutes.RECHARGEFAILED);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: numberTextField.text,
+              amount: amountTextField.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: false,
+              message: responsemessage.value,
+              service: 'Recharge Voice');
         }
       } else {
         Get.back();

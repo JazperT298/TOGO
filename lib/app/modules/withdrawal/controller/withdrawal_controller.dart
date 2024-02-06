@@ -15,6 +15,7 @@ import 'package:ibank/app/modules/withdrawal/modals/withdraw_otp_bottom_sheet.da
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
+import 'package:intl/intl.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:developer';
 
@@ -215,9 +216,35 @@ class WithdrawalController extends GetxController {
           Get.back();
           Get.back();
           Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: nickname.value,
+              amount: amount.value.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: true,
+              message: responsemessage.value,
+              service: 'Withdrawal');
         } else {
           Get.back();
           Get.toNamed(AppRoutes.WITHDRAWALFAILED);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: nickname.value,
+              amount: amount.value.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: false,
+              message: responsemessage.value,
+              service: 'Withdrawal');
         }
       } else {
         Get.back();
@@ -397,9 +424,35 @@ class WithdrawalController extends GetxController {
           Get.back();
           Get.back();
           Get.toNamed(AppRoutes.WITHDRAWALSUCCESS);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: nickname.value,
+              amount: amount.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: true,
+              message: responsemessage.value,
+              service: 'Withdrawal');
         } else {
           Get.back();
           Get.toNamed(AppRoutes.WITHDRAWALFAILED);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary: nickname.value,
+              amount: amount.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: false,
+              message: responsemessage.value,
+              service: 'Withdrawal');
         }
       } else {
         Get.back();

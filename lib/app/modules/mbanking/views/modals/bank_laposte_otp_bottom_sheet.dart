@@ -19,8 +19,8 @@ import 'package:sizer/sizer.dart';
 
 import '../../../../../utils/fontsize_config.dart';
 
-class MBankingOTpBottomSheet {
-  static void showMBankingOtpBankBottomSheet() {
+class MBankingLaPosteOTpBottomSheet {
+  static void showMBankingLaPosteOtpBottomSheet() {
     var controller = Get.find<MBankingController>();
     Get.bottomSheet(
       backgroundColor: Colors.transparent,
@@ -59,7 +59,7 @@ class MBankingOTpBottomSheet {
                         child: Obx(
                           () => Text.rich(
                             controller.selectedSubMenu.value ==
-                                    "Flooz to Ecobank"
+                                    "Flooz to La Poste"
                                 ? TextSpan(
                                     children: [
                                       TextSpan(
@@ -80,7 +80,7 @@ class MBankingOTpBottomSheet {
                                                 FontSizes.headerLargeText),
                                       ),
                                       TextSpan(
-                                        text: 'Ecobank ',
+                                        text: 'La Poste ',
                                         style: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.w600,
                                             color: const Color(0xFFFB6404),
@@ -101,7 +101,7 @@ class MBankingOTpBottomSheet {
                                     children: [
                                       TextSpan(
                                         text:
-                                            'EcoBank ', // 'Vous allez envoyer de l’argent à ',
+                                            'La Poste ', // 'Vous allez envoyer de l’argent à ',
                                         style: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.w600,
                                             color: const Color(0xFFFB6404),
@@ -339,18 +339,17 @@ class MBankingOTpBottomSheet {
                                     "Flooz to Ecobank") {
                                   log('Flooz to bank 1 keyword ${controller.keyword.value}');
                                   log('Flooz to bank 1 selectMenu ${controller.selectedMenu.value}');
-
-                                  controller.sendFinalTransaction(
+                                  controller.sendLaPosteFinalTransaction(
                                       controller.keyword.value,
-                                      controller.selectedMenu.value,
+                                      controller.selectedLinkedBank.value,
                                       controller.amountTextField.text,
                                       controller.codeTextField.value.text);
                                 } else {
                                   log('Flooz to bank 2 keyword ${controller.keyword.value}');
                                   log('Flooz to bank 2 selectMenu ${controller.selectedMenu.value}');
-                                  controller.sendFinalTransaction(
+                                  controller.sendLaPosteFinalTransaction(
                                       controller.keyword.value,
-                                      controller.selectedMenu.value,
+                                      controller.selectedLinkedBank.value,
                                       controller.amountTextField.text,
                                       controller.codeTextField.value.text);
                                 }
@@ -381,20 +380,20 @@ class MBankingOTpBottomSheet {
                                         .verifyAndroid();
                                 if (verified) {
                                   if (controller.selectedSubMenu.value ==
-                                      "Flooz to Ecobank") {
+                                      "Flooz to La Poste") {
                                     log('Flooz to bank 1 keyword ${controller.keyword.value}');
                                     log('Flooz to bank 1 selectMenu ${controller.selectedMenu.value}');
-                                    controller.sendFinalTransaction(
+                                    controller.sendLaPosteFinalTransaction(
                                         controller.keyword.value,
-                                        controller.selectedMenu.value,
+                                        controller.selectedLinkedBank.value,
                                         controller.amountTextField.text,
                                         controller.codeTextField.value.text);
                                   } else {
                                     log('Flooz to bank 2 keyword ${controller.keyword.value}');
                                     log('Flooz to bank 2 selectMenu ${controller.selectedMenu.value}');
-                                    controller.sendFinalTransaction(
+                                    controller.sendLaPosteFinalTransaction(
                                         controller.keyword.value,
-                                        controller.selectedMenu.value,
+                                        controller.selectedLinkedBank.value,
                                         controller.amountTextField.text,
                                         controller.codeTextField.value.text);
                                   }

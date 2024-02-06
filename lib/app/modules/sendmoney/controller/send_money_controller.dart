@@ -18,6 +18,7 @@ import 'package:ibank/app/routes/app_routes.dart';
 import 'package:ibank/app/services/platform_device_services.dart';
 import 'package:ibank/generated/locales.g.dart';
 import 'package:ibank/utils/constants/app_global.dart';
+import 'package:intl/intl.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:developer';
 
@@ -226,8 +227,7 @@ class SendMoneyController extends GetxController {
 
           Get.back();
           Get.back();
-          Get.find<StorageServices>().saveHistoryTransaction(
-              message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
+
           thisDsonString.value = jsonString;
           errorMessage.value = jsonData['message'];
           responsemessage.value = jsonData['message'];
@@ -238,16 +238,56 @@ class SendMoneyController extends GetxController {
               msgId == 3010 && messageType.value == "CASHOFF") {
             log('SULOD DRE $msgId');
             Get.toNamed(AppRoutes.TRANSACCOMPLETE);
+            Get.find<StorageServices>().saveHistoryTransaction(
+                beneficiary:
+                    "${selectedCountryCode.value} ${numberController.value.text}",
+                amount: amountController.text.toString(),
+                fees: totalFess.value.toString(),
+                tax: senderkeycosttva.value.toString(),
+                ttc: totalAmount.value.toString(),
+                operationDate: DateFormat.yMMMd().format(DateTime.now()),
+                operationHour: DateFormat.jm().format(DateTime.now()),
+                txnID: transactionID.value,
+                newBalance: senderBalance.value,
+                status: true,
+                message: jsonString,
+                service: LocaleKeys.strNationalTransfer.tr);
           } else {
             log('SULOD DRE KO $msgId');
             Get.toNamed(AppRoutes.TRANSACFAILED);
+            Get.find<StorageServices>().saveHistoryTransaction(
+                beneficiary:
+                    "${selectedCountryCode.value} ${numberController.value.text}",
+                amount: amountController.text.toString(),
+                fees: totalFess.value.toString(),
+                tax: senderkeycosttva.value.toString(),
+                ttc: totalAmount.value.toString(),
+                operationDate: DateFormat.yMMMd().format(DateTime.now()),
+                operationHour: DateFormat.jm().format(DateTime.now()),
+                txnID: transactionID.value,
+                newBalance: senderBalance.value,
+                status: false,
+                message: jsonString,
+                service: LocaleKeys.strNationalTransfer.tr);
           }
         } else {
           log('SULOD GAWAS');
           Get.back();
-          Get.find<StorageServices>().saveHistoryTransaction(
-              message: jsonString, service: LocaleKeys.strNationalTransfer.tr);
           Get.toNamed(AppRoutes.TRANSACFAILED);
+          Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary:
+                  "${selectedCountryCode.value} ${numberController.value.text}",
+              amount: amountController.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: false,
+              message: jsonString,
+              service: LocaleKeys.strNationalTransfer.tr);
 
           invalidCodeString.value = jsonString;
         }
@@ -664,6 +704,17 @@ class SendMoneyController extends GetxController {
           responsemessage.value = jsonData['message'];
           Get.toNamed(AppRoutes.TRANSACCOMPLETE);
           Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary:
+                  "$selectedCountryCode ${numberController.value.text}",
+              amount: amountController.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: true,
               message: responsemessage.value,
               service: LocaleKeys.strInternationalTransfer.tr);
         } else {
@@ -672,6 +723,17 @@ class SendMoneyController extends GetxController {
           responsemessage.value = jsonData['message'];
           Get.toNamed(AppRoutes.TRANSACFAILED);
           Get.find<StorageServices>().saveHistoryTransaction(
+              beneficiary:
+                  "$selectedCountryCode ${numberController.value.text}",
+              amount: amountController.text.toString(),
+              fees: totalFess.value.toString(),
+              tax: senderkeycosttva.value.toString(),
+              ttc: totalAmount.value.toString(),
+              operationDate: DateFormat.yMMMd().format(DateTime.now()),
+              operationHour: DateFormat.jm().format(DateTime.now()),
+              txnID: transactionID.value,
+              newBalance: senderBalance.value,
+              status: false,
               message: responsemessage.value,
               service: LocaleKeys.strInternationalTransfer.tr);
         }
