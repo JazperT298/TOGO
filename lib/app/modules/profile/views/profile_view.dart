@@ -48,19 +48,26 @@ class _ProfileViewState extends State<ProfileView> {
   void getDataFromProfileOptions() {
     profileScreenOptions = [
       FluOption(icon: FluIcons.profile, title: LocaleKeys.strPersonalInfo.tr, description: LocaleKeys.strPersonalInfoDesc.tr),
-      FluOption(icon: FluIcons.password, title: LocaleKeys.strChangePass.tr, description: LocaleKeys.strChangePassDesc.tr),
-      FluOption(icon: FluIcons.flag, title: LocaleKeys.strLanguage.tr, description: LocaleKeys.strLanguageDesc.tr),
+      FluOption(icon: FluIcons.password, title: 'Security', description: 'Change your security settings'),
       FluOption(icon: FluIcons.people, title: LocaleKeys.strFavorites.tr, description: LocaleKeys.strFavoritesDesc.tr),
-      FluOption(icon: FluIcons.cards, title: LocaleKeys.strMyCards.tr, description: LocaleKeys.strMyCardsDesc.tr),
-      FluOption(icon: FluIcons.bank, title: LocaleKeys.strMyBanks.tr, description: LocaleKeys.strMyBanksDesc.tr),
-      FluOption(icon: FluIcons.noteText, title: LocaleKeys.strFaq.tr, description: LocaleKeys.strFaqDesc.tr),
-      FluOption(icon: FluIcons.supportLikeQuestion24Support, title: LocaleKeys.strSupportHelp.tr, description: LocaleKeys.strSupportHelpDesc.tr),
-      FluOption(icon: FluIcons.textalignCenter, title: LocaleKeys.strCredit.tr, description: LocaleKeys.strCreditDesc.tr),
+      FluOption(icon: FluIcons.cards, title: 'Personal references', description: 'Corem ipsum dolor sit amezx ...'),
+      FluOption(icon: FluIcons.bank, title: 'MBanking', description: 'Corem ipsum dolor sit amezx ...'),
+      FluOption(icon: FluIcons.noteText, title: 'Ticket', description: 'Corem ipsum dolor sit amezx ...'),
+      FluOption(icon: FluIcons.supportLikeQuestion24Support, title: 'Tontine', description: 'Corem ipsum dolor sit amezx ...'),
+      FluOption(icon: FluIcons.textalignCenter, title: 'Collection', description: 'Corem ipsum dolor sit amezx ...'),
+      FluOption(icon: FluIcons.password, title: ' No Limit Subscription', description: 'Corem ipsum dolor sit amezx ...'),
+      // FluOption(icon: FluIcons.cards, title: LocaleKeys.strMyCards.tr, description: LocaleKeys.strMyCardsDesc.tr),
+      // FluOption(icon: FluIcons.bank, title: LocaleKeys.strMyBanks.tr, description: LocaleKeys.strMyBanksDesc.tr),
+      // FluOption(icon: FluIcons.noteText, title: LocaleKeys.strFaq.tr, description: LocaleKeys.strFaqDesc.tr),
+      // FluOption(icon: FluIcons.supportLikeQuestion24Support, title: LocaleKeys.strSupportHelp.tr, description: LocaleKeys.strSupportHelpDesc.tr),
+      // FluOption(icon: FluIcons.textalignCenter, title: LocaleKeys.strCredit.tr, description: LocaleKeys.strCreditDesc.tr),
       FluOption(icon: FluIcons.calculator, title: 'Calculate keycost', description: 'Need help? Contact us...'),
-      FluOption(icon: FluIcons.fingerScan, title: 'Secure Account', description: 'Enable facial recognition authentication'),
+      // FluOption(icon: FluIcons.fingerScan, title: 'Secure Account', description: 'Enable facial recognition authentication'),
+      FluOption(icon: FluIcons.supportLikeQuestion24Support, title: LocaleKeys.strSupportHelp.tr, description: LocaleKeys.strSupportHelpDesc.tr),
       FluOption(icon: FluIcons.logout, title: LocaleKeys.strLogout.tr, description: LocaleKeys.strLogoutDesc.tr),
     ];
   }
+  // FluOption(icon: FluIcons.flag, title: LocaleKeys.strLanguage.tr, description: LocaleKeys.strLanguageDesc.tr),
 
   @override
   Widget build(BuildContext context) {
@@ -334,8 +341,8 @@ class _ProfileViewState extends State<ProfileView> {
                                               showSelectLanguageDialog(context);
                                             } else if (index == 9) {
                                               ProfileBottomSheet.showBottomSheetInputNumber();
-                                            } else if (index == 10) {
-                                              ProfileBottomSheet.showBottomSheetBiometrics();
+                                              // } else if (index == 10) {
+                                              //   ProfileBottomSheet.showBottomSheetBiometrics();
                                             } else if (index == 11) {
                                               showLogoutDialog(context);
                                             } else {
